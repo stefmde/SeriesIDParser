@@ -1,0 +1,83 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="SeriesIDParser" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="ResMap_UltraHD8K" Type="System.Collections.Specialized.StringCollection" Scope="Application">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;string&gt;8K&lt;/string&gt;
+  &lt;string&gt;4320P&lt;/string&gt;
+&lt;/ArrayOfString&gt;</Value>
+    </Setting>
+    <Setting Name="ResMap_UltraHD" Type="System.Collections.Specialized.StringCollection" Scope="Application">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;string&gt;UHD&lt;/string&gt;
+  &lt;string&gt;2160P&lt;/string&gt;
+&lt;/ArrayOfString&gt;</Value>
+    </Setting>
+    <Setting Name="ResMap_FullHD" Type="System.Collections.Specialized.StringCollection" Scope="Application">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;string&gt;FULLHD&lt;/string&gt;
+  &lt;string&gt;1080P&lt;/string&gt;
+&lt;/ArrayOfString&gt;</Value>
+    </Setting>
+    <Setting Name="ResMap_HD" Type="System.Collections.Specialized.StringCollection" Scope="Application">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;string&gt;HDTV&lt;/string&gt;
+  &lt;string&gt;720P&lt;/string&gt;
+  &lt;string&gt;HD&lt;/string&gt;
+&lt;/ArrayOfString&gt;</Value>
+    </Setting>
+    <Setting Name="ResMap_SD" Type="System.Collections.Specialized.StringCollection" Scope="Application">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;string&gt;DVDRIP&lt;/string&gt;
+  &lt;string&gt;DVD&lt;/string&gt;
+  &lt;string&gt;XVID&lt;/string&gt;
+&lt;/ArrayOfString&gt;</Value>
+    </Setting>
+    <Setting Name="Remove_Token" Type="System.Collections.Specialized.StringCollection" Scope="Application">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;string&gt;DUBBED&lt;/string&gt;
+  &lt;string&gt;SYNCED&lt;/string&gt;
+  &lt;string&gt;DL&lt;/string&gt;
+  &lt;string&gt;AVC&lt;/string&gt;
+  &lt;string&gt;GERMAN&lt;/string&gt;
+  &lt;string&gt;ITUNES&lt;/string&gt;
+  &lt;string&gt;DTS&lt;/string&gt;
+  &lt;string&gt;BLURAY&lt;/string&gt;
+  &lt;string&gt;X264&lt;/string&gt;
+  &lt;string&gt;AC3D&lt;/string&gt;
+  &lt;string&gt;AAC&lt;/string&gt;
+  &lt;string&gt;WEBHD&lt;/string&gt;
+  &lt;string&gt;NETFLIXUHD&lt;/string&gt;
+  &lt;string&gt;WEBRIP&lt;/string&gt;
+  &lt;string&gt;DD20&lt;/string&gt;
+  &lt;string&gt;DD51&lt;/string&gt;
+  &lt;string&gt;8K&lt;/string&gt;
+  &lt;string&gt;UHD&lt;/string&gt;
+  &lt;string&gt;FULLHD&lt;/string&gt;
+  &lt;string&gt;1080P&lt;/string&gt;
+  &lt;string&gt;HDTV&lt;/string&gt;
+  &lt;string&gt;720P&lt;/string&gt;
+  &lt;string&gt;HD&lt;/string&gt;
+  &lt;string&gt;DVDRIP&lt;/string&gt;
+  &lt;string&gt;XVID&lt;/string&gt;
+  &lt;string&gt;DVD&lt;/string&gt;
+  &lt;string&gt;2160P&lt;/string&gt;
+  &lt;string&gt;M4V&lt;/string&gt;
+  &lt;string&gt;MP4&lt;/string&gt;
+  &lt;string&gt;AVI&lt;/string&gt;
+  &lt;string&gt;WMV&lt;/string&gt;
+  &lt;string&gt;MPEG&lt;/string&gt;
+  &lt;string&gt;MPG&lt;/string&gt;
+  &lt;string&gt;FLV&lt;/string&gt;
+  &lt;string&gt;MKV&lt;/string&gt;
+&lt;/ArrayOfString&gt;</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
