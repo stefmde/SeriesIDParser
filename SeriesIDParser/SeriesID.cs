@@ -45,68 +45,228 @@ namespace SeriesIDParser
 	{
 		UNKNOWN,
 		OK_SUCCESS,
-		ERR_EMPTY_ARGUMENT,
+		ERR_EMPTY_OR_TO_SHORT_ARGUMENT,
 		ERR_ID_NOT_FOUND
 	}
 
 	public class SeriesID
 	{
-		public SeriesID(State state, string seriesTitle = null, string episodeTitle = null, int season = -1, int episode = -1, Resolutions resolution = Resolutions.UNKNOWN )
+		public SeriesID( State state, bool isSeries = false, string title = null, string episodeTitle = null, int year = -1, int season = -1, int episode = -1, Resolutions resolution = Resolutions.UNKNOWN )
 		{
-			this._seriesTitle = seriesTitle;
+			this._state = state;
+			this._isSeries = isSeries;
+			this._title = title;
 			this._episodeTitle = episodeTitle;
+			this._year = year;
 			this._season = season;
 			this._episode = episode;
 			this._resolution = resolution;
-			this._state = state;
 		}
 
+		/// <summary>
+		/// Returns the full series string if object state IsSeries otherwise it returns Title
+		/// </summary>
+		/// <exception cref="InvalidOperationException">While object state is not OK_SUCCESS</exception>
 		public string FullTitle
 		{
-			get { return _seriesTitle + "." + IDString + "." + _episodeTitle; }
+			get
+			{
+				if (_state == State.OK_SUCCESS)
+				{
+					if (_isSeries)
+					{
+						return _title + "." + IDString + "." + _episodeTitle;
+					}
+					else
+					{
+						return _title;
+					}
+				}
+				else
+				{
+					throw new InvalidOperationException( "Invalid operation while object state is not OK_SUCCESS" );
+				}
+			}
 		}
 
-		private string _seriesTitle;
-		public string SeriesTitle
+
+		private string _title;
+		/// <summary>
+		/// Contains the series title or the movie name, depends on IsSeries
+		/// </summary>
+		public string Title
 		{
-			get { return _seriesTitle; }
+			get
+			{
+				return _title;
+			}
 		}
+
 
 		private State _state;
+		/// <summary>
+		/// Contains the state of the object e.g. OK_SUCCESS
+		/// </summary>
 		public State State
 		{
-			get { return _state; }
+			get
+			{
+				return _state;
+			}
 		}
+
 
 		private string _episodeTitle;
+		/// <summary>
+		/// Contains the eposide title if object state is series
+		/// </summary>
+		/// <exception cref="InvalidOperationException">While IsSeries is false and state is not OK_SUCCESS</exception>
 		public string EpisodeTitle
 		{
-			get { return _episodeTitle; }
+			get
+			{
+				if (_state == State.OK_SUCCESS && _isSeries)
+				{
+					return _episodeTitle;
+				}
+				else
+				{
+					throw new InvalidOperationException( "Invalid operation while IsSeries is false and state is not OK_SUCCESS" );
+				}
+			}
 		}
+
 
 		private int _season;
+		/// <summary>
+		/// Contains the season id if object state is series
+		/// </summary>
+		/// <exception cref="InvalidOperationException">While IsSeries is false and state is not OK_SUCCESS</exception>
 		public int Season
 		{
-			get { return _season; }
+			get
+			{
+				if (_state == State.OK_SUCCESS && _isSeries)
+				{
+					return _season;
+				}
+				else
+				{
+					throw new InvalidOperationException( "Invalid operation while IsSeries is false and state is not OK_SUCCESS" );
+				}
+			}
 		}
+
 
 		private int _episode;
+		/// <summary>
+		/// Contains the eposide id if object state is series
+		/// </summary>
+		/// <exception cref="InvalidOperationException">While IsSeries is false and state is not OK_SUCCESS</exception>
 		public int Episode
 		{
-			get { return _episode; }
+			get
+			{
+				if (_state == State.OK_SUCCESS && _isSeries)
+				{
+					return _episode;
+				}
+				else
+				{
+					throw new InvalidOperationException( "Invalid operation while IsSeries is false and state is not OK_SUCCESS" );
+				}
+			}
 		}
 
+
+		private bool _isSeries;
+		/// <summary>
+		/// Specifies if the object contains a series or a movie
+		/// </summary>
+		/// <exception cref="InvalidOperationException">While object state is not OK_SUCCESS</exception>
+		public bool IsSeries
+		{
+			get
+			{
+				if (_state == State.OK_SUCCESS)
+				{
+
+					return _isSeries;
+				}
+				else
+				{
+					throw new InvalidOperationException( "Invalid operation while object state is not OK_SUCCESS" );
+				}
+			}
+		}
+
+
+		private int _year;
+		/// <summary>
+		/// Returns the year of the episode or movie if contained, otherwise -1
+		/// </summary>
+		/// <exception cref="InvalidOperationException">While object state is not OK_SUCCESS</exception>
+		public int Year
+		{
+			get
+			{
+				if (_state == State.OK_SUCCESS)
+				{
+
+					return _year;
+				}
+				else
+				{
+					throw new InvalidOperationException( "Invalid operation while object state is not OK_SUCCESS" );
+				}
+			}
+		}
+
+
+		/// <summary>
+		/// Contains the ID-String of a series e.g. S01E05.
+		/// </summary>
+		/// <exception cref="InvalidOperationException">While IsSeries is false and state is not OK_SUCCESS</exception>
 		public string IDString
 		{
-			get { return "S" + _season.ToString("D2") + "E" + _episode.ToString("D2"); }
+			get
+			{
+				if (_state == State.OK_SUCCESS && _isSeries)
+				{
+					return "S" + _season.ToString( "D2" ) + "E" + _episode.ToString( "D2" );
+				}
+				else
+				{
+					throw new InvalidOperationException( "Invalid operation while IsSeries is false and state is not OK_SUCCESS" );
+				}
+			}
 		}
+
 
 		private Resolutions _resolution;
+		/// <summary>
+		/// Returns the resolution as enum
+		/// </summary>
+		/// <exception cref="InvalidOperationException">While object state is not OK_SUCCESS</exception>
 		public Resolutions Resolution
 		{
-			get { return _resolution; }
+			get
+			{
+				if (_state == State.OK_SUCCESS)
+				{
+					return _resolution;
+				}
+				else
+				{
+					throw new InvalidOperationException( "Invalid operation while object state is not OK_SUCCESS" );
+				}
+			}
 		}
 
+		/// <summary>
+		/// </summary>
+		/// <returns>FullTitle and resolution</returns>
+		/// /// <exception cref="InvalidOperationException">While object state is not OK_SUCCESS</exception>
 		public override string ToString()
 		{
 			if (_state == State.OK_SUCCESS)
@@ -115,7 +275,7 @@ namespace SeriesIDParser
 			}
 			else
 			{
-				return _state.ToString();
+				throw new InvalidOperationException( "Invalid operation while object state is not OK_SUCCESS" );
 			}
 		}
 	}

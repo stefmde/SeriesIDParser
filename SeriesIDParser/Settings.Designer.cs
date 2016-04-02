@@ -93,6 +93,7 @@ namespace SeriesIDParser {
   <string>DTS</string>
   <string>BLURAY</string>
   <string>X264</string>
+  <string>H264</string>
   <string>AC3D</string>
   <string>AAC</string>
   <string>WEBHD</string>
@@ -119,6 +120,10 @@ namespace SeriesIDParser {
   <string>MPG</string>
   <string>FLV</string>
   <string>MKV</string>
+  <string>MIRROR</string>
+  <string>DOKU</string>
+  <string>WEB</string>
+  <string>BD9</string>
 </ArrayOfString>")]
         public global::System.Collections.Specialized.StringCollection Remove_Token {
             get {

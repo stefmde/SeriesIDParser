@@ -33,18 +33,20 @@ using System.Threading.Tasks;
 
 namespace SeriesIDParser
 {
-    public static class SeriesIDParser
-    {
-		public static SeriesID Parse(string episodeName)
+	public static class SeriesIDParser
+	{
+		public static SeriesID Parse( string parseString )
 		{
-			string fullTitle = episodeName;
-			string seriesTitle = string.Empty;
+			string fullTitle = parseString;
+			string title = string.Empty;
 			string episodeTitle = string.Empty;
+			bool isSeries = false;
 			int season = 0;
 			int episode = 0;
+			int year = -1;
 			Resolutions resolution = Resolutions.UNKNOWN;
 
-			if (episodeName.Length > 0)
+			if (parseString.Length >= 5)
 			{
 
 				// ###################################################################
@@ -67,7 +69,7 @@ namespace SeriesIDParser
 				{
 					foreach (string item in Settings.Default.ResMap_UltraHD8K)
 					{
-						if (episodeName.ToUpper().Contains(item))
+						if (parseString.ToUpper().Contains( item ))
 						{
 							resolutionFound = true;
 							resolution = Resolutions.UltraHD8K_4320p;
@@ -79,7 +81,7 @@ namespace SeriesIDParser
 				{
 					foreach (string item in Settings.Default.ResMap_UltraHD)
 					{
-						if (episodeName.ToUpper().Contains(item))
+						if (parseString.ToUpper().Contains( item ))
 						{
 							resolutionFound = true;
 							resolution = Resolutions.UltraHD_2160p;
@@ -91,7 +93,7 @@ namespace SeriesIDParser
 				{
 					foreach (string item in Settings.Default.ResMap_FullHD)
 					{
-						if (episodeName.ToUpper().Contains(item))
+						if (parseString.ToUpper().Contains( item ))
 						{
 							resolutionFound = true;
 							resolution = Resolutions.FullHD_1080p;
@@ -103,7 +105,7 @@ namespace SeriesIDParser
 				{
 					foreach (string item in Settings.Default.ResMap_HD)
 					{
-						if (episodeName.ToUpper().Contains(item))
+						if (parseString.ToUpper().Contains( item ))
 						{
 							resolutionFound = true;
 							resolution = Resolutions.HD_720p;
@@ -115,13 +117,13 @@ namespace SeriesIDParser
 				{
 					foreach (string item in Settings.Default.ResMap_SD)
 					{
-						if (episodeName.ToUpper().Contains(item))
+						if (parseString.ToUpper().Contains( item ))
 						{
 							resolutionFound = true;
 							resolution = Resolutions.SD_Any;
 
-							Regex removeRegex = new Regex(item, RegexOptions.IgnoreCase);
-							fullTitle = removeRegex.Replace(fullTitle, "");
+							Regex removeRegex = new Regex( item, RegexOptions.IgnoreCase );
+							fullTitle = removeRegex.Replace( fullTitle, "" );
 						}
 					}
 				}
@@ -132,57 +134,95 @@ namespace SeriesIDParser
 				// ### Try get plain title
 				// ###################################################################
 				string tmpTitle = string.Empty;
-				if (episodeName.Length > 30)
+				if (parseString.Length > 30)
 				{
-					tmpTitle = episodeName.Substring(episodeName.Length - 20, 20);
+					tmpTitle = parseString.Substring( parseString.Length - 20, 20 );
 
-					if (tmpTitle.Count(x => x == '-') > 0)
+					if (tmpTitle.Count( x => x == '-' ) > 0)
 					{
-						fullTitle = episodeName.Substring(0, episodeName.LastIndexOf("-"));
+						fullTitle = parseString.Substring( 0, parseString.LastIndexOf( "-" ) );
 					}
 				}
 
 				foreach (string item in Settings.Default.Remove_Token)
 				{
-					Regex removeRegex = new Regex(item, RegexOptions.IgnoreCase);
-					fullTitle = removeRegex.Replace(fullTitle, "");
+					Regex removeRegex = new Regex( item, RegexOptions.IgnoreCase );
+					fullTitle = removeRegex.Replace( fullTitle, "" );
 				}
 
-				while (fullTitle.Contains(".."))
+
+				// Get and remove year
+				year = GetYear( fullTitle );
+				fullTitle = fullTitle.Replace(year.ToString(), "");
+
+
+				while (fullTitle.Contains( ".." ))
 				{
-					fullTitle = fullTitle.Replace("..", ".");
+					fullTitle = fullTitle.Replace( "..", "." );
 				}
 
 				if (fullTitle[fullTitle.Length - 1] == '.')
 				{
-					fullTitle = fullTitle.Substring(0, fullTitle.Length - 1);
+					fullTitle = fullTitle.Substring( 0, fullTitle.Length - 1 );
 				}
 
 
 				// ###################################################################
 				// ### Try get Season and Episode ID
 				// ###################################################################
-				Regex seRegex = new Regex(@"S(?<season>\d{1,4})E(?<episode>\d{1,4})");
-				Match match = seRegex.Match(episodeName.ToUpper());
+				Regex seRegex = new Regex( @"S(?<season>\d{1,4})E(?<episode>\d{1,4})" );
+				Match match = seRegex.Match( parseString.ToUpper() );
 				if (match.Success)
 				{
-					seriesTitle = fullTitle.Substring(0, match.Index - 1);
-					episodeTitle = fullTitle.Substring(match.Index + match.Length + 1);
-					int.TryParse(match.Groups["season"].Value, out season);
-					int.TryParse(match.Groups["episode"].Value, out episode);
+					title = fullTitle.Substring( 0, match.Index - 1 );
+					episodeTitle = fullTitle.Substring( match.Index + match.Length + 1 );
+					int.TryParse( match.Groups["season"].Value, out season );
+					int.TryParse( match.Groups["episode"].Value, out episode );
+					isSeries = true;
 				}
 				else
 				{
-					return new SeriesID(state: State.ERR_ID_NOT_FOUND);
+					// MOVIE
+					return new SeriesID(State.OK_SUCCESS, isSeries, fullTitle, year: year, resolution: resolution );
 				}
 			}
 			else
 			{
-				return new SeriesID( state: State.ERR_EMPTY_ARGUMENT);
+				// ERROR
+				return new SeriesID( state: State.ERR_EMPTY_OR_TO_SHORT_ARGUMENT );
 			}
 
-			return new SeriesID(State.OK_SUCCESS, seriesTitle, episodeTitle, season, episode, resolution);
+			// SERIES
+			return new SeriesID( State.OK_SUCCESS, isSeries, title, episodeTitle, year, season, episode, resolution );
 		}
 
-    }
+
+		private static int GetYear( string title )
+		{
+			int year = -1;
+
+			Regex yearRegex = new Regex( @"(\d{4})" );
+			MatchCollection matches = yearRegex.Matches( title );
+
+			foreach (Match match in matches)
+			{
+				if (match.Success)
+				{
+					int tempYear = -1;
+
+					if (int.TryParse( match.Value, out tempYear ))
+					{
+						if (tempYear >= 1900 && tempYear <= DateTime.Now.Year)
+						{
+							year = tempYear;
+							break;
+						}
+					}
+				}
+			}
+
+			return year;
+		}
+
+	}
 }

@@ -51,6 +51,7 @@
   &lt;string&gt;DTS&lt;/string&gt;
   &lt;string&gt;BLURAY&lt;/string&gt;
   &lt;string&gt;X264&lt;/string&gt;
+  &lt;string&gt;H264&lt;/string&gt;
   &lt;string&gt;AC3D&lt;/string&gt;
   &lt;string&gt;AAC&lt;/string&gt;
   &lt;string&gt;WEBHD&lt;/string&gt;
@@ -77,6 +78,10 @@
   &lt;string&gt;MPG&lt;/string&gt;
   &lt;string&gt;FLV&lt;/string&gt;
   &lt;string&gt;MKV&lt;/string&gt;
+  &lt;string&gt;MIRROR&lt;/string&gt;
+  &lt;string&gt;DOKU&lt;/string&gt;
+  &lt;string&gt;WEB&lt;/string&gt;
+  &lt;string&gt;BD9&lt;/string&gt;
 &lt;/ArrayOfString&gt;</Value>
     </Setting>
   </Settings>

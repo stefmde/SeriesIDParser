@@ -34,20 +34,70 @@ namespace SeriesIDParser_Test
 {
 	class Program
 	{
-		static void Main(string[] args)
+		static void Main( string[] args )
 		{
-			Console.WriteLine(SeriesIDParser.SeriesIDParser.Parse("Dubai.Airport.S01E05.Teil5.GERMAN.DOKU.HDTV.720p.x264.mkv"));
-			Console.WriteLine(SeriesIDParser.SeriesIDParser.Parse("The.Big.Bang.Theory.S09E12.Der.romantische.Asteroid.GERMAN.DL.DUBBED.1080p.WebHD.x264"));
-			Console.WriteLine(SeriesIDParser.SeriesIDParser.Parse("House.of.Cards.S04E04.Akt.der.Verzweiflung.German.DD51.Synced.DL.2160p.NetflixUHD.x264"));
-			Console.WriteLine(SeriesIDParser.SeriesIDParser.Parse("Arrow.S04E03.Auferstehung.GERMAN.DUBBED.DL.1080p.WebHD.x264"));
-			Console.WriteLine(SeriesIDParser.SeriesIDParser.Parse("Arrow.s04e03.Auferstehung.GERMAN.DUBBED.DL.1080p.WebHD.x264"));
-			Console.WriteLine(SeriesIDParser.SeriesIDParser.Parse("Arrow.s4e3.Auferstehung.GERMAN.DUBBED.DL.1080p.WebHD.x264"));
-			Console.WriteLine(SeriesIDParser.SeriesIDParser.Parse("Arrow.s4e321.Auferstehung.GERMAN.DUBBED.DL.1080p.WebHD.x264"));
-			Console.WriteLine(SeriesIDParser.SeriesIDParser.Parse("Sie nannten ihn Knochenbrecher"));
-			Console.WriteLine(SeriesIDParser.SeriesIDParser.Parse("Knight.Rider.S01E07.Die.grosse.Duerre.German.DVDRip.XviD-c0nFuSed"));
-			Console.WriteLine(SeriesIDParser.SeriesIDParser.Parse("059.-.Peter.und.das.Sofamobil"));
-			Console.WriteLine(SeriesIDParser.SeriesIDParser.Parse("NCIS.S01E01.Air.Force.One.German.DD20.Dubbed.DL.720p.iTunesHD.AVC-TVS"));
-			Console.WriteLine(SeriesIDParser.SeriesIDParser.Parse(""));
+			int errorCounter = 0;
+
+			List<string> testList = new List<string>();
+			testList.Add( "Dubai.Airport.S01E05.Teil5.GERMAN.DOKU.HDTV.720p.x264.mkv" );
+			testList.Add( "The.Big.Bang.Theory.S09E12.Der.romantische.Asteroid.GERMAN.DL.DUBBED.1080p.WebHD.x264" );
+			testList.Add( "House.of.Cards.S04E04.Akt.der.Verzweiflung.German.DD51.Synced.DL.2160p.NetflixUHD.x264" );
+			testList.Add( "Arrow.S04E03.Auferstehung.GERMAN.DUBBED.DL.1080p.WebHD.x264" );
+			testList.Add( "Arrow.s04e03.Auferstehung.GERMAN.DUBBED.DL.1080p.WebHD.x264" );
+			testList.Add( "Arrow.s4e3.Auferstehung.GERMAN.DUBBED.DL.1080p.WebHD.x264" );
+			testList.Add( "Arrow.s4e321.Auferstehung.GERMAN.DUBBED.DL.1080p.WebHD.x264" );
+			testList.Add( "Sie nannten ihn Knochenbrecher" );
+			testList.Add( "Knight.Rider.S01E07.Die.grosse.Duerre.German.DVDRip.XviD-c0nFuSed" );
+			testList.Add( "059.-.Peter.und.das.Sofamobil" );
+			testList.Add( "NCIS.S01E01.Air.Force.One.German.DD20.Dubbed.DL.720p.iTunesHD.AVC-TVS" );
+			testList.Add( "" );
+			testList.Add( "." );
+			testList.Add( "Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv" );
+			testList.Add( "A.Chinese.Ghost.Story.3.1991.German.DTS.1080p.BD9.x264.mkv" );
+			testList.Add( "Black.Mass.2015.German.AC3D.DL.1080p.WEB-DL.h264.mkv" );
+
+
+			Console.WriteLine();
+
+			foreach (string item in testList)
+			{
+				try
+				{
+					SeriesID id = null;
+					id = SeriesIDParser.SeriesIDParser.Parse( item );
+
+					Console.WriteLine( "Test: " + item );
+					if (id.State == State.OK_SUCCESS)
+					{
+						Console.WriteLine( "Result: " + id.FullTitle );
+					}
+					else
+					{
+						Console.WriteLine( "ERROR: " + id.State.ToString() );
+					}
+					//Console.WriteLine( "--------------------------------------------------" );
+					Console.WriteLine();
+				}
+				catch (Exception ex)
+				{
+					errorCounter++;
+				}
+			}
+
+			Console.WriteLine();
+			Console.WriteLine();
+			Console.WriteLine( "##################################################" );
+			if (errorCounter == 0)
+			{
+				Console.WriteLine( " Test Completed With No Exceptions." );
+			}
+			else
+			{
+				Console.WriteLine( " Test FAILED. There were " + errorCounter + " Exceptions." );
+			}
+			Console.WriteLine( "##################################################" );
+
+
 
 			Console.ReadLine();
 		}
