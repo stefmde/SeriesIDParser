@@ -33,12 +33,12 @@ namespace SeriesIDParser
 {
 	public enum Resolutions
 	{
-		UNKNOWN,
-		UltraHD8K_4320p,
-		UltraHD_2160p,
-		FullHD_1080p,
-		HD_720p,
-		SD_Any
+		UNKNOWN = 0,
+		SD_Any = 1,
+		HD_720p = 2,
+		FullHD_1080p = 3,
+		UltraHD_2160p = 4,
+		UltraHD8K_4320p = 5
 	}
 
 	public enum State

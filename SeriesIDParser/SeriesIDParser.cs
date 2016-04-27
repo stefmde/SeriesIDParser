@@ -153,13 +153,15 @@ namespace SeriesIDParser
 
 				// Get and remove year
 				year = GetYear( fullTitle );
-				fullTitle = fullTitle.Replace(year.ToString(), "");
+				fullTitle = fullTitle.Replace( year.ToString(), "" );
 
 
 				while (fullTitle.Contains( ".." ))
 				{
 					fullTitle = fullTitle.Replace( "..", "." );
 				}
+
+				fullTitle = fullTitle.Trim();
 
 				if (fullTitle[fullTitle.Length - 1] == '.')
 				{
@@ -183,7 +185,7 @@ namespace SeriesIDParser
 				else
 				{
 					// MOVIE
-					return new SeriesID(State.OK_SUCCESS, isSeries, fullTitle, year: year, resolution: resolution );
+					return new SeriesID( State.OK_SUCCESS, isSeries, fullTitle, year: year, resolution: resolution );
 				}
 			}
 			else

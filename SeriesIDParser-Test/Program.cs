@@ -39,6 +39,7 @@ namespace SeriesIDParser_Test
 			int errorCounter = 0;
 
 			List<string> testList = new List<string>();
+			testList.Add( "Better.Call.Saul.S02E10.GERMAN.DL.DUBBED.1080p.WebHD.h264 - iNFOTv" );
 			testList.Add( "Dubai.Airport.S01E05.Teil5.GERMAN.DOKU.HDTV.720p.x264.mkv" );
 			testList.Add( "The.Big.Bang.Theory.S09E12.Der.romantische.Asteroid.GERMAN.DL.DUBBED.1080p.WebHD.x264" );
 			testList.Add( "House.of.Cards.S04E04.Akt.der.Verzweiflung.German.DD51.Synced.DL.2160p.NetflixUHD.x264" );
