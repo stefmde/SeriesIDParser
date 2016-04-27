@@ -35,9 +35,10 @@ namespace SeriesIDParser
 {
 	public static class SeriesIDParser
 	{
-		public static SeriesID Parse( string parseString )
+		public static SeriesID Parse( string input )
 		{
-			string fullTitle = parseString;
+			string parseString = input.Trim();
+			string fullTitle = parseString.Trim();
 			string title = string.Empty;
 			string episodeTitle = string.Empty;
 			bool isSeries = false;
