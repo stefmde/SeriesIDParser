@@ -178,7 +178,18 @@ namespace SeriesIDParser
 				if (match.Success)
 				{
 					title = fullTitle.Substring( 0, match.Index - 1 );
-					episodeTitle = fullTitle.Substring( match.Index + match.Length + 1 );
+
+					// Get Episode title if there is one
+					int episodeTitleStartIndex = match.Index + match.Length + 1;
+					if (fullTitle.Length > episodeTitleStartIndex)
+					{
+						episodeTitle = fullTitle.Substring( episodeTitleStartIndex );
+					}
+					else
+					{
+						episodeTitle = null;
+					}
+					
 					int.TryParse( match.Groups["season"].Value, out season );
 					int.TryParse( match.Groups["episode"].Value, out episode );
 					isSeries = true;
