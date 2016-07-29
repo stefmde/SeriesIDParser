@@ -17,4 +17,4 @@ The output would be a object like that:
   - |-> IDString      -> S01E07 (string)
   - |-> Resolution  -> SD_Any (enum)
 
-Now on [NuGet](https://www.nuget.org/packages/SeriesIDParser/)!
+**Now on [NuGet](https://www.nuget.org/packages/SeriesIDParser/)!**
