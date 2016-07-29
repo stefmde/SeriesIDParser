@@ -1,0 +1,21 @@
+3.0.0 (2016-07-29)
+------------------
+
+New
+~~~~
+- State is now flagable
+- State has new Flags "WARN_ERR_OR_WARN_OCCURRED" and "WARN_NO_TITLE_FOUND"
+- Now supports 38 file-extensions (https://en.wikipedia.org/wiki/Video_file_format)
+- New property: RemovedTokens
+- New property: FileExtension
+- New property: OriginalString
+- New property: ParsedString
+- Automatic token reorder
+- Replaces Spaces
+- Replaces .-.
+
+Fix
+~~~~
+- Strings without a title are now supported but triggers a warning
+- Performance improvements
+- Code optimization
