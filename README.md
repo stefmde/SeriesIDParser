@@ -16,3 +16,5 @@ The output would be a object like that:
   - |-> Episode       -> 7 (int)
   - |-> IDString      -> S01E07 (string)
   - |-> Resolution  -> SD_Any (enum)
+
+**Now on [NuGet](https://www.nuget.org/packages/SeriesIDParser/)!**
