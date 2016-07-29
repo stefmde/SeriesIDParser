@@ -27,7 +27,7 @@ namespace SeriesIDParser {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<ArrayOfString xmlns:xsi=\"http://www.w3." +
             "org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\r\n  <s" +
-            "tring>8K</string>\r\n  <string>4320P</string>\r\n</ArrayOfString>")]
+            "tring>8K</string>\r\n  <string>4320k</string>\r\n</ArrayOfString>")]
         public global::System.Collections.Specialized.StringCollection ResMap_UltraHD8K {
             get {
                 return ((global::System.Collections.Specialized.StringCollection)(this["ResMap_UltraHD8K"]));
@@ -38,7 +38,7 @@ namespace SeriesIDParser {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<ArrayOfString xmlns:xsi=\"http://www.w3." +
             "org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\r\n  <s" +
-            "tring>UHD</string>\r\n  <string>2160P</string>\r\n</ArrayOfString>")]
+            "tring>UHD</string>\r\n  <string>2160p</string>\r\n</ArrayOfString>")]
         public global::System.Collections.Specialized.StringCollection ResMap_UltraHD {
             get {
                 return ((global::System.Collections.Specialized.StringCollection)(this["ResMap_UltraHD"]));
@@ -49,7 +49,7 @@ namespace SeriesIDParser {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<ArrayOfString xmlns:xsi=\"http://www.w3." +
             "org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\r\n  <s" +
-            "tring>FULLHD</string>\r\n  <string>1080P</string>\r\n</ArrayOfString>")]
+            "tring>FullHD</string>\r\n  <string>1080p</string>\r\n</ArrayOfString>")]
         public global::System.Collections.Specialized.StringCollection ResMap_FullHD {
             get {
                 return ((global::System.Collections.Specialized.StringCollection)(this["ResMap_FullHD"]));
@@ -60,7 +60,7 @@ namespace SeriesIDParser {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<ArrayOfString xmlns:xsi=\"http://www.w3." +
             "org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\r\n  <s" +
-            "tring>HDTV</string>\r\n  <string>720P</string>\r\n  <string>HD</string>\r\n</ArrayOfSt" +
+            "tring>HDTV</string>\r\n  <string>720p</string>\r\n  <string>HD</string>\r\n</ArrayOfSt" +
             "ring>")]
         public global::System.Collections.Specialized.StringCollection ResMap_HD {
             get {
@@ -88,17 +88,18 @@ namespace SeriesIDParser {
   <string>SYNCED</string>
   <string>DL</string>
   <string>AVC</string>
-  <string>GERMAN</string>
-  <string>ITUNES</string>
+  <string>German</string>
+  <string>iTunes</string>
   <string>DTS</string>
-  <string>BLURAY</string>
-  <string>X264</string>
-  <string>H264</string>
+  <string>BluRay</string>
+  <string>x264</string>
+  <string>x265</string>
+  <string>h264</string>
   <string>AC3D</string>
   <string>AAC</string>
-  <string>WEBHD</string>
-  <string>NETFLIXUHD</string>
-  <string>WEBRIP</string>
+  <string>WebHD</string>
+  <string>Netflix</string>
+  <string>WebRIP</string>
   <string>DD20</string>
   <string>DD51</string>
   <string>8K</string>
@@ -112,22 +113,81 @@ namespace SeriesIDParser {
   <string>XVID</string>
   <string>DVD</string>
   <string>2160P</string>
-  <string>M4V</string>
-  <string>MP4</string>
-  <string>AVI</string>
-  <string>WMV</string>
-  <string>MPEG</string>
-  <string>MPG</string>
-  <string>FLV</string>
-  <string>MKV</string>
   <string>MIRROR</string>
   <string>DOKU</string>
   <string>WEB</string>
   <string>BD9</string>
 </ArrayOfString>")]
-        public global::System.Collections.Specialized.StringCollection Remove_Token {
+        public global::System.Collections.Specialized.StringCollection RemoveToken {
             get {
-                return ((global::System.Collections.Specialized.StringCollection)(this["Remove_Token"]));
+                return ((global::System.Collections.Specialized.StringCollection)(this["RemoveToken"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute(@"<?xml version=""1.0"" encoding=""utf-16""?>
+<ArrayOfString xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
+  <string>3G2</string>
+  <string>3GP</string>
+  <string>AMV</string>
+  <string>ASF</string>
+  <string>AVI</string>
+  <string>DRC</string>
+  <string>F4A </string>
+  <string>F4B</string>
+  <string>F4P</string>
+  <string>F4V</string>
+  <string>FLV</string>
+  <string>GIF</string>
+  <string>GIFV</string>
+  <string>M2V</string>
+  <string>M4P </string>
+  <string>M4V</string>
+  <string>MKV</string>
+  <string>MNG</string>
+  <string>MOV</string>
+  <string>MP2</string>
+  <string>MP4</string>
+  <string>MPE</string>
+  <string>MPEG</string>
+  <string>MPG</string>
+  <string>MPV</string>
+  <string>MXF</string>
+  <string>NSV</string>
+  <string>OGG</string>
+  <string>OGV</string>
+  <string>QT</string>
+  <string>RM</string>
+  <string>RMVB</string>
+  <string>ROQ</string>
+  <string>SVI</string>
+  <string>VOB</string>
+  <string>WEBM</string>
+  <string>WMV</string>
+  <string>YUV</string>
+</ArrayOfString>")]
+        public global::System.Collections.Specialized.StringCollection FileExtensions {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["FileExtensions"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ReplaceSpaces {
+            get {
+                return ((bool)(this["ReplaceSpaces"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ReplaceDotHyphenDot {
+            get {
+                return ((bool)(this["ReplaceDotHyphenDot"]));
             }
         }
     }

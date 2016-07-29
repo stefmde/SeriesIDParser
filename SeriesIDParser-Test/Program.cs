@@ -40,25 +40,25 @@ namespace SeriesIDParser_Test
 
 			List<string> testList = new List<string>();
 
-			testList.Add( "Better.Call.Saul.S02E10.GERMAN.DL.DUBBED.1080p.WebHD.h264-iNFOTv" );
-			testList.Add( "Better.Call.Saul.S02E10.GERMAN.DL.DUBBED.1080p.WebHD.h264 - iNFOTv" );
-			testList.Add( "Dubai.Airport.S01E05.Teil5.GERMAN.DOKU.HDTV.720p.x264.mkv" );
-			testList.Add( "The.Big.Bang.Theory.S09E12.Der.romantische.Asteroid.GERMAN.DL.DUBBED.1080p.WebHD.x264" );
-			testList.Add( "House.of.Cards.S04E04.Akt.der.Verzweiflung.German.DD51.Synced.DL.2160p.NetflixUHD.x264" );
-			testList.Add( "Arrow.S04E03.Auferstehung.GERMAN.DUBBED.DL.1080p.WebHD.x264" );
-			testList.Add( "Arrow.s04e03.Auferstehung.GERMAN.DUBBED.DL.1080p.WebHD.x264" );
-			testList.Add( "Arrow.s4e3.Auferstehung.GERMAN.DUBBED.DL.1080p.WebHD.x264" );
-			testList.Add( "Arrow.s4e321.Auferstehung.GERMAN.DUBBED.DL.1080p.WebHD.x264" );
-			testList.Add( "Sie nannten ihn Knochenbrecher" );
-			testList.Add( "Knight.Rider.S01E07.Die.grosse.Duerre.German.DVDRip.XviD-c0nFuSed" );
-			testList.Add( "059.-.Peter.und.das.Sofamobil" );
-			testList.Add( "NCIS.S01E01.Air.Force.One.German.DD20.Dubbed.DL.720p.iTunesHD.AVC-TVS" );
-			testList.Add( "" );
-			testList.Add( "." );
-			testList.Add( "Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv" );
-			testList.Add( "A.Chinese.Ghost.Story.3.1991.German.DTS.1080p.BD9.x264.mkv" );
-			testList.Add( "Black.Mass.2015.German.AC3D.DL.1080p.WEB-DL.h264.mkv" );
-
+			testList.Add("Better.Call.Saul.S02E10.GERMAN.DL.DUBBED.1080p.WebHD.h264-iNFOTv");
+			testList.Add("Better.Call.Saul.S02E10.GERMAN.DL.DUBBED.1080p.WebHD.h264 - iNFOTv");
+			testList.Add("Dubai.Airport.S01E05.Teil5.GERMAN.DOKU.HDTV.720p.x264.mkv");
+			testList.Add("The.Big.Bang.Theory.S09E12.Der.romantische.Asteroid.GERMAN.DL.DUBBED.1080p.WebHD.x264");
+			testList.Add("House.of.Cards.S04E04.Akt.der.Verzweiflung.German.DD51.Synced.DL.2160p.NetflixUHD.x264");
+			testList.Add("Arrow.S04E03.Auferstehung.GERMAN.DUBBED.DL.1080p.WebHD.x264");
+			testList.Add("Arrow.s04e03.Auferstehung.GERMAN.DUBBED.DL.1080p.WebHD.x264");
+			testList.Add("Arrow.s4e3.Auferstehung.GERMAN.DUBBED.DL.1080p.WebHD.x264");
+			testList.Add("Arrow.s4e321.Auferstehung.GERMAN.DUBBED.DL.1080p.WebHD.x264");
+			testList.Add("Sie nannten ihn Knochenbrecher");
+			testList.Add("Knight.Rider.S01E07.Die.grosse.Duerre.German.DVDRip.XviD-c0nFuSed");
+			testList.Add("059.-.Peter.und.das.Sofamobil");
+			testList.Add("NCIS.S01E01.Air.Force.One.German.DD20.Dubbed.DL.720p.iTunesHD.AVC-TVS");
+			testList.Add("");
+			testList.Add(".");
+			testList.Add("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv");
+			testList.Add("A.Chinese.Ghost.Story.3.1991.German.DTS.1080p.BD9.x264.mkv");
+			testList.Add("Black.Mass.2015.German.AC3D.DL.1080p.WEB-DL.h264.mkv");
+			testList.Add("S04E03.Auferstehung.GERMAN.DUBBED.DL.1080p.WebHD.x264");
 
 			Console.WriteLine();
 
@@ -70,7 +70,7 @@ namespace SeriesIDParser_Test
 					id = SeriesIDParser.SeriesIDParser.Parse( item );
 
 					Console.WriteLine( "Test: " + item );
-					if (id.State == State.OK_SUCCESS)
+					if (id.State.HasFlag( State.OK_SUCCESS) )
 					{
 						Console.WriteLine( "Result: " + id.FullTitle );
 					}

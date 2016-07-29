@@ -41,26 +41,34 @@ namespace SeriesIDParser
 		UltraHD8K_4320p = 5
 	}
 
+	[Flags]
 	public enum State
 	{
-		UNKNOWN,
-		OK_SUCCESS,
-		ERR_EMPTY_OR_TO_SHORT_ARGUMENT,
-		ERR_ID_NOT_FOUND
+		UNKNOWN = 0,
+		OK_SUCCESS = 1,
+		WARN_ERR_OR_WARN_OCCURRED = 2,
+		WARN_NO_TITLE_FOUND = 4,
+		ERR_EMPTY_OR_TO_SHORT_ARGUMENT = 8,
+		ERR_ID_NOT_FOUND = 16
 	}
 
 	public class SeriesID
 	{
-		public SeriesID( State state, bool isSeries = false, string title = null, string episodeTitle = null, int year = -1, int season = -1, int episode = -1, Resolutions resolution = Resolutions.UNKNOWN )
+		public SeriesID( State state, bool isSeries = false, string originalString = null, string title = null, 
+			string episodeTitle = null, int year = -1, int season = -1, int episode = -1, 
+			Resolutions resolution = Resolutions.UNKNOWN, List < string > removedTokens = null, string fileExtension = null )
 		{
 			this._state = state;
 			this._isSeries = isSeries;
+			this._originalString = originalString;
 			this._title = title;
 			this._episodeTitle = episodeTitle;
 			this._year = year;
 			this._season = season;
 			this._episode = episode;
 			this._resolution = resolution;
+			this._removedTokens = removedTokens;
+			this._fileExtension = fileExtension;
 		}
 
 		/// <summary>
@@ -71,11 +79,28 @@ namespace SeriesIDParser
 		{
 			get
 			{
-				if (_state == State.OK_SUCCESS)
+				if (_state.HasFlag( State.OK_SUCCESS))
 				{
 					if (_isSeries)
 					{
-						return _title + "." + IDString + "." + _episodeTitle;
+						string tempTitle = string.Empty;
+
+						if (!string.IsNullOrEmpty(_title))
+						{
+							tempTitle = tempTitle + _title;
+						}
+
+						if (!string.IsNullOrEmpty(IDString))
+						{
+							tempTitle = tempTitle + "." + IDString;
+						}
+
+						if (!string.IsNullOrEmpty(_episodeTitle))
+						{
+							tempTitle = tempTitle + "." + _episodeTitle;
+						}
+
+						return tempTitle;
 					}
 					else
 					{
@@ -85,6 +110,104 @@ namespace SeriesIDParser
 				else
 				{
 					throw new InvalidOperationException( "Invalid operation while object state is not OK_SUCCESS" );
+				}
+			}
+		}
+
+		private List<string> _removedTokens;
+		/// <summary>
+		/// Contains tokens whoi are removed by the parser as string list
+		/// </summary>
+		public List<string> RemovedTokens
+		{
+			get
+			{
+				return _removedTokens;
+			}
+		}
+
+
+		private string _fileExtension;
+		/// <summary>
+		/// Contains the file-extension or null
+		/// </summary>
+		public string FileExtension
+		{
+			get
+			{
+				return _fileExtension;
+			}
+		}
+
+
+		private string _originalString;
+		/// <summary>
+		/// Contains the string that is given to the parser
+		/// </summary>
+		public string OriginalString
+		{
+			get
+			{
+				return _originalString;
+			}
+		}
+
+
+		//private string _parsedString;
+		/// <summary>
+		/// Contains the string that was computed by the parser
+		/// </summary>
+		public string ParsedString
+		{
+			get
+			{
+				if (_state.HasFlag( State.OK_SUCCESS) )
+				{
+					string tempString = string.Empty;
+
+					tempString += FullTitle;
+
+					if (_year > -1)
+					{
+						tempString += "." + _year;
+					}
+
+					// Resulution
+					switch (_resolution)
+					{
+						case Resolutions.HD_720p:
+							tempString += ".720p";
+							break;
+						case Resolutions.FullHD_1080p:
+							tempString += ".1080p";
+							break;
+						case Resolutions.UltraHD_2160p:
+							tempString += ".2160p";
+							break;
+						case Resolutions.UltraHD8K_4320p:
+							tempString += ".4320p";
+							break;
+					}
+
+
+					if (_removedTokens != null && _removedTokens.Count > 0)
+					{
+						foreach (string remToken in _removedTokens)
+						{
+							tempString += "." + remToken;
+						}
+					}
+
+					if (!string.IsNullOrEmpty(_fileExtension))
+					{
+						tempString += "." + _fileExtension;
+					}
+
+					return tempString;
+				}
+				else
+				{
+					throw new InvalidOperationException("Invalid operation while object state is not OK_SUCCESS");
 				}
 			}
 		}
@@ -125,7 +248,7 @@ namespace SeriesIDParser
 		{
 			get
 			{
-				if (_state == State.OK_SUCCESS && _isSeries)
+				if (_state.HasFlag(State.OK_SUCCESS) && _isSeries)
 				{
 					return _episodeTitle;
 				}
@@ -146,7 +269,7 @@ namespace SeriesIDParser
 		{
 			get
 			{
-				if (_state == State.OK_SUCCESS && _isSeries)
+				if (_state.HasFlag(State.OK_SUCCESS) && _isSeries)
 				{
 					return _season;
 				}
@@ -167,7 +290,7 @@ namespace SeriesIDParser
 		{
 			get
 			{
-				if (_state == State.OK_SUCCESS && _isSeries)
+				if (_state.HasFlag(State.OK_SUCCESS) && _isSeries)
 				{
 					return _episode;
 				}
@@ -188,7 +311,7 @@ namespace SeriesIDParser
 		{
 			get
 			{
-				if (_state == State.OK_SUCCESS)
+				if (_state.HasFlag(State.OK_SUCCESS))
 				{
 
 					return _isSeries;
@@ -210,7 +333,7 @@ namespace SeriesIDParser
 		{
 			get
 			{
-				if (_state == State.OK_SUCCESS)
+				if (_state.HasFlag(State.OK_SUCCESS))
 				{
 
 					return _year;
@@ -231,7 +354,7 @@ namespace SeriesIDParser
 		{
 			get
 			{
-				if (_state == State.OK_SUCCESS && _isSeries)
+				if (_state.HasFlag(State.OK_SUCCESS) && _isSeries)
 				{
 					return "S" + _season.ToString( "D2" ) + "E" + _episode.ToString( "D2" );
 				}
@@ -252,7 +375,7 @@ namespace SeriesIDParser
 		{
 			get
 			{
-				if (_state == State.OK_SUCCESS)
+				if (_state.HasFlag(State.OK_SUCCESS))
 				{
 					return _resolution;
 				}
@@ -269,7 +392,7 @@ namespace SeriesIDParser
 		/// /// <exception cref="InvalidOperationException">While object state is not OK_SUCCESS</exception>
 		public override string ToString()
 		{
-			if (_state == State.OK_SUCCESS)
+			if (_state.HasFlag(State.OK_SUCCESS))
 			{
 				return FullTitle + " -- " + _resolution.ToString();
 			}

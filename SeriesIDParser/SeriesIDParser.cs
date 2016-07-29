@@ -41,39 +41,50 @@ namespace SeriesIDParser
 			string fullTitle = parseString.Trim();
 			string title = string.Empty;
 			string episodeTitle = string.Empty;
+			string fileExtension = string.Empty;
+			List<string> removedTokens = new List<string>();
 			bool isSeries = false;
+			bool warningOrErrorOccurred = false;
 			int season = 0;
 			int episode = 0;
 			int year = -1;
 			Resolutions resolution = Resolutions.UNKNOWN;
+			State state = new State();
 
 			if (parseString.Length >= 5)
 			{
 
 				// ###################################################################
-				// ### Remove fileextension if apply
+				// ### Find File extension
 				// ###################################################################
-				//if (Path.HasExtension(fullTitle))
-				//{
-				//	string extension = Path.GetExtension(fullTitle);
-				//	fullTitle = fullTitle.Replace(extension, "");
-				//}
+				foreach (string ext in Settings.Default.FileExtensions)
+				{
+					if (input.ToUpper().EndsWith(ext.ToUpper()))
+					{
+						fileExtension = ext.ToLower();
+						break;
+					}
+				}
 
 
 				// ###################################################################
 				// ### Try get resolution
 				// ###################################################################
 				bool resolutionFound = false;
-
+				Regex removeRegex = null;
 
 				if (!resolutionFound && Settings.Default.ResMap_UltraHD8K != null)
 				{
 					foreach (string item in Settings.Default.ResMap_UltraHD8K)
 					{
-						if (parseString.ToUpper().Contains( item ))
+						if (parseString.ToUpper().Contains( item.ToUpper()))
 						{
 							resolutionFound = true;
 							resolution = Resolutions.UltraHD8K_4320p;
+
+							removeRegex = new Regex(item, RegexOptions.IgnoreCase);
+							fullTitle = removeRegex.Replace(fullTitle, "");
+							break;
 						}
 					}
 				}
@@ -82,10 +93,14 @@ namespace SeriesIDParser
 				{
 					foreach (string item in Settings.Default.ResMap_UltraHD)
 					{
-						if (parseString.ToUpper().Contains( item ))
+						if (parseString.ToUpper().Contains( item.ToUpper()))
 						{
 							resolutionFound = true;
 							resolution = Resolutions.UltraHD_2160p;
+
+							removeRegex = new Regex(item, RegexOptions.IgnoreCase);
+							fullTitle = removeRegex.Replace(fullTitle, "");
+							break;
 						}
 					}
 				}
@@ -94,10 +109,14 @@ namespace SeriesIDParser
 				{
 					foreach (string item in Settings.Default.ResMap_FullHD)
 					{
-						if (parseString.ToUpper().Contains( item ))
+						if (parseString.ToUpper().Contains( item.ToUpper() ))
 						{
 							resolutionFound = true;
 							resolution = Resolutions.FullHD_1080p;
+
+							removeRegex = new Regex(item, RegexOptions.IgnoreCase);
+							fullTitle = removeRegex.Replace(fullTitle, "");
+							break;
 						}
 					}
 				}
@@ -106,10 +125,14 @@ namespace SeriesIDParser
 				{
 					foreach (string item in Settings.Default.ResMap_HD)
 					{
-						if (parseString.ToUpper().Contains( item ))
+						if (parseString.ToUpper().Contains( item.ToUpper()))
 						{
 							resolutionFound = true;
 							resolution = Resolutions.HD_720p;
+
+							removeRegex = new Regex(item, RegexOptions.IgnoreCase);
+							fullTitle = removeRegex.Replace(fullTitle, "");
+							break;
 						}
 					}
 				}
@@ -123,8 +146,9 @@ namespace SeriesIDParser
 							resolutionFound = true;
 							resolution = Resolutions.SD_Any;
 
-							Regex removeRegex = new Regex( item, RegexOptions.IgnoreCase );
+							removeRegex = new Regex( item, RegexOptions.IgnoreCase );
 							fullTitle = removeRegex.Replace( fullTitle, "" );
+							break;
 						}
 					}
 				}
@@ -134,32 +158,67 @@ namespace SeriesIDParser
 				// ###################################################################
 				// ### Try get plain title
 				// ###################################################################
+
+				// remove hoster token
 				string tmpTitle = string.Empty;
-				if (parseString.Length > 30)
+				if (fullTitle.Length > 30)
 				{
-					tmpTitle = parseString.Substring( parseString.Length - 20, 20 );
+					tmpTitle = fullTitle.Substring(fullTitle.Length - 20, 20 );
 
 					if (tmpTitle.Count( x => x == '-' ) > 0)
 					{
-						fullTitle = parseString.Substring( 0, parseString.LastIndexOf( "-" ) );
+						fullTitle = fullTitle.Substring( 0, fullTitle.LastIndexOf( "-" ) );
 					}
 				}
 
-				foreach (string item in Settings.Default.Remove_Token)
+				// Remove tokens
+				removeRegex = null;
+				foreach (string removeToken in Settings.Default.RemoveToken)
 				{
-					Regex removeRegex = new Regex( item, RegexOptions.IgnoreCase );
-					fullTitle = removeRegex.Replace( fullTitle, "" );
+					removeRegex = new Regex(removeToken, RegexOptions.IgnoreCase );
+
+					if (removeRegex.IsMatch(fullTitle))
+					{
+						fullTitle = removeRegex.Replace(fullTitle, "");
+						removedTokens.Add(removeToken);
+					}
 				}
+
+				removedTokens = removedTokens.OrderBy(x => x).ToList();
+
+
+				// remove fileextension
+				removeRegex = new Regex(fileExtension, RegexOptions.IgnoreCase);
+				fullTitle = removeRegex.Replace(fullTitle, "");
 
 
 				// Get and remove year
 				year = GetYear( fullTitle );
-				fullTitle = fullTitle.Replace( year.ToString(), "" );
-
-
-				while (fullTitle.Contains( ".." ))
+				if (year >= 1900)
 				{
-					fullTitle = fullTitle.Replace( "..", "." );
+					fullTitle = fullTitle.Replace(year.ToString(), "");
+				}
+
+
+				while (fullTitle.Contains(".."))
+				{
+					fullTitle = fullTitle.Replace("..", ".");
+				}
+
+				if (Settings.Default.ReplaceSpaces)
+				{
+					while (fullTitle.Contains(" "))
+					{
+						fullTitle = fullTitle.Replace(" ", ".");
+					}
+				}
+
+				if (Settings.Default.ReplaceDotHyphenDot)
+				{
+					while (fullTitle.Contains(".-."))
+					{
+						fullTitle = fullTitle.Replace(".-.", ".");
+					}
 				}
 
 				fullTitle = fullTitle.Trim();
@@ -177,7 +236,15 @@ namespace SeriesIDParser
 				Match match = seRegex.Match( parseString.ToUpper() );
 				if (match.Success)
 				{
-					title = fullTitle.Substring( 0, match.Index - 1 );
+					if (match.Index > 0)
+					{
+						title = fullTitle.Substring(0, match.Index - 1);
+					}
+					else
+					{
+						state |= State.WARN_ERR_OR_WARN_OCCURRED | State.WARN_NO_TITLE_FOUND;
+						warningOrErrorOccurred = true;
+					}
 
 					// Get Episode title if there is one
 					int episodeTitleStartIndex = match.Index + match.Length + 1;
@@ -197,17 +264,27 @@ namespace SeriesIDParser
 				else
 				{
 					// MOVIE
-					return new SeriesID( State.OK_SUCCESS, isSeries, fullTitle, year: year, resolution: resolution );
+					if (!warningOrErrorOccurred)
+					{
+						state |= State.OK_SUCCESS;
+					}
+
+					return new SeriesID(state, isSeries, input, fullTitle, year: year, resolution: resolution, removedTokens: removedTokens, fileExtension: fileExtension );
 				}
 			}
 			else
 			{
 				// ERROR
-				return new SeriesID( state: State.ERR_EMPTY_OR_TO_SHORT_ARGUMENT );
+				state |= State.ERR_EMPTY_OR_TO_SHORT_ARGUMENT;
+				return new SeriesID( state: state);
 			}
 
 			// SERIES
-			return new SeriesID( State.OK_SUCCESS, isSeries, title, episodeTitle, year, season, episode, resolution );
+			if (!warningOrErrorOccurred)
+			{
+				state |= State.OK_SUCCESS;
+			}
+			return new SeriesID(state, isSeries, input, title, episodeTitle, year, season, episode, resolution, removedTokens: removedTokens, fileExtension: fileExtension);
 		}
 
 
