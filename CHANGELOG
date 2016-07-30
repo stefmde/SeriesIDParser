@@ -1,3 +1,18 @@
+3.1.0 (2016-07-30)
+------------------
+
+New
+~~~~
+- Test description added
+- Added code comments
+- Added some tests
+
+Fix
+~~~~
+- Tokens can't be duplicated any more
+
+
+
 3.0.0 (2016-07-29)
 ------------------
 

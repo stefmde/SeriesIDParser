@@ -33,16 +33,26 @@ using System.Threading.Tasks;
 
 namespace SeriesIDParser
 {
+	/// <summary>
+	/// Parses series or movie strings to detailed object
+	/// </summary>
 	public static class SeriesIDParser
 	{
+		private static List<string> _removedTokens = new List<string>();
+
+		/// <summary>
+		/// The primary parsing function
+		/// </summary>
+		/// <param name="input">The series or movie string who get parsed. Must be atleast five chars</param>
+		/// <returns>The SeriesID object that represents the series or movie string</returns>
 		public static SeriesID Parse( string input )
 		{
+			_removedTokens.Clear();
 			string parseString = input.Trim();
 			string fullTitle = parseString.Trim();
 			string title = string.Empty;
 			string episodeTitle = string.Empty;
 			string fileExtension = string.Empty;
-			List<string> removedTokens = new List<string>();
 			bool isSeries = false;
 			bool warningOrErrorOccurred = false;
 			int season = 0;
@@ -55,7 +65,7 @@ namespace SeriesIDParser
 			{
 
 				// ###################################################################
-				// ### Find File extension
+				// ### Find file extension
 				// ###################################################################
 				foreach (string ext in Settings.Default.FileExtensions)
 				{
@@ -73,6 +83,7 @@ namespace SeriesIDParser
 				bool resolutionFound = false;
 				Regex removeRegex = null;
 
+				// Try get 8K
 				if (!resolutionFound && Settings.Default.ResMap_UltraHD8K != null)
 				{
 					foreach (string item in Settings.Default.ResMap_UltraHD8K)
@@ -88,7 +99,8 @@ namespace SeriesIDParser
 						}
 					}
 				}
-
+				
+				// Try get 4K
 				if (!resolutionFound && Settings.Default.ResMap_UltraHD != null)
 				{
 					foreach (string item in Settings.Default.ResMap_UltraHD)
@@ -105,6 +117,7 @@ namespace SeriesIDParser
 					}
 				}
 
+				// Try get FullHD
 				if (!resolutionFound && Settings.Default.ResMap_FullHD != null)
 				{
 					foreach (string item in Settings.Default.ResMap_FullHD)
@@ -121,6 +134,7 @@ namespace SeriesIDParser
 					}
 				}
 
+				// Try get HD
 				if (!resolutionFound && Settings.Default.ResMap_HD != null)
 				{
 					foreach (string item in Settings.Default.ResMap_HD)
@@ -137,6 +151,7 @@ namespace SeriesIDParser
 					}
 				}
 
+				// Try get SD
 				if (!resolutionFound && Settings.Default.ResMap_SD != null)
 				{
 					foreach (string item in Settings.Default.ResMap_SD)
@@ -180,17 +195,16 @@ namespace SeriesIDParser
 					if (removeRegex.IsMatch(fullTitle))
 					{
 						fullTitle = removeRegex.Replace(fullTitle, "");
-						removedTokens.Add(removeToken);
+						AddRemovedToken(removeToken);
 					}
 				}
 
-				removedTokens = removedTokens.OrderBy(x => x).ToList();
-
+				// Sort removedTokensList
+				_removedTokens = _removedTokens.OrderBy(x => x).ToList();
 
 				// remove fileextension
 				removeRegex = new Regex(fileExtension, RegexOptions.IgnoreCase);
 				fullTitle = removeRegex.Replace(fullTitle, "");
-
 
 				// Get and remove year
 				year = GetYear( fullTitle );
@@ -199,12 +213,13 @@ namespace SeriesIDParser
 					fullTitle = fullTitle.Replace(year.ToString(), "");
 				}
 
-
+				// Remove double dots
 				while (fullTitle.Contains(".."))
 				{
 					fullTitle = fullTitle.Replace("..", ".");
 				}
 
+				// Remove spaces
 				if (Settings.Default.ReplaceSpaces)
 				{
 					while (fullTitle.Contains(" "))
@@ -213,6 +228,7 @@ namespace SeriesIDParser
 					}
 				}
 
+				// Remove .-.
 				if (Settings.Default.ReplaceDotHyphenDot)
 				{
 					while (fullTitle.Contains(".-."))
@@ -221,8 +237,10 @@ namespace SeriesIDParser
 					}
 				}
 
+				// Remove starting and trailing spaces
 				fullTitle = fullTitle.Trim();
 
+				// Remove trailing dot
 				if (fullTitle[fullTitle.Length - 1] == '.')
 				{
 					fullTitle = fullTitle.Substring( 0, fullTitle.Length - 1 );
@@ -269,7 +287,7 @@ namespace SeriesIDParser
 						state |= State.OK_SUCCESS;
 					}
 
-					return new SeriesID(state, isSeries, input, fullTitle, year: year, resolution: resolution, removedTokens: removedTokens, fileExtension: fileExtension );
+					return new SeriesID(state, isSeries, input, fullTitle, year: year, resolution: resolution, removedTokens: _removedTokens, fileExtension: fileExtension );
 				}
 			}
 			else
@@ -284,9 +302,18 @@ namespace SeriesIDParser
 			{
 				state |= State.OK_SUCCESS;
 			}
-			return new SeriesID(state, isSeries, input, title, episodeTitle, year, season, episode, resolution, removedTokens: removedTokens, fileExtension: fileExtension);
+
+			return new SeriesID(state, isSeries, input, title, episodeTitle, year, season, episode, resolution, removedTokens: _removedTokens, fileExtension: fileExtension);
 		}
 
+
+		private static void AddRemovedToken(string token)
+		{
+			if (!_removedTokens.Any(x => x.ToLower() == token.ToLower()))
+			{
+				_removedTokens.Add(token);
+			}
+		}
 
 		private static int GetYear( string title )
 		{

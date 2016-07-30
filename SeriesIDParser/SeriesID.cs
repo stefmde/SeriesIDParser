@@ -31,6 +31,9 @@ using System.Threading.Tasks;
 
 namespace SeriesIDParser
 {
+	/// <summary>
+	/// Representing the series or movie resolution
+	/// </summary>
 	public enum Resolutions
 	{
 		UNKNOWN = 0,
@@ -41,6 +44,9 @@ namespace SeriesIDParser
 		UltraHD8K_4320p = 5
 	}
 
+	/// <summary>
+	/// Representing the object success state
+	/// </summary>
 	[Flags]
 	public enum State
 	{
@@ -52,8 +58,25 @@ namespace SeriesIDParser
 		ERR_ID_NOT_FOUND = 16
 	}
 
+	/// <summary>
+	/// The result object representing the series or movie string
+	/// </summary>
 	public class SeriesID
 	{
+		/// <summary>
+		/// Representing the ctor of the object to initialize the readonly object
+		/// </summary>
+		/// <param name="state"></param>
+		/// <param name="isSeries"></param>
+		/// <param name="originalString"></param>
+		/// <param name="title"></param>
+		/// <param name="episodeTitle"></param>
+		/// <param name="year"></param>
+		/// <param name="season"></param>
+		/// <param name="episode"></param>
+		/// <param name="resolution"></param>
+		/// <param name="removedTokens"></param>
+		/// <param name="fileExtension"></param>
 		public SeriesID( State state, bool isSeries = false, string originalString = null, string title = null, 
 			string episodeTitle = null, int year = -1, int season = -1, int episode = -1, 
 			Resolutions resolution = Resolutions.UNKNOWN, List < string > removedTokens = null, string fileExtension = null )
