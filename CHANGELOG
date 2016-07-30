@@ -1,3 +1,18 @@
+4.0.0 (2016-07-30)
+------------------
+
+New
+~~~~
+- Class isn't static any more
+- Posibility to throw an exception instead of an error flag
+- Object inizializer
+
+Fix
+~~~~
+- 
+
+
+
 3.1.0 (2016-07-30)
 ------------------
 

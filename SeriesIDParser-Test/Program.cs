@@ -77,12 +77,15 @@ namespace SeriesIDParser_Test
 
 			Console.WriteLine();
 
+			SeriesIDParser.SeriesIDParser parser = new SeriesIDParser.SeriesIDParser(true);
+
 			foreach (string item in testList)
 			{
 				try
 				{
 					SeriesID id = null;
-					id = SeriesIDParser.SeriesIDParser.Parse( item );
+					
+					id = parser.Parse( item );
 
 					Console.WriteLine( "Test: " + item );
 					if (id.State.HasFlag( State.OK_SUCCESS) )
