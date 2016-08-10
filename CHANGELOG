@@ -1,4 +1,4 @@
-5.0.0 (2016-08-??)
+5.0.0 (2016-08-11)
 ------------------
 
 New
@@ -6,7 +6,7 @@ New
 - Added some more code comments
 - Code refactored
 - Properties no longer throw exceptions on error state
-- Class SeriesIDParser are now Obsolete -> SeriesID
+- Class SeriesIDParser removed -> SeriesID
 - ParserSettings Added
 - Parser are now configurable with the ParserSettings object
 - Unit Tests
@@ -14,7 +14,7 @@ New
 
 Fix
 ~~~~
-- No mor need for a static object
+- No more need for a static object
 
 
 
