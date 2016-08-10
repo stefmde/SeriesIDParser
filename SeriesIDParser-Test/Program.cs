@@ -42,8 +42,10 @@ namespace SeriesIDParser_Test
 			int errorCounter = 0;
 
 			List<string> testList = new List<string>();
-																													// Test Description
-																													// Series
+			//Die.Dinos.S04E11.-.Earl.und.Pearl [5AA5F32F]
+			//[S01E01] [E01] - Der Liebesspitzel [A3A2CB0A]
+			// Test Description
+			// Series
 			testList.Add("Dubai.Airport.S01E05.Teil5.GERMAN.DOKU.HDTV.720p.x264.mkv");                                  // Usual
 			testList.Add("The.Big.Bang.Theory.S09E12.Der.romantische.Asteroid.GERMAN.DL.DUBBED.1080p.WebHD.x264");      // Usual
 			testList.Add("House.of.Cards.S04E04.Akt.der.Verzweiflung.German.DD51.Synced.DL.2160p.NetflixUHD.x264");     // Usual
@@ -77,8 +79,8 @@ namespace SeriesIDParser_Test
 
 			Console.WriteLine();
 
-			SeriesIDParser.SeriesIDParser parser = new SeriesIDParser.SeriesIDParser(true);
-
+			SeriesID parser = new SeriesID();
+			
 			foreach (string item in testList)
 			{
 				try

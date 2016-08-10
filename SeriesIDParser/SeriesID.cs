@@ -25,12 +25,17 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
+[assembly: InternalsVisibleTo("SeriesIDParser_Test")]
 namespace SeriesIDParser
 {
+	
 	/// <summary>
 	/// Representing the series or movie resolution
 	/// </summary>
@@ -64,6 +69,9 @@ namespace SeriesIDParser
 	/// </summary>
 	public class SeriesID
 	{
+
+		private ParserSettings _parserSettings = null;
+
 		/// <summary>
 		/// Representing the ctor of the object to initialize the readonly object
 		/// </summary>
@@ -78,9 +86,10 @@ namespace SeriesIDParser
 		/// <param name="resolution"></param>
 		/// <param name="removedTokens"></param>
 		/// <param name="fileExtension"></param>
-		public SeriesID( State state, bool isSeries = false, string originalString = null, string title = null, 
-			string episodeTitle = null, int year = -1, int season = -1, int episode = -1, 
-			Resolutions resolution = Resolutions.UNKNOWN, List < string > removedTokens = null, string fileExtension = null )
+		[Obsolete]
+		internal SeriesID(State state, bool isSeries = false, string originalString = null, string title = null,
+			string episodeTitle = null, int year = -1, int season = -1, int episode = -1,
+			Resolutions resolution = Resolutions.UNKNOWN, List<string> removedTokens = null, string fileExtension = null)
 		{
 			this._state = state;
 			this._isSeries = isSeries;
@@ -96,35 +105,63 @@ namespace SeriesIDParser
 		}
 
 		/// <summary>
-		/// Returns the full series string if object state IsSeries otherwise it returns Title
+		/// Representing the object for error state
 		/// </summary>
-		/// <exception cref="InvalidOperationException">While object state is not OK_SUCCESS</exception>
+		/// <param name="state"></param>
+		private SeriesID(State state)
+		{
+			this._state = state;
+		}
+
+
+		public SeriesID(ParserSettings settings = null)
+		{
+			if (settings == null)
+			{
+				this._parserSettings = new ParserSettings();
+			}
+			else
+			{
+				this._parserSettings = settings;
+			}
+		}
+
+		// ############################################################
+		// ### Properties
+		// ############################################################
+		// TODO implement better failsafe and remove exceptions
+		#region Properties
+		/// <summary>
+		/// Returns the full series string for Series, title for movies and null on error
+		/// </summary>
 		public string FullTitle
 		{
 			get
 			{
-				if (_state.HasFlag( State.OK_SUCCESS))
+				if (_state.HasFlag(State.OK_SUCCESS))
 				{
+					StringBuilder sb = new StringBuilder();
+
 					if (_isSeries)
 					{
-						string tempTitle = string.Empty;
-
 						if (!string.IsNullOrEmpty(_title))
 						{
-							tempTitle = tempTitle + _title;
+							sb.Append(_title);
 						}
 
 						if (!string.IsNullOrEmpty(IDString))
 						{
-							tempTitle = tempTitle + "." + IDString;
+							sb.Append(_parserSettings.NewSpacingChar);
+							sb.Append( IDString);
 						}
 
 						if (!string.IsNullOrEmpty(_episodeTitle))
 						{
-							tempTitle = tempTitle + "." + _episodeTitle;
+							sb.Append(_parserSettings.NewSpacingChar);
+							sb.Append( _episodeTitle);
 						}
 
-						return tempTitle;
+						return sb.ToString();
 					}
 					else
 					{
@@ -133,12 +170,13 @@ namespace SeriesIDParser
 				}
 				else
 				{
-					throw new InvalidOperationException( "Invalid operation while object state is not OK_SUCCESS" );
+					return null;
 				}
 			}
 		}
 
-		private List<string> _removedTokens;
+
+		private List<string> _removedTokens = new List<string>();
 		/// <summary>
 		/// Contains tokens whoi are removed by the parser as string list
 		/// </summary>
@@ -148,6 +186,8 @@ namespace SeriesIDParser
 			{
 				return _removedTokens;
 			}
+
+			internal set { _removedTokens = value; }
 		}
 
 
@@ -161,6 +201,8 @@ namespace SeriesIDParser
 			{
 				return _fileExtension;
 			}
+
+			internal set { _fileExtension = value; }
 		}
 
 
@@ -174,64 +216,76 @@ namespace SeriesIDParser
 			{
 				return _originalString;
 			}
+
+			internal set { _originalString = value; }
 		}
 
 
 		//private string _parsedString;
 		/// <summary>
-		/// Contains the string that was computed by the parser
+		/// Contains the string that was computed by the parser. Null on error
 		/// </summary>
 		public string ParsedString
 		{
 			get
 			{
-				if (_state.HasFlag( State.OK_SUCCESS) )
+				if (_state.HasFlag(State.OK_SUCCESS))
 				{
-					string tempString = string.Empty;
+					StringBuilder sb = new StringBuilder();
+					//string tempString = string.Empty;
 
-					tempString += FullTitle;
+					sb.Append(FullTitle);
 
 					if (_year > -1)
 					{
-						tempString += "." + _year;
+						sb.Append(_parserSettings.NewSpacingChar);
+						sb.Append(_year);
 					}
 
 					// Resulution
 					switch (_resolution)
 					{
+						case Resolutions.SD_Any:
+							sb.Append(_parserSettings.NewSpacingChar);
+							sb.Append("SD");
+							break;
 						case Resolutions.HD_720p:
-							tempString += ".720p";
+							sb.Append(_parserSettings.NewSpacingChar);
+							sb.Append("720p");
 							break;
 						case Resolutions.FullHD_1080p:
-							tempString += ".1080p";
+							sb.Append(_parserSettings.NewSpacingChar);
+							sb.Append("1080p");
 							break;
 						case Resolutions.UltraHD_2160p:
-							tempString += ".2160p";
+							sb.Append(_parserSettings.NewSpacingChar);
+							sb.Append("2160p");
 							break;
 						case Resolutions.UltraHD8K_4320p:
-							tempString += ".4320p";
+							sb.Append(_parserSettings.NewSpacingChar);
+							sb.Append("4320p");
 							break;
 					}
-
 
 					if (_removedTokens != null && _removedTokens.Count > 0)
 					{
 						foreach (string remToken in _removedTokens)
 						{
-							tempString += "." + remToken;
+							sb.Append(_parserSettings.NewSpacingChar + remToken);
 						}
 					}
 
 					if (!string.IsNullOrEmpty(_fileExtension))
 					{
-						tempString += "." + _fileExtension;
+						sb.Append(".");
+						sb.Append(_fileExtension);
 					}
 
-					return tempString;
+					return sb.ToString();
 				}
 				else
 				{
-					throw new InvalidOperationException("Invalid operation while object state is not OK_SUCCESS");
+					return null;
 				}
 			}
 		}
@@ -247,6 +301,8 @@ namespace SeriesIDParser
 			{
 				return _title;
 			}
+
+			internal set { _title = value; }
 		}
 
 
@@ -260,35 +316,38 @@ namespace SeriesIDParser
 			{
 				return _state;
 			}
+
+			internal set { _state = value; }
 		}
 
 
 		private string _episodeTitle;
 		/// <summary>
-		/// Contains the eposide title if object state is series
+		/// Contains the eposide title if object state is series. null on error
 		/// </summary>
-		/// <exception cref="InvalidOperationException">While IsSeries is false and state is not OK_SUCCESS</exception>
 		public string EpisodeTitle
 		{
 			get
 			{
+				//return FailSafeProperties<string>(_episodeTitle);
 				if (_state.HasFlag(State.OK_SUCCESS) && _isSeries)
 				{
 					return _episodeTitle;
 				}
 				else
 				{
-					throw new InvalidOperationException( "Invalid operation while IsSeries is false and state is not OK_SUCCESS" );
+					return null;
 				}
 			}
+
+			internal set { _episodeTitle = value; }
 		}
 
 
-		private int _season;
+		private int _season = -1;
 		/// <summary>
-		/// Contains the season id if object state is series
+		/// Contains the season id if object state is series. -1 on error
 		/// </summary>
-		/// <exception cref="InvalidOperationException">While IsSeries is false and state is not OK_SUCCESS</exception>
 		public int Season
 		{
 			get
@@ -299,17 +358,18 @@ namespace SeriesIDParser
 				}
 				else
 				{
-					throw new InvalidOperationException( "Invalid operation while IsSeries is false and state is not OK_SUCCESS" );
+					return -1;
 				}
 			}
+
+			internal set { _season = value; }
 		}
 
 
-		private int _episode;
+		private int _episode = -1;
 		/// <summary>
-		/// Contains the eposide id if object state is series
+		/// Contains the eposide id if object state is series. -1 on error
 		/// </summary>
-		/// <exception cref="InvalidOperationException">While IsSeries is false and state is not OK_SUCCESS</exception>
 		public int Episode
 		{
 			get
@@ -320,39 +380,33 @@ namespace SeriesIDParser
 				}
 				else
 				{
-					throw new InvalidOperationException( "Invalid operation while IsSeries is false and state is not OK_SUCCESS" );
+					return -1;
 				}
 			}
+
+			internal set { _episode = value; }
 		}
 
 
 		private bool _isSeries;
 		/// <summary>
-		/// Specifies if the object contains a series or a movie
+		/// Specifies if the object contains a series or a movie. Default: false
 		/// </summary>
-		/// <exception cref="InvalidOperationException">While object state is not OK_SUCCESS</exception>
 		public bool IsSeries
 		{
 			get
 			{
-				if (_state.HasFlag(State.OK_SUCCESS))
-				{
-
-					return _isSeries;
-				}
-				else
-				{
-					throw new InvalidOperationException( "Invalid operation while object state is not OK_SUCCESS" );
-				}
+				return _isSeries;
 			}
+
+			internal set { _isSeries = value; }
 		}
 
 
-		private int _year;
+		private int _year = -1;
 		/// <summary>
 		/// Returns the year of the episode or movie if contained, otherwise -1
 		/// </summary>
-		/// <exception cref="InvalidOperationException">While object state is not OK_SUCCESS</exception>
 		public int Year
 		{
 			get
@@ -364,27 +418,28 @@ namespace SeriesIDParser
 				}
 				else
 				{
-					throw new InvalidOperationException( "Invalid operation while object state is not OK_SUCCESS" );
+					return -1;
 				}
 			}
+
+			internal set { _year = value; }
 		}
 
 
 		/// <summary>
-		/// Contains the ID-String of a series e.g. S01E05.
+		/// Contains the ID-String of a series e.g. S01E05. Null on error
 		/// </summary>
-		/// <exception cref="InvalidOperationException">While IsSeries is false and state is not OK_SUCCESS</exception>
 		public string IDString
 		{
 			get
 			{
 				if (_state.HasFlag(State.OK_SUCCESS) && _isSeries)
 				{
-					return "S" + _season.ToString( "D2" ) + "E" + _episode.ToString( "D2" );
+					return string.Format(_parserSettings.IDStringFormater, _season, _episode);
 				}
 				else
 				{
-					throw new InvalidOperationException( "Invalid operation while IsSeries is false and state is not OK_SUCCESS" );
+					return null;
 				}
 			}
 		}
@@ -392,9 +447,8 @@ namespace SeriesIDParser
 
 		private Resolutions _resolution;
 		/// <summary>
-		/// Returns the resolution as enum
+		/// Returns the resolution as enum. UNKNOWN on error
 		/// </summary>
-		/// <exception cref="InvalidOperationException">While object state is not OK_SUCCESS</exception>
 		public Resolutions Resolution
 		{
 			get
@@ -405,15 +459,33 @@ namespace SeriesIDParser
 				}
 				else
 				{
-					throw new InvalidOperationException( "Invalid operation while object state is not OK_SUCCESS" );
+					return Resolutions.UNKNOWN;
 				}
 			}
+
+			internal set { _resolution = value; }
 		}
+
+
+		private Exception _exception = null;
+		/// <summary>
+		/// Contains the Exception if any occours. Default: null
+		/// </summary>
+		public Exception Exception
+		{
+			get
+			{
+				return _exception;
+			}
+
+			internal set { _exception = value; }
+		}
+		#endregion Properties
+
 
 		/// <summary>
 		/// </summary>
-		/// <returns>FullTitle and resolution</returns>
-		/// /// <exception cref="InvalidOperationException">While object state is not OK_SUCCESS</exception>
+		/// <returns>FullTitle and resolution. Null on error</returns>
 		public override string ToString()
 		{
 			if (_state.HasFlag(State.OK_SUCCESS))
@@ -422,8 +494,367 @@ namespace SeriesIDParser
 			}
 			else
 			{
-				throw new InvalidOperationException( "Invalid operation while object state is not OK_SUCCESS" );
+				return null;
 			}
 		}
+
+
+
+		// ############################################################
+		// ### Function
+		// ############################################################
+		#region HelperFunctions
+
+		/// <summary>
+		/// The primary parsing function
+		/// </summary>
+		/// <param name="input">The series or movie string who get parsed. Must be atleast five chars</param>
+		/// <returns>The SeriesID object that represents the series or movie string</returns>
+		public SeriesID Parse(string input)
+		{
+			_removedTokens.Clear();
+			_originalString = input.Trim();
+			string fullTitle = _originalString;
+			bool warningOrErrorOccurred = false;
+			Regex removeRegex = null;
+			string oldSpacingChar = GetSpacingChar(input);
+
+			try
+			{
+				if (_originalString.Length >= 5)
+				{
+
+					// ###################################################################
+					// ### Find file extension
+					// ###################################################################
+
+					_fileExtension = GetFileExtension(input, _parserSettings.FileExtensions);
+
+					// ###################################################################
+					// ### Try get resolution
+					// ###################################################################
+					//bool resolutionFound = false;
+					
+
+					// Try get 8K
+					GetResolutionByResMap(_parserSettings.DetectUltraHD8kTokens, Resolutions.UltraHD8K_4320p, ref fullTitle);
+
+					// Try get 4K
+					GetResolutionByResMap(_parserSettings.DetectUltraHDTokens, Resolutions.UltraHD_2160p, ref fullTitle);
+
+					// Try get FullHD
+					GetResolutionByResMap(_parserSettings.DetectFullHDTokens, Resolutions.FullHD_1080p, ref fullTitle);
+
+					// Try get HD
+					GetResolutionByResMap(_parserSettings.DetectHDTokens, Resolutions.HD_720p, ref fullTitle);
+
+					// Try get SD
+					GetResolutionByResMap(_parserSettings.DetectSDTokens, Resolutions.SD_Any, ref fullTitle);
+
+
+
+					// ###################################################################
+					// ### Try get plain title
+					// ###################################################################
+
+					// remove hoster token
+					string tmpTitle = string.Empty;
+					if (fullTitle.Length > 30)
+					{
+						tmpTitle = fullTitle.Substring(fullTitle.Length - 20, 20);
+
+						if (tmpTitle.Count(x => x == '-') > 0)
+						{
+							fullTitle = fullTitle.Substring(0, fullTitle.LastIndexOf("-"));
+						}
+					}
+
+					// Remove tokens
+					fullTitle = RemoveTokens(fullTitle, oldSpacingChar, _parserSettings.RemoveAndListTokens, true);
+					fullTitle = RemoveTokens(fullTitle, oldSpacingChar, _parserSettings.RemoveWithoutListTokens, false);
+
+					// Sort removedTokensList
+					_removedTokens = _removedTokens.OrderBy(x => x).ToList();
+
+					// remove fileextension
+					removeRegex = null;
+					if (_fileExtension != null)
+					{
+						removeRegex = new Regex(_fileExtension, RegexOptions.IgnoreCase);
+						fullTitle = removeRegex.Replace(fullTitle, "");
+					}
+
+					// Get and remove year
+					_year = GetYear(fullTitle);
+					fullTitle = fullTitle.Replace(_year.ToString(), "");
+
+					// Remove double spacer
+					while (fullTitle.Contains(oldSpacingChar + oldSpacingChar))
+					{
+						fullTitle = fullTitle.Replace(oldSpacingChar+ oldSpacingChar, oldSpacingChar);
+					}
+
+					// Convert to new spacer
+					fullTitle = fullTitle.Replace(oldSpacingChar, _parserSettings.NewSpacingChar.ToString());
+
+					// Remove starting and trailing spaces
+					fullTitle = fullTitle.Trim();
+
+					// Remove trailing spacer
+					fullTitle = fullTitle.Trim(oldSpacingChar.LastOrDefault<char>());
+					fullTitle = fullTitle.Trim(_parserSettings.NewSpacingChar);
+
+
+					// ###################################################################
+					// ### Try get Season and Episode ID
+					// ###################################################################
+					Regex seRegex = new Regex(_parserSettings.SeasonAndEpisodeParseRegex);
+					Match match = seRegex.Match(_originalString.ToUpper());
+					if (match.Success)
+					{
+						if (match.Index > 0)
+						{
+							_title = fullTitle.Substring(0, match.Index - 1).Replace(oldSpacingChar, _parserSettings.NewSpacingChar.ToString());
+						}
+						else
+						{
+							_state |= State.WARN_ERR_OR_WARN_OCCURRED | State.WARN_NO_TITLE_FOUND;
+							warningOrErrorOccurred = true;
+						}
+
+						// Get Episode title if there is one
+						int episodeTitleStartIndex = match.Index + match.Length + 1;
+						if (fullTitle.Length > episodeTitleStartIndex)
+						{
+							_episodeTitle = fullTitle.Substring(episodeTitleStartIndex);
+						}
+						else
+						{
+							_episodeTitle = null;
+						}
+
+						int.TryParse(match.Groups["season"].Value, out _season);
+						int.TryParse(match.Groups["episode"].Value, out _episode);
+						_isSeries = true;
+					}
+					else
+					{
+						// MOVIE
+						_title = fullTitle;
+
+						if (!warningOrErrorOccurred)
+						{
+							_state |= State.OK_SUCCESS;
+						}
+
+						return this;
+					}
+				}
+				else
+				{
+					// ERROR
+					_state |= State.ERR_EMPTY_OR_TO_SHORT_ARGUMENT;
+					return this;
+				}
+
+				// SERIES
+				if (!warningOrErrorOccurred)
+				{
+					_state |= State.OK_SUCCESS;
+				}
+				
+				return this;
+			}
+			catch (Exception ex)
+			{
+				_exception = ex;
+
+				// Throw exception if the flag is set
+				if (_parserSettings.ThrowExceptionInsteadOfErrorFlag)
+				{
+					throw;
+				}
+				else
+				{
+					// ERROR
+					_state |= State.ERR_UNKNOWN_ERROR;
+					return this;
+				}
+			}
+		}
+
+
+		/// <summary>
+		/// Adds a token who is removed and should be tracked to a list if it is not contained
+		/// </summary>
+		/// <param name="token">String token to add to list</param>
+		internal void AddRemovedToken(string token)
+		{
+			if (_removedTokens != null && !_removedTokens.Any(x => x.ToLower() == token.ToLower()))
+			{
+				_removedTokens.Add(token);
+			}
+		}
+
+		/// <summary>
+		/// Tries to get the year from a given string. Have to be between now and 1900
+		/// </summary>
+		/// <param name="title">String who should be analized</param>
+		/// <returns>-1 or the found year</returns>
+		internal int GetYear(string title)
+		{
+			int year = -1;
+
+			Regex yearRegex = new Regex(@"(\d{4})");
+			MatchCollection matches = yearRegex.Matches(title);
+
+			foreach (Match match in matches)
+			{
+				if (match.Success)
+				{
+					int tempYear = -1;
+
+					if (int.TryParse(match.Value, out tempYear))
+					{
+						if (tempYear >= 1900 && tempYear <= DateTime.Now.Year)
+						{
+							year = tempYear;
+							break;
+						}
+					}
+				}
+			}
+
+			return year;
+		}
+
+		/// <summary>
+		/// Tries to get the resolution from a given string
+		/// </summary>
+		/// <param name="ResMap">the resolution tokens to match the given res</param>
+		/// <param name="res">The given res to the tokens</param>
+		/// <param name="fullTitle">The string who should be analized</param>
+		internal void GetResolutionByResMap(List<string> ResMap, Resolutions res, ref string fullTitle)
+		{
+			if (_resolution == Resolutions.UNKNOWN && ResMap != null)
+			{
+				foreach (string item in ResMap)
+				{
+					if (fullTitle.ToUpper().Contains(item.ToUpper()))
+					{
+						_resolution = res;
+						Regex removeRegex = new Regex(item, RegexOptions.IgnoreCase);
+						fullTitle = removeRegex.Replace(fullTitle, "");
+					}
+				}
+			}
+		}
+
+		internal T FailSafeProperties<T>(T value, params bool[] checks)
+		{
+			if (checks.Contains(false) || false == _state.HasFlag(State.OK_SUCCESS))
+			{
+				return default(T);
+				//TODO throw exception
+			}
+
+			return value;
+
+		}
+
+		internal struct CharRating
+		{
+			public char Char;
+			public int Count;
+		}
+
+		/// <summary>
+		/// Tries to get the spacing char from a given string
+		/// </summary>
+		/// <param name="input">The string who should be analized</param>
+		/// <returns>returns an empty string or the spacing char</returns>
+		internal string GetSpacingChar(string input)
+		{
+			string foundChar = string.Empty;
+
+			List<CharRating> charRating = new List<CharRating>();
+			foreach (char item in _parserSettings.PossibleSpacingChars)
+			{
+				charRating.Add(new CharRating { Char = item, Count = 0 });
+			}
+			
+			for (int i = 0; i < charRating.Count; i++)
+			{
+				charRating[i] = new CharRating { Char = charRating[i].Char, Count = input.Count(f => f == charRating[i].Char) };
+			}
+
+			charRating = charRating.OrderBy(x => x.Count).ToList();
+
+			int sum = charRating.Sum(x => x.Count);
+			int largestOne = charRating.LastOrDefault().Count;
+
+			// if largest one count is larger than the others additive -> 51% +
+			if (largestOne > sum - largestOne)
+			{
+				foundChar = charRating.LastOrDefault().Char.ToString();
+			}
+
+			return foundChar;
+		}
+
+
+		/// <summary>
+		/// Tries to get the file extension from a given string
+		/// </summary>
+		/// <param name="input">The string who should be analized</param>
+		/// <param name="extensions">The list with the posible extensions</param>
+		/// <returns>returns null or the found extension</returns>
+		internal string GetFileExtension(string input, List<string> extensions)
+		{
+			string extension = null;
+			string tempExtension = Path.GetExtension(input).TrimStart('.');
+
+			if (extensions.Any(x => x.ToUpper() == tempExtension.ToUpper()))
+			{
+				extension = tempExtension;
+			}
+
+			return extension;
+		}
+
+		/// <summary>
+		/// Removes tokens from the string
+		/// </summary>
+		/// <param name="input">The string who should be analized</param>
+		/// <param name="oldSpacingChar">The spacing char from the given string</param>
+		/// <param name="removeTokens">List with the tokens who should be removed</param>
+		/// <param name="addRemovedToList">Should the removed tokens be added to the removed list?</param>
+		/// <returns>returns the cleaned string</returns>
+		internal string RemoveTokens(string input, string oldSpacingChar, List<string> removeTokens, bool addRemovedToList)
+		{
+			string ret = input;
+
+			Regex removeRegex = null;
+			foreach (string removeToken in removeTokens)
+			{
+				removeRegex = new Regex(oldSpacingChar + removeToken + oldSpacingChar, RegexOptions.IgnoreCase);
+
+				if (removeRegex.IsMatch(ret) || input.EndsWith(oldSpacingChar + removeToken))
+				{
+					// Search with spacer but remove without spacer
+					removeRegex = new Regex(removeToken, RegexOptions.IgnoreCase);
+
+					ret = removeRegex.Replace(ret, "");
+
+					if (addRemovedToList)
+					{
+						AddRemovedToken(removeToken);
+					}
+				}
+			}
+
+			return ret;
+		}
+		#endregion HelperFunctions
 	}
 }
