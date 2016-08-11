@@ -36,6 +36,10 @@ namespace SeriesIDParser
 	/// </summary>
 	public class ParserSettings
 	{
+		// TODO
+		// Move Prefill-Data to Ressource or something like that
+		// Maybe Add De/Serializer
+
 
 		/// <summary>
 		/// Prefill ctor
@@ -138,26 +142,11 @@ namespace SeriesIDParser
 			_possibleSpacingChars.Add('*');
 		}
 
-		private bool _throwExceptionInsteadOfErrorFlag = false;
-		/// <summary>
-		/// Throws an exception instead of setting an error state. Default: false
-		/// </summary>
-		public bool ThrowExceptionInsteadOfErrorFlag
-		{
-			get { return _throwExceptionInsteadOfErrorFlag; }
-			set { _throwExceptionInsteadOfErrorFlag = value; }
-		}
 
-		private char _newSpacingChar = '.';
-		/// <summary>
-		/// Defines the new spacing char between the tokens in the output string. Default: '.'
-		/// </summary>
-		public char NewSpacingChar
-		{
-			get { return _newSpacingChar; }
-			set { _newSpacingChar = value; }
-		}
-
+		#region Properties
+		// ### Parsing
+		// ############################################################
+		#region Parsing
 
 		private string _seasonAndEpisodeParseRegex = @"S(?<season>\d{1,4})E(?<episode>\d{1,4})";
 		/// <summary>
@@ -167,6 +156,43 @@ namespace SeriesIDParser
 		{
 			get { return _seasonAndEpisodeParseRegex; }
 			set { _seasonAndEpisodeParseRegex = value; }
+		}
+
+
+		private List<string> _fileExtensions = new List<string>();
+		/// <summary>
+		/// Defines the prefilled list with the posible extension to garantee a better detection
+		/// </summary>
+		public List<string> FileExtensions
+		{
+			get { return _fileExtensions; }
+			set { _fileExtensions = value; }
+		}
+
+
+		private List<char> _possibleSpacingChars = new List<char>();
+		/// <summary>
+		/// Defines the prefilled list with the posible spacing chars for the given string to detect the char
+		/// </summary>
+		public List<char> PossibleSpacingChars
+		{
+			get { return _possibleSpacingChars; }
+			set { _possibleSpacingChars = value; }
+		}
+		#endregion Parsing
+
+
+		// ### Output
+		// ############################################################
+		#region Output
+		private char _newSpacingChar = '.';
+		/// <summary>
+		/// Defines the new spacing char between the tokens in the output string. Default: '.'
+		/// </summary>
+		public char NewSpacingChar
+		{
+			get { return _newSpacingChar; }
+			set { _newSpacingChar = value; }
 		}
 
 
@@ -181,10 +207,65 @@ namespace SeriesIDParser
 		}
 
 
+		private string _resolutionStringSD = "SD";
+		/// <summary>
+		/// Defines the string who is convertet from the enum Resolutions to something readable for e.g. the ParsedString. Default: 'SD'
+		/// </summary>
+		public string ResolutionStringSD
+		{
+			get { return _resolutionStringSD; }
+			set { _resolutionStringSD = value; }
+		}
+
+
+		private string _resolutionStringHD = "720p";
+		/// <summary>
+		/// Defines the string who is convertet from the enum Resolutions to something readable for e.g. the ParsedString. Default: '720p'
+		/// </summary>
+		public string ResolutionStringHD
+		{
+			get { return _resolutionStringHD; }
+			set { _resolutionStringHD = value; }
+		}
+
+
+		private string _resolutionStringFullHD = "1080p";
+		/// <summary>
+		/// Defines the string who is convertet from the enum Resolutions to something readable for e.g. the ParsedString. Default: '1080p'
+		/// </summary>
+		public string ResolutionStringFullHD
+		{
+			get { return _resolutionStringFullHD; }
+			set { _resolutionStringFullHD = value; }
+		}
+
+
+		private string _resolutionStringUltraHD = "2160p";
+		/// <summary>
+		/// Defines the string who is convertet from the enum Resolutions to something readable for e.g. the ParsedString. Default: '2160p'
+		/// </summary>
+		public string ResolutionStringUltraHD
+		{
+			get { return _resolutionStringUltraHD; }
+			set { _resolutionStringUltraHD = value; }
+		}
+
+
+		private string _resolutionStringUltraHD8K = "4320p";
+		/// <summary>
+		/// Defines the string who is convertet from the enum Resolutions to something readable for e.g. the ParsedString. Default: '4320p'
+		/// </summary>
+		public string ResolutionStringUltraHD8k
+		{
+			get { return _resolutionStringUltraHD8K; }
+			set { _resolutionStringUltraHD8K = value; }
+		}
+		#endregion Output
+
 
 		// ### Resolution Detection
 		// ############################################################
-
+		#region ResolutionDetection
 		private List<string> _detectUltraHD8kTokens = new List<string>();
 		/// <summary>
 		/// Defines the prefilled list to detect the UHD8k strings
@@ -238,11 +319,12 @@ namespace SeriesIDParser
 			get { return _detectSDTokens; }
 			set { _detectSDTokens = value; }
 		}
+		#endregion ResolutionDetection
 
 
 		// ### Remove and Replace
 		// ############################################################
-
+		#region RemoveAndReplace
 		private List<string> _removeAndListTokens = new List<string>();
 		/// <summary>
 		/// Defines the prefilled list with the tokens who should removed from the title string but re-added to the parsed string and the deletedtokens list
@@ -263,27 +345,22 @@ namespace SeriesIDParser
 			get { return _removeWithoutListTokens; }
 			set { _removeWithoutListTokens = value; }
 		}
+		#endregion RemoveAndReplace
 
 
-		private List<string> _fileExtensions = new List<string>();
+		// ### Remove and Replace
+		// ############################################################
+		#region OtherStuff
+		private bool _throwExceptionInsteadOfErrorFlag = false;
 		/// <summary>
-		/// Defines the prefilled list with the posible extension to garantee a better detection
+		/// Throws an exception instead of setting an error state. Default: false
 		/// </summary>
-		public List<string> FileExtensions
+		public bool ThrowExceptionInsteadOfErrorFlag
 		{
-			get { return _fileExtensions; }
-			set { _fileExtensions = value; }
+			get { return _throwExceptionInsteadOfErrorFlag; }
+			set { _throwExceptionInsteadOfErrorFlag = value; }
 		}
-
-
-		private List<char> _possibleSpacingChars = new List<char>();
-		/// <summary>
-		/// Defines the prefilled list with the posible spacing chars for the given string to detect the char
-		/// </summary>
-		public List<char> PossibleSpacingChars
-		{
-			get { return _possibleSpacingChars; }
-			set { _possibleSpacingChars = value; }
-		}
+		#endregion OtherStuff
+		#endregion Properties
 	}
 }

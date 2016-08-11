@@ -247,23 +247,23 @@ namespace SeriesIDParser
 					{
 						case Resolutions.SD_Any:
 							sb.Append(_parserSettings.NewSpacingChar);
-							sb.Append("SD");
+							sb.Append(_parserSettings.ResolutionStringSD);
 							break;
 						case Resolutions.HD_720p:
 							sb.Append(_parserSettings.NewSpacingChar);
-							sb.Append("720p");
+							sb.Append(_parserSettings.ResolutionStringHD);
 							break;
 						case Resolutions.FullHD_1080p:
 							sb.Append(_parserSettings.NewSpacingChar);
-							sb.Append("1080p");
+							sb.Append(_parserSettings.ResolutionStringFullHD);
 							break;
 						case Resolutions.UltraHD_2160p:
 							sb.Append(_parserSettings.NewSpacingChar);
-							sb.Append("2160p");
+							sb.Append(_parserSettings.ResolutionStringUltraHD);
 							break;
 						case Resolutions.UltraHD8K_4320p:
 							sb.Append(_parserSettings.NewSpacingChar);
-							sb.Append("4320p");
+							sb.Append(_parserSettings.ResolutionStringUltraHD8k);
 							break;
 					}
 
