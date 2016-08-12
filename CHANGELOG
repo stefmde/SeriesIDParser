@@ -1,3 +1,16 @@
+5.2.0 (2016-08-12)
+------------------
+
+New
+~~~~
+- DeSerializer in ParserSettings
+
+Fix
+~~~~
+- Fixed an error that could cause wrong resolutions in wrong strings
+
+
+
 5.1.0 (2016-08-12)
 ------------------
 

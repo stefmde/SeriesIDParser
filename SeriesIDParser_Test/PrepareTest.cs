@@ -37,14 +37,13 @@ namespace SeriesIDParser_Test
 			id.State = State.OK_SUCCESS;
 			id.Title = "Dubai.Airport";
 			id.Year = -1;
-
 			testData.Add(new TestData()
 			{
 				Actual = id.OriginalString,
 				FullTitle = "Dubai.Airport.S01E05.Teil5",
 				ParsedString = "Dubai.Airport.S01E05.Teil5.720p.DOKU.German.x264.mkv",
 				Expected = id,
-				Settings = new ParserSettings(),
+				Settings = new ParserSettings(true),
 				Comment = "Test001"
 			});
 
@@ -62,14 +61,13 @@ namespace SeriesIDParser_Test
 			id.State = State.OK_SUCCESS;
 			id.Title = "Dubai.Airport";
 			id.Year = -1;
-
 			testData.Add(new TestData()
 			{
 				Actual = id.OriginalString,
 				FullTitle = "Dubai.Airport.S01E05.Teil5",
 				ParsedString = "Dubai.Airport.S01E05.Teil5.720p.DOKU.German.x264.mkv",
 				Expected = id,
-				Settings = new ParserSettings(),
+				Settings = new ParserSettings(true),
 				Comment = "Test002"
 			});
 
@@ -87,14 +85,13 @@ namespace SeriesIDParser_Test
 			id.State = State.OK_SUCCESS;
 			id.Title = "Dubai.Airport";
 			id.Year = -1;
-
 			testData.Add(new TestData()
 			{
 				Actual = id.OriginalString,
 				FullTitle = "Dubai.Airport.S01E05.Teil5",
 				ParsedString = "Dubai.Airport.S01E05.Teil5.720p.DOKU.German.x264.mkv",
 				Expected = id,
-				Settings = new ParserSettings(),
+				Settings = new ParserSettings(true),
 				Comment = "Test003"
 			});
 
@@ -112,14 +109,13 @@ namespace SeriesIDParser_Test
 			id.State = State.OK_SUCCESS;
 			id.Title = "Dubai.Airport";
 			id.Year = -1;
-
 			testData.Add(new TestData()
 			{
 				Actual = id.OriginalString,
 				FullTitle = "Dubai.Airport.S01E05.Teil5",
 				ParsedString = "Dubai.Airport.S01E05.Teil5.720p.DOKU.German.x264.mkv",
 				Expected = id,
-				Settings = new ParserSettings(),
+				Settings = new ParserSettings(true),
 				Comment = "Test004"
 			});
 
@@ -138,14 +134,13 @@ namespace SeriesIDParser_Test
 			id.State = State.OK_SUCCESS;
 			id.Title = "Dubai.Airport";
 			id.Year = -1;
-
 			testData.Add(new TestData()
 			{
 				Actual = id.OriginalString,
 				FullTitle = "Dubai.Airport.S01E05.Teil5",
 				ParsedString = "Dubai.Airport.S01E05.Teil5.720p.DOKU.German.x264.mkv",
 				Expected = id,
-				Settings = new ParserSettings(),
+				Settings = new ParserSettings(true),
 				Comment = "Test005"
 			});
 
@@ -164,14 +159,13 @@ namespace SeriesIDParser_Test
 			id.State = State.OK_SUCCESS;
 			id.Title = "Dubai.Airport";
 			id.Year = -1;
-
 			testData.Add(new TestData()
 			{
 				Actual = id.OriginalString,
 				FullTitle = "Dubai.Airport.S01E05.Teil5",
 				ParsedString = "Dubai.Airport.S01E05.Teil5.720p.DOKU.German.x264.mkv",
 				Expected = id,
-				Settings = new ParserSettings(),
+				Settings = new ParserSettings(true),
 				Comment = "Test006"
 			});
 
@@ -190,14 +184,13 @@ namespace SeriesIDParser_Test
 			id.State = State.OK_SUCCESS;
 			id.Title = "Dubai-Airport";
 			id.Year = -1;
-
 			testData.Add(new TestData()
 			{
 				Actual = id.OriginalString,
 				FullTitle = "Dubai-Airport-S01E05-Teil5",
 				ParsedString = "Dubai-Airport-S01E05-Teil5-720p-DOKU-German-x264.mkv",
 				Expected = id,
-				Settings = new ParserSettings() { NewSpacingChar = '-' },
+				Settings = new ParserSettings(true) { NewSpacingChar = '-' },
 				Comment = "Test007"
 			});
 
@@ -216,14 +209,13 @@ namespace SeriesIDParser_Test
 			id.State = State.OK_SUCCESS;
 			id.Title = "Better.Call.Saul";
 			id.Year = -1;
-
 			testData.Add(new TestData()
 			{
 				Actual = id.OriginalString,
 				FullTitle = "Better.Call.Saul.S02E10",
 				ParsedString = "Better.Call.Saul.S02E10.1080p.DUBBED.German.h264.WebHD",
 				Expected = id,
-				Settings = new ParserSettings(),
+				Settings = new ParserSettings(true),
 				Comment = "Test008"
 			});
 
@@ -242,14 +234,13 @@ namespace SeriesIDParser_Test
 			id.State = State.OK_SUCCESS;
 			id.Title = "Better.Call.Saul";
 			id.Year = -1;
-
 			testData.Add(new TestData()
 			{
 				Actual = id.OriginalString,
 				FullTitle = "Better.Call.Saul.S02E10",
 				ParsedString = "Better.Call.Saul.S02E10.1080p.DUBBED.German.h264.WebHD",
 				Expected = id,
-				Settings = new ParserSettings(),
+				Settings = new ParserSettings(true),
 				Comment = "Test009"
 			});
 
@@ -268,14 +259,13 @@ namespace SeriesIDParser_Test
 			id.State = State.OK_SUCCESS;
 			id.Title = "Better.Call.Saul";
 			id.Year = -1;
-
 			testData.Add(new TestData()
 			{
 				Actual = id.OriginalString,
 				FullTitle = "Better.Call.Saul.S02E10",
 				ParsedString = "Better.Call.Saul.S02E10.1080p.DUBBED.German.h264.WebHD.avi",
 				Expected = id,
-				Settings = new ParserSettings(),
+				Settings = new ParserSettings(true),
 				Comment = "Test010"
 			});
 
@@ -294,14 +284,13 @@ namespace SeriesIDParser_Test
 			id.State = State.OK_SUCCESS;
 			id.Title = "Der.Hobbit.Smaugs.Einoede";
 			id.Year = 2013;
-
 			testData.Add(new TestData()
 			{
 				Actual = id.OriginalString,
 				FullTitle = "Der.Hobbit.Smaugs.Einoede",
 				ParsedString = "Der.Hobbit.Smaugs.Einoede.2013.1080p.BluRay.EXTENDED.German.x264.mkv",
 				Expected = id,
-				Settings = new ParserSettings(),
+				Settings = new ParserSettings(true),
 				Comment = "Test011"
 			});
 
@@ -320,14 +309,13 @@ namespace SeriesIDParser_Test
 			id.State = State.OK_SUCCESS;
 			id.Title = "A.Chinese.Ghost.Story.3";
 			id.Year = 1991;
-
 			testData.Add(new TestData()
 			{
 				Actual = id.OriginalString,
 				FullTitle = "A.Chinese.Ghost.Story.3",
 				ParsedString = "A.Chinese.Ghost.Story.3.1991.1080p.DTS.German.x264",
 				Expected = id,
-				Settings = new ParserSettings(),
+				Settings = new ParserSettings(true),
 				Comment = "Test012"
 			});
 

@@ -117,7 +117,7 @@ namespace SeriesIDParser
 		{
 			if (settings == null)
 			{
-				this._parserSettings = new ParserSettings();
+				this._parserSettings = new ParserSettings(true);
 			}
 			else
 			{

@@ -47,34 +47,41 @@ namespace SeriesIDParser
 		/// <summary>
 		/// Prefill ctor
 		/// </summary>
-		public ParserSettings()
+		public ParserSettings(bool preFillLists = false)
 		{
-			// ### Resolution Detection
-			_detectUltraHD8kTokens = new List<string>() { "8k", "4320k" };
-			_detectUltraHDTokens = new List<string>() { "UHD", "2160p" };
-			_detectFullHDTokens = new List<string>() { "FullHD", "1080p" };
-			_detectHDTokens = new List<string>() { "HDTV", "720p", "HD" };
-			_detectSDTokens = new List<string>() { "DVDRIP", "DVD", "XVID", "SD" };
+			if (preFillLists)
+			{
+				// ### Resolution Detection
+				_detectUltraHD8kTokens = new List<string>() { "8k", "4320k" };
+				_detectUltraHDTokens = new List<string>() { "UHD", "2160p" };
+				_detectFullHDTokens = new List<string>() { "FullHD", "1080p" };
+				_detectHDTokens = new List<string>() { "HDTV", "720p", "HD" };
+				_detectSDTokens = new List<string>() { "DVDRIP", "DVD", "XVID", "SD" };
 
-			// ### Fileextensions
-			_fileExtensions = new List<string>() { "3G2", "3GP", "AMV", "ASF", "AVI", "DRC", "F4A", "F4B", "F4P", "F4V",
+				// ### Fileextensions
+				_fileExtensions = new List<string>() { "3G2", "3GP", "AMV", "ASF", "AVI", "DRC", "F4A", "F4B", "F4P", "F4V",
 												"FLV", "GIF", "GIFV", "M2V", "M4P", "M4V", "MKV", "MNG", "MOV", "MP2",
 												"MP4", "MPE", "MPEG", "MPG", "MPV", "MXF", "NSV", "OGG", "OGV", "QT",
 												"RM", "RMVB", "ROQ", "SVI", "VOB", "WEBM", "WMV", "YUV" };
 
-			// ### Remove and Replace
-			_removeAndListTokens = new List<string>() { "DUBBED", "SYNCED", "AVC", "German", "iTunes",
+				// ### Remove and Replace
+				_removeAndListTokens = new List<string>() { "DUBBED", "SYNCED", "AVC", "German", "iTunes",
 													"DTS", "BluRay", "x264", "x265", "h264",
 													"AC3D", "AAC", "WebHD", "Netflix", "WebRIP",
 													"DOKU", "EXTENDED", "DTSHD" };
 
-			_removeWithoutListTokens = new List<string>() { " ", "MIRROR", "WEB", "BD9", "DD20",
+				_removeWithoutListTokens = new List<string>() { " ", "MIRROR", "WEB", "BD9", "DD20",
 														"DD51", "DL" };
 
-			// ### Other Stuff
-			_possibleSpacingChars = new List<char>() { '.', ',', '-', ' ', '+', '*' };
+				// ### Other Stuff
+				_possibleSpacingChars = new List<char>() { '.', ',', '-', ' ', '+', '*' };
+			}
 		}
 
+		public ParserSettings()
+		{
+
+		}
 		#region Properties
 		// ### Parsing
 		// ############################################################
@@ -280,59 +287,59 @@ namespace SeriesIDParser
 		#endregion RemoveAndReplace
 
 
-		//// ### De/Serialization
-		//// ############################################################
-		//#region DeSerialisazion
+		// ### De/Serialization
+		// ############################################################
+		#region DeSerialisazion
 
-		///// <summary>
-		///// Serializes this object to a xml string that could be stored in a file or somewhere else
-		///// </summary>
-		///// <param name="obj">The object that should be converted to an xml string</param>
-		///// <returns>The xml string representing this object</returns>
-		//public static string SerializeToXML(ParserSettings obj)
-		//{
-		//	try
-		//	{
-		//		XmlSerializer x = new XmlSerializer(obj.GetType());
-		//		using (MemoryStream ms = new MemoryStream())
-		//		{
-		//			x.Serialize(ms, obj);
-		//			ms.Position = 0;
-		//			using (StreamReader sr = new StreamReader(ms, Encoding.Default))
-		//			{
-		//				return sr.ReadToEnd();
-		//			}
-		//		}
-		//	}
-		//	catch (Exception)
-		//	{
-		//		throw;
-		//	}
-		//}
+		/// <summary>
+		/// Serializes this object to a xml string that could be stored in a file or somewhere else
+		/// </summary>
+		/// <param name="obj">The object that should be converted to an xml string</param>
+		/// <returns>The xml string representing this object</returns>
+		public static string SerializeToXML(ParserSettings obj)
+		{
+			try
+			{
+				XmlSerializer x = new XmlSerializer(obj.GetType());
+				using (MemoryStream ms = new MemoryStream())
+				{
+					x.Serialize(ms, obj);
+					ms.Position = 0;
+					using (StreamReader sr = new StreamReader(ms, Encoding.Default))
+					{
+						return sr.ReadToEnd();
+					}
+				}
+			}
+			catch (Exception)
+			{
+				throw;
+			}
+		}
 
 
-		///// <summary>
-		///// Deserializes this object from a xml string
-		///// </summary>
-		///// <param name="xml">The xml string representing this object</param>
-		///// <returns>The object generated out of the xml content</returns>
-		//public static ParserSettings DeSerializeFromXML(string xml)
-		//{
-		//	try
-		//	{
-		//		XmlSerializer x = new XmlSerializer(typeof(ParserSettings));
-		//		byte[] xmlBytes = Encoding.Default.GetBytes(xml);
-		//		using (MemoryStream ms = new MemoryStream(xmlBytes))
-		//		{
-		//			return (ParserSettings)x.Deserialize(ms);
-		//		}
-		//	}
-		//	catch
-		//	{
-		//		throw;
-		//	}
-		//}
-		//#endregion DeSerialisazion
+		/// <summary>
+		/// Deserializes this object from a xml string
+		/// </summary>
+		/// <param name="xml">The xml string representing this object</param>
+		/// <returns>The object generated out of the xml content</returns>
+		public static ParserSettings DeSerializeFromXML(string xml)
+		{
+			try
+			{
+				XmlSerializer x = new XmlSerializer(typeof(ParserSettings));
+				byte[] xmlBytes = Encoding.Default.GetBytes(xml);
+				using (MemoryStream ms = new MemoryStream(xmlBytes))
+				{
+					return (ParserSettings)x.Deserialize(ms);
+				}
+			}
+			catch
+			{
+				throw;
+			}
+		}
+		#endregion DeSerialisazion
 
 		// ### Remove and Replace
 		// ############################################################

@@ -46,45 +46,45 @@ namespace SeriesIDParser_Test
 		}
 
 
-		//[TestMethod]
-		//public void DeSerialization()
-		//{
-		//	// Create and modify object
-		//	ParserSettings ps1 = new ParserSettings();
-		//	ps1.DetectFullHDTokens.Add("Test");
-		//	ps1.DetectHDTokens.Clear();
-		//	ps1.DetectSDTokens.Add("Test2");
-		//	ps1.DetectUltraHD8kTokens.Clear();
-		//	ps1.DetectUltraHDTokens.Add("Test3");
-		//	ps1.FileExtensions.Add("AAA");
-		//	ps1.IDStringFormater = "ABC+#*7543";
-		//	ps1.NewSpacingChar = 'x';
-		//	ps1.PossibleSpacingChars.Remove('.');
-		//	ps1.ThrowExceptionInsteadOfErrorFlag = true;
+		[TestMethod]
+		public void DeSerialization()
+		{
+			// Create and modify object
+			ParserSettings ps1 = new ParserSettings();
+			ps1.DetectFullHDTokens.Add("Test");
+			ps1.DetectHDTokens.Clear();
+			ps1.DetectSDTokens.Add("Test2");
+			ps1.DetectUltraHD8kTokens.Clear();
+			ps1.DetectUltraHDTokens.Add("Test3");
+			ps1.FileExtensions.Add("AAA");
+			ps1.IDStringFormater = "ABC+#*7543";
+			ps1.NewSpacingChar = 'x';
+			ps1.PossibleSpacingChars.Remove('.');
+			ps1.ThrowExceptionInsteadOfErrorFlag = true;
 
-		//	// Serialization
-		//	string ps1String = ParserSettings.SerializeToXML(ps1);
-		//	ParserSettings ps2 = ParserSettings.DeSerializeFromXML(ps1String);
+			// Serialization
+			string ps1String = ParserSettings.SerializeToXML(ps1);
+			ParserSettings ps2 = ParserSettings.DeSerializeFromXML(ps1String);
 
-		//	// Compare
-		//	CollectionAssert.AreEqual(ps1.DetectFullHDTokens, ps2.DetectFullHDTokens, "DetectFullHDTokens ");
-		//	CollectionAssert.AreEqual(ps1.DetectHDTokens, ps2.DetectHDTokens, "DetectHDTokens ");
-		//	CollectionAssert.AreEqual(ps1.DetectSDTokens, ps2.DetectSDTokens, "DetectSDTokens ");
-		//	CollectionAssert.AreEqual(ps1.DetectUltraHD8kTokens, ps2.DetectUltraHD8kTokens, "DetectUltraHD8kTokens ");
-		//	CollectionAssert.AreEqual(ps1.DetectUltraHDTokens, ps2.DetectUltraHDTokens, "DetectUltraHDTokens ");
-		//	CollectionAssert.AreEqual(ps1.FileExtensions, ps2.FileExtensions, "FileExtensions ");
-		//	Assert.AreEqual(ps1.IDStringFormater, ps2.IDStringFormater, "IDStringFormater ");
-		//	Assert.AreEqual(ps1.NewSpacingChar, ps2.NewSpacingChar, "NewSpacingChar ");
-		//	CollectionAssert.AreEqual(ps1.PossibleSpacingChars, ps2.PossibleSpacingChars, "PossibleSpacingChars ");
-		//	CollectionAssert.AreEqual(ps1.RemoveAndListTokens, ps2.RemoveAndListTokens, "RemoveAndListTokens ");
-		//	CollectionAssert.AreEqual(ps1.RemoveWithoutListTokens, ps2.RemoveWithoutListTokens, "RemoveWithoutListTokens ");
-		//	Assert.AreEqual(ps1.ResolutionStringFullHD, ps2.ResolutionStringFullHD, "ResolutionStringFullHD ");
-		//	Assert.AreEqual(ps1.ResolutionStringHD, ps2.ResolutionStringHD, "ResolutionStringHD ");
-		//	Assert.AreEqual(ps1.ResolutionStringSD, ps2.ResolutionStringSD, "ResolutionStringSD ");
-		//	Assert.AreEqual(ps1.ResolutionStringUltraHD, ps2.ResolutionStringUltraHD, "ResolutionStringUltraHD ");
-		//	Assert.AreEqual(ps1.ResolutionStringUltraHD8k, ps2.ResolutionStringUltraHD8k, "ResolutionStringUltraHD8k ");
-		//	Assert.AreEqual(ps1.SeasonAndEpisodeParseRegex, ps2.SeasonAndEpisodeParseRegex, "SeasonAndEpisodeParseRegex ");
-		//	Assert.AreEqual(ps1.ThrowExceptionInsteadOfErrorFlag, ps2.ThrowExceptionInsteadOfErrorFlag, "ThrowExceptionInsteadOfErrorFlag ");
-		//}
+			// Compare
+			CollectionAssert.AreEqual(ps1.DetectFullHDTokens, ps2.DetectFullHDTokens, "DetectFullHDTokens ");
+			CollectionAssert.AreEqual(ps1.DetectHDTokens, ps2.DetectHDTokens, "DetectHDTokens ");
+			CollectionAssert.AreEqual(ps1.DetectSDTokens, ps2.DetectSDTokens, "DetectSDTokens ");
+			CollectionAssert.AreEqual(ps1.DetectUltraHD8kTokens, ps2.DetectUltraHD8kTokens, "DetectUltraHD8kTokens ");
+			CollectionAssert.AreEqual(ps1.DetectUltraHDTokens, ps2.DetectUltraHDTokens, "DetectUltraHDTokens ");
+			CollectionAssert.AreEqual(ps1.FileExtensions, ps2.FileExtensions, "FileExtensions ");
+			Assert.AreEqual(ps1.IDStringFormater, ps2.IDStringFormater, "IDStringFormater ");
+			Assert.AreEqual(ps1.NewSpacingChar, ps2.NewSpacingChar, "NewSpacingChar ");
+			CollectionAssert.AreEqual(ps1.PossibleSpacingChars, ps2.PossibleSpacingChars, "PossibleSpacingChars ");
+			CollectionAssert.AreEqual(ps1.RemoveAndListTokens, ps2.RemoveAndListTokens, "RemoveAndListTokens ");
+			CollectionAssert.AreEqual(ps1.RemoveWithoutListTokens, ps2.RemoveWithoutListTokens, "RemoveWithoutListTokens ");
+			Assert.AreEqual(ps1.ResolutionStringFullHD, ps2.ResolutionStringFullHD, "ResolutionStringFullHD ");
+			Assert.AreEqual(ps1.ResolutionStringHD, ps2.ResolutionStringHD, "ResolutionStringHD ");
+			Assert.AreEqual(ps1.ResolutionStringSD, ps2.ResolutionStringSD, "ResolutionStringSD ");
+			Assert.AreEqual(ps1.ResolutionStringUltraHD, ps2.ResolutionStringUltraHD, "ResolutionStringUltraHD ");
+			Assert.AreEqual(ps1.ResolutionStringUltraHD8k, ps2.ResolutionStringUltraHD8k, "ResolutionStringUltraHD8k ");
+			Assert.AreEqual(ps1.SeasonAndEpisodeParseRegex, ps2.SeasonAndEpisodeParseRegex, "SeasonAndEpisodeParseRegex ");
+			Assert.AreEqual(ps1.ThrowExceptionInsteadOfErrorFlag, ps2.ThrowExceptionInsteadOfErrorFlag, "ThrowExceptionInsteadOfErrorFlag ");
+		}
 	}
 }
