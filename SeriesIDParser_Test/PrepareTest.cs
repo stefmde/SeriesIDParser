@@ -19,9 +19,6 @@ namespace SeriesIDParser_Test
 
 	public class PrepareTest
 	{
-		
-
-
 		public List<TestData> GetTestData()
 		{
 			List<TestData> testData = new List<TestData>();
@@ -354,6 +351,5 @@ namespace SeriesIDParser_Test
 
 			return testData;
 		}
-
 	}
 }

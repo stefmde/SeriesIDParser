@@ -1,3 +1,17 @@
+5.1.0 (2016-08-12)
+------------------
+
+New
+~~~~
+- Code optimizations
+- Warning: SeriesID multi parameter ctor will be removed in the next release
+
+Fix
+~~~~
+- 
+
+
+
 5.0.1 (2016-08-11)
 ------------------
 

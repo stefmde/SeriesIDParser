@@ -26,19 +26,22 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
+//using System.Runtime.Serialization.Formatters.Soap;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
+using System.IO;
 
 namespace SeriesIDParser
 {
 	/// <summary>
 	/// The settings who can give to the SeriesIDParser to modify the behavior. Object is prefilled with the default values and list entries
 	/// </summary>
+	[Serializable]
 	public class ParserSettings
 	{
-		// TODO
-		// Move Prefill-Data to Ressource or something like that
-		// Maybe Add De/Serializer
 
 
 		/// <summary>
@@ -47,101 +50,30 @@ namespace SeriesIDParser
 		public ParserSettings()
 		{
 			// ### Resolution Detection
-			_detectUltraHD8kTokens.Add("8k");
-			_detectUltraHD8kTokens.Add("4320k");
+			_detectUltraHD8kTokens = new List<string>() { "8k", "4320k" };
+			_detectUltraHDTokens = new List<string>() { "UHD", "2160p" };
+			_detectFullHDTokens = new List<string>() { "FullHD", "1080p" };
+			_detectHDTokens = new List<string>() { "HDTV", "720p", "HD" };
+			_detectSDTokens = new List<string>() { "DVDRIP", "DVD", "XVID", "SD" };
 
-			_detectUltraHDTokens.Add("UHD");
-			_detectUltraHDTokens.Add("2160p");
-
-			_detectFullHDTokens.Add("FullHD");
-			_detectFullHDTokens.Add("1080p");
-
-			_detectHDTokens.Add("HDTV");
-			_detectHDTokens.Add("720p");
-			_detectHDTokens.Add("HD");
-
-			_detectSDTokens.Add("DVDRIP");
-			_detectSDTokens.Add("DVD");
-			_detectSDTokens.Add("XVID");
-			_detectSDTokens.Add("SD");
-
-			// ## Fileextensions
-			_fileExtensions.Add("3G2");
-			_fileExtensions.Add("3GP");
-			_fileExtensions.Add("AMV");
-			_fileExtensions.Add("ASF");
-			_fileExtensions.Add("AVI");
-			_fileExtensions.Add("DRC");
-			_fileExtensions.Add("F4A");
-			_fileExtensions.Add("F4B");
-			_fileExtensions.Add("F4P");
-			_fileExtensions.Add("F4V");
-			_fileExtensions.Add("FLV");
-			_fileExtensions.Add("GIF");
-			_fileExtensions.Add("GIFV");
-			_fileExtensions.Add("M2V");
-			_fileExtensions.Add("M4P");
-			_fileExtensions.Add("M4V");
-			_fileExtensions.Add("MKV");
-			_fileExtensions.Add("MNG");
-			_fileExtensions.Add("MOV");
-			_fileExtensions.Add("MP2");
-			_fileExtensions.Add("MP4");
-			_fileExtensions.Add("MPE");
-			_fileExtensions.Add("MPEG");
-			_fileExtensions.Add("MPG");
-			_fileExtensions.Add("MPV");
-			_fileExtensions.Add("MXF");
-			_fileExtensions.Add("NSV");
-			_fileExtensions.Add("OGG");
-			_fileExtensions.Add("OGV");
-			_fileExtensions.Add("QT");
-			_fileExtensions.Add("RM");
-			_fileExtensions.Add("RMVB");
-			_fileExtensions.Add("ROQ");
-			_fileExtensions.Add("SVI");
-			_fileExtensions.Add("VOB");
-			_fileExtensions.Add("WEBM");
-			_fileExtensions.Add("WMV");
-			_fileExtensions.Add("YUV");
+			// ### Fileextensions
+			_fileExtensions = new List<string>() { "3G2", "3GP", "AMV", "ASF", "AVI", "DRC", "F4A", "F4B", "F4P", "F4V",
+												"FLV", "GIF", "GIFV", "M2V", "M4P", "M4V", "MKV", "MNG", "MOV", "MP2",
+												"MP4", "MPE", "MPEG", "MPG", "MPV", "MXF", "NSV", "OGG", "OGV", "QT",
+												"RM", "RMVB", "ROQ", "SVI", "VOB", "WEBM", "WMV", "YUV" };
 
 			// ### Remove and Replace
-			_removeAndListTokens.Add("DUBBED");
-			_removeAndListTokens.Add("SYNCED");
-			_removeAndListTokens.Add("AVC");
-			_removeAndListTokens.Add("German");
-			_removeAndListTokens.Add("iTunes");
-			_removeAndListTokens.Add("DTS");
-			_removeAndListTokens.Add("BluRay");
-			_removeAndListTokens.Add("x264");
-			_removeAndListTokens.Add("x265");
-			_removeAndListTokens.Add("h264");
-			_removeAndListTokens.Add("AC3D");
-			_removeAndListTokens.Add("AAC");
-			_removeAndListTokens.Add("WebHD");
-			_removeAndListTokens.Add("Netflix");
-			_removeAndListTokens.Add("WebRIP");
-			_removeAndListTokens.Add("DOKU");
-			_removeAndListTokens.Add("EXTENDED");
+			_removeAndListTokens = new List<string>() { "DUBBED", "SYNCED", "AVC", "German", "iTunes",
+													"DTS", "BluRay", "x264", "x265", "h264",
+													"AC3D", "AAC", "WebHD", "Netflix", "WebRIP",
+													"DOKU", "EXTENDED", "DTSHD" };
 
-			_removeWithoutListTokens.Add(" ");
-			_removeWithoutListTokens.Add(".-.");
-			_removeWithoutListTokens.Add("MIRROR");
-			_removeWithoutListTokens.Add("WEB");
-			_removeWithoutListTokens.Add("BD9");
-			_removeWithoutListTokens.Add("DD20");
-			_removeWithoutListTokens.Add("DD51");
-			_removeWithoutListTokens.Add("DL");
+			_removeWithoutListTokens = new List<string>() { " ", "MIRROR", "WEB", "BD9", "DD20",
+														"DD51", "DL" };
 
 			// ### Other Stuff
-			_possibleSpacingChars.Add('.');
-			_possibleSpacingChars.Add(',');
-			_possibleSpacingChars.Add('-');
-			_possibleSpacingChars.Add(' ');
-			_possibleSpacingChars.Add('+');
-			_possibleSpacingChars.Add('*');
+			_possibleSpacingChars = new List<char>() { '.', ',', '-', ' ', '+', '*' };
 		}
-
 
 		#region Properties
 		// ### Parsing
@@ -348,6 +280,60 @@ namespace SeriesIDParser
 		#endregion RemoveAndReplace
 
 
+		//// ### De/Serialization
+		//// ############################################################
+		//#region DeSerialisazion
+
+		///// <summary>
+		///// Serializes this object to a xml string that could be stored in a file or somewhere else
+		///// </summary>
+		///// <param name="obj">The object that should be converted to an xml string</param>
+		///// <returns>The xml string representing this object</returns>
+		//public static string SerializeToXML(ParserSettings obj)
+		//{
+		//	try
+		//	{
+		//		XmlSerializer x = new XmlSerializer(obj.GetType());
+		//		using (MemoryStream ms = new MemoryStream())
+		//		{
+		//			x.Serialize(ms, obj);
+		//			ms.Position = 0;
+		//			using (StreamReader sr = new StreamReader(ms, Encoding.Default))
+		//			{
+		//				return sr.ReadToEnd();
+		//			}
+		//		}
+		//	}
+		//	catch (Exception)
+		//	{
+		//		throw;
+		//	}
+		//}
+
+
+		///// <summary>
+		///// Deserializes this object from a xml string
+		///// </summary>
+		///// <param name="xml">The xml string representing this object</param>
+		///// <returns>The object generated out of the xml content</returns>
+		//public static ParserSettings DeSerializeFromXML(string xml)
+		//{
+		//	try
+		//	{
+		//		XmlSerializer x = new XmlSerializer(typeof(ParserSettings));
+		//		byte[] xmlBytes = Encoding.Default.GetBytes(xml);
+		//		using (MemoryStream ms = new MemoryStream(xmlBytes))
+		//		{
+		//			return (ParserSettings)x.Deserialize(ms);
+		//		}
+		//	}
+		//	catch
+		//	{
+		//		throw;
+		//	}
+		//}
+		//#endregion DeSerialisazion
+
 		// ### Remove and Replace
 		// ############################################################
 		#region OtherStuff
@@ -360,7 +346,10 @@ namespace SeriesIDParser
 			get { return _throwExceptionInsteadOfErrorFlag; }
 			set { _throwExceptionInsteadOfErrorFlag = value; }
 		}
+
 		#endregion OtherStuff
 		#endregion Properties
+
+		
 	}
 }

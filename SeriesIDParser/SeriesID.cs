@@ -69,7 +69,6 @@ namespace SeriesIDParser
 	/// </summary>
 	public class SeriesID
 	{
-
 		private ParserSettings _parserSettings = null;
 
 		/// <summary>
@@ -86,7 +85,7 @@ namespace SeriesIDParser
 		/// <param name="resolution"></param>
 		/// <param name="removedTokens"></param>
 		/// <param name="fileExtension"></param>
-		[Obsolete]
+		[Obsolete("Will be removed in future updates", true)]
 		internal SeriesID(State state, bool isSeries = false, string originalString = null, string title = null,
 			string episodeTitle = null, int year = -1, int season = -1, int episode = -1,
 			Resolutions resolution = Resolutions.UNKNOWN, List<string> removedTokens = null, string fileExtension = null)
@@ -503,7 +502,6 @@ namespace SeriesIDParser
 		// ############################################################
 		// ### Function
 		// ############################################################
-		#region HelperFunctions
 
 		/// <summary>
 		/// The primary parsing function
@@ -512,7 +510,7 @@ namespace SeriesIDParser
 		/// <returns>The SeriesID object that represents the series or movie string</returns>
 		public SeriesID Parse(string input)
 		{
-			_removedTokens.Clear();
+			ResetObject();
 			_originalString = input.Trim();
 			string fullTitle = _originalString;
 			bool warningOrErrorOccurred = false;
@@ -523,18 +521,11 @@ namespace SeriesIDParser
 			{
 				if (_originalString.Length >= 5)
 				{
-
-					// ###################################################################
-					// ### Find file extension
-					// ###################################################################
-
 					_fileExtension = GetFileExtension(input, _parserSettings.FileExtensions);
 
 					// ###################################################################
 					// ### Try get resolution
 					// ###################################################################
-					//bool resolutionFound = false;
-					
 
 					// Try get 8K
 					GetResolutionByResMap(_parserSettings.DetectUltraHD8kTokens, Resolutions.UltraHD8K_4320p, ref fullTitle);
@@ -591,7 +582,7 @@ namespace SeriesIDParser
 					// Remove double spacer
 					while (fullTitle.Contains(oldSpacingChar + oldSpacingChar))
 					{
-						fullTitle = fullTitle.Replace(oldSpacingChar+ oldSpacingChar, oldSpacingChar);
+						fullTitle = fullTitle.Replace(oldSpacingChar + oldSpacingChar, oldSpacingChar);
 					}
 
 					// Convert to new spacer
@@ -603,6 +594,7 @@ namespace SeriesIDParser
 					// Remove trailing spacer
 					fullTitle = fullTitle.Trim(oldSpacingChar.LastOrDefault<char>());
 					fullTitle = fullTitle.Trim(_parserSettings.NewSpacingChar);
+
 
 
 					// ###################################################################
@@ -662,7 +654,7 @@ namespace SeriesIDParser
 				{
 					_state |= State.OK_SUCCESS;
 				}
-				
+
 				return this;
 			}
 			catch (Exception ex)
@@ -681,6 +673,26 @@ namespace SeriesIDParser
 					return this;
 				}
 			}
+		}
+
+		#region HelperFunctions
+		/// <summary>
+		/// Clears and resets the object for the new execution
+		/// </summary>
+		internal void ResetObject()
+		{
+			this._episode = -1;
+			this._episodeTitle = null;
+			this._exception = null;
+			this._fileExtension = null;
+			this._isSeries = false;
+			this._originalString = null;
+			this._removedTokens.Clear();
+			this._resolution = Resolutions.UNKNOWN;
+			this._season = -1;
+			this._state = State.UNKNOWN;
+			this._title = null;
+			this._year = -1;
 		}
 
 
