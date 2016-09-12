@@ -26,9 +26,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Serialization.Formatters.Binary;
-//using System.Runtime.Serialization.Formatters.Soap;
-using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
@@ -68,7 +65,7 @@ namespace SeriesIDParser
 				_removeAndListTokens = new List<string>() { "DUBBED", "SYNCED", "AVC", "German", "iTunes",
 													"DTS", "BluRay", "x264", "x265", "h264",
 													"AC3D", "AAC", "WebHD", "Netflix", "WebRIP",
-													"DOKU", "EXTENDED", "DTSHD" };
+													"DOKU", "EXTENDED", "DTSHD", "UNRATED" };
 
 				_removeWithoutListTokens = new List<string>() { " ", "MIRROR", "WEB", "BD9", "DD20",
 														"DD51", "DL" };

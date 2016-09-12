@@ -320,6 +320,31 @@ namespace SeriesIDParser_Test
 			});
 
 
+
+			// Series down sampled - Test013
+			id = new SeriesID();
+			id.Episode = 1;
+			id.EpisodeTitle = "Endlich.frei";
+			id.FileExtension = "mkv";
+			id.IsSeries = true;
+			id.OriginalString = "Narcos.S02E01.Endlich.frei.German.DD51.DL.1080p.NetflixUHD.x264.mkv";
+			id.RemovedTokens = new List<string>() { "German", "DL", "Netflix", "x264" };
+			id.Resolution = Resolutions.FullHD_1080p;
+			id.Season = 2;
+			id.State = State.OK_SUCCESS;
+			id.Title = "Narcos";
+			id.Year = 1991;
+			testData.Add(new TestData()
+			{
+				Actual = id.OriginalString,
+				FullTitle = "Narcos.S02E01.Endlich.frei",
+				ParsedString = "Narcos.S02E01.Enich.frei.1080p.German.Netflix.x264.mkv",
+				Expected = id,
+				Settings = new ParserSettings(true),
+				Comment = "Test013"
+			});
+
+
 			//_data.Add(new TestData() { actual = "The.Big.Bang.Theory.S09E12.Der.romantische.Asteroid.GERMAN.DL.DUBBED.1080p.WebHD.x264", expected = "x" });     // Usual
 			//_data.Add(new TestData() { actual = "House.of.Cards.S04E04.Akt.der.Verzweiflung.German.DD51.Synced.DL.2160p.NetflixUHD.x264", expected = "" });     // Usual
 			//_data.Add(new TestData() { actual = "Arrow.S04E03.Auferstehung.GERMAN.DUBBED.DL.1080p.WebHD.x264", expected = "" });                                // Usual
