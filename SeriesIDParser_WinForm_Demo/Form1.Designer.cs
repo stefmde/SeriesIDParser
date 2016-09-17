@@ -28,16 +28,17 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
 			this.label1 = new System.Windows.Forms.Label();
 			this.tbxException = new System.Windows.Forms.TextBox();
 			this.btnParse = new System.Windows.Forms.Button();
 			this.tbxInput = new System.Windows.Forms.TextBox();
 			this.label2 = new System.Windows.Forms.Label();
 			this.dataGridViewResult = new System.Windows.Forms.DataGridView();
-			this.label3 = new System.Windows.Forms.Label();
 			this.ColumnProperty = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ColumnType = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ColumnValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.label3 = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridViewResult)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -55,7 +56,7 @@
 			// 
 			this.tbxException.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.tbxException.Location = new System.Drawing.Point(74, 421);
+			this.tbxException.Location = new System.Drawing.Point(74, 468);
 			this.tbxException.Multiline = true;
 			this.tbxException.Name = "tbxException";
 			this.tbxException.ReadOnly = true;
@@ -89,7 +90,7 @@
 			// 
 			this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(11, 424);
+			this.label2.Location = new System.Drawing.Point(11, 471);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(57, 13);
 			this.label2.TabIndex = 4;
@@ -110,17 +111,8 @@
 			this.dataGridViewResult.Location = new System.Drawing.Point(74, 59);
 			this.dataGridViewResult.Name = "dataGridViewResult";
 			this.dataGridViewResult.ReadOnly = true;
-			this.dataGridViewResult.Size = new System.Drawing.Size(862, 339);
+			this.dataGridViewResult.Size = new System.Drawing.Size(862, 386);
 			this.dataGridViewResult.TabIndex = 5;
-			// 
-			// label3
-			// 
-			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(28, 59);
-			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(40, 13);
-			this.label3.TabIndex = 6;
-			this.label3.Text = "Result:";
 			// 
 			// ColumnProperty
 			// 
@@ -142,11 +134,20 @@
 			this.ColumnValue.ReadOnly = true;
 			this.ColumnValue.Width = 500;
 			// 
+			// label3
+			// 
+			this.label3.AutoSize = true;
+			this.label3.Location = new System.Drawing.Point(28, 59);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(40, 13);
+			this.label3.TabIndex = 6;
+			this.label3.Text = "Result:";
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(949, 582);
+			this.ClientSize = new System.Drawing.Size(949, 629);
 			this.Controls.Add(this.label3);
 			this.Controls.Add(this.dataGridViewResult);
 			this.Controls.Add(this.label2);
@@ -154,6 +155,7 @@
 			this.Controls.Add(this.btnParse);
 			this.Controls.Add(this.tbxException);
 			this.Controls.Add(this.label1);
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "Form1";
 			this.Text = "SeriesIDParser - Demo App";
 			((System.ComponentModel.ISupportInitialize)(this.dataGridViewResult)).EndInit();

@@ -35,11 +35,10 @@ using System.Threading.Tasks;
 [assembly: InternalsVisibleTo("SeriesIDParser_Test")]
 namespace SeriesIDParser
 {
-	
 	/// <summary>
 	/// Representing the series or movie resolution
 	/// </summary>
-	public enum Resolutions
+	public enum ResolutionsMap
 	{
 		UNKNOWN = 0,
 		SD_Any = 1,
@@ -70,38 +69,7 @@ namespace SeriesIDParser
 	public class SeriesID
 	{
 		private ParserSettings _parserSettings = null;
-
-		/// <summary>
-		/// Representing the ctor of the object to initialize the readonly object
-		/// </summary>
-		/// <param name="state"></param>
-		/// <param name="isSeries"></param>
-		/// <param name="originalString"></param>
-		/// <param name="title"></param>
-		/// <param name="episodeTitle"></param>
-		/// <param name="year"></param>
-		/// <param name="season"></param>
-		/// <param name="episode"></param>
-		/// <param name="resolution"></param>
-		/// <param name="removedTokens"></param>
-		/// <param name="fileExtension"></param>
-		[Obsolete("Will be removed in future updates", true)]
-		internal SeriesID(State state, bool isSeries = false, string originalString = null, string title = null,
-			string episodeTitle = null, int year = -1, int season = -1, int episode = -1,
-			Resolutions resolution = Resolutions.UNKNOWN, List<string> removedTokens = null, string fileExtension = null)
-		{
-			this._state = state;
-			this._isSeries = isSeries;
-			this._originalString = originalString;
-			this._title = title;
-			this._episodeTitle = episodeTitle;
-			this._year = year;
-			this._season = season;
-			this._episode = episode;
-			this._resolution = resolution;
-			this._removedTokens = removedTokens;
-			this._fileExtension = fileExtension;
-		}
+		private DateTime _parseStartTime = new DateTime();
 
 		/// <summary>
 		/// Representing the object for error state
@@ -112,7 +80,10 @@ namespace SeriesIDParser
 			this._state = state;
 		}
 
-
+		/// <summary>
+		/// ctor with optional settings. Null settings are overriden with default settings
+		/// </summary>
+		/// <param name="settings"></param>
 		public SeriesID(ParserSettings settings = null)
 		{
 			if (settings == null)
@@ -128,7 +99,7 @@ namespace SeriesIDParser
 		// ############################################################
 		// ### Properties
 		// ############################################################
-		// TODO implement better failsafe and remove exceptions
+		// TODO implement better failsafe
 		#region Properties
 		/// <summary>
 		/// Returns the full series string for Series, title for movies and null on error
@@ -220,6 +191,21 @@ namespace SeriesIDParser
 		}
 
 
+		private char _detectedOldSpacingChar;
+		/// <summary>
+		/// Contains the char who are detected as the old spacing char
+		/// </summary>
+		public char DetectedOldSpacingChar
+		{
+			get
+			{
+				return _detectedOldSpacingChar;
+			}
+
+			internal set { _detectedOldSpacingChar = value; }
+		}
+
+
 		//private string _parsedString;
 		/// <summary>
 		/// Contains the string that was computed by the parser. Null on error
@@ -241,30 +227,8 @@ namespace SeriesIDParser
 						sb.Append(_year);
 					}
 
-					// Resulution
-					switch (_resolution)
-					{
-						case Resolutions.SD_Any:
-							sb.Append(_parserSettings.NewSpacingChar);
-							sb.Append(_parserSettings.ResolutionStringSD);
-							break;
-						case Resolutions.HD_720p:
-							sb.Append(_parserSettings.NewSpacingChar);
-							sb.Append(_parserSettings.ResolutionStringHD);
-							break;
-						case Resolutions.FullHD_1080p:
-							sb.Append(_parserSettings.NewSpacingChar);
-							sb.Append(_parserSettings.ResolutionStringFullHD);
-							break;
-						case Resolutions.UltraHD_2160p:
-							sb.Append(_parserSettings.NewSpacingChar);
-							sb.Append(_parserSettings.ResolutionStringUltraHD);
-							break;
-						case Resolutions.UltraHD8K_4320p:
-							sb.Append(_parserSettings.NewSpacingChar);
-							sb.Append(_parserSettings.ResolutionStringUltraHD8k);
-							break;
-					}
+					sb.Append(_parserSettings.NewSpacingChar);
+					sb.Append(GetResolutionString(_parserSettings, _resolutions));
 
 					if (_removedTokens != null && _removedTokens.Count > 0)
 					{
@@ -288,6 +252,9 @@ namespace SeriesIDParser
 				}
 			}
 		}
+
+
+		
 
 
 		private string _title;
@@ -425,6 +392,30 @@ namespace SeriesIDParser
 		}
 
 
+
+		private TimeSpan _processingDuration = new TimeSpan();
+		/// <summary>
+		/// Returns the year of the episode or movie if contained, otherwise -1
+		/// </summary>
+		public TimeSpan ProcessingDuration
+		{
+			get
+			{
+				if (_state.HasFlag(State.OK_SUCCESS))
+				{
+
+					return _processingDuration;
+				}
+				else
+				{
+					return new TimeSpan();
+				}
+			}
+
+			internal set { _processingDuration = value; }
+		}
+
+
 		/// <summary>
 		/// Contains the ID-String of a series e.g. S01E05. Null on error
 		/// </summary>
@@ -444,25 +435,25 @@ namespace SeriesIDParser
 		}
 
 
-		private Resolutions _resolution;
+		private IList<ResolutionsMap> _resolutions = new List<ResolutionsMap>();
 		/// <summary>
 		/// Returns the resolution as enum. UNKNOWN on error
 		/// </summary>
-		public Resolutions Resolution
+		public IList<ResolutionsMap> Resolutions
 		{
 			get
 			{
 				if (_state.HasFlag(State.OK_SUCCESS))
 				{
-					return _resolution;
+					return _resolutions;
 				}
 				else
 				{
-					return Resolutions.UNKNOWN;
+					return new List<ResolutionsMap>() { ResolutionsMap.UNKNOWN };
 				}
 			}
 
-			internal set { _resolution = value; }
+			internal set { _resolutions = value; }
 		}
 
 
@@ -489,7 +480,7 @@ namespace SeriesIDParser
 		{
 			if (_state.HasFlag(State.OK_SUCCESS))
 			{
-				return FullTitle + " -- " + _resolution.ToString();
+				return FullTitle + " -- " + GetResolutionString(_parserSettings, _resolutions);
 			}
 			else
 			{
@@ -500,7 +491,7 @@ namespace SeriesIDParser
 
 
 		// ############################################################
-		// ### Function
+		// ### Core Function
 		// ############################################################
 
 		/// <summary>
@@ -515,7 +506,7 @@ namespace SeriesIDParser
 			string fullTitle = _originalString;
 			bool warningOrErrorOccurred = false;
 			Regex removeRegex = null;
-			string oldSpacingChar = GetSpacingChar(input);
+			_detectedOldSpacingChar = GetSpacingChar(input);
 
 			try
 			{
@@ -528,19 +519,19 @@ namespace SeriesIDParser
 					// ###################################################################
 
 					// Try get 8K
-					GetResolutionByResMap(_parserSettings.DetectUltraHD8kTokens, Resolutions.UltraHD8K_4320p, ref fullTitle);
+					GetResolutionByResMap(_parserSettings.DetectUltraHD8kTokens, ResolutionsMap.UltraHD8K_4320p, _detectedOldSpacingChar, ref fullTitle);
 
 					// Try get 4K
-					GetResolutionByResMap(_parserSettings.DetectUltraHDTokens, Resolutions.UltraHD_2160p, ref fullTitle);
+					GetResolutionByResMap(_parserSettings.DetectUltraHDTokens, ResolutionsMap.UltraHD_2160p, _detectedOldSpacingChar, ref fullTitle);
 
 					// Try get FullHD
-					GetResolutionByResMap(_parserSettings.DetectFullHDTokens, Resolutions.FullHD_1080p, ref fullTitle);
+					GetResolutionByResMap(_parserSettings.DetectFullHDTokens, ResolutionsMap.FullHD_1080p, _detectedOldSpacingChar, ref fullTitle);
 
 					// Try get HD
-					GetResolutionByResMap(_parserSettings.DetectHDTokens, Resolutions.HD_720p, ref fullTitle);
+					GetResolutionByResMap(_parserSettings.DetectHDTokens, ResolutionsMap.HD_720p, _detectedOldSpacingChar, ref fullTitle);
 
 					// Try get SD
-					GetResolutionByResMap(_parserSettings.DetectSDTokens, Resolutions.SD_Any, ref fullTitle);
+					GetResolutionByResMap(_parserSettings.DetectSDTokens, ResolutionsMap.SD_Any, _detectedOldSpacingChar, ref fullTitle);
 
 
 
@@ -556,13 +547,15 @@ namespace SeriesIDParser
 
 						if (tmpTitle.Count(x => x == '-') > 0)
 						{
-							fullTitle = fullTitle.Substring(0, fullTitle.LastIndexOf("-"));
+							fullTitle = fullTitle.Substring(0, fullTitle.LastIndexOf("-")).Trim();
 						}
 					}
 
 					// Remove tokens
-					fullTitle = RemoveTokens(fullTitle, oldSpacingChar, _parserSettings.RemoveAndListTokens, true);
-					fullTitle = RemoveTokens(fullTitle, oldSpacingChar, _parserSettings.RemoveWithoutListTokens, false);
+					fullTitle = RemoveTokens(fullTitle, _detectedOldSpacingChar.ToString(), _parserSettings.RemoveAndListTokens, true);
+					fullTitle = RemoveTokens(fullTitle, _detectedOldSpacingChar.ToString(), _parserSettings.RemoveWithoutListTokens, false);
+					fullTitle = ReplaceTokens(fullTitle, _detectedOldSpacingChar.ToString(), _parserSettings.ReplaceRegexAndListTokens, true);
+					fullTitle = ReplaceTokens(fullTitle, _detectedOldSpacingChar.ToString(), _parserSettings.ReplaceRegexWithoutListTokens, false);
 
 					// Sort removedTokensList
 					_removedTokens = _removedTokens.OrderBy(x => x).ToList();
@@ -580,19 +573,19 @@ namespace SeriesIDParser
 					fullTitle = fullTitle.Replace(_year.ToString(), "");
 
 					// Remove double spacer
-					while (fullTitle.Contains(oldSpacingChar + oldSpacingChar))
+					while (fullTitle.Contains(_detectedOldSpacingChar.ToString() + _detectedOldSpacingChar.ToString()))
 					{
-						fullTitle = fullTitle.Replace(oldSpacingChar + oldSpacingChar, oldSpacingChar);
+						fullTitle = fullTitle.Replace(_detectedOldSpacingChar.ToString() + _detectedOldSpacingChar.ToString(), _detectedOldSpacingChar.ToString());
 					}
 
 					// Convert to new spacer
-					fullTitle = fullTitle.Replace(oldSpacingChar, _parserSettings.NewSpacingChar.ToString());
+					fullTitle = fullTitle.Replace(_detectedOldSpacingChar.ToString(), _parserSettings.NewSpacingChar.ToString());
 
 					// Remove starting and trailing spaces
 					fullTitle = fullTitle.Trim();
 
 					// Remove trailing spacer
-					fullTitle = fullTitle.Trim(oldSpacingChar.LastOrDefault<char>());
+					fullTitle = fullTitle.Trim(_detectedOldSpacingChar.ToString().LastOrDefault<char>());
 					fullTitle = fullTitle.Trim(_parserSettings.NewSpacingChar);
 
 
@@ -606,7 +599,7 @@ namespace SeriesIDParser
 					{
 						if (match.Index > 0)
 						{
-							_title = fullTitle.Substring(0, match.Index - 1).Replace(oldSpacingChar, _parserSettings.NewSpacingChar.ToString());
+							_title = fullTitle.Substring(0, match.Index - 1).Replace(_detectedOldSpacingChar.ToString(), _parserSettings.NewSpacingChar.ToString());
 						}
 						else
 						{
@@ -638,7 +631,8 @@ namespace SeriesIDParser
 						{
 							_state |= State.OK_SUCCESS;
 						}
-
+						MaintainUnknownResolution();
+						_processingDuration = DateTime.Now - _parseStartTime;
 						return this;
 					}
 				}
@@ -646,6 +640,7 @@ namespace SeriesIDParser
 				{
 					// ERROR
 					_state |= State.ERR_EMPTY_OR_TO_SHORT_ARGUMENT;
+					MaintainUnknownResolution();
 					return this;
 				}
 
@@ -654,6 +649,9 @@ namespace SeriesIDParser
 				{
 					_state |= State.OK_SUCCESS;
 				}
+
+				MaintainUnknownResolution();
+				_processingDuration = DateTime.Now - _parseStartTime;
 
 				return this;
 			}
@@ -675,6 +673,11 @@ namespace SeriesIDParser
 			}
 		}
 
+
+
+		// ############################################################
+		// ### Helper Functions
+		// ############################################################
 		#region HelperFunctions
 		/// <summary>
 		/// Clears and resets the object for the new execution
@@ -688,19 +691,156 @@ namespace SeriesIDParser
 			this._isSeries = false;
 			this._originalString = null;
 			this._removedTokens.Clear();
-			this._resolution = Resolutions.UNKNOWN;
+			this._resolutions = new List<ResolutionsMap>();
 			this._season = -1;
 			this._state = State.UNKNOWN;
 			this._title = null;
 			this._year = -1;
+			this._detectedOldSpacingChar = new char();
+			this._processingDuration = new TimeSpan();
+			_parseStartTime = DateTime.Now;
 		}
 
+		/// <summary>
+		/// Function Adds a Unknown Resolution mark or removes it if needed
+		/// </summary>
+		private void MaintainUnknownResolution()
+		{
+			if (_resolutions.Count == 0)
+			{
+				_resolutions.Add(ResolutionsMap.UNKNOWN);
+			}
+			else
+			{
+				_resolutions.Remove(ResolutionsMap.UNKNOWN);
+			}
+		}
+
+
+		/// <summary>
+		/// Gets the Resolutions depending on the found Resolutions and the ParserSettings
+		/// </summary>
+		/// <param name="settings"></param>
+		/// <param name="res"></param>
+		/// <returns></returns>
+		internal string GetResolutionString(ParserSettings settings, IList<ResolutionsMap> res)
+		{
+			string output = ResolutionsMap.UNKNOWN.ToString() + settings.NewSpacingChar;
+
+			if (res != null && res.Count > 0 && !(res.Count == 1 && res.Contains(ResolutionsMap.UNKNOWN)))
+			{
+				res.Remove(ResolutionsMap.UNKNOWN);
+				res = res.OrderBy(x => x).ToList();			
+
+				if (settings.ResolutionStringOutput == ResolutionOutputBehavior.HighestResolution)
+				{
+					// Highest
+					if (res.Contains(ResolutionsMap.UltraHD8K_4320p))
+					{
+						output = settings.ResolutionStringUltraHD8k;
+					}
+					else if (res.Contains(ResolutionsMap.UltraHD_2160p))
+					{
+						output = settings.ResolutionStringUltraHD;
+					}
+					else if (res.Contains(ResolutionsMap.FullHD_1080p))
+					{
+						output = settings.ResolutionStringFullHD;
+					}
+					else if (res.Contains(ResolutionsMap.HD_720p))
+					{
+						output = settings.ResolutionStringHD;
+					}
+					else if (res.Contains(ResolutionsMap.SD_Any))
+					{
+						output = settings.ResolutionStringSD;
+					}
+					else
+					{
+						output = settings.ResolutionStringUnknown;
+					}
+				}
+				else if (settings.ResolutionStringOutput == ResolutionOutputBehavior.LowestResolution)
+				{
+					// Lowest
+					if (res.Contains(ResolutionsMap.SD_Any))
+					{
+						output = settings.ResolutionStringSD;
+					}
+					else if (res.Contains(ResolutionsMap.HD_720p))
+					{
+						output = settings.ResolutionStringHD;
+					}
+					else if (res.Contains(ResolutionsMap.FullHD_1080p))
+					{
+						output = settings.ResolutionStringFullHD;
+					}
+					else if (res.Contains(ResolutionsMap.UltraHD_2160p))
+					{
+						output = settings.ResolutionStringUltraHD;
+					}
+					else if (res.Contains(ResolutionsMap.UltraHD8K_4320p))
+					{
+						output = settings.ResolutionStringUltraHD8k;
+					}
+					else
+					{
+						output = settings.ResolutionStringUnknown;
+					}
+				}
+				else
+				{
+					// All
+					output = string.Empty;
+
+					foreach (ResolutionsMap itm in res)
+					{
+						if (itm == ResolutionsMap.SD_Any)
+						{
+							output += settings.ResolutionStringSD + settings.NewSpacingChar;
+						}
+						else if (itm == ResolutionsMap.HD_720p)
+						{
+							output += settings.ResolutionStringHD + settings.NewSpacingChar;
+						}
+						else if (itm == ResolutionsMap.FullHD_1080p)
+						{
+							output += settings.ResolutionStringFullHD + settings.NewSpacingChar;
+						}
+						else if (itm == ResolutionsMap.UltraHD_2160p)
+						{
+							output += settings.ResolutionStringUltraHD + settings.NewSpacingChar;
+						}
+						else if (itm == ResolutionsMap.UltraHD8K_4320p)
+						{
+							output += settings.ResolutionStringUltraHD8k + settings.NewSpacingChar;
+						}
+					}
+				}
+			}
+
+			output = output.TrimEnd(settings.NewSpacingChar);
+
+			return output;
+		}
+
+		/// <summary>
+		/// Adds a Resolution to the list if its not already contained
+		/// </summary>
+		/// <param name="res"></param>
+		private void AddUniqueResolutionToList(ResolutionsMap res)
+		{
+			if (!_resolutions.Contains(res))
+			{
+				_resolutions.Add(res);
+			}
+		}
 
 		/// <summary>
 		/// Adds a token who is removed and should be tracked to a list if it is not contained
 		/// </summary>
 		/// <param name="token">String token to add to list</param>
-		internal void AddRemovedToken(string token)
+		private void AddRemovedToken(string token)
 		{
 			if (_removedTokens != null && !_removedTokens.Any(x => x.ToLower() == token.ToLower()))
 			{
@@ -741,23 +881,28 @@ namespace SeriesIDParser
 		}
 
 		/// <summary>
-		/// Tries to get the resolution from a given string
+		/// Gets the resolutions of a given string
 		/// </summary>
-		/// <param name="ResMap">the resolution tokens to match the given res</param>
-		/// <param name="res">The given res to the tokens</param>
-		/// <param name="fullTitle">The string who should be analized</param>
-		internal void GetResolutionByResMap(List<string> ResMap, Resolutions res, ref string fullTitle)
+		/// <param name="ResMap">The token that could match the given resolution</param>
+		/// <param name="res">The given resolution wo is targeted by the ResMap tokens</param>
+		/// <param name="oldSpacingChar">the spacing char in the given string</param>
+		/// <param name="fullTitle">The given string who should be analized</param>
+		private void GetResolutionByResMap(List<string> ResMap, ResolutionsMap res, char oldSpacingChar, ref string fullTitle)
 		{
-			if (_resolution == Resolutions.UNKNOWN && ResMap != null)
+			string spacer = Regex.Escape(oldSpacingChar.ToString());
+
+			Regex removeRegex = null;
+			foreach (string item in ResMap)
 			{
-				foreach (string item in ResMap)
+				removeRegex = new Regex(spacer + item + spacer, RegexOptions.IgnoreCase);
+
+				if (removeRegex.IsMatch(fullTitle) )
 				{
-					if (fullTitle.ToUpper().Contains(item.ToUpper()))
-					{
-						_resolution = res;
-						Regex removeRegex = new Regex(item, RegexOptions.IgnoreCase);
-						fullTitle = removeRegex.Replace(fullTitle, "");
-					}
+					// Search with spacer but remove without spacer
+					removeRegex = new Regex(item, RegexOptions.IgnoreCase);
+					AddUniqueResolutionToList(res);
+
+					fullTitle = removeRegex.Replace(fullTitle, "");
 				}
 			}
 		}
@@ -785,9 +930,9 @@ namespace SeriesIDParser
 		/// </summary>
 		/// <param name="input">The string who should be analized</param>
 		/// <returns>returns an empty string or the spacing char</returns>
-		internal string GetSpacingChar(string input)
+		internal char GetSpacingChar(string input)
 		{
-			string foundChar = string.Empty;
+			char foundChar = new char();
 
 			List<CharRating> charRating = new List<CharRating>();
 			foreach (char item in _parserSettings.PossibleSpacingChars)
@@ -808,7 +953,7 @@ namespace SeriesIDParser
 			// if largest one count is larger than the others additive -> 51% +
 			if (largestOne > sum - largestOne)
 			{
-				foundChar = charRating.LastOrDefault().Char.ToString();
+				foundChar = charRating.LastOrDefault().Char;
 			}
 
 			return foundChar;
@@ -828,7 +973,7 @@ namespace SeriesIDParser
 
 			if (extensions.Any(x => x.ToUpper() == tempExtension.ToUpper()))
 			{
-				extension = tempExtension;
+				extension = tempExtension.ToLower();
 			}
 
 			return extension;
@@ -838,35 +983,119 @@ namespace SeriesIDParser
 		/// Removes tokens from the string
 		/// </summary>
 		/// <param name="input">The string who should be analized</param>
-		/// <param name="oldSpacingChar">The spacing char from the given string</param>
-		/// <param name="removeTokens">List with the tokens who should be removed</param>
+		/// <param name="oldSpacingChar">The spacing char from the given string</param>s
+		/// <param name="removeTokens">List with the tokens who should be removed (regex possible)</param>
 		/// <param name="addRemovedToList">Should the removed tokens be added to the removed list?</param>
 		/// <returns>returns the cleaned string</returns>
 		internal string RemoveTokens(string input, string oldSpacingChar, List<string> removeTokens, bool addRemovedToList)
 		{
 			string ret = input;
 
-			Regex removeRegex = null;
-			foreach (string removeToken in removeTokens)
+			if (input == null || oldSpacingChar == null || removeTokens == null || removeTokens.Count == 0)
 			{
-				removeRegex = new Regex(oldSpacingChar + removeToken + oldSpacingChar, RegexOptions.IgnoreCase);
+				// Input error
+				ret =  null;
+			}
+			else
+			{
+				string spacerEscaped = Regex.Escape(oldSpacingChar.ToString());
 
-				if (removeRegex.IsMatch(ret) || input.EndsWith(oldSpacingChar + removeToken))
+				Regex removeRegex = null;
+				foreach (string removeToken in removeTokens)
 				{
-					// Search with spacer but remove without spacer
-					removeRegex = new Regex(removeToken, RegexOptions.IgnoreCase);
+					removeRegex = new Regex(spacerEscaped + removeToken + spacerEscaped, RegexOptions.IgnoreCase);
 
-					ret = removeRegex.Replace(ret, "");
-
-					if (addRemovedToList)
+					// Regex
+					while (removeRegex.IsMatch(ret))
 					{
-						AddRemovedToken(removeToken);
+						ret = removeRegex.Replace(ret, oldSpacingChar);
+
+						if (addRemovedToList)
+						{
+							AddRemovedToken(removeToken);
+						}
+					}
+
+					// Plain
+					while (ret.EndsWith(oldSpacingChar + removeToken))
+					{
+						// Search with spacer but remove without spacer
+						removeRegex = new Regex(removeToken, RegexOptions.IgnoreCase);
+
+						ret = removeRegex.Replace(ret, oldSpacingChar);
+
+						if (addRemovedToList)
+						{
+							AddRemovedToken(removeToken);
+						}
 					}
 				}
 			}
 
 			return ret;
 		}
+
+
+		/// <summary>
+		/// Replaces tokens from the string
+		/// </summary>
+		/// <param name="input">The string who should be analized</param>
+		/// <param name="oldSpacingChar">The spacing char from the given string</param>
+		/// <param name="replaceList">List with the tokens who contains the search and the replaxe string (regex possible)</param>
+		/// <param name="addRemovedToList">Should the removed tokens be added to the removed list?</param>
+		/// <returns></returns>
+		internal string ReplaceTokens(string input, string oldSpacingChar, List<KeyValuePair<string, string>> replaceList, bool addRemovedToList)
+		{
+			string ret = input;
+
+			if (replaceList == null || replaceList.Count == 0)
+			{
+				ret = input;
+			}
+			else if (input == null || oldSpacingChar == null )
+			{
+				// Input error
+				ret = null;
+			}
+			else
+			{
+				string spacerEscaped = Regex.Escape(oldSpacingChar.ToString());
+
+				Regex removeRegex = null;
+				foreach (KeyValuePair<string, string> replacePair in replaceList)
+				{
+					removeRegex = new Regex(spacerEscaped + replacePair.Key + spacerEscaped, RegexOptions.IgnoreCase);
+
+					// Regex
+					while (removeRegex.IsMatch(ret))
+					{
+						ret = removeRegex.Replace(ret, replacePair.Value);
+
+						if (addRemovedToList)
+						{
+							AddRemovedToken(replacePair.Key);
+						}
+					}
+
+					// Plain
+					while (ret.EndsWith(oldSpacingChar + replacePair.Key))
+					{
+						// Search with spacer but remove without spacer
+						removeRegex = new Regex(replacePair.Key, RegexOptions.IgnoreCase);
+
+						ret = removeRegex.Replace(ret, replacePair.Value);
+
+						if (addRemovedToList)
+						{
+							AddRemovedToken(replacePair.Key);
+						}
+					}
+				}
+			}
+
+			return ret;
+		}
+
 		#endregion HelperFunctions
 	}
 }

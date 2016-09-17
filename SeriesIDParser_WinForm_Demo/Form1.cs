@@ -65,11 +65,13 @@ namespace SeriesIDParser_WinForm_Demo
 			dataGridViewResult.Rows.Add("Season", "int", sid.Season);
 			dataGridViewResult.Rows.Add("Episode", "int", sid.Episode);
 			dataGridViewResult.Rows.Add("IDString", "string", sid.IDString);
-			dataGridViewResult.Rows.Add("Resolution", "enum Resolutions", sid.Resolution);
+			dataGridViewResult.Rows.Add("Resolutions", "enum list Resolutions", string.Join(", ", sid.Resolutions));
 			dataGridViewResult.Rows.Add("Year", "int", sid.Year);
 			dataGridViewResult.Rows.Add("FileExtension", "string", sid.FileExtension);
 			dataGridViewResult.Rows.Add("RemovedTokens", "string list", string.Join(", ", sid.RemovedTokens));
 			dataGridViewResult.Rows.Add("State", "enum State", sid.State);
+			dataGridViewResult.Rows.Add("DetectedOldSpacingChar", "char", sid.DetectedOldSpacingChar);
+			dataGridViewResult.Rows.Add("ProcessingDuration", "TimeSpan", sid.ProcessingDuration.TotalMilliseconds + " ms");
 
 			tbxException.Clear();
 			if (sid.Exception != null)

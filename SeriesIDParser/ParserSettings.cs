@@ -34,6 +34,16 @@ using System.IO;
 namespace SeriesIDParser
 {
 	/// <summary>
+	/// The properties for the ResolutionOutputBehavior
+	/// </summary>
+	public enum ResolutionOutputBehavior
+	{
+		AllFoundResolutions,
+		HighestResolution,
+		LowestResolution
+	}
+
+	/// <summary>
 	/// The settings who can give to the SeriesIDParser to modify the behavior. Object is prefilled with the default values and list entries
 	/// </summary>
 	[Serializable]
@@ -50,7 +60,7 @@ namespace SeriesIDParser
 			{
 				// ### Resolution Detection
 				_detectUltraHD8kTokens = new List<string>() { "8k", "4320k" };
-				_detectUltraHDTokens = new List<string>() { "UHD", "2160p" };
+				_detectUltraHDTokens = new List<string>() { "NetflixUHD", "UHD", "2160p" };
 				_detectFullHDTokens = new List<string>() { "FullHD", "1080p" };
 				_detectHDTokens = new List<string>() { "HDTV", "720p", "HD" };
 				_detectSDTokens = new List<string>() { "DVDRIP", "DVD", "XVID", "SD" };
@@ -143,6 +153,17 @@ namespace SeriesIDParser
 		}
 
 
+		private string _resolutionStringUnknown = "UNKNOWN";
+		/// <summary>
+		/// Defines the string who is convertet from the enum Resolutions to something readable for e.g. the ParsedString. Default: 'UNKNOWN'
+		/// </summary>
+		public string ResolutionStringUnknown
+		{
+			get { return _resolutionStringUnknown; }
+			set { _resolutionStringUnknown = value; }
+		}
+
+
 		private string _resolutionStringSD = "SD";
 		/// <summary>
 		/// Defines the string who is convertet from the enum Resolutions to something readable for e.g. the ParsedString. Default: 'SD'
@@ -195,6 +216,17 @@ namespace SeriesIDParser
 		{
 			get { return _resolutionStringUltraHD8K; }
 			set { _resolutionStringUltraHD8K = value; }
+		}
+
+	
+		private ResolutionOutputBehavior _resolutionStringOutput = ResolutionOutputBehavior.LowestResolution;
+		/// <summary>
+		/// Defines how the resolution is formated in the output strings e.g. ParsedString. Default: LowesrResolution
+		/// </summary>
+		public ResolutionOutputBehavior ResolutionStringOutput
+		{
+			get { return _resolutionStringOutput; }
+			set { _resolutionStringOutput = value; }
 		}
 		#endregion Output
 
@@ -281,6 +313,29 @@ namespace SeriesIDParser
 			get { return _removeWithoutListTokens; }
 			set { _removeWithoutListTokens = value; }
 		}
+
+
+
+		private List<KeyValuePair<string, string>> _replaceRegexAndListTokens = new List<KeyValuePair<string, string>>();
+		/// <summary>
+		/// Defines the empty list with the KeyValuePair to replace (regex, replace)
+		/// </summary>
+		public List<KeyValuePair<string, string>> ReplaceRegexAndListTokens
+		{
+			get { return _replaceRegexAndListTokens; }
+			set { _replaceRegexAndListTokens = value; }
+		}
+
+
+		private List<KeyValuePair<string, string>> _replaceRegexWithoutListTokens = new List<KeyValuePair<string, string>>();
+		/// <summary>
+		/// Defines the empty list with the KeyValuePair to replace (regex, replace)
+		/// </summary>
+		public List<KeyValuePair<string, string>> ReplaceRegexWithoutListTokens
+		{
+			get { return _replaceRegexWithoutListTokens; }
+			set { _replaceRegexWithoutListTokens = value; }
+		}
 		#endregion RemoveAndReplace
 
 
@@ -297,6 +352,7 @@ namespace SeriesIDParser
 		{
 			try
 			{
+				string data = string.Empty;
 				XmlSerializer x = new XmlSerializer(obj.GetType());
 				using (MemoryStream ms = new MemoryStream())
 				{
@@ -304,9 +360,11 @@ namespace SeriesIDParser
 					ms.Position = 0;
 					using (StreamReader sr = new StreamReader(ms, Encoding.Default))
 					{
-						return sr.ReadToEnd();
+						data = sr.ReadToEnd();
 					}
 				}
+
+				return data;
 			}
 			catch (Exception)
 			{

@@ -1,3 +1,37 @@
+6.0.0 (2016-09-17)
+------------------
+
+New
+~~~~
+- Added ParserSettings Property ReplaceRegexAndListTokens
+- Added ParserSettings Property ReplaceRegexWithoutListTokens
+- Added ParserSettings Property ResolutionStringOutput
+- Added ParserSettings Property ResolutionStringUnknown
+- Added ParserSettings Enum  ResolutionOutputBehavior
+- Added SeriesID Property Resolutions
+- Added SeriesID Enum ResolutionsMap
+- Added SeriesID Property DetectedOldSpacingChar
+- Added SeriesID Property ProcessingDuration
+- Removed Property Resolution
+- Removed Enum Resolutions
+- Removed Old SeriesID ctor
+- Removed useless comments
+- Support für multi resolution tokens in string
+- Added Unit Tests
+- Unit Tests improved for better code coverage
+- Project/Demo/Assembly/Package Icon
+- Added some more code comments
+
+
+Fix
+~~~~
+- Issue#005 - RemovewithoutListtokens are removed without checking for dots bevore and after
+- Issue#006 - Error with double resolution tokens
+- Issue#007 - Add Raw and/or Regex replace
+- Some smaller fixes
+
+
+
 5.2.0 (2016-08-12)
 ------------------
 
