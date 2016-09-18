@@ -125,6 +125,17 @@ namespace SeriesIDParser
 			get { return _possibleSpacingChars; }
 			set { _possibleSpacingChars = value; }
 		}
+
+
+		private char _releaseGroupSeperator = '-';
+		/// <summary>
+		/// Defines the prefilled list with the posible spacing chars for the given string to detect the char
+		/// </summary>
+		public char ReleaseGroupSeperator
+		{
+			get { return _releaseGroupSeperator; }
+			set { _releaseGroupSeperator = value; }
+		}
 		#endregion Parsing
 
 

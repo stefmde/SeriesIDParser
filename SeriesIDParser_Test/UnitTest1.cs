@@ -1,4 +1,29 @@
-﻿using System;
+﻿
+// MIT License
+
+// Copyright(c) 2016
+// Stefan Müller, Stefm, https://gitlab.com/u/Stefm
+
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
+
+
+using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SeriesIDParser;
 using System.Collections.Generic;
@@ -42,11 +67,13 @@ namespace SeriesIDParser_Test
 		[TestMethod]
 		public void GetSpacingCharTest()
 		{
-			Assert.AreEqual('.', new SeriesID().GetSpacingChar("Dubai.Airport.S01E05.Teil5.GERMAN.DOKU.HDTV.720p.x264.mkv"), "Should return a .");
-			Assert.AreEqual('.', new SeriesID().GetSpacingChar("Dubai.Airport,S01E05.Teil5.GERMAN.DOKU-HDTV.720p.x264.mkv"), "Should return a .");
-			Assert.AreEqual('-', new SeriesID().GetSpacingChar("Dubai-Airport-S01E05-Teil5-GERMAN-DOKU-HDTV-720p-x264.mkv"), "Should return a -");
-			Assert.AreEqual(' ', new SeriesID().GetSpacingChar("Dubai Airport S01E05 Teil5 GERMAN DOKU HDTV 720p x264.mkv"), "Should return a space");
-			Assert.AreEqual(new char(), new SeriesID().GetSpacingChar("Dubai Airport S01E05 Teil5 GERMAN-DOKU-HDTV-720p-x264"), "Should return a empy char");
+			ParserSettings ps = new ParserSettings(true);
+
+			Assert.AreEqual('.', Helper.GetSpacingChar("Dubai.Airport.S01E05.Teil5.GERMAN.DOKU.HDTV.720p.x264.mkv", ps), "Should return a .");
+			Assert.AreEqual('.', Helper.GetSpacingChar("Dubai.Airport,S01E05.Teil5.GERMAN.DOKU-HDTV.720p.x264.mkv", ps), "Should return a .");
+			Assert.AreEqual('-', Helper.GetSpacingChar("Dubai-Airport-S01E05-Teil5-GERMAN-DOKU-HDTV-720p-x264.mkv", ps), "Should return a -");
+			Assert.AreEqual(' ', Helper.GetSpacingChar("Dubai Airport S01E05 Teil5 GERMAN DOKU HDTV 720p x264.mkv", ps), "Should return a space");
+			Assert.AreEqual(new char(), Helper.GetSpacingChar("Dubai Airport S01E05 Teil5 GERMAN-DOKU-HDTV-720p-x264", ps), "Should return a empy char");
 		}
 
 
@@ -95,11 +122,11 @@ namespace SeriesIDParser_Test
 		[TestMethod]
 		public void GetYearTest()
 		{
-			Assert.AreEqual(2013, new SeriesID().GetYear("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv"), "Should give a year");
-			Assert.AreEqual(-1, new SeriesID().GetYear("Der.Hobbit.Smaugs.Einoede.1899.EXTENDED.German.DL.1080p.BluRay.x264.mkv"), "Should give no year");
-			Assert.AreEqual(1900, new SeriesID().GetYear("Der.Hobbit.Smaugs.Einoede.1900.EXTENDED.German.DL.1080p.BluRay.x264.mkv"), "Should give a year");
-			Assert.AreEqual(-1, new SeriesID().GetYear("Der.Hobbit.Smaugs.Einoede." + DateTime.Now.AddYears(1) + ".EXTENDED.German.DL.1080p.BluRay.x264.mkv"), "Should give no year");
-			Assert.AreEqual(2013, new SeriesID().GetYear("Der,Hobbit-Smaugs;Einoedex2013?EXTENDED(German)DL/1080p*BluRay+x264#mkv"), "Should give a year");
+			Assert.AreEqual(2013, Helper.GetYear("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv"), "Should give a year");
+			Assert.AreEqual(-1, Helper.GetYear("Der.Hobbit.Smaugs.Einoede.1899.EXTENDED.German.DL.1080p.BluRay.x264.mkv"), "Should give no year");
+			Assert.AreEqual(1900, Helper.GetYear("Der.Hobbit.Smaugs.Einoede.1900.EXTENDED.German.DL.1080p.BluRay.x264.mkv"), "Should give a year");
+			Assert.AreEqual(-1, Helper.GetYear("Der.Hobbit.Smaugs.Einoede." + DateTime.Now.AddYears(1) + ".EXTENDED.German.DL.1080p.BluRay.x264.mkv"), "Should give no year");
+			Assert.AreEqual(2013, Helper.GetYear("Der,Hobbit-Smaugs;Einoedex2013?EXTENDED(German)DL/1080p*BluRay+x264#mkv"), "Should give a year");
 		}
 
 
@@ -108,14 +135,14 @@ namespace SeriesIDParser_Test
 		{
 			ParserSettings ps = new ParserSettings(true);
 
-			Assert.AreEqual("mkv", new SeriesID().GetFileExtension("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv", ps.FileExtensions), "(1) Should give a extension");
-			Assert.AreEqual("avi", new SeriesID().GetFileExtension("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.avi", ps.FileExtensions), "(2) Should give a extension");
-			Assert.AreEqual("m4v", new SeriesID().GetFileExtension("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.m4v", ps.FileExtensions), "(3) Should give a extension");
-			Assert.AreEqual("wmv", new SeriesID().GetFileExtension("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.wmv", ps.FileExtensions), "(4) Should give a extension");
-			Assert.AreEqual(null, new SeriesID().GetFileExtension("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.xyz", ps.FileExtensions), "(5) Should give no extension");
-			Assert.AreEqual("wmv", new SeriesID().GetFileExtension("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.WmV", ps.FileExtensions), "(6) Should give a extension");
-			Assert.AreEqual("mp4", new SeriesID().GetFileExtension("Der,Hobbit,Smaugs,Einoede,2013,EXTENDED,German,DL,1080p,BluRay,x264.mp4", ps.FileExtensions), "(7) Should give a extension");
-			Assert.AreEqual(null, new SeriesID().GetFileExtension("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264", ps.FileExtensions), "(8) Should give no extension");
+			Assert.AreEqual("mkv", Helper.GetFileExtension("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv", ps.FileExtensions), "(1) Should give a extension");
+			Assert.AreEqual("avi", Helper.GetFileExtension("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.avi", ps.FileExtensions), "(2) Should give a extension");
+			Assert.AreEqual("m4v", Helper.GetFileExtension("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.m4v", ps.FileExtensions), "(3) Should give a extension");
+			Assert.AreEqual("wmv", Helper.GetFileExtension("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.wmv", ps.FileExtensions), "(4) Should give a extension");
+			Assert.AreEqual(null, Helper.GetFileExtension("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.xyz", ps.FileExtensions), "(5) Should give no extension");
+			Assert.AreEqual("wmv", Helper.GetFileExtension("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.WmV", ps.FileExtensions), "(6) Should give a extension");
+			Assert.AreEqual("mp4", Helper.GetFileExtension("Der,Hobbit,Smaugs,Einoede,2013,EXTENDED,German,DL,1080p,BluRay,x264.mp4", ps.FileExtensions), "(7) Should give a extension");
+			Assert.AreEqual(null, Helper.GetFileExtension("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264", ps.FileExtensions), "(8) Should give no extension");
 		}
 
 
@@ -125,21 +152,21 @@ namespace SeriesIDParser_Test
 			ParserSettings ps = new ParserSettings(true);
 
 			// Regular Test
-			Assert.AreEqual("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.1080p.BluRay.x264.mkv",
-				new SeriesID().RemoveTokens("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv", ".", ps.RemoveWithoutListTokens, false),
-				"(1) Should give a string");
-			Assert.AreEqual(null,
-				new SeriesID().RemoveTokens("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv", null, ps.RemoveWithoutListTokens, false),
-				"(2) Should give null");
-			Assert.AreEqual(null,
-				new SeriesID().RemoveTokens("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv", ".", new List<string>(), false),
-				"(3) Should give null");
-			Assert.AreEqual(null,
-				new SeriesID().RemoveTokens("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv", ".", null, false),
-				"(4) Should give null");
-			Assert.AreEqual("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.1080p.BluRay.x264.mkv",
-				new SeriesID().RemoveTokens("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.MIRROR.WEB.1080p.BluRay.x264.mkv", ".", ps.RemoveWithoutListTokens, false),
-				"(5) Should give a string");
+			//Assert.AreEqual("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.1080p.BluRay.x264.mkv",
+			//	new SeriesID().RemoveTokens("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv", ".", ps.RemoveWithoutListTokens, false),
+			//	"(1) Should give a string");
+			//Assert.AreEqual(null,
+			//	new SeriesID().RemoveTokens("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv", null, ps.RemoveWithoutListTokens, false),
+			//	"(2) Should give null");
+			//Assert.AreEqual(null,
+			//	new SeriesID().RemoveTokens("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv", ".", new List<string>(), false),
+			//	"(3) Should give null");
+			//Assert.AreEqual(null,
+			//	new SeriesID().RemoveTokens("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv", ".", null, false),
+			//	"(4) Should give null");
+			//Assert.AreEqual("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.1080p.BluRay.x264.mkv",
+			//	new SeriesID().RemoveTokens("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.MIRROR.WEB.1080p.BluRay.x264.mkv", ".", ps.RemoveWithoutListTokens, false),
+			//	"(5) Should give a string");
 
 			// Regex Test
 			ps.RemoveWithoutListTokens.Clear();
@@ -155,38 +182,63 @@ namespace SeriesIDParser_Test
 
 			// Regular Test
 			ps.ReplaceRegexWithoutListTokens.Add(new KeyValuePair<string, string>("EXTENDED", "."));
+			string input = "Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv";
+			string expected = "Der.Hobbit.Smaugs.Einoede.2013.German.DL.1080p.BluRay.x264.mkv";
+			List<string> expectedOutputList = new List<string>() { };
+			ReplaceTokensTestHelper(ps, input, expected, expectedOutputList, 1);
 
-			Assert.AreEqual("Der.Hobbit.Smaugs.Einoede.2013.German.DL.1080p.BluRay.x264.mkv",
-				new SeriesID().ReplaceTokens("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv", ".", ps.ReplaceRegexWithoutListTokens, false),
-				"(1) Should give a string");
 
 			ps.ReplaceRegexWithoutListTokens.Clear();
 			ps.ReplaceRegexWithoutListTokens.Add(new KeyValuePair<string, string>(".EXTENDED.", "."));
-			Assert.AreEqual("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv",
-				new SeriesID().ReplaceTokens("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv", ".", ps.ReplaceRegexWithoutListTokens, false),
-				"(2) Should give a string");
+			input = "Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv";
+			expected = "Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv";
+			expectedOutputList = new List<string>() { };
+			ReplaceTokensTestHelper(ps, input, expected, expectedOutputList, 2);
+
 
 			ps.ReplaceRegexWithoutListTokens.Clear();
 			ps.ReplaceRegexWithoutListTokens.Add(new KeyValuePair<string, string>("extended", "."));
-			Assert.AreEqual("Der.Hobbit.Smaugs.Einoede.2013.German.DL.1080p.BluRay.x264.mkv",
-				new SeriesID().ReplaceTokens("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv", ".", ps.ReplaceRegexWithoutListTokens, false),
-				"(3) Should give a string");
-			Assert.AreEqual("Der,Hobbit,Smaugs,Einoede,2013,EXTENDED,German,DL,1080p,BluRay,x264.mkv",
-				new SeriesID().ReplaceTokens("Der,Hobbit,Smaugs,Einoede,2013,EXTENDED,German,DL,1080p,BluRay,x264.mkv", ".", ps.ReplaceRegexWithoutListTokens, false),
-				"(4) Should give a string");
-			Assert.AreEqual("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv",
-				new SeriesID().ReplaceTokens("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv", ".", new List<KeyValuePair<string, string>>(), false),
-				"(5) Should give a string");
-			Assert.AreEqual("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv",
-				new SeriesID().ReplaceTokens("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv", ".", null, false),
-				"(6) Should give a pass throw");
+			input = "Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv";
+			expected = "Der.Hobbit.Smaugs.Einoede.2013.German.DL.1080p.BluRay.x264.mkv";
+			expectedOutputList = new List<string>() { };
+			ReplaceTokensTestHelper(ps, input, expected, expectedOutputList, 3);
+
+			input = "Der,Hobbit,Smaugs,Einoede,2013,EXTENDED,German,DL,1080p,BluRay,x264.mkv";
+			expected = "Der,Hobbit,Smaugs,Einoede,2013,EXTENDED,German,DL,1080p,BluRay,x264.mkv";
+			expectedOutputList = new List<string>() { };
+			ReplaceTokensTestHelper(ps, input, expected, expectedOutputList, 4);
+
+
+			ps.ReplaceRegexWithoutListTokens = new List<KeyValuePair<string, string>>();
+			input = "Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv";
+			expected = "Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv";
+			expectedOutputList = new List<string>() { };
+			ReplaceTokensTestHelper(ps, input, expected, expectedOutputList, 5);
+
+
+			ps.ReplaceRegexWithoutListTokens = null;
+			input = "Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv";
+			expected = "Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv";
+			expectedOutputList = new List<string>() { };
+			ReplaceTokensTestHelper(ps, input, expected, expectedOutputList, 5);
 
 
 			// Regex Test
+			ps.ReplaceRegexWithoutListTokens = new List<KeyValuePair<string, string>>();
 			ps.ReplaceRegexWithoutListTokens.Clear();
 			ps.ReplaceRegexWithoutListTokens.Add(new KeyValuePair<string, string>("extended", "xxXxx"));
 			// TODO implement regex test
 		}
+
+
+		private void ReplaceTokensTestHelper(ParserSettings ps, string inputString, string expectedString, List<string> expectedRemovedTokens, int testID)
+		{
+			List<string> actualRemovedTokens = Helper.ReplaceTokens(ref inputString, ".", ps.ReplaceRegexWithoutListTokens, false);
+			Assert.AreEqual(expectedString, inputString, "(" + testID + ") String compare ");
+			CollectionAssert.AreEqual(expectedRemovedTokens, actualRemovedTokens, "(" + testID + ") List compare ");
+		}
+
+
 
 
 		[TestMethod]
@@ -197,46 +249,46 @@ namespace SeriesIDParser_Test
 			// Lowest
 			ps.ResolutionStringOutput = ResolutionOutputBehavior.LowestResolution;
 			Assert.AreEqual(ps.ResolutionStringFullHD,
-				new SeriesID().GetResolutionString(ps, new List<ResolutionsMap> { ResolutionsMap.FullHD_1080p, ResolutionsMap.UltraHD_2160p }),
+				Helper.GetResolutionString(ps, new List<ResolutionsMap> { ResolutionsMap.FullHD_1080p, ResolutionsMap.UltraHD_2160p }),
 				"(1) Should give one full HD");
 			Assert.AreEqual(ps.ResolutionStringFullHD,
-				new SeriesID().GetResolutionString(ps, new List<ResolutionsMap> { ResolutionsMap.FullHD_1080p }),
+				Helper.GetResolutionString(ps, new List<ResolutionsMap> { ResolutionsMap.FullHD_1080p }),
 				"(2) Should give one full HD");
 			Assert.AreEqual(ps.ResolutionStringFullHD,
-				new SeriesID().GetResolutionString(ps, new List<ResolutionsMap> { ResolutionsMap.UNKNOWN, ResolutionsMap.UltraHD8K_4320p, ResolutionsMap.FullHD_1080p }),
+				Helper.GetResolutionString(ps, new List<ResolutionsMap> { ResolutionsMap.UNKNOWN, ResolutionsMap.UltraHD8K_4320p, ResolutionsMap.FullHD_1080p }),
 				"(3) Should give one full HD");
 			Assert.AreEqual(ps.ResolutionStringUnknown,
-				new SeriesID().GetResolutionString(ps, new List<ResolutionsMap>()),
+				Helper.GetResolutionString(ps, new List<ResolutionsMap>()),
 				"(4) Should give unknown");
 
 			// Highest
 			ps.ResolutionStringOutput = ResolutionOutputBehavior.HighestResolution;
 			Assert.AreEqual(ps.ResolutionStringUltraHD,
-				new SeriesID().GetResolutionString(ps, new List<ResolutionsMap> { ResolutionsMap.FullHD_1080p, ResolutionsMap.UltraHD_2160p }),
+				Helper.GetResolutionString(ps, new List<ResolutionsMap> { ResolutionsMap.FullHD_1080p, ResolutionsMap.UltraHD_2160p }),
 				"(10) Should give one UHD");
 			Assert.AreEqual(ps.ResolutionStringFullHD,
-				new SeriesID().GetResolutionString(ps, new List<ResolutionsMap> { ResolutionsMap.FullHD_1080p }),
+				Helper.GetResolutionString(ps, new List<ResolutionsMap> { ResolutionsMap.FullHD_1080p }),
 				"(11) Should give one full HD");
 			Assert.AreEqual(ps.ResolutionStringUltraHD8k,
-				new SeriesID().GetResolutionString(ps, new List<ResolutionsMap> { ResolutionsMap.UNKNOWN, ResolutionsMap.UltraHD8K_4320p, ResolutionsMap.FullHD_1080p }),
+				Helper.GetResolutionString(ps, new List<ResolutionsMap> { ResolutionsMap.UNKNOWN, ResolutionsMap.UltraHD8K_4320p, ResolutionsMap.FullHD_1080p }),
 				"(12) Should give one UHD");
 			Assert.AreEqual(ps.ResolutionStringUnknown,
-				new SeriesID().GetResolutionString(ps, new List<ResolutionsMap>()),
+				Helper.GetResolutionString(ps, new List<ResolutionsMap>()),
 				"(13) Should give unknown");
 
 			// All
 			ps.ResolutionStringOutput = ResolutionOutputBehavior.AllFoundResolutions;
 			Assert.AreEqual(ps.ResolutionStringFullHD + ps.NewSpacingChar + ps.ResolutionStringUltraHD,
-				new SeriesID().GetResolutionString(ps, new List<ResolutionsMap> { ResolutionsMap.FullHD_1080p, ResolutionsMap.UltraHD_2160p }),
+				Helper.GetResolutionString(ps, new List<ResolutionsMap> { ResolutionsMap.FullHD_1080p, ResolutionsMap.UltraHD_2160p }),
 				"(20) Should give HD + UHD");
 			Assert.AreEqual(ps.ResolutionStringFullHD,
-				new SeriesID().GetResolutionString(ps, new List<ResolutionsMap> { ResolutionsMap.FullHD_1080p }),
+				Helper.GetResolutionString(ps, new List<ResolutionsMap> { ResolutionsMap.FullHD_1080p }),
 				"(21) Should give one full HD");
 			Assert.AreEqual(ps.ResolutionStringFullHD  + ps.NewSpacingChar + ps.ResolutionStringUltraHD8k,
-				new SeriesID().GetResolutionString(ps, new List<ResolutionsMap> { ResolutionsMap.UNKNOWN, ResolutionsMap.UltraHD8K_4320p, ResolutionsMap.FullHD_1080p }),
+				Helper.GetResolutionString(ps, new List<ResolutionsMap> { ResolutionsMap.UNKNOWN, ResolutionsMap.UltraHD8K_4320p, ResolutionsMap.FullHD_1080p }),
 				"(22) Should give UHD HD");
 			Assert.AreEqual(ps.ResolutionStringUnknown,
-				new SeriesID().GetResolutionString(ps, new List<ResolutionsMap>()),
+				Helper.GetResolutionString(ps, new List<ResolutionsMap>()),
 				"(23) Should give unknown");
 		}
 

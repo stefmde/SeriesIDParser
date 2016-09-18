@@ -1,8 +1,22 @@
-6.0.0 (2016-09-17)
-------------------
+# Changelog #
 
-New
-~~~~
+##6.1.0 (2016-09-??)##
+###New###
+- Added ParserSettings Property ReleaseGroupSeperator
+- Added SeriesID Property ReleaseGroup
+- Added partial class SeriesID-Properties
+- Added class Helpers
+- Added missing license notes in class files
+- Change in *.md format
+
+###Fix###
+ - Code organization
+
+---
+
+
+##6.0.0 (2016-09-17)##
+###New###
 - Added ParserSettings Property ReplaceRegexAndListTokens
 - Added ParserSettings Property ReplaceRegexWithoutListTokens
 - Added ParserSettings Property ResolutionStringOutput
@@ -22,62 +36,49 @@ New
 - Project/Demo/Assembly/Package Icon
 - Added some more code comments
 
-
-Fix
-~~~~
+###Fix###
 - Issue#005 - RemovewithoutListtokens are removed without checking for dots bevore and after
 - Issue#006 - Error with double resolution tokens
 - Issue#007 - Add Raw and/or Regex replace
 - Some smaller fixes
 
+---
 
 
-5.2.0 (2016-08-12)
-------------------
-
-New
-~~~~
+##5.2.0 (2016-08-12)##
+###New###
 - DeSerializer in ParserSettings
 
-Fix
-~~~~
+###Fix###
 - Fixed an error that could cause wrong resolutions in wrong strings
 
+---
 
 
-5.1.0 (2016-08-12)
-------------------
-
-New
-~~~~
+##5.1.0 (2016-08-12)##
+###New###
 - Code optimizations
 - Warning: SeriesID multi parameter ctor will be removed in the next release
 
-Fix
-~~~~
-- 
+###Fix###
+- -
+
+---
 
 
-
-5.0.1 (2016-08-11)
-------------------
-
-New
-~~~~
+##5.0.1 (2016-08-11)##
+###New###
 - Moved more stuff to the settings object
 - Code optimizations
 
-Fix
-~~~~
-- 
+###Fix###
+- -
+
+---
 
 
-
-5.0.0 (2016-08-11)
-------------------
-
-New
-~~~~
+##5.0.0 (2016-08-11)##
+###New###
 - Added some more code comments
 - Code refactored
 - Properties no longer throw exceptions on error state
@@ -87,47 +88,38 @@ New
 - Unit Tests
 - Demo Project
 
-Fix
-~~~~
+###Fix###
 - No more need for a static object
 
+---
 
 
-4.0.0 (2016-07-30)
-------------------
-
-New
-~~~~
+##4.0.0 (2016-07-30)##
+###New###
 - Class isn't static any more
 - Posibility to throw an exception instead of an error flag
 - Object inizializer
 
-Fix
-~~~~
-- 
+###Fix###
+- -
+
+---
 
 
-
-3.1.0 (2016-07-30)
-------------------
-
-New
-~~~~
+##3.1.0 (2016-07-30)##
+###New###
 - Test description added
 - Added code comments
 - Added some tests
 
-Fix
-~~~~
+###Fix###
 - Tokens can't be duplicated any more
 
+---
 
 
-3.0.0 (2016-07-29)
-------------------
-
-New
-~~~~
+##3.0.0 (2016-07-29)##
+###New###
 - State is now flagable
 - State has new Flags "WARN_ERR_OR_WARN_OCCURRED" and "WARN_NO_TITLE_FOUND"
 - Now supports 38 file-extensions (https://en.wikipedia.org/wiki/Video_file_format)
@@ -139,8 +131,7 @@ New
 - Replaces Spaces
 - Replaces .-.
 
-Fix
-~~~~
+###Fix###
 - Strings without a title are now supported but triggers a warning
 - Performance improvements
 - Code optimization

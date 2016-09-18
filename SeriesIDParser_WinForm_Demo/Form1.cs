@@ -72,6 +72,7 @@ namespace SeriesIDParser_WinForm_Demo
 			dataGridViewResult.Rows.Add("State", "enum State", sid.State);
 			dataGridViewResult.Rows.Add("DetectedOldSpacingChar", "char", sid.DetectedOldSpacingChar);
 			dataGridViewResult.Rows.Add("ProcessingDuration", "TimeSpan", sid.ProcessingDuration.TotalMilliseconds + " ms");
+			dataGridViewResult.Rows.Add("ReleaseGroup", "string", sid.ReleaseGroup);
 
 			tbxException.Clear();
 			if (sid.Exception != null)

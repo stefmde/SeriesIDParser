@@ -56,7 +56,7 @@
 			// 
 			this.tbxException.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.tbxException.Location = new System.Drawing.Point(74, 468);
+			this.tbxException.Location = new System.Drawing.Point(74, 481);
 			this.tbxException.Multiline = true;
 			this.tbxException.Name = "tbxException";
 			this.tbxException.ReadOnly = true;
@@ -90,7 +90,7 @@
 			// 
 			this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(11, 471);
+			this.label2.Location = new System.Drawing.Point(11, 484);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(57, 13);
 			this.label2.TabIndex = 4;
@@ -111,7 +111,7 @@
 			this.dataGridViewResult.Location = new System.Drawing.Point(74, 59);
 			this.dataGridViewResult.Name = "dataGridViewResult";
 			this.dataGridViewResult.ReadOnly = true;
-			this.dataGridViewResult.Size = new System.Drawing.Size(862, 386);
+			this.dataGridViewResult.Size = new System.Drawing.Size(862, 399);
 			this.dataGridViewResult.TabIndex = 5;
 			// 
 			// ColumnProperty
@@ -147,7 +147,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(949, 629);
+			this.ClientSize = new System.Drawing.Size(949, 642);
 			this.Controls.Add(this.label3);
 			this.Controls.Add(this.dataGridViewResult);
 			this.Controls.Add(this.label2);
