@@ -45,6 +45,7 @@ namespace SeriesIDParser
 		/// <returns></returns>
 		internal static string GetResolutionString(ParserSettings settings, IList<ResolutionsMap> res)
 		{
+			// TODO: Only 72% Covered
 			string output = ResolutionsMap.UNKNOWN.ToString() + settings.NewSpacingChar;
 
 			if (res != null && res.Count > 0 && !(res.Count == 1 && res.Contains(ResolutionsMap.UNKNOWN)))
@@ -277,6 +278,7 @@ namespace SeriesIDParser
 		/// <returns>returns the cleaned string</returns>
 		internal static List<string> RemoveTokens(ref string input, string oldSpacingChar, List<string> removeTokens, bool addRemovedToList)
 		{
+			// TODO: Only 95% Covered
 			string ret = input;
 			List<string> foundTokens = new List<string>();
 
@@ -349,6 +351,7 @@ namespace SeriesIDParser
 		/// <returns></returns>
 		internal static List<string> ReplaceTokens(ref string input, string oldSpacingChar, List<KeyValuePair<string, string>> replaceList, bool addRemovedToList)
 		{
+			// TODO: Only 72% Covered
 			string ret = input;
 			List<string> foundTokens = new List<string>();
 
@@ -406,6 +409,39 @@ namespace SeriesIDParser
 		}
 
 
+
+
+
+		/// <summary>
+		/// Gets the resolutions of a given string
+		/// </summary>
+		/// <param name="ResMap">The token that could match the given resolution</param>
+		/// <param name="res">The given resolution wo is targeted by the ResMap tokens</param>
+		/// <param name="oldSpacingChar">the spacing char in the given string</param>
+		/// <param name="fullTitle">The given string who should be analized</param>
+		internal static List<ResolutionsMap> GetResolutionByResMap(List<string> ResMap, ResolutionsMap res, char oldSpacingChar, ref string fullTitle)
+		{
+			string spacer = Regex.Escape(oldSpacingChar.ToString());
+			List<ResolutionsMap> foundResolutions = new List<ResolutionsMap>();
+
+			Regex removeRegex = null;
+			foreach (string item in ResMap)
+			{
+				removeRegex = new Regex(spacer + item + spacer, RegexOptions.IgnoreCase);
+
+				if (removeRegex.IsMatch(fullTitle))
+				{
+					// Search with spacer but remove without spacer
+					removeRegex = new Regex(item, RegexOptions.IgnoreCase);
+					//AddUniqueResolutionToList(res);
+					foundResolutions.Add(res);
+
+					fullTitle = removeRegex.Replace(fullTitle, "");
+				}
+			}
+
+			return foundResolutions;
+		}
 
 	}
 }

@@ -137,26 +137,36 @@ namespace SeriesIDParser
 				if (_originalString.Length >= 5)
 				{
 					_fileExtension = Helper.GetFileExtension(input, _parserSettings.FileExtensions);
-					
+
 
 					// ###################################################################
 					// ### Try get resolution
 					// ###################################################################
 
+					List<ResolutionsMap> foundResolutions = new List<ResolutionsMap>();
+
 					// Try get 8K
-					GetResolutionByResMap(_parserSettings.DetectUltraHD8kTokens, ResolutionsMap.UltraHD8K_4320p, _detectedOldSpacingChar, ref fullTitle);
+					foundResolutions.AddRange(Helper.GetResolutionByResMap(_parserSettings.DetectUltraHD8kTokens, ResolutionsMap.UltraHD8K_4320p, _detectedOldSpacingChar, ref fullTitle));
 
 					// Try get 4K
-					GetResolutionByResMap(_parserSettings.DetectUltraHDTokens, ResolutionsMap.UltraHD_2160p, _detectedOldSpacingChar, ref fullTitle);
+					foundResolutions.AddRange(Helper.GetResolutionByResMap(_parserSettings.DetectUltraHDTokens, ResolutionsMap.UltraHD_2160p, _detectedOldSpacingChar, ref fullTitle));
 
 					// Try get FullHD
-					GetResolutionByResMap(_parserSettings.DetectFullHDTokens, ResolutionsMap.FullHD_1080p, _detectedOldSpacingChar, ref fullTitle);
+					foundResolutions.AddRange(Helper.GetResolutionByResMap(_parserSettings.DetectFullHDTokens, ResolutionsMap.FullHD_1080p, _detectedOldSpacingChar, ref fullTitle));
 
 					// Try get HD
-					GetResolutionByResMap(_parserSettings.DetectHDTokens, ResolutionsMap.HD_720p, _detectedOldSpacingChar, ref fullTitle);
+					foundResolutions.AddRange(Helper.GetResolutionByResMap(_parserSettings.DetectHDTokens, ResolutionsMap.HD_720p, _detectedOldSpacingChar, ref fullTitle));
 
 					// Try get SD
-					GetResolutionByResMap(_parserSettings.DetectSDTokens, ResolutionsMap.SD_Any, _detectedOldSpacingChar, ref fullTitle);
+					foundResolutions.AddRange(Helper.GetResolutionByResMap(_parserSettings.DetectSDTokens, ResolutionsMap.SD_Any, _detectedOldSpacingChar, ref fullTitle));
+
+					foreach (ResolutionsMap res in foundResolutions)
+					{
+						if (!_resolutions.Contains(res))
+						{
+							_resolutions.Add(res);
+						}
+					}
 
 
 
@@ -187,7 +197,10 @@ namespace SeriesIDParser
 					foundTokens.AddRange( Helper.ReplaceTokens(ref fullTitle, _detectedOldSpacingChar.ToString(), _parserSettings.ReplaceRegexWithoutListTokens, false));
 					foreach (string item in foundTokens)
 					{
-						AddRemovedToken(item);
+						if (_removedTokens != null && !_removedTokens.Any(x => x.ToLower() == item.ToLower()))
+						{
+							_removedTokens.Add(item);
+						}
 					}
 
 					// Sort removedTokensList
@@ -347,58 +360,6 @@ namespace SeriesIDParser
 			else
 			{
 				_resolutions.Remove(ResolutionsMap.UNKNOWN);
-			}
-		}
-
-		/// <summary>
-		/// Adds a Resolution to the list if its not already contained
-		/// </summary>
-		/// <param name="res"></param>
-		private void AddUniqueResolutionToList(ResolutionsMap res)
-		{
-			if (!_resolutions.Contains(res))
-			{
-				_resolutions.Add(res);
-			}
-		}
-
-		/// <summary>
-		/// Adds a token who is removed and should be tracked to a list if it is not contained
-		/// </summary>
-		/// <param name="token">String token to add to list</param>
-		private void AddRemovedToken(string token)
-		{
-			if (_removedTokens != null && !_removedTokens.Any(x => x.ToLower() == token.ToLower()))
-			{
-				_removedTokens.Add(token);
-			}
-		}
-
-
-		/// <summary>
-		/// Gets the resolutions of a given string
-		/// </summary>
-		/// <param name="ResMap">The token that could match the given resolution</param>
-		/// <param name="res">The given resolution wo is targeted by the ResMap tokens</param>
-		/// <param name="oldSpacingChar">the spacing char in the given string</param>
-		/// <param name="fullTitle">The given string who should be analized</param>
-		private void GetResolutionByResMap(List<string> ResMap, ResolutionsMap res, char oldSpacingChar, ref string fullTitle)
-		{
-			string spacer = Regex.Escape(oldSpacingChar.ToString());
-
-			Regex removeRegex = null;
-			foreach (string item in ResMap)
-			{
-				removeRegex = new Regex(spacer + item + spacer, RegexOptions.IgnoreCase);
-
-				if (removeRegex.IsMatch(fullTitle))
-				{
-					// Search with spacer but remove without spacer
-					removeRegex = new Regex(item, RegexOptions.IgnoreCase);
-					AddUniqueResolutionToList(res);
-
-					fullTitle = removeRegex.Replace(fullTitle, "");
-				}
 			}
 		}
 

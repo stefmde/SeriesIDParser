@@ -361,8 +361,8 @@ namespace SeriesIDParser
 		/// <returns>The xml string representing this object</returns>
 		public static string SerializeToXML(ParserSettings obj)
 		{
-			try
-			{
+			//try
+			//{
 				string data = string.Empty;
 				XmlSerializer x = new XmlSerializer(obj.GetType());
 				using (MemoryStream ms = new MemoryStream())
@@ -376,11 +376,11 @@ namespace SeriesIDParser
 				}
 
 				return data;
-			}
-			catch (Exception)
-			{
-				throw;
-			}
+			//}
+			//catch (Exception)
+			//{
+			//	throw;
+			//}
 		}
 
 
@@ -391,19 +391,19 @@ namespace SeriesIDParser
 		/// <returns>The object generated out of the xml content</returns>
 		public static ParserSettings DeSerializeFromXML(string xml)
 		{
-			try
-			{
+			//try
+			//{
 				XmlSerializer x = new XmlSerializer(typeof(ParserSettings));
 				byte[] xmlBytes = Encoding.Default.GetBytes(xml);
 				using (MemoryStream ms = new MemoryStream(xmlBytes))
 				{
 					return (ParserSettings)x.Deserialize(ms);
 				}
-			}
-			catch
-			{
-				throw;
-			}
+			//}
+			//catch
+			//{
+			//	throw;
+			//}
 		}
 		#endregion DeSerialisazion
 

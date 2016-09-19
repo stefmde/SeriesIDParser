@@ -81,42 +81,53 @@ namespace SeriesIDParser_Test
 		public void DeSerializationTest()
 		{
 			// Create and modify object
-			ParserSettings ps1 = new ParserSettings();
-			ps1.DetectFullHDTokens.Add("Test");
-			ps1.DetectHDTokens.Clear();
-			ps1.DetectSDTokens.Add("Test2");
-			ps1.DetectUltraHD8kTokens.Clear();
-			ps1.DetectUltraHDTokens.Add("Test3");
-			ps1.FileExtensions.Add("AAA");
-			ps1.IDStringFormater = "ABC+#*7543";
-			ps1.NewSpacingChar = 'x';
-			ps1.PossibleSpacingChars.Remove('.');
-			ps1.ThrowExceptionInsteadOfErrorFlag = true;
+			ParserSettings expectedParserSettings = new ParserSettings();
+			expectedParserSettings.DetectFullHDTokens.Add("Test");
+			expectedParserSettings.DetectHDTokens.Clear();
+			expectedParserSettings.DetectSDTokens.Add("Test2");
+			expectedParserSettings.DetectUltraHD8kTokens.Clear();
+			expectedParserSettings.DetectUltraHDTokens.Add("Test3");
+			expectedParserSettings.FileExtensions.Add("AAA");
+			expectedParserSettings.IDStringFormater = "ABC+#*7543";
+			expectedParserSettings.NewSpacingChar = 'x';
+			expectedParserSettings.PossibleSpacingChars.Remove('.');
+			expectedParserSettings.ThrowExceptionInsteadOfErrorFlag = true;
 
 			// Serialization
-			string ps1String = ParserSettings.SerializeToXML(ps1);
-			ParserSettings ps2 = ParserSettings.DeSerializeFromXML(ps1String);
+			string ps1String = ParserSettings.SerializeToXML(expectedParserSettings);
+			ParserSettings actualParserSettings = ParserSettings.DeSerializeFromXML(ps1String);
 
 			// Compare
-			CollectionAssert.AreEqual(ps1.DetectFullHDTokens, ps2.DetectFullHDTokens, "DetectFullHDTokens ");
-			CollectionAssert.AreEqual(ps1.DetectHDTokens, ps2.DetectHDTokens, "DetectHDTokens ");
-			CollectionAssert.AreEqual(ps1.DetectSDTokens, ps2.DetectSDTokens, "DetectSDTokens ");
-			CollectionAssert.AreEqual(ps1.DetectUltraHD8kTokens, ps2.DetectUltraHD8kTokens, "DetectUltraHD8kTokens ");
-			CollectionAssert.AreEqual(ps1.DetectUltraHDTokens, ps2.DetectUltraHDTokens, "DetectUltraHDTokens ");
-			CollectionAssert.AreEqual(ps1.FileExtensions, ps2.FileExtensions, "FileExtensions ");
-			Assert.AreEqual(ps1.IDStringFormater, ps2.IDStringFormater, "IDStringFormater ");
-			Assert.AreEqual(ps1.NewSpacingChar, ps2.NewSpacingChar, "NewSpacingChar ");
-			CollectionAssert.AreEqual(ps1.PossibleSpacingChars, ps2.PossibleSpacingChars, "PossibleSpacingChars ");
-			CollectionAssert.AreEqual(ps1.RemoveAndListTokens, ps2.RemoveAndListTokens, "RemoveAndListTokens ");
-			CollectionAssert.AreEqual(ps1.RemoveWithoutListTokens, ps2.RemoveWithoutListTokens, "RemoveWithoutListTokens ");
-			Assert.AreEqual(ps1.ResolutionStringFullHD, ps2.ResolutionStringFullHD, "ResolutionStringFullHD ");
-			Assert.AreEqual(ps1.ResolutionStringHD, ps2.ResolutionStringHD, "ResolutionStringHD ");
-			Assert.AreEqual(ps1.ResolutionStringSD, ps2.ResolutionStringSD, "ResolutionStringSD ");
-			Assert.AreEqual(ps1.ResolutionStringUltraHD, ps2.ResolutionStringUltraHD, "ResolutionStringUltraHD ");
-			Assert.AreEqual(ps1.ResolutionStringUltraHD8k, ps2.ResolutionStringUltraHD8k, "ResolutionStringUltraHD8k ");
-			Assert.AreEqual(ps1.SeasonAndEpisodeParseRegex, ps2.SeasonAndEpisodeParseRegex, "SeasonAndEpisodeParseRegex ");
-			Assert.AreEqual(ps1.ThrowExceptionInsteadOfErrorFlag, ps2.ThrowExceptionInsteadOfErrorFlag, "ThrowExceptionInsteadOfErrorFlag ");
+			DeSerializationTestHelper(expectedParserSettings, actualParserSettings);
 		}
+
+		private void DeSerializationTestHelper(ParserSettings expectedParserSettings, ParserSettings actualParserSettings)
+		{
+			CollectionAssert.AreEqual(expectedParserSettings.DetectFullHDTokens, actualParserSettings.DetectFullHDTokens, "DetectFullHDTokens ");
+			CollectionAssert.AreEqual(expectedParserSettings.DetectHDTokens, actualParserSettings.DetectHDTokens, "DetectHDTokens ");
+			CollectionAssert.AreEqual(expectedParserSettings.DetectSDTokens, actualParserSettings.DetectSDTokens, "DetectSDTokens ");
+			CollectionAssert.AreEqual(expectedParserSettings.DetectUltraHD8kTokens, actualParserSettings.DetectUltraHD8kTokens, "DetectUltraHD8kTokens ");
+			CollectionAssert.AreEqual(expectedParserSettings.DetectUltraHDTokens, actualParserSettings.DetectUltraHDTokens, "DetectUltraHDTokens ");
+			CollectionAssert.AreEqual(expectedParserSettings.FileExtensions, actualParserSettings.FileExtensions, "FileExtensions ");
+			Assert.AreEqual(expectedParserSettings.IDStringFormater, actualParserSettings.IDStringFormater, "IDStringFormater ");
+			Assert.AreEqual(expectedParserSettings.NewSpacingChar, actualParserSettings.NewSpacingChar, "NewSpacingChar ");
+			CollectionAssert.AreEqual(expectedParserSettings.PossibleSpacingChars, actualParserSettings.PossibleSpacingChars, "PossibleSpacingChars ");
+			CollectionAssert.AreEqual(expectedParserSettings.RemoveAndListTokens, actualParserSettings.RemoveAndListTokens, "RemoveAndListTokens ");
+			CollectionAssert.AreEqual(expectedParserSettings.RemoveWithoutListTokens, actualParserSettings.RemoveWithoutListTokens, "RemoveWithoutListTokens ");
+			Assert.AreEqual(expectedParserSettings.ResolutionStringFullHD, actualParserSettings.ResolutionStringFullHD, "ResolutionStringFullHD ");
+			Assert.AreEqual(expectedParserSettings.ResolutionStringHD, actualParserSettings.ResolutionStringHD, "ResolutionStringHD ");
+			Assert.AreEqual(expectedParserSettings.ResolutionStringSD, actualParserSettings.ResolutionStringSD, "ResolutionStringSD ");
+			Assert.AreEqual(expectedParserSettings.ResolutionStringUltraHD, actualParserSettings.ResolutionStringUltraHD, "ResolutionStringUltraHD ");
+			Assert.AreEqual(expectedParserSettings.ResolutionStringUltraHD8k, actualParserSettings.ResolutionStringUltraHD8k, "ResolutionStringUltraHD8k ");
+			Assert.AreEqual(expectedParserSettings.SeasonAndEpisodeParseRegex, actualParserSettings.SeasonAndEpisodeParseRegex, "SeasonAndEpisodeParseRegex ");
+			Assert.AreEqual(expectedParserSettings.ThrowExceptionInsteadOfErrorFlag, actualParserSettings.ThrowExceptionInsteadOfErrorFlag, "ThrowExceptionInsteadOfErrorFlag ");
+			CollectionAssert.AreEqual(expectedParserSettings.ReplaceRegexAndListTokens, actualParserSettings.ReplaceRegexAndListTokens, "ReplaceRegexAndListTokens ");
+			CollectionAssert.AreEqual(expectedParserSettings.ReplaceRegexWithoutListTokens, actualParserSettings.ReplaceRegexWithoutListTokens, "ReplaceRegexWithoutListTokens ");
+			Assert.AreEqual(expectedParserSettings.ResolutionStringOutput, actualParserSettings.ResolutionStringOutput, "ResolutionStringOutput ");
+			Assert.AreEqual(expectedParserSettings.ResolutionStringUnknown, actualParserSettings.ResolutionStringUnknown, "ResolutionStringUnknown ");
+		}
+
+
 
 
 		[TestMethod]
@@ -226,8 +237,12 @@ namespace SeriesIDParser_Test
 			// Regex Test
 			ps.ReplaceRegexWithoutListTokens = new List<KeyValuePair<string, string>>();
 			ps.ReplaceRegexWithoutListTokens.Clear();
-			ps.ReplaceRegexWithoutListTokens.Add(new KeyValuePair<string, string>("extended", "xxXxx"));
-			// TODO implement regex test
+			ps.ReplaceRegexWithoutListTokens.Add(new KeyValuePair<string, string>("e.tended", "."));
+
+			input = "Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv";
+			expected = "Der.Hobbit.Smaugs.Einoede.2013.German.DL.1080p.BluRay.x264.mkv";
+			expectedOutputList = new List<string>() { };
+			ReplaceTokensTestHelper(ps, input, expected, expectedOutputList, 10);
 		}
 
 
@@ -291,6 +306,71 @@ namespace SeriesIDParser_Test
 				Helper.GetResolutionString(ps, new List<ResolutionsMap>()),
 				"(23) Should give unknown");
 		}
+
+
+		[TestMethod]
+		public void GetResolutionByResMapTest()
+		{
+			ParserSettings ps = new ParserSettings(true);
+			// TODO implement me
+			string inputTitle = "";
+			string expectedTitle = "";
+			GetResolutionByResMapTestHelper(ps, '.', inputTitle, expectedTitle, ResolutionsMap.FullHD_1080p, 1);
+
+			inputTitle = "";
+			expectedTitle = "";
+			GetResolutionByResMapTestHelper(ps, '.', inputTitle, expectedTitle, ResolutionsMap.FullHD_1080p, 2);
+
+			inputTitle = "";
+			expectedTitle = "";
+			GetResolutionByResMapTestHelper(ps, '.', inputTitle, expectedTitle, ResolutionsMap.FullHD_1080p, 3);
+
+			inputTitle = "";
+			expectedTitle = "";
+			GetResolutionByResMapTestHelper(ps, '.', inputTitle, expectedTitle, ResolutionsMap.FullHD_1080p, 4);
+
+			inputTitle = "";
+			expectedTitle = "";
+			GetResolutionByResMapTestHelper(ps, '.', inputTitle, expectedTitle, ResolutionsMap.FullHD_1080p, 5);
+		}
+
+
+		public void GetResolutionByResMapTestHelper(ParserSettings ps, char seperator, string actualTitle, string expectedTitle, ResolutionsMap expectedResolution, int id)
+		{
+			List<ResolutionsMap> actualResolutions = new List<ResolutionsMap>();
+
+			// Try get 8K
+			actualResolutions.AddRange(Helper.GetResolutionByResMap(ps.DetectUltraHD8kTokens, ResolutionsMap.UltraHD8K_4320p, seperator, ref actualTitle));
+
+			// Try get 4K
+			actualResolutions.AddRange(Helper.GetResolutionByResMap(ps.DetectUltraHDTokens, ResolutionsMap.UltraHD_2160p, seperator, ref actualTitle));
+
+			// Try get FullHD
+			actualResolutions.AddRange(Helper.GetResolutionByResMap(ps.DetectFullHDTokens, ResolutionsMap.FullHD_1080p, seperator, ref actualTitle));
+
+			// Try get HD
+			actualResolutions.AddRange(Helper.GetResolutionByResMap(ps.DetectHDTokens, ResolutionsMap.HD_720p, seperator, ref actualTitle));
+
+			// Try get SD
+			actualResolutions.AddRange(Helper.GetResolutionByResMap(ps.DetectSDTokens, ResolutionsMap.SD_Any, seperator, ref actualTitle));
+
+			actualResolutions = actualResolutions.Distinct().ToList();
+
+			if (actualResolutions.Count == 1)
+			{
+				Assert.AreEqual(expectedResolution, actualResolutions.LastOrDefault(), "(+" + id + ") Collections");
+				Assert.AreEqual(expectedTitle, actualTitle, "(+" + id + ") Title");
+			}
+			else
+			{
+				Assert.Fail("(+" + id + ") Collection Error: More than one resolution found");
+			}
+		}
+
+		
+
+
+
 
 	}
 }
