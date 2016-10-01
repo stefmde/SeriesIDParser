@@ -161,22 +161,22 @@ namespace SeriesIDParser_Test
 		public void RemoveTokensTest()
 		{
 			ParserSettings ps = new ParserSettings(true);
-
+			//TODO Implement me
 			// Regular Test
 			//Assert.AreEqual("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.1080p.BluRay.x264.mkv",
-			//	new SeriesID().RemoveTokens("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv", ".", ps.RemoveWithoutListTokens, false),
+			//	Helper.RemoveTokens("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv", ".", ps.RemoveWithoutListTokens, false),
 			//	"(1) Should give a string");
 			//Assert.AreEqual(null,
-			//	new SeriesID().RemoveTokens("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv", null, ps.RemoveWithoutListTokens, false),
+			//	Helper.RemoveTokens("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv", null, ps.RemoveWithoutListTokens, false),
 			//	"(2) Should give null");
 			//Assert.AreEqual(null,
-			//	new SeriesID().RemoveTokens("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv", ".", new List<string>(), false),
+			//	Helper.RemoveTokens("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv", ".", new List<string>(), false),
 			//	"(3) Should give null");
 			//Assert.AreEqual(null,
-			//	new SeriesID().RemoveTokens("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv", ".", null, false),
+			//	Helper.RemoveTokens("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv", ".", null, false),
 			//	"(4) Should give null");
 			//Assert.AreEqual("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.1080p.BluRay.x264.mkv",
-			//	new SeriesID().RemoveTokens("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.MIRROR.WEB.1080p.BluRay.x264.mkv", ".", ps.RemoveWithoutListTokens, false),
+			//	Helper.RemoveTokens("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.MIRROR.WEB.1080p.BluRay.x264.mkv", ".", ps.RemoveWithoutListTokens, false),
 			//	"(5) Should give a string");
 
 			// Regex Test
@@ -246,7 +246,7 @@ namespace SeriesIDParser_Test
 		}
 
 
-		private void ReplaceTokensTestHelper(ParserSettings ps, string inputString, string expectedString, List<string> expectedRemovedTokens, int testID)
+		private static void ReplaceTokensTestHelper(ParserSettings ps, string inputString, string expectedString, List<string> expectedRemovedTokens, int testID)
 		{
 			List<string> actualRemovedTokens = Helper.ReplaceTokens(ref inputString, ".", ps.ReplaceRegexWithoutListTokens, false);
 			Assert.AreEqual(expectedString, inputString, "(" + testID + ") String compare ");
@@ -335,7 +335,7 @@ namespace SeriesIDParser_Test
 		}
 
 
-		public void GetResolutionByResMapTestHelper(ParserSettings ps, char seperator, string actualTitle, string expectedTitle, ResolutionsMap expectedResolution, int id)
+		private static void GetResolutionByResMapTestHelper(ParserSettings ps, char seperator, string actualTitle, string expectedTitle, ResolutionsMap expectedResolution, int id)
 		{
 			List<ResolutionsMap> actualResolutions = new List<ResolutionsMap>();
 
@@ -358,18 +358,14 @@ namespace SeriesIDParser_Test
 
 			if (actualResolutions.Count == 1)
 			{
-				Assert.AreEqual(expectedResolution, actualResolutions.LastOrDefault(), "(+" + id + ") Collections");
+				Assert.AreEqual(expectedResolution, actualResolutions.LastOrDefault(), "(" + id + ") Collections");
 				Assert.AreEqual(expectedTitle, actualTitle, "(+" + id + ") Title");
 			}
 			else
 			{
-				Assert.Fail("(+" + id + ") Collection Error: More than one resolution found");
+				Assert.Fail("(+" + id + ") Collection Error: More than one resolution found for input: \"" + actualTitle + "\"");
 			}
 		}
-
-		
-
-
 
 
 	}

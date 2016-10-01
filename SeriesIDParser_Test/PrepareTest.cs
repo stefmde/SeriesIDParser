@@ -234,7 +234,7 @@ namespace SeriesIDParser_Test
 			//Remove Hoster-String - Test008
 			id = new SeriesID();
 			id.Episode = 10;
-			id.EpisodeTitle = null;
+			id.EpisodeTitle = string.Empty;
 			id.FileExtension = null;
 			id.IsSeries = true;
 			id.OriginalString = "Better.Call.Saul.S02E10.GERMAN.DL.DUBBED.1080p.WebHD.h264-iNFOTv";
@@ -260,7 +260,7 @@ namespace SeriesIDParser_Test
 			//Remove Hoster-String with spaces - Test009
 			id = new SeriesID();
 			id.Episode = 10;
-			id.EpisodeTitle = null;
+            id.EpisodeTitle = string.Empty;
 			id.FileExtension = null;
 			id.IsSeries = true;
 			id.OriginalString = "Better.Call.Saul.S02E10.GERMAN.DL.DUBBED.1080p.WebHD.h264 - iNFOTv";
@@ -286,7 +286,7 @@ namespace SeriesIDParser_Test
 			//Remove Hoster-String with spaces and extension - Test010
 			id = new SeriesID();
 			id.Episode = 10;
-			id.EpisodeTitle = null;
+            id.EpisodeTitle = string.Empty;
 			id.FileExtension = "avi";
 			id.IsSeries = true;
 			id.OriginalString = "Better.Call.Saul.S02E10.GERMAN.DL.DUBBED.1080p.WebHD.h264 - iNFOTv.avi";
@@ -312,7 +312,7 @@ namespace SeriesIDParser_Test
 			// Movie with extension - Test011
 			id = new SeriesID();
 			id.Episode = -1;
-			id.EpisodeTitle = null;
+            id.EpisodeTitle = string.Empty;
 			id.FileExtension = "mkv";
 			id.IsSeries = false;
 			id.OriginalString = "Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv";
@@ -338,7 +338,7 @@ namespace SeriesIDParser_Test
 			// Movie usual - Test012
 			id = new SeriesID();
 			id.Episode = -1;
-			id.EpisodeTitle = null;
+            id.EpisodeTitle = string.Empty;
 			id.FileExtension = null;
 			id.IsSeries = false;
 			id.OriginalString = "A.Chinese.Ghost.Story.3.1991.German.DTS.1080p.BD9.x264";

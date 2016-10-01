@@ -50,53 +50,69 @@ namespace SeriesIDParser
 	public class ParserSettings
 	{
 
-
 		/// <summary>
 		/// Prefill ctor
 		/// </summary>
 		public ParserSettings(bool preFillLists = false)
 		{
-			if (preFillLists)
-			{
-				// ### Resolution Detection
-				_detectUltraHD8kTokens = new List<string>() { "8k", "4320k" };
-				_detectUltraHDTokens = new List<string>() { "NetflixUHD", "UHD", "2160p" };
-				_detectFullHDTokens = new List<string>() { "FullHD", "1080p" };
-				_detectHDTokens = new List<string>() { "HDTV", "720p", "HD" };
-				_detectSDTokens = new List<string>() { "DVDRIP", "DVD", "XVID", "SD" };
+		    if (!preFillLists)
+		    {
+		        return;
+		    }
 
-				// ### Fileextensions
-				_fileExtensions = new List<string>() { "3G2", "3GP", "AMV", "ASF", "AVI", "DRC", "F4A", "F4B", "F4P", "F4V",
-												"FLV", "GIF", "GIFV", "M2V", "M4P", "M4V", "MKV", "MNG", "MOV", "MP2",
-												"MP4", "MPE", "MPEG", "MPG", "MPV", "MXF", "NSV", "OGG", "OGV", "QT",
-												"RM", "RMVB", "ROQ", "SVI", "VOB", "WEBM", "WMV", "YUV" };
+		    // ### Resolution Detection
+		    _detectUltraHD8kTokens = new List<string>() { "8k", "4320k" };
+		    _detectUltraHDTokens = new List<string>() { "NetflixUHD", "UHD", "2160p" };
+		    _detectFullHDTokens = new List<string>() { "FullHD", "1080p", "1080i" };
+		    _detectHDTokens = new List<string>() { "HDTV", "720p", "HD" };
+		    _detectSDTokens = new List<string>() { "DVDRIP", "DVD", "SD" };
 
-				// ### Remove and Replace
-				_removeAndListTokens = new List<string>() { "DUBBED", "SYNCED", "AVC", "German", "iTunes",
-													"DTS", "BluRay", "x264", "x265", "h264",
-													"AC3D", "AAC", "WebHD", "Netflix", "WebRIP",
-													"DOKU", "EXTENDED", "DTSHD", "UNRATED" };
+		    // ### Fileextensions
+		    _fileExtensions = new List<string>() { "3G2", "3GP", "AMV", "ASF", "AVI", "DRC", "F4A", "F4B", "F4P", "F4V",
+		        "FLV", "GIF", "GIFV", "M2V", "M4P", "M4V", "MKV", "MNG", "MOV", "MP2",
+		        "MP4", "MPE", "MPEG", "MPG", "MPV", "MXF", "NSV", "OGG", "OGV", "QT",
+		        "RM", "RMVB", "ROQ", "SVI", "VOB", "WEBM", "WMV", "YUV" };
 
-				_removeWithoutListTokens = new List<string>() { " ", "MIRROR", "WEB", "BD9", "DD20",
-														"DD51", "DL" };
+		    // ### Remove 
+		    _removeAndListTokens = new List<string>() { "DUBBED", "SYNCED", "iTunes", "BluRay", "WebHD",
+		        "Netflix", "WebRIP", "DOKU", "EXTENDED", "UNRATED",
+		        "AmazonHD", "German", "Remastered", "HDRip", "Remux" };
 
-				// ### Other Stuff
-				_possibleSpacingChars = new List<char>() { '.', ',', '-', ' ', '+', '*' };
-			}
+		    //_removeAndListTokensOnLanguageParserIsDisabled = new List<string>() { "GERMAN" };
+
+		    _removeWithoutListTokens = new List<string>() { " ", "MIRROR", "WEB", "BD9", "DD20",
+		        "DD51", "DD5.1", "Web-DL", "DL", "HDDVDRip",
+		        "AC3D",	"THEATRICAL" };
+
+		    // ### Parsing
+		    _videoCodecs = new List<string>() { "x264", "h264", "x265", "AVC", "XVID",
+		        "FFmpeg", "VP7", "VP8", "VP9",
+		        "MPEG-4", "MPEG-2", "MPEG4", "MPEG2" };
+
+		    _audioCodecs = new List<string>() { "DTSHD", "DTS", "AAC", "MP3", "MPEG3", "MPEG-3" };
+
+		    //_languages = new List<string>() { "English", "Chinese", "Hindi", "Spanish",
+		    //"French", "Arabic", "Russian", "Portuguese",
+		    //"Bengalese", "German", "Japanese", "Korean" };
+
+		    // ### Other Stuff
+		    _possibleSpacingChars = new List<char>() { '.', ',', '-', ' ', '+', '*' };
 		}
 
-		public ParserSettings()
-		{
+        internal ParserSettings()
+        {
 
-		}
+        }
+
+
 		#region Properties
 		// ### Parsing
 		// ############################################################
 		#region Parsing
 
-		private string _seasonAndEpisodeParseRegex = @"S(?<season>\d{1,4})E(?<episode>\d{1,4})";
+		private string _seasonAndEpisodeParseRegex = @"S(?<season>\d{1,4})(E(?<episode>\d{1,4}))+";
 		/// <summary>
-		/// Defines the regex-string that parses the season and episode id from the input string. Default: 'S(?<season>\d{1,4})E(?<episode>\d{1,4})'
+        /// Defines the regex-string that parses the season and episode id from the input string. Default: 'S(?<season>\d{1,4})(E(?<episode>\d{1,4}))+'
 		/// </summary>
 		public string SeasonAndEpisodeParseRegex
 		{
@@ -113,6 +129,28 @@ namespace SeriesIDParser
 		{
 			get { return _fileExtensions; }
 			set { _fileExtensions = value; }
+		}
+
+
+		private List<string> _videoCodecs = new List<string>();
+		/// <summary>
+		/// Defines the prefilled list with the posible Videocodecs
+		/// </summary>
+		public List<string> VideoCodecs
+		{
+			get { return _videoCodecs; }
+			set { _videoCodecs = value; }
+		}
+
+
+		private List<string> _audioCodecs = new List<string>();
+		/// <summary>
+		/// Defines the prefilled list with the posible Audiocodecs
+		/// </summary>
+		public List<string> AudioCodecs
+		{
+			get { return _audioCodecs; }
+			set { _audioCodecs = value; }
 		}
 
 
@@ -135,6 +173,50 @@ namespace SeriesIDParser
 		{
 			get { return _releaseGroupSeperator; }
 			set { _releaseGroupSeperator = value; }
+		}
+
+
+		// ### Language ############################################################
+		private List<string> _languages = new List<string>();
+		/// <summary>
+		/// Defines the prefilled list with the languages for the output. Language parsing is Instable!
+		/// </summary>
+		public List<string> Languages
+		{
+			get { return _languages; }
+			set { _languages = value; }
+		}
+
+
+		private bool _activateLanguageParser = false;
+		/// <summary>
+		/// Activates the parsing of the language. Default: false. Language parsing is Instable!
+		/// </summary>
+		public bool ActivateLanguageParser
+		{
+			get { return _activateLanguageParser; }
+			set { _activateLanguageParser = value; }
+		}
+
+
+		private bool _removeLanguageTokenOnFound = false;
+		/// <summary>
+		/// Removes the language token if it is found. Default: false. Language parsing is Instable!
+		/// </summary>
+		public bool RemoveLanguageTokenOnFound
+		{
+			get { return _removeLanguageTokenOnFound; }
+			set { _removeLanguageTokenOnFound = value; }
+		}
+
+		private List<string> _removeAndListTokensOnLanguageParserIsDisabled = new List<string>();
+		/// <summary>
+		/// Prefilled tokens list who should be removed from input string if the language parser is disabled. Language parsing is Instable!
+		/// </summary>
+		public List<string> RemoveAndListTokensOnLanguageParserIsDisabled
+		{
+			get { return _removeAndListTokensOnLanguageParserIsDisabled; }
+			set { _removeAndListTokensOnLanguageParserIsDisabled = value; }
 		}
 		#endregion Parsing
 
@@ -361,26 +443,19 @@ namespace SeriesIDParser
 		/// <returns>The xml string representing this object</returns>
 		public static string SerializeToXML(ParserSettings obj)
 		{
-			//try
-			//{
-				string data = string.Empty;
-				XmlSerializer x = new XmlSerializer(obj.GetType());
-				using (MemoryStream ms = new MemoryStream())
+			string data = string.Empty;
+			XmlSerializer x = new XmlSerializer(obj.GetType());
+			using (MemoryStream ms = new MemoryStream())
+			{
+				x.Serialize(ms, obj);
+				ms.Position = 0;
+				using (StreamReader sr = new StreamReader(ms, Encoding.Default))
 				{
-					x.Serialize(ms, obj);
-					ms.Position = 0;
-					using (StreamReader sr = new StreamReader(ms, Encoding.Default))
-					{
-						data = sr.ReadToEnd();
-					}
+					data = sr.ReadToEnd();
 				}
+			}
 
-				return data;
-			//}
-			//catch (Exception)
-			//{
-			//	throw;
-			//}
+			return data;
 		}
 
 
@@ -391,19 +466,12 @@ namespace SeriesIDParser
 		/// <returns>The object generated out of the xml content</returns>
 		public static ParserSettings DeSerializeFromXML(string xml)
 		{
-			//try
-			//{
-				XmlSerializer x = new XmlSerializer(typeof(ParserSettings));
-				byte[] xmlBytes = Encoding.Default.GetBytes(xml);
-				using (MemoryStream ms = new MemoryStream(xmlBytes))
-				{
-					return (ParserSettings)x.Deserialize(ms);
-				}
-			//}
-			//catch
-			//{
-			//	throw;
-			//}
+			XmlSerializer x = new XmlSerializer(typeof(ParserSettings));
+			byte[] xmlBytes = Encoding.Default.GetBytes(xml);
+			using (MemoryStream ms = new MemoryStream(xmlBytes))
+			{
+				return (ParserSettings)x.Deserialize(ms);
+			}
 		}
 		#endregion DeSerialisazion
 
@@ -423,6 +491,5 @@ namespace SeriesIDParser
 		#endregion OtherStuff
 		#endregion Properties
 
-		
 	}
 }

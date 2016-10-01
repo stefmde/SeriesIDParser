@@ -33,13 +33,13 @@ namespace SeriesIDParser
 {
 	public partial class SeriesID
 	{
-		// ############################################################
-		// ### Properties
-		// ############################################################
 		// TODO implement better failsafe
+
+
 		#region Properties
+		#region Computed
 		/// <summary>
-		/// Returns the full series string for Series, title for movies and null on error
+        /// Returns the full series string for Series, title for movies and string.Empty on error
 		/// </summary>
 		public string FullTitle
 		{
@@ -77,75 +77,14 @@ namespace SeriesIDParser
 				}
 				else
 				{
-					return null;
+                    return string.Empty;
 				}
 			}
 		}
 
-
-		private List<string> _removedTokens = new List<string>();
-		/// <summary>
-		/// Contains tokens whoi are removed by the parser as string list
-		/// </summary>
-		public List<string> RemovedTokens
-		{
-			get
-			{
-				return _removedTokens;
-			}
-
-			internal set { _removedTokens = value; }
-		}
-
-
-		private string _fileExtension;
-		/// <summary>
-		/// Contains the file-extension or null
-		/// </summary>
-		public string FileExtension
-		{
-			get
-			{
-				return _fileExtension;
-			}
-
-			internal set { _fileExtension = value; }
-		}
-
-
-		private string _originalString;
-		/// <summary>
-		/// Contains the string that is given to the parser
-		/// </summary>
-		public string OriginalString
-		{
-			get
-			{
-				return _originalString;
-			}
-
-			internal set { _originalString = value; }
-		}
-
-
-		private char _detectedOldSpacingChar;
-		/// <summary>
-		/// Contains the char who are detected as the old spacing char
-		/// </summary>
-		public char DetectedOldSpacingChar
-		{
-			get
-			{
-				return _detectedOldSpacingChar;
-			}
-
-			internal set { _detectedOldSpacingChar = value; }
-		}
-
-
 		//private string _parsedString;
 		/// <summary>
-		/// Contains the string that was computed by the parser. Null on error
+        /// Contains the string that was computed by the parser. string.Empty on error
 		/// </summary>
 		public string ParsedString
 		{
@@ -154,8 +93,6 @@ namespace SeriesIDParser
 				if (_state.HasFlag(State.OK_SUCCESS))
 				{
 					StringBuilder sb = new StringBuilder();
-					//string tempString = string.Empty;
-
 					sb.Append(FullTitle);
 
 					if (_year > -1)
@@ -185,176 +122,14 @@ namespace SeriesIDParser
 				}
 				else
 				{
-					return null;
+					return string.Empty;
 				}
 			}
 		}
 
 
-
-
-
-		private string _title;
 		/// <summary>
-		/// Contains the series title or the movie name, depends on IsSeries
-		/// </summary>
-		public string Title
-		{
-			get
-			{
-				return _title;
-			}
-
-			internal set { _title = value; }
-		}
-
-
-		private State _state;
-		/// <summary>
-		/// Contains the state of the object e.g. OK_SUCCESS
-		/// </summary>
-		public State State
-		{
-			get
-			{
-				return _state;
-			}
-
-			internal set { _state = value; }
-		}
-
-
-		private string _episodeTitle;
-		/// <summary>
-		/// Contains the eposide title if object state is series. null on error
-		/// </summary>
-		public string EpisodeTitle
-		{
-			get
-			{
-				//return FailSafeProperties<string>(_episodeTitle);
-				if (_state.HasFlag(State.OK_SUCCESS) && _isSeries)
-				{
-					return _episodeTitle;
-				}
-				else
-				{
-					return null;
-				}
-			}
-
-			internal set { _episodeTitle = value; }
-		}
-
-
-		private int _season = -1;
-		/// <summary>
-		/// Contains the season id if object state is series. -1 on error
-		/// </summary>
-		public int Season
-		{
-			get
-			{
-				if (_state.HasFlag(State.OK_SUCCESS) && _isSeries)
-				{
-					return _season;
-				}
-				else
-				{
-					return -1;
-				}
-			}
-
-			internal set { _season = value; }
-		}
-
-
-		private int _episode = -1;
-		/// <summary>
-		/// Contains the eposide id if object state is series. -1 on error
-		/// </summary>
-		public int Episode
-		{
-			get
-			{
-				if (_state.HasFlag(State.OK_SUCCESS) && _isSeries)
-				{
-					return _episode;
-				}
-				else
-				{
-					return -1;
-				}
-			}
-
-			internal set { _episode = value; }
-		}
-
-
-		private bool _isSeries;
-		/// <summary>
-		/// Specifies if the object contains a series or a movie. Default: false
-		/// </summary>
-		public bool IsSeries
-		{
-			get
-			{
-				return _isSeries;
-			}
-
-			internal set { _isSeries = value; }
-		}
-
-
-		private int _year = -1;
-		/// <summary>
-		/// Returns the year of the episode or movie if contained, otherwise -1
-		/// </summary>
-		public int Year
-		{
-			get
-			{
-				if (_state.HasFlag(State.OK_SUCCESS))
-				{
-
-					return _year;
-				}
-				else
-				{
-					return -1;
-				}
-			}
-
-			internal set { _year = value; }
-		}
-
-
-
-		private TimeSpan _processingDuration = new TimeSpan();
-		/// <summary>
-		/// Returns the year of the episode or movie if contained, otherwise -1
-		/// </summary>
-		public TimeSpan ProcessingDuration
-		{
-			get
-			{
-				if (_state.HasFlag(State.OK_SUCCESS))
-				{
-
-					return _processingDuration;
-				}
-				else
-				{
-					return new TimeSpan();
-				}
-			}
-
-			internal set { _processingDuration = value; }
-		}
-
-
-		/// <summary>
-		/// Contains the ID-String of a series e.g. S01E05. Null on error
+        /// Contains the ID-String of a series e.g. S01E05. string.Empty on error
 		/// </summary>
 		public string IDString
 		{
@@ -366,31 +141,241 @@ namespace SeriesIDParser
 				}
 				else
 				{
-					return null;
+                    return string.Empty;
 				}
 			}
 		}
+		#endregion Computed
+
+		#region Default
+        //private string _language = string.Empty;
+        ///// <summary>
+        ///// Contains the language if one is found. null on error
+        ///// </summary>
+        //public string Language
+        //{
+        //    get {
+        //        return _state.HasFlag(State.OK_SUCCESS) ? _language : null;
+        //    }
+
+        //    internal set { _language = value; }
+        //}
+
+        // TODO dynamic based on episode count
+        private bool _isMultiEpisode = false;
+        /// <summary>
+        /// Shows if a Episode is a MultiEpisode with more than one Episode in one file. Default: false
+        /// </summary>
+        public bool IsMultiEpisode
+        {
+            get
+            {
+                return _state.HasFlag(State.OK_SUCCESS) && _isMultiEpisode;
+            }
+
+            internal set { _isMultiEpisode = value; }
+        }
 
 
-		private IList<ResolutionsMap> _resolutions = new List<ResolutionsMap>();
+		private string _audioCodec = string.Empty;
 		/// <summary>
-		/// Returns the resolution as enum. UNKNOWN on error
+        /// Contains the audiocodec if one is found. string.Empty on error
 		/// </summary>
-		public IList<ResolutionsMap> Resolutions
+		public string AudioCodec
+		{
+			get {
+			    return _state.HasFlag(State.OK_SUCCESS) ? _audioCodec : null;
+			}
+
+		    internal set { _audioCodec = value; }
+		}
+
+
+		private string _videoCodec = string.Empty;
+		/// <summary>
+        /// Contains the videocodec if one is found. string.Empty on error
+		/// </summary>
+		public string VideoCodec
+		{
+			get {
+			    return _state.HasFlag(State.OK_SUCCESS) ? _videoCodec : null;
+			}
+
+		    internal set { _videoCodec = value; }
+		}
+
+
+		private List<string> _removedTokens = new List<string>();
+		/// <summary>
+		/// Contains tokens whoi are removed by the parser as string list
+		/// </summary>
+		public IEnumerable<string> RemovedTokens
+		{
+			get { return _removedTokens; }
+			internal set { _removedTokens = new List<string>(value); }
+		}
+
+
+		private string _fileExtension = string.Empty;
+		/// <summary>
+        /// Contains the file-extension or string.Empty
+		/// </summary>
+		public string FileExtension
+		{
+			get { return _fileExtension; }
+			internal set { _fileExtension = value; }
+		}
+
+
+        private string _originalString = string.Empty;
+		/// <summary>
+		/// Contains the string that is given to the parser
+		/// </summary>
+		public string OriginalString
+		{
+			get { return _originalString; }
+			internal set { _originalString = value; }
+		}
+
+
+		private char _detectedOldSpacingChar;
+		/// <summary>
+		/// Contains the char who are detected as the old spacing char
+		/// </summary>
+		public char DetectedOldSpacingChar
+		{
+			get { return _detectedOldSpacingChar; }
+			internal set { _detectedOldSpacingChar = value; }
+		}
+
+
+        private string _title = string.Empty;
+		/// <summary>
+		/// Contains the series title or the movie name, depends on IsSeries
+		/// </summary>
+		public string Title
+		{
+			get { return _title; }
+			internal set { _title = value; }
+		}
+
+
+		private State _state = State.UNKNOWN;
+		/// <summary>
+		/// Contains the state of the object e.g. OK_SUCCESS
+		/// </summary>
+		public State State
+		{
+			get { return _state; }
+			internal set { _state = value; }
+		}
+
+
+		private string _episodeTitle = string.Empty;
+		/// <summary>
+        /// Contains the eposide title if object state is series. string.Empty on error
+		/// </summary>
+		public string EpisodeTitle
 		{
 			get
 			{
-				if (_state.HasFlag(State.OK_SUCCESS))
-				{
-					return _resolutions;
-				}
-				else
-				{
-					return new List<ResolutionsMap>() { ResolutionsMap.UNKNOWN };
-				}
+			    //return FailSafeProperties<string>(_episodeTitle);
+                return _state.HasFlag(State.OK_SUCCESS) && _isSeries ? _episodeTitle : string.Empty;
 			}
 
-			internal set { _resolutions = value; }
+		    internal set { _episodeTitle = value; }
+		}
+
+
+		private int _season = -1;
+		/// <summary>
+		/// Contains the season id if object state is series. -1 on error
+		/// </summary>
+		public int Season
+		{
+			get { return _state.HasFlag(State.OK_SUCCESS) && _isSeries ? _season : -1; }
+
+		    internal set { _season = value; }
+		}
+
+
+        // Todo remove in future releases
+        private int _episode = -1;
+        /// <summary>
+        /// Contains the eposide id if object state is series. -1 on error
+        /// </summary>
+        [Obsolete("Use Episodes which can contain more than one episode. Will be removed in future releases")]
+        public int Episode
+        {
+            get { return _state.HasFlag(State.OK_SUCCESS) && _isSeries ? _episode : -1; }
+
+            internal set { _episode = value; }
+        }
+
+
+        private List<int> _episodes = new List<int>();
+        /// <summary>
+        /// Contains the eposide id if object state is series.
+        /// </summary>
+        public IEnumerable<int> Episodes
+        {
+            get
+            {
+                return _state.HasFlag(State.OK_SUCCESS) && _isSeries ? _episodes : new List<int>();
+            }
+
+            internal set { _episodes = new List<int>(value); }
+        }
+
+
+		private bool _isSeries;
+		/// <summary>
+		/// Specifies if the object contains a series or a movie. Default: false
+		/// </summary>
+		public bool IsSeries
+		{
+			get { return _isSeries; }
+			internal set { _isSeries = value; }
+		}
+
+
+		private int _year = -1;
+		/// <summary>
+		/// Returns the year of the episode or movie if contained, otherwise -1
+		/// </summary>
+		public int Year
+		{
+			get { return _state.HasFlag(State.OK_SUCCESS) ? _year : -1; }
+
+		    internal set { _year = value; }
+		}
+
+
+		private TimeSpan _processingDuration = new TimeSpan();
+		/// <summary>
+		/// Returns the year of the episode or movie if contained, otherwise -1
+		/// </summary>
+		public TimeSpan ProcessingDuration
+		{
+			get {
+			    return _state.HasFlag(State.OK_SUCCESS) ? _processingDuration : new TimeSpan();
+			}
+
+		    internal set { _processingDuration = value; }
+		}
+
+
+		private List<ResolutionsMap> _resolutions = new List<ResolutionsMap>();
+		/// <summary>
+		/// Returns the resolution as enum. UNKNOWN on error
+		/// </summary>
+        public IEnumerable<ResolutionsMap> Resolutions
+		{
+			get {
+			    return _state.HasFlag(State.OK_SUCCESS) ? _resolutions : new List<ResolutionsMap>() { ResolutionsMap.UNKNOWN };
+			}
+
+		    internal set { _resolutions = new List<ResolutionsMap>(value); }
 		}
 
 
@@ -400,35 +385,24 @@ namespace SeriesIDParser
 		/// </summary>
 		public Exception Exception
 		{
-			get
-			{
-				return _exception;
-			}
-
+			get { return _exception; }
 			internal set { _exception = value; }
 		}
 
 
 		private string _releaseGroup;
 		/// <summary>
-		/// Contains the release group string if countained in the source. null on error
+        /// Contains the release group string if countained in the source. string.Empty on error
 		/// </summary>
 		public string ReleaseGroup
 		{
-			get
-			{
-				if (_state.HasFlag(State.OK_SUCCESS))
-				{
-					return _releaseGroup;
-				}
-				else
-				{
-					return null;
-				}
+			get {
+			    return _state.HasFlag(State.OK_SUCCESS) ? _releaseGroup : string.Empty;
 			}
 
-			internal set { _releaseGroup = value; }
+		    internal set { _releaseGroup = value; }
 		}
+		#endregion Default
 		#endregion Properties
 
 	}

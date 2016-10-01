@@ -68,17 +68,17 @@ namespace SeriesIDParser
 	/// </summary>
 	public partial class SeriesID
 	{
-		private ParserSettings _parserSettings = null;
+		private ParserSettings _parserSettings = new ParserSettings(true);
 		private DateTime _parseStartTime = new DateTime();
 
 		/// <summary>
 		/// Representing the object for error state
 		/// </summary>
 		/// <param name="state"></param>
-		private SeriesID(State state)
-		{
-			this._state = state;
-		}
+		//private SeriesID(State state)
+		//{
+		//	this._state = state;
+		//}
 
 		/// <summary>
 		/// ctor with optional settings. Null settings are overriden with default settings
@@ -86,11 +86,7 @@ namespace SeriesIDParser
 		/// <param name="settings"></param>
 		public SeriesID(ParserSettings settings = null)
 		{
-			if (settings == null)
-			{
-				this._parserSettings = new ParserSettings(true);
-			}
-			else
+			if (settings != null)
 			{
 				this._parserSettings = settings;
 			}
@@ -99,7 +95,7 @@ namespace SeriesIDParser
 
 		/// <summary>
 		/// </summary>
-		/// <returns>FullTitle and resolution. Null on error</returns>
+		/// <returns>FullTitle and resolution. string.Empty on error</returns>
 		public override string ToString()
 		{
 			if (_state.HasFlag(State.OK_SUCCESS))
@@ -108,7 +104,7 @@ namespace SeriesIDParser
 			}
 			else
 			{
-				return null;
+				return string.Empty;
 			}
 		}
 
@@ -129,85 +125,34 @@ namespace SeriesIDParser
 			_originalString = input.Trim();
 			string fullTitle = _originalString;
 			bool warningOrErrorOccurred = false;
-			Regex removeRegex = null;
+			Regex removeRegex;
 			_detectedOldSpacingChar = Helper.GetSpacingChar(input, _parserSettings);
 
 			try
 			{
 				if (_originalString.Length >= 5)
 				{
+					// Todo remove fileextension instantly
 					_fileExtension = Helper.GetFileExtension(input, _parserSettings.FileExtensions);
+					_resolutions = Helper.GetResolutions(_parserSettings, _detectedOldSpacingChar, ref fullTitle);
+					_releaseGroup = Helper.GetReleaseGroup(ref fullTitle, _parserSettings, _fileExtension);
+					_removedTokens = Helper.RemoveTokens(_parserSettings, _detectedOldSpacingChar, ref fullTitle);
 
-
-					// ###################################################################
-					// ### Try get resolution
-					// ###################################################################
-
-					List<ResolutionsMap> foundResolutions = new List<ResolutionsMap>();
-
-					// Try get 8K
-					foundResolutions.AddRange(Helper.GetResolutionByResMap(_parserSettings.DetectUltraHD8kTokens, ResolutionsMap.UltraHD8K_4320p, _detectedOldSpacingChar, ref fullTitle));
-
-					// Try get 4K
-					foundResolutions.AddRange(Helper.GetResolutionByResMap(_parserSettings.DetectUltraHDTokens, ResolutionsMap.UltraHD_2160p, _detectedOldSpacingChar, ref fullTitle));
-
-					// Try get FullHD
-					foundResolutions.AddRange(Helper.GetResolutionByResMap(_parserSettings.DetectFullHDTokens, ResolutionsMap.FullHD_1080p, _detectedOldSpacingChar, ref fullTitle));
-
-					// Try get HD
-					foundResolutions.AddRange(Helper.GetResolutionByResMap(_parserSettings.DetectHDTokens, ResolutionsMap.HD_720p, _detectedOldSpacingChar, ref fullTitle));
-
-					// Try get SD
-					foundResolutions.AddRange(Helper.GetResolutionByResMap(_parserSettings.DetectSDTokens, ResolutionsMap.SD_Any, _detectedOldSpacingChar, ref fullTitle));
-
-					foreach (ResolutionsMap res in foundResolutions)
+					_audioCodec = Helper.FindTokens(ref fullTitle, _detectedOldSpacingChar.ToString(), _parserSettings.AudioCodecs, true).LastOrDefault();
+					if (_audioCodec != null)
 					{
-						if (!_resolutions.Contains(res))
-						{
-							_resolutions.Add(res);
-						}
+						_removedTokens.Add(_audioCodec);
 					}
 
-
-
-					// ###################################################################
-					// ### Try get plain title
-					// ###################################################################
-
-					// remove hoster token
-					string tmpTitle = string.Empty;
-					if (fullTitle.Length > 30)
+					_videoCodec = Helper.FindTokens(ref fullTitle, _detectedOldSpacingChar.ToString(), _parserSettings.VideoCodecs, true).LastOrDefault();
+					if (_videoCodec != null)
 					{
-						tmpTitle = fullTitle.Substring(fullTitle.Length - 20, 20);
-
-						if (tmpTitle.Count(x => x == _parserSettings.ReleaseGroupSeperator ) > 0)
-						{
-							int seperatorIndex = fullTitle.LastIndexOf(_parserSettings.ReleaseGroupSeperator);
-							_releaseGroup = fullTitle.Substring(seperatorIndex+1).Replace("." + _fileExtension, "").Trim();
-							fullTitle = fullTitle.Substring(0, seperatorIndex).Trim();
-						}
+						_removedTokens.Add(_videoCodec);
 					}
 
-					// Remove tokens
-					List<string> foundTokens = new List<string>();
-					foundTokens.AddRange(Helper.RemoveTokens(ref fullTitle, _detectedOldSpacingChar.ToString(), _parserSettings.RemoveAndListTokens, true));
-					foundTokens.AddRange(Helper.RemoveTokens(ref fullTitle, _detectedOldSpacingChar.ToString(), _parserSettings.RemoveWithoutListTokens, false));
-
-					foundTokens.AddRange( Helper.ReplaceTokens(ref fullTitle, _detectedOldSpacingChar.ToString(), _parserSettings.ReplaceRegexAndListTokens, true));
-					foundTokens.AddRange( Helper.ReplaceTokens(ref fullTitle, _detectedOldSpacingChar.ToString(), _parserSettings.ReplaceRegexWithoutListTokens, false));
-					foreach (string item in foundTokens)
-					{
-						if (_removedTokens != null && !_removedTokens.Any(x => x.ToLower() == item.ToLower()))
-						{
-							_removedTokens.Add(item);
-						}
-					}
-
-					// Sort removedTokensList
 					_removedTokens = _removedTokens.OrderBy(x => x).ToList();
 
 					// remove fileextension
-					removeRegex = null;
 					if (_fileExtension != null)
 					{
 						removeRegex = new Regex(_fileExtension, RegexOptions.IgnoreCase);
@@ -227,66 +172,25 @@ namespace SeriesIDParser
 					// Convert to new spacer
 					fullTitle = fullTitle.Replace(_detectedOldSpacingChar.ToString(), _parserSettings.NewSpacingChar.ToString());
 
-					// Remove starting and trailing spaces
-					fullTitle = fullTitle.Trim();
-
 					// Remove trailing spacer
-					fullTitle = fullTitle.Trim(_detectedOldSpacingChar.ToString().LastOrDefault<char>());
-					fullTitle = fullTitle.Trim(_parserSettings.NewSpacingChar);
-
+                    fullTitle = fullTitle.Trim().Trim(_detectedOldSpacingChar).Trim(_parserSettings.NewSpacingChar);
 
 
 					// ###################################################################
 					// ### Try get Season and Episode ID
 					// ###################################################################
-					Regex seRegex = new Regex(_parserSettings.SeasonAndEpisodeParseRegex);
-					Match match = seRegex.Match(_originalString.ToUpper());
-					if (match.Success)
-					{
-						if (match.Index > 0)
-						{
-							_title = fullTitle.Substring(0, match.Index - 1).Replace(_detectedOldSpacingChar.ToString(), _parserSettings.NewSpacingChar.ToString());
-						}
-						else
-						{
-							_state |= State.WARN_ERR_OR_WARN_OCCURRED | State.WARN_NO_TITLE_FOUND;
-							warningOrErrorOccurred = true;
-						}
-
-						// Get Episode title if there is one
-						int episodeTitleStartIndex = match.Index + match.Length + 1;
-						if (fullTitle.Length > episodeTitleStartIndex)
-						{
-							_episodeTitle = fullTitle.Substring(episodeTitleStartIndex);
-						}
-						else
-						{
-							_episodeTitle = null;
-						}
-
-						int.TryParse(match.Groups["season"].Value, out _season);
-						int.TryParse(match.Groups["episode"].Value, out _episode);
-						_isSeries = true;
-					}
-					else
-					{
-						// MOVIE
-						_title = fullTitle;
-
-						if (!warningOrErrorOccurred)
-						{
-							_state |= State.OK_SUCCESS;
-						}
-						MaintainUnknownResolution();
-						_processingDuration = DateTime.Now - _parseStartTime;
-						return this;
-					}
+                    _title = Helper.GetTitle(_parserSettings, _detectedOldSpacingChar, fullTitle, ref warningOrErrorOccurred, ref _state);
+				    _episodeTitle = Helper.GetEpisodeTitle(_parserSettings, fullTitle);
+				    _isSeries = Helper.IsSeries(_parserSettings, fullTitle);
+                    _season = Helper.GetSeasonID(_parserSettings, fullTitle);
+                    _episode = Helper.GetEpisodeID(_parserSettings, fullTitle);
+                    _episodes = Helper.GetEpisodeIDs(_parserSettings, fullTitle);
 				}
 				else
 				{
 					// ERROR
 					_state |= State.ERR_EMPTY_OR_TO_SHORT_ARGUMENT;
-					MaintainUnknownResolution();
+                    _resolutions = Helper.MaintainUnknownResolution(_resolutions);
 					return this;
 				}
 
@@ -296,7 +200,7 @@ namespace SeriesIDParser
 					_state |= State.OK_SUCCESS;
 				}
 
-				MaintainUnknownResolution();
+                _resolutions = Helper.MaintainUnknownResolution(_resolutions);
 				_processingDuration = DateTime.Now - _parseStartTime;
 
 				return this;
@@ -321,6 +225,8 @@ namespace SeriesIDParser
 
 
 
+
+
 		// ############################################################
 		// ### Local Helper Functions
 		// ############################################################
@@ -330,39 +236,23 @@ namespace SeriesIDParser
 		/// </summary>
 		private void ResetObject()
 		{
-			this._episode = -1;
-			this._episodeTitle = null;
-			this._exception = null;
-			this._fileExtension = null;
-			this._isSeries = false;
-			this._originalString = null;
-			this._removedTokens.Clear();
-			this._resolutions = new List<ResolutionsMap>();
-			this._season = -1;
-			this._state = State.UNKNOWN;
-			this._title = null;
-			this._year = -1;
-			this._detectedOldSpacingChar = new char();
-			this._processingDuration = new TimeSpan();
-			this._parseStartTime = DateTime.Now;
-			this._releaseGroup = null;
+			_episode = -1;
+            _episodeTitle = string.Empty;
+			_exception = null;
+            _fileExtension = string.Empty;
+			_isSeries = false;
+            _originalString = string.Empty;
+			_removedTokens.Clear();
+			_resolutions = new List<ResolutionsMap>();
+			_season = -1;
+			_state = State.UNKNOWN;
+            _title = string.Empty;
+			_year = -1;
+			_detectedOldSpacingChar = new char();
+			_processingDuration = new TimeSpan();
+			_parseStartTime = DateTime.Now;
+			_releaseGroup = string.Empty;
 		}
-
-		/// <summary>
-		/// Function Adds a Unknown Resolution mark or removes it if needed
-		/// </summary>
-		private void MaintainUnknownResolution()
-		{
-			if (_resolutions.Count == 0)
-			{
-				_resolutions.Add(ResolutionsMap.UNKNOWN);
-			}
-			else
-			{
-				_resolutions.Remove(ResolutionsMap.UNKNOWN);
-			}
-		}
-
 		#endregion HelperFunctions
 	}
 }
