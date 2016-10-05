@@ -31,11 +31,37 @@ using System.Threading.Tasks;
 
 namespace SeriesIDParser
 {
+    /// <summary>
+    /// Representing the series or movie resolution
+    /// </summary>
+    public enum ResolutionsMap
+    {
+        UNKNOWN = 0,
+        SD_Any = 1,
+        HD_720p = 2,
+        FullHD_1080p = 3,
+        UltraHD_2160p = 4,
+        UltraHD8K_4320p = 5
+    }
+
+    /// <summary>
+    /// Representing the object success state
+    /// </summary>
+    [Flags]
+    public enum State
+    {
+        UNKNOWN = 0,
+        OK_SUCCESS = 1,
+        WARN_ERR_OR_WARN_OCCURRED = 2,
+        WARN_NO_TITLE_FOUND = 4,
+        ERR_EMPTY_OR_TO_SHORT_ARGUMENT = 8,
+        ERR_ID_NOT_FOUND = 16,
+        ERR_UNKNOWN_ERROR = 32
+    }
+
 	public partial class SeriesID
 	{
 		// TODO implement better failsafe
-
-
 		#region Properties
 		#region Computed
 		/// <summary>
@@ -137,7 +163,15 @@ namespace SeriesIDParser
 			{
 				if (_state.HasFlag(State.OK_SUCCESS) && _isSeries)
 				{
-					return string.Format(_parserSettings.IDStringFormater, _season, _episode);
+                    StringBuilder sb = new StringBuilder();
+				    sb.Append(string.Format(_parserSettings.IDStringFormaterSeason, _season));
+
+				    foreach (int episode in _episodes)
+				    {
+                        sb.Append(string.Format(_parserSettings.IDStringFormaterEpisode, episode));
+				    }
+
+					return sb.ToString();
 				}
 				else
 				{
@@ -148,18 +182,6 @@ namespace SeriesIDParser
 		#endregion Computed
 
 		#region Default
-        //private string _language = string.Empty;
-        ///// <summary>
-        ///// Contains the language if one is found. null on error
-        ///// </summary>
-        //public string Language
-        //{
-        //    get {
-        //        return _state.HasFlag(State.OK_SUCCESS) ? _language : null;
-        //    }
-
-        //    internal set { _language = value; }
-        //}
 
         // TODO dynamic based on episode count
         private bool _isMultiEpisode = false;
@@ -300,6 +322,7 @@ namespace SeriesIDParser
 
 
         // Todo remove in future releases
+        [Obsolete("Use _episodes which can contain more than one episode. Will be removed in future releases")]
         private int _episode = -1;
         /// <summary>
         /// Contains the eposide id if object state is series. -1 on error

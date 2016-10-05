@@ -41,14 +41,16 @@ namespace SeriesIDParser_WinForm_Demo
 		public Form1()
 		{
 			InitializeComponent();
+            this.Text += " - SeriesIDParser Assembly v" + typeof(SeriesID).Assembly.GetName().Version;
 		}
 
-		private void btnParse_Click(object sender, EventArgs e)
+	    private void btnParse_Click(object sender, EventArgs e)
 		{
 			// Use the following three lines as a example for editing the parser settings
-			//ParserSettings ps = new ParserSettings();
-			//ps.NewSpacingChar = '-';
-			//SeriesID sid = new SeriesID(ps);
+			// ParserSettings ps = new ParserSettings();
+			// ps.NewSpacingChar = '-';
+			// SeriesID sid = new SeriesID(ps);
+
 
 			// Creating the parser object with default settings(empty ctor)
 			SeriesID sid = new SeriesID();
@@ -61,9 +63,11 @@ namespace SeriesIDParser_WinForm_Demo
 			dataGridViewResult.Rows.Add("Title", "string", sid.Title);
 			dataGridViewResult.Rows.Add("EpisodeTitle", "string", sid.EpisodeTitle);
 			dataGridViewResult.Rows.Add("FullTitle", "string", sid.FullTitle);
-			dataGridViewResult.Rows.Add("IsSeries", "bool", sid.IsSeries);
-			dataGridViewResult.Rows.Add("Season", "int", sid.Season);
-			dataGridViewResult.Rows.Add("Episode", "int", sid.Episode);
+            dataGridViewResult.Rows.Add("IsSeries", "bool", sid.IsSeries);
+            dataGridViewResult.Rows.Add("IsMultiEpisode", "bool", sid.IsMultiEpisode);
+            dataGridViewResult.Rows.Add("Season", "int", sid.Season);
+            dataGridViewResult.Rows.Add("Episode (Obsolete)", "int", sid.Episode);
+            dataGridViewResult.Rows.Add("Episodes", "int list", string.Join(", ", sid.Episodes));
 			dataGridViewResult.Rows.Add("IDString", "string", sid.IDString);
 			dataGridViewResult.Rows.Add("Resolutions", "enum list Resolutions", string.Join(", ", sid.Resolutions));
 			dataGridViewResult.Rows.Add("Year", "int", sid.Year);
@@ -71,8 +75,10 @@ namespace SeriesIDParser_WinForm_Demo
 			dataGridViewResult.Rows.Add("RemovedTokens", "string list", string.Join(", ", sid.RemovedTokens));
 			dataGridViewResult.Rows.Add("State", "enum State", sid.State);
 			dataGridViewResult.Rows.Add("DetectedOldSpacingChar", "char", sid.DetectedOldSpacingChar);
-			dataGridViewResult.Rows.Add("ProcessingDuration", "TimeSpan", sid.ProcessingDuration.TotalMilliseconds + " ms");
-			dataGridViewResult.Rows.Add("ReleaseGroup", "string", sid.ReleaseGroup);
+            dataGridViewResult.Rows.Add("ProcessingDuration", "TimeSpan", sid.ProcessingDuration.TotalMilliseconds + " ms");
+            dataGridViewResult.Rows.Add("ReleaseGroup", "string", sid.ReleaseGroup);
+            dataGridViewResult.Rows.Add("AudioCodec", "string", sid.AudioCodec);
+            dataGridViewResult.Rows.Add("VideoCodec", "string", sid.VideoCodec);
 
 			tbxException.Clear();
 			if (sid.Exception != null)

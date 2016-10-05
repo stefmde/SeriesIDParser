@@ -85,7 +85,7 @@ namespace SeriesIDParser
 		        "AC3D",	"THEATRICAL" };
 
 		    // ### Parsing
-		    _videoCodecs = new List<string>() { "x264", "h264", "x265", "AVC", "XVID",
+		    _videoCodecs = new List<string>() { "x264", "h264", "x265", "AVC", "XviD",
 		        "FFmpeg", "VP7", "VP8", "VP9",
 		        "MPEG-4", "MPEG-2", "MPEG4", "MPEG2" };
 
@@ -232,18 +232,29 @@ namespace SeriesIDParser
 		{
 			get { return _newSpacingChar; }
 			set { _newSpacingChar = value; }
-		}
+        }
 
 
-		private string _idStringFormater = "S{0:00}E{1:00}";
-		/// <summary>
-		/// Defines the String.Format-string that formats the season and episode id-string. Do NOT use larger than four digits per octet. Default: 'S{0:00}E{1:00}'
-		/// </summary>
-		public string IDStringFormater
-		{
-			get { return _idStringFormater; }
-			set { _idStringFormater = value; }
-		}
+        private string _idStringFormaterSeason = "S{0:00}";
+        /// <summary>
+        /// Defines the String.Format-string that formats the season for the id-string. Do NOT use larger than four digits per octet. Default: 'S{0:00}'
+        /// </summary>
+        public string IDStringFormaterSeason
+        {
+            get { return _idStringFormaterSeason; }
+            set { _idStringFormaterSeason = value; }
+        }
+
+
+        private string _idStringFormaterEpisode = "E{0:00}";
+        /// <summary>
+        /// Defines the String.Format-string that formats the episode for the id-string. Do NOT use larger than four digits per octet. Default: 'E{1:00}'
+        /// </summary>
+        public string IDStringFormaterEpisode
+        {
+            get { return _idStringFormaterEpisode; }
+            set { _idStringFormaterEpisode = value; }
+        }
 
 
 		private string _resolutionStringUnknown = "UNKNOWN";

@@ -1,13 +1,22 @@
 # Changelog #
 
-##6.1.0 (2016-09-??)##
+##6.1.0 (2016-10-??)##
 ###New###
 - Added ParserSettings Property ReleaseGroupSeperator
 - Added SeriesID Property ReleaseGroup
+- Added SeriesID Property Episodes
+- Added SeriesID Property AudioCodec
+- Added SeriesID Property VideoCodec
 - Added partial class SeriesID-Properties
 - Added class Helpers
 - Added missing license notes in class files
 - Change in *.md format
+- Support for multi episode strings added (see below)
+- Property Episode is now obsolete and will be replaced with Episodes (int list)
+- Code refactoring
+- Useless ctor removed
+- Most properties now return an empty value instead of null on error
+- Removed some ref keywords
 
 ###Fix###
  - Code organization
@@ -30,14 +39,14 @@
 - Removed Enum Resolutions
 - Removed Old SeriesID ctor
 - Removed useless comments
-- Support für multi resolution tokens in string
+- Support for multi resolution tokens in string
 - Added Unit Tests
 - Unit Tests improved for better code coverage
 - Project/Demo/Assembly/Package Icon
 - Added some more code comments
 
 ###Fix###
-- Issue#005 - RemovewithoutListtokens are removed without checking for dots bevore and after
+- Issue#005 - RemovewithoutListtokens are removed without checking for dots before and after
 - Issue#006 - Error with double resolution tokens
 - Issue#007 - Add Raw and/or Regex replace
 - Some smaller fixes
@@ -97,8 +106,8 @@
 ##4.0.0 (2016-07-30)##
 ###New###
 - Class isn't static any more
-- Posibility to throw an exception instead of an error flag
-- Object inizializer
+- Possibility to throw an exception instead of an error flag
+- Object initializer
 
 ###Fix###
 - -
