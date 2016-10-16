@@ -66,7 +66,6 @@ namespace SeriesIDParser_WinForm_Demo
             dataGridViewResult.Rows.Add("IsSeries", "bool", sid.IsSeries);
             dataGridViewResult.Rows.Add("IsMultiEpisode", "bool", sid.IsMultiEpisode);
             dataGridViewResult.Rows.Add("Season", "int", sid.Season);
-            dataGridViewResult.Rows.Add("Episode (Obsolete)", "int", sid.Episode);
             dataGridViewResult.Rows.Add("Episodes", "int list", string.Join(", ", sid.Episodes));
 			dataGridViewResult.Rows.Add("IDString", "string", sid.IDString);
 			dataGridViewResult.Rows.Add("Resolutions", "enum list Resolutions", string.Join(", ", sid.Resolutions));

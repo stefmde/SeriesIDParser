@@ -32,7 +32,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace SeriesIDParser
+namespace SeriesIDParserCore
 {
 	internal static class Helper
 	{
@@ -631,14 +631,14 @@ namespace SeriesIDParser
 
 
 
-		/// <summary>
-		/// Gets the first found episode id. Default/Error: -1
-		/// </summary>
-		/// <param name="ps">Currently used settings for the parser</param>
-		/// <param name="fullTitle">The fullTitle who worked on</param>
-		/// <returns>First episode as int</returns>
+        /// <summary>
+        /// Gets the first found episode id. Default/Error: -1
+        /// </summary>
+        /// <param name="ps">Currently used settings for the parser</param>
+        /// <param name="fullTitle">The fullTitle who worked on</param>
+        /// <returns>First episode as int</returns>
 		[Obsolete]
-		internal static int GetEpisodeID(ParserSettings ps, string fullTitle)
+        internal static int GetEpisodeID(ParserSettings ps, string fullTitle)
         {
             int episode = -1;
             List<int> episodes = GetEpisodeIDs(ps, fullTitle);

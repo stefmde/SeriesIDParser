@@ -48,7 +48,6 @@ namespace SeriesIDParser_Test
 				SeriesID id = idp.Parse(td.Actual);
 				Assert.AreEqual(td.FullTitle, id.FullTitle, td.Comment + "-FullTitle ");
 				Assert.AreEqual(td.ParsedString, id.ParsedString, td.Comment + "-ParsedString ");
-				Assert.AreEqual(td.Expected.Episode, id.Episode, td.Comment + "-Episode ");
 				Assert.AreEqual(td.Expected.IsMultiEpisode, id.IsMultiEpisode, td.Comment + "-IsMultiEpisode ");
 				CollectionAssert.AreEqual(td.Expected.Episodes.ToList(), id.Episodes.ToList(), td.Comment + "-Episodes ");
 				Assert.AreEqual(td.Expected.EpisodeTitle, id.EpisodeTitle, td.Comment + "-EpisodeTitle ");
@@ -245,60 +244,60 @@ namespace SeriesIDParser_Test
 		}
 
 
-        //[TestMethod]
-        //public void GetResolutionByResMapTest()
-        //{
-        //    ParserSettings ps = new ParserSettings(true);
-        //    // TODO implement me
-        //    string inputTitle = "";
-        //    string expectedTitle = "";
-        //    GetResolutionByResMapTestHelper(ps, '.', inputTitle, expectedTitle, ResolutionsMap.FullHD_1080p, 1);
+		//[TestMethod]
+		//public void GetResolutionByResMapTest()
+		//{
+		//    ParserSettings ps = new ParserSettings(true);
+		//    // TODO implement me
+		//    string inputTitle = "";
+		//    string expectedTitle = "";
+		//    GetResolutionByResMapTestHelper(ps, '.', inputTitle, expectedTitle, ResolutionsMap.FullHD_1080p, 1);
 
-        //    //inputTitle = "";
-        //    //expectedTitle = "";
-        //    //GetResolutionByResMapTestHelper(ps, '.', inputTitle, expectedTitle, ResolutionsMap.FullHD_1080p, 2);
+		//    //inputTitle = "";
+		//    //expectedTitle = "";
+		//    //GetResolutionByResMapTestHelper(ps, '.', inputTitle, expectedTitle, ResolutionsMap.FullHD_1080p, 2);
 
-        //    //inputTitle = "";
-        //    //expectedTitle = "";
-        //    //GetResolutionByResMapTestHelper(ps, '.', inputTitle, expectedTitle, ResolutionsMap.FullHD_1080p, 3);
+		//    //inputTitle = "";
+		//    //expectedTitle = "";
+		//    //GetResolutionByResMapTestHelper(ps, '.', inputTitle, expectedTitle, ResolutionsMap.FullHD_1080p, 3);
 
-        //    //inputTitle = "";
-        //    //expectedTitle = "";
-        //    //GetResolutionByResMapTestHelper(ps, '.', inputTitle, expectedTitle, ResolutionsMap.FullHD_1080p, 4);
+		//    //inputTitle = "";
+		//    //expectedTitle = "";
+		//    //GetResolutionByResMapTestHelper(ps, '.', inputTitle, expectedTitle, ResolutionsMap.FullHD_1080p, 4);
 
-        //    //inputTitle = "";
-        //    //expectedTitle = "";
-        //    //GetResolutionByResMapTestHelper(ps, '.', inputTitle, expectedTitle, ResolutionsMap.FullHD_1080p, 5);
-        //}
+		//    //inputTitle = "";
+		//    //expectedTitle = "";
+		//    //GetResolutionByResMapTestHelper(ps, '.', inputTitle, expectedTitle, ResolutionsMap.FullHD_1080p, 5);
+		//}
 
 
-        //[TestMethod]
-        //public void RemoveTokensTest()
-        //{
-        //    ParserSettings ps = new ParserSettings(true);
-        //    //TODO Implement me
-        //    // Regular Test
-        //    //Assert.AreEqual("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.1080p.BluRay.x264.mkv",
-        //    //	Helper.RemoveTokens("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv", ".", ps.RemoveWithoutListTokens, false),
-        //    //	"(1) Should give a string");
-        //    //Assert.AreEqual(null,
-        //    //	Helper.RemoveTokens("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv", null, ps.RemoveWithoutListTokens, false),
-        //    //	"(2) Should give null");
-        //    //Assert.AreEqual(null,
-        //    //	Helper.RemoveTokens("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv", ".", new List<string>(), false),
-        //    //	"(3) Should give null");
-        //    //Assert.AreEqual(null,
-        //    //	Helper.RemoveTokens("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv", ".", null, false),
-        //    //	"(4) Should give null");
-        //    //Assert.AreEqual("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.1080p.BluRay.x264.mkv",
-        //    //	Helper.RemoveTokens("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.MIRROR.WEB.1080p.BluRay.x264.mkv", ".", ps.RemoveWithoutListTokens, false),
-        //    //	"(5) Should give a string");
+		//[TestMethod]
+		//public void RemoveTokensTest()
+		//{
+		//    ParserSettings ps = new ParserSettings(true);
+		//    //TODO Implement me
+		//    // Regular Test
+		//    //Assert.AreEqual("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.1080p.BluRay.x264.mkv",
+		//    //	Helper.RemoveTokens("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv", ".", ps.RemoveWithoutListTokens, false),
+		//    //	"(1) Should give a string");
+		//    //Assert.AreEqual(null,
+		//    //	Helper.RemoveTokens("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv", null, ps.RemoveWithoutListTokens, false),
+		//    //	"(2) Should give null");
+		//    //Assert.AreEqual(null,
+		//    //	Helper.RemoveTokens("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv", ".", new List<string>(), false),
+		//    //	"(3) Should give null");
+		//    //Assert.AreEqual(null,
+		//    //	Helper.RemoveTokens("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv", ".", null, false),
+		//    //	"(4) Should give null");
+		//    //Assert.AreEqual("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.1080p.BluRay.x264.mkv",
+		//    //	Helper.RemoveTokens("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.MIRROR.WEB.1080p.BluRay.x264.mkv", ".", ps.RemoveWithoutListTokens, false),
+		//    //	"(5) Should give a string");
 
-        //    // Regex Test
-        //    ps.RemoveWithoutListTokens.Clear();
-        //    ps.RemoveWithoutListTokens.Add("");
-        //    // TODO implement regex test
-        //}
+		//    // Regex Test
+		//    ps.RemoveWithoutListTokens.Clear();
+		//    ps.RemoveWithoutListTokens.Add("");
+		//    // TODO implement regex test
+		//}
 
 
 
@@ -350,9 +349,9 @@ namespace SeriesIDParser_Test
 			CollectionAssert.AreEqual(expectedParserSettings.DetectSDTokens, actualParserSettings.DetectSDTokens, "DetectSDTokens ");
 			CollectionAssert.AreEqual(expectedParserSettings.DetectUltraHD8kTokens, actualParserSettings.DetectUltraHD8kTokens, "DetectUltraHD8kTokens ");
 			CollectionAssert.AreEqual(expectedParserSettings.DetectUltraHDTokens, actualParserSettings.DetectUltraHDTokens, "DetectUltraHDTokens ");
-            CollectionAssert.AreEqual(expectedParserSettings.FileExtensions, actualParserSettings.FileExtensions, "FileExtensions ");
-            Assert.AreEqual(expectedParserSettings.IDStringFormaterSeason, actualParserSettings.IDStringFormaterSeason, "IDStringFormaterSeason ");
-            Assert.AreEqual(expectedParserSettings.IDStringFormaterEpisode, actualParserSettings.IDStringFormaterEpisode, "IDStringFormaterEpisode ");
+			CollectionAssert.AreEqual(expectedParserSettings.FileExtensions, actualParserSettings.FileExtensions, "FileExtensions ");
+			Assert.AreEqual(expectedParserSettings.IDStringFormaterSeason, actualParserSettings.IDStringFormaterSeason, "IDStringFormaterSeason ");
+			Assert.AreEqual(expectedParserSettings.IDStringFormaterEpisode, actualParserSettings.IDStringFormaterEpisode, "IDStringFormaterEpisode ");
 			Assert.AreEqual(expectedParserSettings.NewSpacingChar, actualParserSettings.NewSpacingChar, "NewSpacingChar ");
 			CollectionAssert.AreEqual(expectedParserSettings.PossibleSpacingChars, actualParserSettings.PossibleSpacingChars, "PossibleSpacingChars ");
 			CollectionAssert.AreEqual(expectedParserSettings.RemoveAndListTokens, actualParserSettings.RemoveAndListTokens, "RemoveAndListTokens ");

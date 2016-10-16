@@ -51,7 +51,6 @@ namespace SeriesIDParser_Test
 			// Usual - Test001
 		    SeriesID id = new SeriesID
 		    {
-		        Episode = 5,
 		        Episodes = new List<int>() {5},
                 IsMultiEpisode = false,
 		        EpisodeTitle = "Teil5",
@@ -84,7 +83,6 @@ namespace SeriesIDParser_Test
 			// Small s-e - Test002
 		    id = new SeriesID
 		    {
-		        Episode = 5,
                 Episodes = new List<int>() { 5 },
                 IsMultiEpisode = false,
 		        EpisodeTitle = "Teil5",
@@ -117,7 +115,6 @@ namespace SeriesIDParser_Test
 			// three s-e - Test003
 		    id = new SeriesID
 		    {
-		        Episode = 5,
                 Episodes = new List<int>() { 5 },
                 IsMultiEpisode = false,
 		        EpisodeTitle = "Teil5",
@@ -150,7 +147,6 @@ namespace SeriesIDParser_Test
 			// single s-e - Test004
 		    id = new SeriesID
 		    {
-		        Episode = 5,
                 Episodes = new List<int>() { 5 },
                 IsMultiEpisode = false,
 		        EpisodeTitle = "Teil5",
@@ -183,7 +179,6 @@ namespace SeriesIDParser_Test
 			// different s-e count - Test005
 		    id = new SeriesID
 		    {
-		        Episode = 5,
                 Episodes = new List<int>() { 5 },
                 IsMultiEpisode = false,
 		        EpisodeTitle = "Teil5",
@@ -216,7 +211,6 @@ namespace SeriesIDParser_Test
 			// token doubble - Test006
 		    id = new SeriesID
 		    {
-		        Episode = 5,
                 Episodes = new List<int>() { 5 },
                 IsMultiEpisode = false,
 		        EpisodeTitle = "Teil5",
@@ -249,7 +243,6 @@ namespace SeriesIDParser_Test
 			// Usual with custom spacer - Test007
 		    id = new SeriesID
 		    {
-		        Episode = 5,
                 Episodes = new List<int>() { 5 },
                 IsMultiEpisode = false,
 		        EpisodeTitle = "Teil5",
@@ -282,7 +275,6 @@ namespace SeriesIDParser_Test
 			//Remove Hoster-String - Test008
 		    id = new SeriesID
 		    {
-		        Episode = 10,
                 Episodes = new List<int>() { 10 },
                 IsMultiEpisode = false,
 		        EpisodeTitle = string.Empty,
@@ -315,7 +307,6 @@ namespace SeriesIDParser_Test
 			//Remove Hoster-String with spaces - Test009
 		    id = new SeriesID
 		    {
-		        Episode = 10,
                 Episodes = new List<int>() { 10 },
                 IsMultiEpisode = false,
 		        EpisodeTitle = string.Empty,
@@ -348,7 +339,6 @@ namespace SeriesIDParser_Test
 			//Remove Hoster-String with spaces and extension - Test010
 		    id = new SeriesID
 		    {
-		        Episode = 10,
                 Episodes = new List<int>() { 10 },
                 IsMultiEpisode = false,
 		        EpisodeTitle = string.Empty,
@@ -381,7 +371,6 @@ namespace SeriesIDParser_Test
 			// Movie with extension - Test011
 		    id = new SeriesID
 		    {
-		        Episode = -1,
                 Episodes = new List<int>(),
                 IsMultiEpisode = false,
 		        EpisodeTitle = string.Empty,
@@ -414,7 +403,6 @@ namespace SeriesIDParser_Test
 			// Movie usual - Test012
 		    id = new SeriesID
 		    {
-		        Episode = -1,
                 Episodes = new List<int>(),
                 IsMultiEpisode = false,
 		        EpisodeTitle = string.Empty,
@@ -447,7 +435,6 @@ namespace SeriesIDParser_Test
 			// Series multi Resolutions - Test013
 		    id = new SeriesID
 		    {
-		        Episode = 1,
                 Episodes = new List<int>() { 1 },
                 IsMultiEpisode = false,
 		        EpisodeTitle = "Endlich.frei",
@@ -480,7 +467,6 @@ namespace SeriesIDParser_Test
             // Series down sampled (Original String) - Test014
             id = new SeriesID
             {
-                Episode = 1,
                 Episodes = new List<int>() { 1 },
                 IsMultiEpisode = false,
                 EpisodeTitle = "Endlich.frei",
@@ -513,7 +499,6 @@ namespace SeriesIDParser_Test
             // Multi Episode - Test015
             id = new SeriesID
             {
-                Episode = 1,
                 Episodes = new List<int>() { 1, 2 },
                 IsMultiEpisode = true,
                 EpisodeTitle = "Endlich.frei",
@@ -546,7 +531,6 @@ namespace SeriesIDParser_Test
             // Multi Episode - Test016
             id = new SeriesID
             {
-                Episode = 1,
                 Episodes = new List<int>() { 1, 2, 3 },
                 IsMultiEpisode = true,
                 EpisodeTitle = "Endlich.frei",
@@ -579,7 +563,6 @@ namespace SeriesIDParser_Test
             // Multi Episode - Test017
             id = new SeriesID
             {
-                Episode = 1,
                 Episodes = new List<int>() { 1, 2, 4 },
                 IsMultiEpisode = true,
                 EpisodeTitle = "Endlich.frei",

@@ -1,6 +1,23 @@
 # Changelog #
 
-##6.1.0 (2016-10-??)##
+##7.0.0 (2016-10-16)##
+###New###
+- !! Now supporting .Net Core !!
+- SeriesIDParserCore for .Net Core implementation
+- Removed unused '[Serializable]' attribute from ParserSettings
+- Removed unused app.config entries
+- Removed 'Episode' (single)
+- Added Console Demo for Core version
+- Unit tests updated
+
+###Fix###
+ - 
+
+
+---
+
+
+##6.1.0 (2016-10-05)##
 ###New###
 - Added ParserSettings Property ReleaseGroupSeperator
 - Added SeriesID Property ReleaseGroup

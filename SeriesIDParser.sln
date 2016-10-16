@@ -9,6 +9,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeriesIDParser_Test", "Seri
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeriesIDParser_WinForm_Demo", "SeriesIDParser_WinForm_Demo\SeriesIDParser_WinForm_Demo.csproj", "{3A90193D-8664-42CD-B49D-DCD2B9E6CB4D}"
 EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SeriesIDParserCore", "SeriesIDParserCore\SeriesIDParserCore.xproj", "{958064FF-C77F-478C-9243-3E374D2BDAC0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Net 4.5", ".Net 4.5", "{AE0C9F53-3F9B-48FA-862F-1080F8A5D172}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Net Core", ".Net Core", "{14D5AB57-4404-46A8-B523-724060BB7DA0}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SeriesIDParserCore_Console_Demo", "SeriesIDParserCore_Console_Demo\SeriesIDParserCore_Console_Demo.xproj", "{D7D1B627-B679-4C4A-9353-EF23A6FD37CA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,8 +35,23 @@ Global
 		{3A90193D-8664-42CD-B49D-DCD2B9E6CB4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3A90193D-8664-42CD-B49D-DCD2B9E6CB4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3A90193D-8664-42CD-B49D-DCD2B9E6CB4D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{958064FF-C77F-478C-9243-3E374D2BDAC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{958064FF-C77F-478C-9243-3E374D2BDAC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{958064FF-C77F-478C-9243-3E374D2BDAC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{958064FF-C77F-478C-9243-3E374D2BDAC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7D1B627-B679-4C4A-9353-EF23A6FD37CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7D1B627-B679-4C4A-9353-EF23A6FD37CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7D1B627-B679-4C4A-9353-EF23A6FD37CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7D1B627-B679-4C4A-9353-EF23A6FD37CA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D584FD1D-63D3-4FE2-A229-7F01E7A93797} = {AE0C9F53-3F9B-48FA-862F-1080F8A5D172}
+		{6F30FEEF-A65B-4E54-8014-AD9FC2D440CC} = {AE0C9F53-3F9B-48FA-862F-1080F8A5D172}
+		{3A90193D-8664-42CD-B49D-DCD2B9E6CB4D} = {AE0C9F53-3F9B-48FA-862F-1080F8A5D172}
+		{958064FF-C77F-478C-9243-3E374D2BDAC0} = {14D5AB57-4404-46A8-B523-724060BB7DA0}
+		{D7D1B627-B679-4C4A-9353-EF23A6FD37CA} = {14D5AB57-4404-46A8-B523-724060BB7DA0}
 	EndGlobalSection
 EndGlobal

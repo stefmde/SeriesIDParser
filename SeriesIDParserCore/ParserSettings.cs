@@ -31,7 +31,7 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using System.IO;
 
-namespace SeriesIDParser
+namespace SeriesIDParserCore
 {
 	/// <summary>
 	/// The properties for the ResolutionOutputBehavior
@@ -460,7 +460,7 @@ namespace SeriesIDParser
 			{
 				x.Serialize(ms, obj);
 				ms.Position = 0;
-				using (StreamReader sr = new StreamReader(ms, Encoding.Default))
+				using (StreamReader sr = new StreamReader(ms, Encoding.UTF32))
 				{
 					data = sr.ReadToEnd();
 				}
@@ -478,7 +478,7 @@ namespace SeriesIDParser
 		public static ParserSettings DeSerializeFromXML(string xml)
 		{
 			XmlSerializer x = new XmlSerializer(typeof(ParserSettings));
-			byte[] xmlBytes = Encoding.Default.GetBytes(xml);
+			byte[] xmlBytes = Encoding.UTF32.GetBytes(xml);
 			using (MemoryStream ms = new MemoryStream(xmlBytes))
 			{
 				return (ParserSettings)x.Deserialize(ms);

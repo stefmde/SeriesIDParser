@@ -32,8 +32,8 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-[assembly: InternalsVisibleTo("SeriesIDParser_Test")]
-namespace SeriesIDParser
+[assembly: InternalsVisibleTo("SeriesIDParserCore_Test")]
+namespace SeriesIDParserCore
 {
 	/// <summary>
 	/// The result object representing the series or movie string

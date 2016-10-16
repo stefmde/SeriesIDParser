@@ -29,7 +29,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SeriesIDParser
+namespace SeriesIDParserCore
 {
     /// <summary>
     /// Representing the series or movie resolution
