@@ -108,11 +108,13 @@ namespace SeriesIDParser_Test
 		[TestMethod]
 		public void GetYearTest()
 		{
-			Assert.AreEqual(2013, Helper.GetYear("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv"), "Should give a year");
-			Assert.AreEqual(-1, Helper.GetYear("Der.Hobbit.Smaugs.Einoede.1899.EXTENDED.German.DL.1080p.BluRay.x264.mkv"), "Should give no year");
-			Assert.AreEqual(1900, Helper.GetYear("Der.Hobbit.Smaugs.Einoede.1900.EXTENDED.German.DL.1080p.BluRay.x264.mkv"), "Should give a year");
-			Assert.AreEqual(-1, Helper.GetYear("Der.Hobbit.Smaugs.Einoede." + DateTime.Now.AddYears(1) + ".EXTENDED.German.DL.1080p.BluRay.x264.mkv"), "Should give no year");
-			Assert.AreEqual(2013, Helper.GetYear("Der,Hobbit-Smaugs;Einoedex2013?EXTENDED(German)DL/1080p*BluRay+x264#mkv"), "Should give a year");
+            ParserSettings ps = new ParserSettings(true);
+
+            Assert.AreEqual(2013, Helper.GetYear("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv", ps.YearParseRegex), "Should give a year");
+            Assert.AreEqual(-1, Helper.GetYear("Der.Hobbit.Smaugs.Einoede.1899.EXTENDED.German.DL.1080p.BluRay.x264.mkv", ps.YearParseRegex), "Should give no year");
+            Assert.AreEqual(1900, Helper.GetYear("Der.Hobbit.Smaugs.Einoede.1900.EXTENDED.German.DL.1080p.BluRay.x264.mkv", ps.YearParseRegex), "Should give a year");
+            Assert.AreEqual(-1, Helper.GetYear("Der.Hobbit.Smaugs.Einoede." + DateTime.Now.AddYears(1) + ".EXTENDED.German.DL.1080p.BluRay.x264.mkv", ps.YearParseRegex), "Should give no year");
+            Assert.AreEqual(2013, Helper.GetYear("Der,Hobbit-Smaugs;Einoedex2013?EXTENDED(German)DL/1080p*BluRay+x264#mkv", ps.YearParseRegex), "Should give a year");
 		}
 
 
@@ -121,13 +123,13 @@ namespace SeriesIDParser_Test
 		{
 			ParserSettings ps = new ParserSettings(true);
 
-			Assert.AreEqual("mkv", Helper.GetFileExtension("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv", ps.FileExtensions), "(1) Should give a extension");
-			Assert.AreEqual("avi", Helper.GetFileExtension("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.avi", ps.FileExtensions), "(2) Should give a extension");
-			Assert.AreEqual("m4v", Helper.GetFileExtension("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.m4v", ps.FileExtensions), "(3) Should give a extension");
-			Assert.AreEqual("wmv", Helper.GetFileExtension("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.wmv", ps.FileExtensions), "(4) Should give a extension");
+			Assert.AreEqual(".mkv", Helper.GetFileExtension("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv", ps.FileExtensions), "(1) Should give a extension");
+			Assert.AreEqual(".avi", Helper.GetFileExtension("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.avi", ps.FileExtensions), "(2) Should give a extension");
+			Assert.AreEqual(".m4v", Helper.GetFileExtension("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.m4v", ps.FileExtensions), "(3) Should give a extension");
+			Assert.AreEqual(".wmv", Helper.GetFileExtension("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.wmv", ps.FileExtensions), "(4) Should give a extension");
 			Assert.AreEqual(null, Helper.GetFileExtension("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.xyz", ps.FileExtensions), "(5) Should give no extension");
-			Assert.AreEqual("wmv", Helper.GetFileExtension("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.WmV", ps.FileExtensions), "(6) Should give a extension");
-			Assert.AreEqual("mp4", Helper.GetFileExtension("Der,Hobbit,Smaugs,Einoede,2013,EXTENDED,German,DL,1080p,BluRay,x264.mp4", ps.FileExtensions), "(7) Should give a extension");
+			Assert.AreEqual(".wmv", Helper.GetFileExtension("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.WmV", ps.FileExtensions), "(6) Should give a extension");
+			Assert.AreEqual(".mp4", Helper.GetFileExtension("Der,Hobbit,Smaugs,Einoede,2013,EXTENDED,German,DL,1080p,BluRay,x264.mp4", ps.FileExtensions), "(7) Should give a extension");
 			Assert.AreEqual(null, Helper.GetFileExtension("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264", ps.FileExtensions), "(8) Should give no extension");
 		}
 

@@ -146,17 +146,17 @@ namespace SeriesIDParser
 			return output;
 		}
 
-
-		/// <summary>
-		/// Tries to get the year from a given string. Have to be between now and 1900
-		/// </summary>
-		/// <param name="title">String who should be analized</param>
-		/// <returns>-1 or the found year</returns>
-		internal static int GetYear(string title)
+	    /// <summary>
+	    /// Tries to get the year from a given string. Have to be between now and 1900
+	    /// </summary>
+	    /// <param name="title">String who should be analized</param>
+	    /// <param name="regex">The regex string who parses the year</param>
+	    /// <returns>-1 or the found year</returns>
+	    internal static int GetYear(string title, string regex)
 		{
 			int year = -1;
 
-			Regex yearRegex = new Regex(@"(\d{4})");
+			Regex yearRegex = new Regex(regex);
 			MatchCollection matches = yearRegex.Matches(title);
 
 			foreach (Match match in matches)
@@ -193,7 +193,7 @@ namespace SeriesIDParser
 
 		//}
 
-		internal struct CharRating
+		private struct CharRating
 		{
 			internal char Char;
 			internal int Count;
@@ -243,11 +243,14 @@ namespace SeriesIDParser
 		internal static string GetFileExtension(string input, List<string> extensions)
 		{
 			string extension = null;
-			string tempExtension = Path.GetExtension(input).TrimStart('.');
-
-			if (extensions.Any(x => x.ToUpper() == tempExtension.ToUpper()))
+			if (!string.IsNullOrEmpty(input))
 			{
-				extension = tempExtension.ToLower();
+				string tempExtension = Path.GetExtension(input);
+
+				if (extensions.Any(x => x.Equals( tempExtension, StringComparison.OrdinalIgnoreCase)))
+				{
+					extension = tempExtension.ToLower();
+				}
 			}
 
 			return extension;
@@ -255,14 +258,14 @@ namespace SeriesIDParser
 
 
 
-        /// <summary>
+		/// <summary>
 		/// find and removes tokens from the ref input string
 		/// </summary>
 		/// <param name="fullTitle">The string who should be analized</param>
 		/// <param name="oldSpacingChar">The spacing char from the given string</param>s
-        /// <param name="removeTokens">List with the tokens who should be removed (regex possible)</param>
-        /// <param name="addRemovedToList">Should the removed tokens be added to the removed list?</param>
-        /// <param name="removeTokensFromInput">Should the found token should be removed from the ref input?</param>
+		/// <param name="removeTokens">List with the tokens who should be removed (regex possible)</param>
+		/// <param name="addRemovedToList">Should the removed tokens be added to the removed list?</param>
+		/// <param name="removeTokensFromInput">Should the found token should be removed from the ref input?</param>
 		/// <returns>returns the cleaned string</returns>
 		internal static List<string> FindTokens(ref string fullTitle, string oldSpacingChar, List<string> removeTokens, bool addRemovedToList, bool removeTokensFromInput = true)
 		{
@@ -281,7 +284,7 @@ namespace SeriesIDParser
 
 				foreach (string removeToken in removeTokens)
 				{
-                    Regex removeRegex = removeRegex = new Regex(spacerEscaped + removeToken + spacerEscaped, RegexOptions.IgnoreCase);
+					Regex removeRegex = removeRegex = new Regex(spacerEscaped + removeToken + spacerEscaped, RegexOptions.IgnoreCase);
 
 					// Regex
 					while (removeRegex.IsMatch(ret))
@@ -348,15 +351,15 @@ namespace SeriesIDParser
 			else if (input == null || oldSpacingChar == null)
 			{
 				// Input error
-                ret = string.Empty;
+				ret = string.Empty;
 			}
 			else
 			{
-				string spacerEscaped = Regex.Escape(oldSpacingChar.ToString());
+				string spacerEscaped = Regex.Escape(oldSpacingChar);
 
 				foreach (KeyValuePair<string, string> replacePair in replaceList)
 				{
-                    Regex removeRegex = removeRegex = new Regex(spacerEscaped + replacePair.Key + spacerEscaped, RegexOptions.IgnoreCase);
+					Regex removeRegex = removeRegex = new Regex(spacerEscaped + replacePair.Key + spacerEscaped, RegexOptions.IgnoreCase);
 
 					// Regex
 					while (removeRegex.IsMatch(ret))
@@ -408,7 +411,7 @@ namespace SeriesIDParser
 
 			foreach (string item in resolutionMap)
 			{
-                Regex removeRegex = new Regex(spacer + item + spacer, RegexOptions.IgnoreCase);
+				Regex removeRegex = new Regex(spacer + item + spacer, RegexOptions.IgnoreCase);
 
 				if (removeRegex.IsMatch(fullTitle))
 				{
@@ -425,22 +428,22 @@ namespace SeriesIDParser
 
 
 
-        /// <summary>
-        /// Function Adds a Unknown Resolution mark or removes it if needed
-        /// </summary>
-        internal static List<ResolutionsMap> MaintainUnknownResolution(List<ResolutionsMap> resolutions)
-        {
-            if (resolutions.Count == 0)
-            {
-                resolutions.Add(ResolutionsMap.UNKNOWN);
-            }
-            else
-            {
-                resolutions.Remove(ResolutionsMap.UNKNOWN);
-            }
+		/// <summary>
+		/// Function Adds a Unknown Resolution mark or removes it if needed
+		/// </summary>
+		internal static List<ResolutionsMap> MaintainUnknownResolution(List<ResolutionsMap> resolutions)
+		{
+			if (resolutions.Count == 0)
+			{
+				resolutions.Add(ResolutionsMap.UNKNOWN);
+			}
+			else
+			{
+				resolutions.Remove(ResolutionsMap.UNKNOWN);
+			}
 
-            return resolutions;
-        }
+			return resolutions;
+		}
 
 
 
@@ -478,7 +481,7 @@ namespace SeriesIDParser
 
 
 
-	    internal static List<string> RemoveTokens(ParserSettings ps, char oldSpacer, ref string fullTitle)
+		internal static List<string> RemoveTokens(ParserSettings ps, char oldSpacer, ref string fullTitle)
 		{
 			List<string> tempFoundResolutions = new List<string>();
 			List<string> foundResolutions = new List<string>();
@@ -491,7 +494,7 @@ namespace SeriesIDParser
 
 			foreach (string item in tempFoundResolutions)
 			{
-                if (!foundResolutions.Any(x => x.Equals(item, StringComparison.OrdinalIgnoreCase)))
+				if (!foundResolutions.Any(x => x.Equals(item, StringComparison.OrdinalIgnoreCase)))
 				{
 					foundResolutions.Add(item);
 				}
@@ -501,133 +504,132 @@ namespace SeriesIDParser
 		}
 
 
-        /// <summary>
-        /// Trys to get the release group
-        /// </summary>
-        /// <param name="ps">Currently used settings for the parser</param>
-        /// <param name="fullTitle">The fullTitle who worked on</param>
-        /// <param name="fileExtension">The file extension is there is one without the dot</param>
-        /// <returns>the release group string if there is one or string.Empty</returns>
-        internal static string GetReleaseGroup( string fullTitle, ParserSettings ps, string fileExtension)
-        {
-            string group = string.Empty;
+		/// <summary>
+		/// Trys to get the release group
+		/// </summary>
+		/// <param name="ps">Currently used settings for the parser</param>
+		/// <param name="fullTitle">The fullTitle who worked on</param>
+		/// <param name="fileExtension">The file extension is there is one without the dot</param>
+		/// <returns>the release group string if there is one or string.Empty</returns>
+		internal static string GetReleaseGroup( string fullTitle, ParserSettings ps, string fileExtension)
+		{
+			string group = string.Empty;
 
-            string tmpTitle = string.Empty;
-            if (fullTitle.Length > 30)
-            {
-                tmpTitle = fullTitle.Substring(fullTitle.Length - 20, 20);
+			if (fullTitle.Length > 30)
+			{
+				string tmpTitle = fullTitle.Substring(fullTitle.Length - 20, 20);
 
-                if (tmpTitle.Count(x => x == ps.ReleaseGroupSeperator) > 0)
-                {
-                    int seperatorIndex = fullTitle.LastIndexOf(ps.ReleaseGroupSeperator);
-                    group = fullTitle.Substring(seperatorIndex + 1).Replace("." + fileExtension, "").Trim();
-                }
-            }
+				if (tmpTitle.Count(x => x == ps.ReleaseGroupSeperator) > 0)
+				{
+					int seperatorIndex = fullTitle.LastIndexOf(ps.ReleaseGroupSeperator);
+					group = fullTitle.Substring(seperatorIndex + 1).Replace("." + fileExtension, "").Trim();
+				}
+			}
 
-            return group;
-        }
-
-
-        /// <summary>
-        /// Removes the Releasegroup from the input string
-        /// </summary>
-        /// <param name="ps">Currently used settings for the parser</param>
-        /// <param name="fullTitle">The fullTitle who worked on</param>
-        /// <param name="releaseGroup">The found releasegroup</param>
-        /// <returns>The output string without the releasegroup</returns>
-        internal static string RemoveReleaseGroup(string fullTitle, ParserSettings ps, string releaseGroup)
-        {
-            string retVal = fullTitle;
-            int seperatorIndex = fullTitle.LastIndexOf(ps.ReleaseGroupSeperator);
-
-            if (seperatorIndex > 30)
-            {
-                retVal = fullTitle.Substring(0, seperatorIndex).Trim();
-            }
-
-            return retVal;
-        }
+			return group;
+		}
 
 
+		/// <summary>
+		/// Removes the Releasegroup from the input string
+		/// </summary>
+		/// <param name="ps">Currently used settings for the parser</param>
+		/// <param name="fullTitle">The fullTitle who worked on</param>
+		/// <param name="releaseGroup">The found releasegroup</param>
+		/// <returns>The output string without the releasegroup</returns>
+		internal static string RemoveReleaseGroup(string fullTitle, ParserSettings ps, string releaseGroup)
+		{
+			string retVal = fullTitle;
+			int seperatorIndex = fullTitle.LastIndexOf(ps.ReleaseGroupSeperator);
 
-        /// <summary>
-        /// Trys to get the episode title from the input string
-        /// </summary>
-        /// <param name="ps">Currently used settings for the parser</param>
-        /// <param name="fullTitle">The fullTitle who worked on</param>
-        /// <returns>The spisode title if one is fround or string.Empty</returns>
-        internal static string GetEpisodeTitle(ParserSettings ps, string fullTitle)
-	    {
-            Regex seRegex = new Regex(ps.SeasonAndEpisodeParseRegex);
-            Match match = seRegex.Match(fullTitle.ToUpper());
-	        string episodeTitle = string.Empty;
+			if (seperatorIndex > 30)
+			{
+				retVal = fullTitle.Substring(0, seperatorIndex).Trim();
+			}
 
-            if (IsSeries(ps, fullTitle))
-            {
-                int episodeTitleStartIndex = match.Index + match.Length + 1;
-
-                if (fullTitle.Length > episodeTitleStartIndex)
-                {
-                    episodeTitle = fullTitle.Substring(episodeTitleStartIndex);
-                }
-            }
-
-	        return episodeTitle;
-	    }
+			return retVal;
+		}
 
 
-	    internal static string GetTitle(ParserSettings ps, char oldSpacingChar, string fullTitle, ref bool warningOrError, ref State state)
-	    {
-            Regex seRegex = new Regex(ps.SeasonAndEpisodeParseRegex);
-            Match match = seRegex.Match(fullTitle.ToUpper());
-	        string title = string.Empty;
 
-            if (IsSeries(ps, fullTitle))
-            {
-                if (match.Index > 0)
-                {
-                    title = fullTitle.Substring(0, match.Index - 1).Replace(oldSpacingChar.ToString(), ps.NewSpacingChar.ToString());
-                }
-                else
-                {
-                    state |= State.WARN_ERR_OR_WARN_OCCURRED | State.WARN_NO_TITLE_FOUND;
-                    warningOrError = true;
-                }
-            }
-            else
-            {
-                title = fullTitle;
+		/// <summary>
+		/// Trys to get the episode title from the input string
+		/// </summary>
+		/// <param name="ps">Currently used settings for the parser</param>
+		/// <param name="fullTitle">The fullTitle who worked on</param>
+		/// <returns>The spisode title if one is fround or string.Empty</returns>
+		internal static string GetEpisodeTitle(ParserSettings ps, string fullTitle)
+		{
+			Regex seRegex = new Regex(ps.SeasonAndEpisodeParseRegex);
+			Match match = seRegex.Match(fullTitle.ToUpper());
+			string episodeTitle = string.Empty;
 
-                if (!warningOrError)
-                {
-                    state |= State.OK_SUCCESS;
-                }
-            }
+			if (IsSeries(ps, fullTitle))
+			{
+				int episodeTitleStartIndex = match.Index + match.Length + 1;
 
-            return title;
-	    }
+				if (fullTitle.Length > episodeTitleStartIndex)
+				{
+					episodeTitle = fullTitle.Substring(episodeTitleStartIndex);
+				}
+			}
+
+			return episodeTitle;
+		}
 
 
-        /// <summary>
-        /// Gets the season ID from a given string. Default/Error: -1
-        /// </summary>
-        /// <param name="ps">Currently used settings for the parser</param>
-        /// <param name="fullTitle">The fullTitle who worked on</param>
-        /// <returns>The season id as int</returns>
-        internal static int GetSeasonID(ParserSettings ps, string fullTitle)
-        {
-            int season = -1;
+		internal static string GetTitle(ParserSettings ps, char oldSpacingChar, string fullTitle, ref bool warningOrError, ref State state)
+		{
+			Regex seRegex = new Regex(ps.SeasonAndEpisodeParseRegex);
+			Match match = seRegex.Match(fullTitle.ToUpper());
+			string title = string.Empty;
 
-            Regex seRegex = new Regex(ps.SeasonAndEpisodeParseRegex);
-            Match match = seRegex.Match(fullTitle.ToUpper());
+			if (IsSeries(ps, fullTitle))
+			{
+				if (match.Index > 0)
+				{
+					title = fullTitle.Substring(0, match.Index - 1).Replace(oldSpacingChar.ToString(), ps.NewSpacingChar.ToString());
+				}
+				else
+				{
+					state |= State.WARN_ERR_OR_WARN_OCCURRED | State.WARN_NO_TITLE_FOUND;
+					warningOrError = true;
+				}
+			}
+			else
+			{
+				title = fullTitle;
 
-            if (IsSeries(ps, fullTitle))
-            {
-                int.TryParse(match.Groups["season"].Value, out season);
-            }
+				if (!warningOrError)
+				{
+					state |= State.OK_SUCCESS;
+				}
+			}
 
-            return season;
-        }
+			return title;
+		}
+
+
+		/// <summary>
+		/// Gets the season ID from a given string. Default/Error: -1
+		/// </summary>
+		/// <param name="ps">Currently used settings for the parser</param>
+		/// <param name="fullTitle">The fullTitle who worked on</param>
+		/// <returns>The season id as int</returns>
+		internal static int GetSeasonID(ParserSettings ps, string fullTitle)
+		{
+			int season = -1;
+
+			Regex seRegex = new Regex(ps.SeasonAndEpisodeParseRegex);
+			Match match = seRegex.Match(fullTitle.ToUpper());
+
+			if (IsSeries(ps, fullTitle))
+			{
+				int.TryParse(match.Groups["season"].Value, out season);
+			}
+
+			return season;
+		}
 
 
 
@@ -639,73 +641,73 @@ namespace SeriesIDParser
 		/// <returns>First episode as int</returns>
 		[Obsolete]
 		internal static int GetEpisodeID(ParserSettings ps, string fullTitle)
-        {
-            int episode = -1;
-            List<int> episodes = GetEpisodeIDs(ps, fullTitle);
+		{
+			int episode = -1;
+			List<int> episodes = GetEpisodeIDs(ps, fullTitle);
 
-            if (episodes.Count > 0)
-            {
-                episode = episodes.FirstOrDefault();
-            }
+			if (episodes.Count > 0)
+			{
+				episode = episodes.FirstOrDefault();
+			}
 
-            return episode;
-        }
-        
+			return episode;
+		}
+		
 
-        /// <summary>
-        /// Gets the EpisodeID's from a given string as int list. Default/Error: -1
-        /// </summary>
-        /// <param name="ps">Currently used settings for the parser</param>
-        /// <param name="fullTitle">The fullTitle who worked on</param>
-        /// <returns>Episode's as int list</returns>
-        internal static List<int> GetEpisodeIDs(ParserSettings ps, string fullTitle)
-        {
-            List<int> episodes = new List<int>();
+		/// <summary>
+		/// Gets the EpisodeID's from a given string as int list. Default/Error: -1
+		/// </summary>
+		/// <param name="ps">Currently used settings for the parser</param>
+		/// <param name="fullTitle">The fullTitle who worked on</param>
+		/// <returns>Episode's as int list</returns>
+		internal static List<int> GetEpisodeIDs(ParserSettings ps, string fullTitle)
+		{
+			List<int> episodes = new List<int>();
 
-            Regex seRegex = new Regex(ps.SeasonAndEpisodeParseRegex);
-            Match match = seRegex.Match(fullTitle.ToUpper());
+			Regex seRegex = new Regex(ps.SeasonAndEpisodeParseRegex);
+			Match match = seRegex.Match(fullTitle.ToUpper());
 
-            if (IsSeries(ps, fullTitle))
-            {
-                CaptureCollection cc = match.Groups["episode"].Captures;
-                int temp = -1;
+			if (IsSeries(ps, fullTitle))
+			{
+				CaptureCollection cc = match.Groups["episode"].Captures;
+				int temp = -1;
 
-                // TODO Resharper suggestion: episodes.AddRange(from object item in cc where int.TryParse(item.ToString(), NumberStyles.Number, new CultureInfo(CultureInfo.CurrentCulture.ToString()), out temp) select temp);
+				// TODO Resharper suggestion: episodes.AddRange(from object item in cc where int.TryParse(item.ToString(), NumberStyles.Number, new CultureInfo(CultureInfo.CurrentCulture.ToString()), out temp) select temp);
 
-                foreach (object item in cc)
-                {
-                    if (int.TryParse(item.ToString(), NumberStyles.Number,
-                        new CultureInfo(CultureInfo.CurrentCulture.ToString()), out temp))
-                    {
-                        episodes.Add(temp);
-                    }
-                }
-            }
+				foreach (object item in cc)
+				{
+					if (int.TryParse(item.ToString(), NumberStyles.Number,
+						new CultureInfo(CultureInfo.CurrentCulture.ToString()), out temp))
+					{
+						episodes.Add(temp);
+					}
+				}
+			}
 
-            return episodes;
-        }
+			return episodes;
+		}
 
 
 
-        /// <summary>
-        /// Checks if a given string is a series string
-        /// </summary>
-        /// <param name="ps">Currently used settings for the parser</param>
-        /// <param name="fullTitle">The fullTitle who worked on</param>
-        /// <returns>Bool if is series or not</returns>
-        internal static bool IsSeries(ParserSettings ps, string fullTitle)
-	    {
-	        bool isSeries = false;
-            Regex seRegex = new Regex(ps.SeasonAndEpisodeParseRegex);
-            Match match = seRegex.Match(fullTitle.ToUpper());
+		/// <summary>
+		/// Checks if a given string is a series string
+		/// </summary>
+		/// <param name="ps">Currently used settings for the parser</param>
+		/// <param name="fullTitle">The fullTitle who worked on</param>
+		/// <returns>Bool if is series or not</returns>
+		internal static bool IsSeries(ParserSettings ps, string fullTitle)
+		{
+			bool isSeries = false;
+			Regex seRegex = new Regex(ps.SeasonAndEpisodeParseRegex);
+			Match match = seRegex.Match(fullTitle.ToUpper());
 
-            if (match.Success)
-            {
-                isSeries = true;
-            }
+			if (match.Success)
+			{
+				isSeries = true;
+			}
 
-            return isSeries;
-	    }
+			return isSeries;
+		}
 
 	}
 }

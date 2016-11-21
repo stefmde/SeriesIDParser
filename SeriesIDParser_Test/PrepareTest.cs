@@ -49,26 +49,26 @@ namespace SeriesIDParser_Test
 			List<TestData> testData = new List<TestData>();
 			
 			// Usual - Test001
-		    SeriesID id = new SeriesID
-		    {
-		        Episodes = new List<int>() {5},
-                IsMultiEpisode = false,
-		        EpisodeTitle = "Teil5",
-		        FileExtension = "mkv",
-		        IsSeries = true,
-		        OriginalString = "Dubai.Airport.S01E05.Teil5.GERMAN.DOKU.HDTV.720p.x264.mkv",
-		        RemovedTokens = new List<string>() {"German", "DOKU", "x264"},
-		        Resolutions = new List<ResolutionsMap> {ResolutionsMap.HD_720p},
-		        Season = 1,
-		        State = State.OK_SUCCESS,
-		        Title = "Dubai.Airport",
-		        Year = -1,
-		        DetectedOldSpacingChar = '.',
-		        AudioCodec = "",
-                VideoCodec = "x264",
-                ReleaseGroup = string.Empty
-		    };
-		    testData.Add(new TestData()
+			SeriesID id = new SeriesID
+			{
+				Episodes = new List<int>() {5},
+				IsMultiEpisode = false,
+				EpisodeTitle = "Teil5",
+				FileExtension = ".mkv",
+				IsSeries = true,
+				OriginalString = "Dubai.Airport.S01E05.Teil5.GERMAN.DOKU.HDTV.720p.x264.mkv",
+				RemovedTokens = new List<string>() {"German", "DOKU", "x264"},
+				Resolutions = new List<ResolutionsMap> {ResolutionsMap.HD_720p},
+				Season = 1,
+				State = State.OK_SUCCESS,
+				Title = "Dubai.Airport",
+				Year = -1,
+				DetectedOldSpacingChar = '.',
+				AudioCodec = "",
+				VideoCodec = "x264",
+				ReleaseGroup = string.Empty
+			};
+			testData.Add(new TestData()
 			{
 				Actual = id.OriginalString,
 				FullTitle = "Dubai.Airport.S01E05.Teil5",
@@ -81,26 +81,26 @@ namespace SeriesIDParser_Test
 
 
 			// Small s-e - Test002
-		    id = new SeriesID
-		    {
-                Episodes = new List<int>() { 5 },
-                IsMultiEpisode = false,
-		        EpisodeTitle = "Teil5",
-		        FileExtension = "mkv",
-		        IsSeries = true,
-		        OriginalString = "Dubai.Airport.s01e05.Teil5.GERMAN.DOKU.HDTV.720p.x264.mkv",
-		        RemovedTokens = new List<string>() {"German", "DOKU", "x264"},
-		        Resolutions = new List<ResolutionsMap> {ResolutionsMap.HD_720p},
-		        Season = 1,
-		        State = State.OK_SUCCESS,
-		        Title = "Dubai.Airport",
-		        Year = -1,
-		        DetectedOldSpacingChar = '.',
-		        AudioCodec = "",
-                VideoCodec = "x264",
-                ReleaseGroup = string.Empty
-		    };
-		    testData.Add(new TestData()
+			id = new SeriesID
+			{
+				Episodes = new List<int>() { 5 },
+				IsMultiEpisode = false,
+				EpisodeTitle = "Teil5",
+				FileExtension = ".mkv",
+				IsSeries = true,
+				OriginalString = "Dubai.Airport.s01e05.Teil5.GERMAN.DOKU.HDTV.720p.x264.mkv",
+				RemovedTokens = new List<string>() {"German", "DOKU", "x264"},
+				Resolutions = new List<ResolutionsMap> {ResolutionsMap.HD_720p},
+				Season = 1,
+				State = State.OK_SUCCESS,
+				Title = "Dubai.Airport",
+				Year = -1,
+				DetectedOldSpacingChar = '.',
+				AudioCodec = "",
+				VideoCodec = "x264",
+				ReleaseGroup = string.Empty
+			};
+			testData.Add(new TestData()
 			{
 				Actual = id.OriginalString,
 				FullTitle = "Dubai.Airport.S01E05.Teil5",
@@ -113,26 +113,26 @@ namespace SeriesIDParser_Test
 
 
 			// three s-e - Test003
-		    id = new SeriesID
-		    {
-                Episodes = new List<int>() { 5 },
-                IsMultiEpisode = false,
-		        EpisodeTitle = "Teil5",
-		        FileExtension = "mkv",
-		        IsSeries = true,
-		        OriginalString = "Dubai.Airport.S001E005.Teil5.GERMAN.DOKU.HDTV.720p.x264.mkv",
-		        RemovedTokens = new List<string>() {"German", "DOKU", "x264"},
-		        Resolutions = new List<ResolutionsMap> {ResolutionsMap.HD_720p},
-		        Season = 1,
-		        State = State.OK_SUCCESS,
-		        Title = "Dubai.Airport",
-		        Year = -1,
-		        DetectedOldSpacingChar = '.',
-		        AudioCodec = "",
-                VideoCodec = "x264",
-                ReleaseGroup = string.Empty
-		    };
-		    testData.Add(new TestData()
+			id = new SeriesID
+			{
+				Episodes = new List<int>() { 5 },
+				IsMultiEpisode = false,
+				EpisodeTitle = "Teil5",
+				FileExtension = ".mkv",
+				IsSeries = true,
+				OriginalString = "Dubai.Airport.S001E005.Teil5.GERMAN.DOKU.HDTV.720p.x264.mkv",
+				RemovedTokens = new List<string>() {"German", "DOKU", "x264"},
+				Resolutions = new List<ResolutionsMap> {ResolutionsMap.HD_720p},
+				Season = 1,
+				State = State.OK_SUCCESS,
+				Title = "Dubai.Airport",
+				Year = -1,
+				DetectedOldSpacingChar = '.',
+				AudioCodec = "",
+				VideoCodec = "x264",
+				ReleaseGroup = string.Empty
+			};
+			testData.Add(new TestData()
 			{
 				Actual = id.OriginalString,
 				FullTitle = "Dubai.Airport.S01E05.Teil5",
@@ -145,26 +145,26 @@ namespace SeriesIDParser_Test
 
 
 			// single s-e - Test004
-		    id = new SeriesID
-		    {
-                Episodes = new List<int>() { 5 },
-                IsMultiEpisode = false,
-		        EpisodeTitle = "Teil5",
-		        FileExtension = "mkv",
-		        IsSeries = true,
-		        OriginalString = "Dubai.Airport.s01e05.Teil5.GERMAN.DOKU.HDTV.720p.x264.mkv",
-		        RemovedTokens = new List<string>() {"German", "DOKU", "x264"},
-		        Resolutions = new List<ResolutionsMap> {ResolutionsMap.HD_720p},
-		        Season = 1,
-		        State = State.OK_SUCCESS,
-		        Title = "Dubai.Airport",
-		        Year = -1,
-		        DetectedOldSpacingChar = '.',
-		        AudioCodec = "",
-                VideoCodec = "x264",
-                ReleaseGroup = string.Empty
-		    };
-		    testData.Add(new TestData()
+			id = new SeriesID
+			{
+				Episodes = new List<int>() { 5 },
+				IsMultiEpisode = false,
+				EpisodeTitle = "Teil5",
+				FileExtension = ".mkv",
+				IsSeries = true,
+				OriginalString = "Dubai.Airport.s01e05.Teil5.GERMAN.DOKU.HDTV.720p.x264.mkv",
+				RemovedTokens = new List<string>() {"German", "DOKU", "x264"},
+				Resolutions = new List<ResolutionsMap> {ResolutionsMap.HD_720p},
+				Season = 1,
+				State = State.OK_SUCCESS,
+				Title = "Dubai.Airport",
+				Year = -1,
+				DetectedOldSpacingChar = '.',
+				AudioCodec = "",
+				VideoCodec = "x264",
+				ReleaseGroup = string.Empty
+			};
+			testData.Add(new TestData()
 			{
 				Actual = id.OriginalString,
 				FullTitle = "Dubai.Airport.S01E05.Teil5",
@@ -177,26 +177,26 @@ namespace SeriesIDParser_Test
 
 
 			// different s-e count - Test005
-		    id = new SeriesID
-		    {
-                Episodes = new List<int>() { 5 },
-                IsMultiEpisode = false,
-		        EpisodeTitle = "Teil5",
-		        FileExtension = "mkv",
-		        IsSeries = true,
-		        OriginalString = "Dubai.Airport.S001E5.Teil5.GERMAN.DOKU.HDTV.720p.x264.mkv",
-		        RemovedTokens = new List<string>() {"German", "DOKU", "x264"},
-		        Resolutions = new List<ResolutionsMap> {ResolutionsMap.HD_720p},
-		        Season = 1,
-		        State = State.OK_SUCCESS,
-		        Title = "Dubai.Airport",
-		        Year = -1,
-		        DetectedOldSpacingChar = '.',
-		        AudioCodec = "",
-                VideoCodec = "x264",
-                ReleaseGroup = string.Empty
-		    };
-		    testData.Add(new TestData()
+			id = new SeriesID
+			{
+				Episodes = new List<int>() { 5 },
+				IsMultiEpisode = false,
+				EpisodeTitle = "Teil5",
+				FileExtension = ".mkv",
+				IsSeries = true,
+				OriginalString = "Dubai.Airport.S001E5.Teil5.GERMAN.DOKU.HDTV.720p.x264.mkv",
+				RemovedTokens = new List<string>() {"German", "DOKU", "x264"},
+				Resolutions = new List<ResolutionsMap> {ResolutionsMap.HD_720p},
+				Season = 1,
+				State = State.OK_SUCCESS,
+				Title = "Dubai.Airport",
+				Year = -1,
+				DetectedOldSpacingChar = '.',
+				AudioCodec = "",
+				VideoCodec = "x264",
+				ReleaseGroup = string.Empty
+			};
+			testData.Add(new TestData()
 			{
 				Actual = id.OriginalString,
 				FullTitle = "Dubai.Airport.S01E05.Teil5",
@@ -209,26 +209,26 @@ namespace SeriesIDParser_Test
 
 
 			// token doubble - Test006
-		    id = new SeriesID
-		    {
-                Episodes = new List<int>() { 5 },
-                IsMultiEpisode = false,
-		        EpisodeTitle = "Teil5",
-		        FileExtension = "mkv",
-		        IsSeries = true,
-		        OriginalString = "Dubai.Airport.S01E05.Teil5.GERMAN.GERMAN.720p.DOKU.HDTV.720p.x264.mkv",
-		        RemovedTokens = new List<string>() {"German", "DOKU", "x264"},
-		        Resolutions = new List<ResolutionsMap> {ResolutionsMap.HD_720p},
-		        Season = 1,
-		        State = State.OK_SUCCESS,
-		        Title = "Dubai.Airport",
-		        Year = -1,
-		        DetectedOldSpacingChar = '.',
-		        AudioCodec = "",
-                VideoCodec = "x264",
-                ReleaseGroup = string.Empty
-		    };
-		    testData.Add(new TestData()
+			id = new SeriesID
+			{
+				Episodes = new List<int>() { 5 },
+				IsMultiEpisode = false,
+				EpisodeTitle = "Teil5",
+				FileExtension = ".mkv",
+				IsSeries = true,
+				OriginalString = "Dubai.Airport.S01E05.Teil5.GERMAN.GERMAN.720p.DOKU.HDTV.720p.x264.mkv",
+				RemovedTokens = new List<string>() {"German", "DOKU", "x264"},
+				Resolutions = new List<ResolutionsMap> {ResolutionsMap.HD_720p},
+				Season = 1,
+				State = State.OK_SUCCESS,
+				Title = "Dubai.Airport",
+				Year = -1,
+				DetectedOldSpacingChar = '.',
+				AudioCodec = "",
+				VideoCodec = "x264",
+				ReleaseGroup = string.Empty
+			};
+			testData.Add(new TestData()
 			{
 				Actual = id.OriginalString,
 				FullTitle = "Dubai.Airport.S01E05.Teil5",
@@ -241,26 +241,26 @@ namespace SeriesIDParser_Test
 
 
 			// Usual with custom spacer - Test007
-		    id = new SeriesID
-		    {
-                Episodes = new List<int>() { 5 },
-                IsMultiEpisode = false,
-		        EpisodeTitle = "Teil5",
-		        FileExtension = "mkv",
-		        IsSeries = true,
-		        OriginalString = "Dubai.Airport.S01E05.Teil5.GERMAN.DOKU.HDTV.720p.x264.mkv",
-		        RemovedTokens = new List<string>() {"German", "DOKU", "x264"},
-		        Resolutions = new List<ResolutionsMap> {ResolutionsMap.HD_720p},
-		        Season = 1,
-		        State = State.OK_SUCCESS,
-		        Title = "Dubai-Airport",
-		        Year = -1,
-		        DetectedOldSpacingChar = '.',
-		        AudioCodec = "",
-                VideoCodec = "x264",
-                ReleaseGroup = string.Empty
-		    };
-		    testData.Add(new TestData()
+			id = new SeriesID
+			{
+				Episodes = new List<int>() { 5 },
+				IsMultiEpisode = false,
+				EpisodeTitle = "Teil5",
+				FileExtension = ".mkv",
+				IsSeries = true,
+				OriginalString = "Dubai.Airport.S01E05.Teil5.GERMAN.DOKU.HDTV.720p.x264.mkv",
+				RemovedTokens = new List<string>() {"German", "DOKU", "x264"},
+				Resolutions = new List<ResolutionsMap> {ResolutionsMap.HD_720p},
+				Season = 1,
+				State = State.OK_SUCCESS,
+				Title = "Dubai-Airport",
+				Year = -1,
+				DetectedOldSpacingChar = '.',
+				AudioCodec = "",
+				VideoCodec = "x264",
+				ReleaseGroup = string.Empty
+			};
+			testData.Add(new TestData()
 			{
 				Actual = id.OriginalString,
 				FullTitle = "Dubai-Airport-S01E05-Teil5",
@@ -273,26 +273,26 @@ namespace SeriesIDParser_Test
 
 
 			//Remove Hoster-String - Test008
-		    id = new SeriesID
-		    {
-                Episodes = new List<int>() { 10 },
-                IsMultiEpisode = false,
-		        EpisodeTitle = string.Empty,
-		        FileExtension = null,
-		        IsSeries = true,
-		        OriginalString = "Better.Call.Saul.S02E10.GERMAN.DL.DUBBED.1080p.WebHD.h264-iNFOTv",
-		        RemovedTokens = new List<string>() {"German", "DUBBED", "h264", "WebHD"},
-		        Resolutions = new List<ResolutionsMap> {ResolutionsMap.FullHD_1080p},
-		        Season = 2,
-		        State = State.OK_SUCCESS,
-		        Title = "Better.Call.Saul",
-		        Year = -1,
-		        DetectedOldSpacingChar = '.',
-		        AudioCodec = "",
-                VideoCodec = "h264",
-                ReleaseGroup = "iNFOTv"
-		    };
-		    testData.Add(new TestData()
+			id = new SeriesID
+			{
+				Episodes = new List<int>() { 10 },
+				IsMultiEpisode = false,
+				EpisodeTitle = string.Empty,
+				FileExtension = null,
+				IsSeries = true,
+				OriginalString = "Better.Call.Saul.S02E10.GERMAN.DL.DUBBED.1080p.WebHD.h264-iNFOTv",
+				RemovedTokens = new List<string>() {"German", "DUBBED", "h264", "WebHD"},
+				Resolutions = new List<ResolutionsMap> {ResolutionsMap.FullHD_1080p},
+				Season = 2,
+				State = State.OK_SUCCESS,
+				Title = "Better.Call.Saul",
+				Year = -1,
+				DetectedOldSpacingChar = '.',
+				AudioCodec = "",
+				VideoCodec = "h264",
+				ReleaseGroup = "iNFOTv"
+			};
+			testData.Add(new TestData()
 			{
 				Actual = id.OriginalString,
 				FullTitle = "Better.Call.Saul.S02E10",
@@ -305,26 +305,26 @@ namespace SeriesIDParser_Test
 
 
 			//Remove Hoster-String with spaces - Test009
-		    id = new SeriesID
-		    {
-                Episodes = new List<int>() { 10 },
-                IsMultiEpisode = false,
-		        EpisodeTitle = string.Empty,
-		        FileExtension = null,
-		        IsSeries = true,
-		        OriginalString = "Better.Call.Saul.S02E10.GERMAN.DL.DUBBED.1080p.WebHD.h264 - iNFOTv",
-		        RemovedTokens = new List<string>() {"German", "DUBBED", "h264", "WebHD"},
-		        Resolutions = new List<ResolutionsMap> {ResolutionsMap.FullHD_1080p},
-		        Season = 2,
-		        State = State.OK_SUCCESS,
-		        Title = "Better.Call.Saul",
-		        Year = -1,
-		        DetectedOldSpacingChar = '.',
-		        AudioCodec = "",
-                VideoCodec = "h264",
-                ReleaseGroup = "iNFOTv"
-		    };
-		    testData.Add(new TestData()
+			id = new SeriesID
+			{
+				Episodes = new List<int>() { 10 },
+				IsMultiEpisode = false,
+				EpisodeTitle = string.Empty,
+				FileExtension = null,
+				IsSeries = true,
+				OriginalString = "Better.Call.Saul.S02E10.GERMAN.DL.DUBBED.1080p.WebHD.h264 - iNFOTv",
+				RemovedTokens = new List<string>() {"German", "DUBBED", "h264", "WebHD"},
+				Resolutions = new List<ResolutionsMap> {ResolutionsMap.FullHD_1080p},
+				Season = 2,
+				State = State.OK_SUCCESS,
+				Title = "Better.Call.Saul",
+				Year = -1,
+				DetectedOldSpacingChar = '.',
+				AudioCodec = "",
+				VideoCodec = "h264",
+				ReleaseGroup = "iNFOTv"
+			};
+			testData.Add(new TestData()
 			{
 				Actual = id.OriginalString,
 				FullTitle = "Better.Call.Saul.S02E10",
@@ -337,26 +337,26 @@ namespace SeriesIDParser_Test
 
 
 			//Remove Hoster-String with spaces and extension - Test010
-		    id = new SeriesID
-		    {
-                Episodes = new List<int>() { 10 },
-                IsMultiEpisode = false,
-		        EpisodeTitle = string.Empty,
-		        FileExtension = "avi",
-		        IsSeries = true,
-		        OriginalString = "Better.Call.Saul.S02E10.GERMAN.DL.DUBBED.1080p.WebHD.h264 - iNFOTv.avi",
-		        RemovedTokens = new List<string>() {"German", "DUBBED", "h264", "WebHD"},
-		        Resolutions = new List<ResolutionsMap> {ResolutionsMap.FullHD_1080p},
-		        Season = 2,
-		        State = State.OK_SUCCESS,
-		        Title = "Better.Call.Saul",
-		        Year = -1,
-		        DetectedOldSpacingChar = '.',
-		        AudioCodec = "",
-                VideoCodec = "h264",
-                ReleaseGroup = "iNFOTv"
-		    };
-		    testData.Add(new TestData()
+			id = new SeriesID
+			{
+				Episodes = new List<int>() { 10 },
+				IsMultiEpisode = false,
+				EpisodeTitle = string.Empty,
+				FileExtension = ".avi",
+				IsSeries = true,
+				OriginalString = "Better.Call.Saul.S02E10.GERMAN.DL.DUBBED.1080p.WebHD.h264 - iNFOTv.avi",
+				RemovedTokens = new List<string>() {"German", "DUBBED", "h264", "WebHD"},
+				Resolutions = new List<ResolutionsMap> {ResolutionsMap.FullHD_1080p},
+				Season = 2,
+				State = State.OK_SUCCESS,
+				Title = "Better.Call.Saul",
+				Year = -1,
+				DetectedOldSpacingChar = '.',
+				AudioCodec = "",
+				VideoCodec = "h264",
+				ReleaseGroup = "iNFOTv"
+			};
+			testData.Add(new TestData()
 			{
 				Actual = id.OriginalString,
 				FullTitle = "Better.Call.Saul.S02E10",
@@ -369,26 +369,26 @@ namespace SeriesIDParser_Test
 
 
 			// Movie with extension - Test011
-		    id = new SeriesID
-		    {
-                Episodes = new List<int>(),
-                IsMultiEpisode = false,
-		        EpisodeTitle = string.Empty,
-		        FileExtension = "mkv",
-		        IsSeries = false,
-		        OriginalString = "Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv",
-		        RemovedTokens = new List<string>() {"German", "x264", "EXTENDED", "BluRay"},
-		        Resolutions = new List<ResolutionsMap> {ResolutionsMap.FullHD_1080p},
-		        Season = -1,
-		        State = State.OK_SUCCESS,
-		        Title = "Der.Hobbit.Smaugs.Einoede",
-		        Year = 2013,
-		        DetectedOldSpacingChar = '.',
-		        AudioCodec = "",
-                VideoCodec = "x264",
-                ReleaseGroup = string.Empty
-		    };
-		    testData.Add(new TestData()
+			id = new SeriesID
+			{
+				Episodes = new List<int>(),
+				IsMultiEpisode = false,
+				EpisodeTitle = string.Empty,
+				FileExtension = ".mkv",
+				IsSeries = false,
+				OriginalString = "Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv",
+				RemovedTokens = new List<string>() {"German", "x264", "EXTENDED", "BluRay"},
+				Resolutions = new List<ResolutionsMap> {ResolutionsMap.FullHD_1080p},
+				Season = -1,
+				State = State.OK_SUCCESS,
+				Title = "Der.Hobbit.Smaugs.Einoede",
+				Year = 2013,
+				DetectedOldSpacingChar = '.',
+				AudioCodec = "",
+				VideoCodec = "x264",
+				ReleaseGroup = string.Empty
+			};
+			testData.Add(new TestData()
 			{
 				Actual = id.OriginalString,
 				FullTitle = "Der.Hobbit.Smaugs.Einoede",
@@ -401,26 +401,26 @@ namespace SeriesIDParser_Test
 
 
 			// Movie usual - Test012
-		    id = new SeriesID
-		    {
-                Episodes = new List<int>(),
-                IsMultiEpisode = false,
-		        EpisodeTitle = string.Empty,
-		        FileExtension = null,
-		        IsSeries = false,
-		        OriginalString = "A.Chinese.Ghost.Story.3.1991.German.DTS.1080p.BD9.x264",
-		        RemovedTokens = new List<string>() {"German", "DTS", "x264"},
-		        Resolutions = new List<ResolutionsMap> {ResolutionsMap.FullHD_1080p},
-		        Season = -1,
-		        State = State.OK_SUCCESS,
-		        Title = "A.Chinese.Ghost.Story.3",
-		        Year = 1991,
-		        DetectedOldSpacingChar = '.',
-		        AudioCodec = "DTS",
-                VideoCodec = "x264",
-                ReleaseGroup = string.Empty
-		    };
-		    testData.Add(new TestData()
+			id = new SeriesID
+			{
+				Episodes = new List<int>(),
+				IsMultiEpisode = false,
+				EpisodeTitle = string.Empty,
+				FileExtension = null,
+				IsSeries = false,
+				OriginalString = "A.Chinese.Ghost.Story.3.1991.German.DTS.1080p.BD9.x264",
+				RemovedTokens = new List<string>() {"German", "DTS", "x264"},
+				Resolutions = new List<ResolutionsMap> {ResolutionsMap.FullHD_1080p},
+				Season = -1,
+				State = State.OK_SUCCESS,
+				Title = "A.Chinese.Ghost.Story.3",
+				Year = 1991,
+				DetectedOldSpacingChar = '.',
+				AudioCodec = "DTS",
+				VideoCodec = "x264",
+				ReleaseGroup = string.Empty
+			};
+			testData.Add(new TestData()
 			{
 				Actual = id.OriginalString,
 				FullTitle = "A.Chinese.Ghost.Story.3",
@@ -433,26 +433,26 @@ namespace SeriesIDParser_Test
 
 
 			// Series multi Resolutions - Test013
-		    id = new SeriesID
-		    {
-                Episodes = new List<int>() { 1 },
-                IsMultiEpisode = false,
-		        EpisodeTitle = "Endlich.frei",
-		        FileExtension = "mkv",
-		        IsSeries = true,
-		        OriginalString = "Narcos.S02E01.Endlich.frei.German.DD51.DL.1080p.720p.x264.mkv",
-		        RemovedTokens = new List<string>() {"German", "x264"},
-		        Resolutions = new List<ResolutionsMap> {ResolutionsMap.HD_720p, ResolutionsMap.FullHD_1080p},
-		        Season = 2,
-		        State = State.OK_SUCCESS,
-		        Title = "Narcos",
-		        Year = -1,
-		        DetectedOldSpacingChar = '.',
-		        AudioCodec = "",
-		        VideoCodec = "x264",
-                ReleaseGroup = string.Empty
-		    };
-		    testData.Add(new TestData()
+			id = new SeriesID
+			{
+				Episodes = new List<int>() { 1 },
+				IsMultiEpisode = false,
+				EpisodeTitle = "Endlich.frei",
+				FileExtension = ".mkv",
+				IsSeries = true,
+				OriginalString = "Narcos.S02E01.Endlich.frei.German.DD51.DL.1080p.720p.x264.mkv",
+				RemovedTokens = new List<string>() {"German", "x264"},
+				Resolutions = new List<ResolutionsMap> {ResolutionsMap.HD_720p, ResolutionsMap.FullHD_1080p},
+				Season = 2,
+				State = State.OK_SUCCESS,
+				Title = "Narcos",
+				Year = -1,
+				DetectedOldSpacingChar = '.',
+				AudioCodec = "",
+				VideoCodec = "x264",
+				ReleaseGroup = string.Empty
+			};
+			testData.Add(new TestData()
 			{
 				Actual = id.OriginalString,
 				FullTitle = "Narcos.S02E01.Endlich.frei",
@@ -460,135 +460,135 @@ namespace SeriesIDParser_Test
 				Expected = id,
 				Settings = new ParserSettings(true),
 				Comment = "Test013"
-            });
+			});
 
 
 
-            // Series down sampled (Original String) - Test014
-            id = new SeriesID
-            {
-                Episodes = new List<int>() { 1 },
-                IsMultiEpisode = false,
-                EpisodeTitle = "Endlich.frei",
-                FileExtension = "mkv",
-                IsSeries = true,
-                OriginalString = "Narcos.S02E01.Endlich.frei.German.DD51.DL.1080p.NetflixUHD.AAC.x264.mkv",
-                RemovedTokens = new List<string>() { "AAC", "German", "x264" },
-                Resolutions = new List<ResolutionsMap> { ResolutionsMap.FullHD_1080p, ResolutionsMap.UltraHD_2160p },
-                Season = 2,
-                State = State.OK_SUCCESS,
-                Title = "Narcos",
-                Year = -1,
-                DetectedOldSpacingChar = '.',
-                AudioCodec = "AAC",
-                VideoCodec = "x264",
-                ReleaseGroup = string.Empty
-            };
-            testData.Add(new TestData()
-            {
-                Actual = id.OriginalString,
-                FullTitle = "Narcos.S02E01.Endlich.frei",
-                ParsedString = "Narcos.S02E01.Endlich.frei.1080p.AAC.German.x264.mkv",
-                Expected = id,
-                Settings = new ParserSettings(true),
-                Comment = "Test014"
-            });
+			// Series down sampled (Original String) - Test014
+			id = new SeriesID
+			{
+				Episodes = new List<int>() { 1 },
+				IsMultiEpisode = false,
+				EpisodeTitle = "Endlich.frei",
+				FileExtension = ".mkv",
+				IsSeries = true,
+				OriginalString = "Narcos.S02E01.Endlich.frei.German.DD51.DL.1080p.NetflixUHD.AAC.x264.mkv",
+				RemovedTokens = new List<string>() { "AAC", "German", "x264" },
+				Resolutions = new List<ResolutionsMap> { ResolutionsMap.FullHD_1080p, ResolutionsMap.UltraHD_2160p },
+				Season = 2,
+				State = State.OK_SUCCESS,
+				Title = "Narcos",
+				Year = -1,
+				DetectedOldSpacingChar = '.',
+				AudioCodec = "AAC",
+				VideoCodec = "x264",
+				ReleaseGroup = string.Empty
+			};
+			testData.Add(new TestData()
+			{
+				Actual = id.OriginalString,
+				FullTitle = "Narcos.S02E01.Endlich.frei",
+				ParsedString = "Narcos.S02E01.Endlich.frei.1080p.AAC.German.x264.mkv",
+				Expected = id,
+				Settings = new ParserSettings(true),
+				Comment = "Test014"
+			});
 
 
 
-            // Multi Episode - Test015
-            id = new SeriesID
-            {
-                Episodes = new List<int>() { 1, 2 },
-                IsMultiEpisode = true,
-                EpisodeTitle = "Endlich.frei",
-                FileExtension = "mkv",
-                IsSeries = true,
-                OriginalString = "Narcos.S02E01E02.Endlich.frei.German.DD51.DL.1080p.NetflixUHD.AAC.x264.mkv",
-                RemovedTokens = new List<string>() { "AAC", "German", "x264" },
-                Resolutions = new List<ResolutionsMap> { ResolutionsMap.FullHD_1080p, ResolutionsMap.UltraHD_2160p },
-                Season = 2,
-                State = State.OK_SUCCESS,
-                Title = "Narcos",
-                Year = -1,
-                DetectedOldSpacingChar = '.',
-                AudioCodec = "AAC",
-                VideoCodec = "x264",
-                ReleaseGroup = string.Empty
-            };
-            testData.Add(new TestData()
-            {
-                Actual = id.OriginalString,
-                FullTitle = "Narcos.S02E01E02.Endlich.frei",
-                ParsedString = "Narcos.S02E01E02.Endlich.frei.1080p.AAC.German.x264.mkv",
-                Expected = id,
-                Settings = new ParserSettings(true),
-                Comment = "Test015"
-            });
+			// Multi Episode - Test015
+			id = new SeriesID
+			{
+				Episodes = new List<int>() { 1, 2 },
+				IsMultiEpisode = true,
+				EpisodeTitle = "Endlich.frei",
+				FileExtension = ".mkv",
+				IsSeries = true,
+				OriginalString = "Narcos.S02E01E02.Endlich.frei.German.DD51.DL.1080p.NetflixUHD.AAC.x264.mkv",
+				RemovedTokens = new List<string>() { "AAC", "German", "x264" },
+				Resolutions = new List<ResolutionsMap> { ResolutionsMap.FullHD_1080p, ResolutionsMap.UltraHD_2160p },
+				Season = 2,
+				State = State.OK_SUCCESS,
+				Title = "Narcos",
+				Year = -1,
+				DetectedOldSpacingChar = '.',
+				AudioCodec = "AAC",
+				VideoCodec = "x264",
+				ReleaseGroup = string.Empty
+			};
+			testData.Add(new TestData()
+			{
+				Actual = id.OriginalString,
+				FullTitle = "Narcos.S02E01E02.Endlich.frei",
+				ParsedString = "Narcos.S02E01E02.Endlich.frei.1080p.AAC.German.x264.mkv",
+				Expected = id,
+				Settings = new ParserSettings(true),
+				Comment = "Test015"
+			});
 
 
 
-            // Multi Episode - Test016
-            id = new SeriesID
-            {
-                Episodes = new List<int>() { 1, 2, 3 },
-                IsMultiEpisode = true,
-                EpisodeTitle = "Endlich.frei",
-                FileExtension = "mkv",
-                IsSeries = true,
-                OriginalString = "Narcos.S02E01E02E03.Endlich.frei.German.DD51.DL.1080p.NetflixUHD.AAC.x264.mkv",
-                RemovedTokens = new List<string>() { "AAC", "German", "x264" },
-                Resolutions = new List<ResolutionsMap> { ResolutionsMap.FullHD_1080p, ResolutionsMap.UltraHD_2160p },
-                Season = 2,
-                State = State.OK_SUCCESS,
-                Title = "Narcos",
-                Year = -1,
-                DetectedOldSpacingChar = '.',
-                AudioCodec = "AAC",
-                VideoCodec = "x264",
-                ReleaseGroup = string.Empty
-            };
-            testData.Add(new TestData()
-            {
-                Actual = id.OriginalString,
-                FullTitle = "Narcos.S02E01E02E03.Endlich.frei",
-                ParsedString = "Narcos.S02E01E02E03.Endlich.frei.1080p.AAC.German.x264.mkv",
-                Expected = id,
-                Settings = new ParserSettings(true),
-                Comment = "Test016"
-            });
+			// Multi Episode - Test016
+			id = new SeriesID
+			{
+				Episodes = new List<int>() { 1, 2, 3 },
+				IsMultiEpisode = true,
+				EpisodeTitle = "Endlich.frei",
+				FileExtension = ".mkv",
+				IsSeries = true,
+				OriginalString = "Narcos.S02E01E02E03.Endlich.frei.German.DD51.DL.1080p.NetflixUHD.AAC.x264.mkv",
+				RemovedTokens = new List<string>() { "AAC", "German", "x264" },
+				Resolutions = new List<ResolutionsMap> { ResolutionsMap.FullHD_1080p, ResolutionsMap.UltraHD_2160p },
+				Season = 2,
+				State = State.OK_SUCCESS,
+				Title = "Narcos",
+				Year = -1,
+				DetectedOldSpacingChar = '.',
+				AudioCodec = "AAC",
+				VideoCodec = "x264",
+				ReleaseGroup = string.Empty
+			};
+			testData.Add(new TestData()
+			{
+				Actual = id.OriginalString,
+				FullTitle = "Narcos.S02E01E02E03.Endlich.frei",
+				ParsedString = "Narcos.S02E01E02E03.Endlich.frei.1080p.AAC.German.x264.mkv",
+				Expected = id,
+				Settings = new ParserSettings(true),
+				Comment = "Test016"
+			});
 
 
 
-            // Multi Episode - Test017
-            id = new SeriesID
-            {
-                Episodes = new List<int>() { 1, 2, 4 },
-                IsMultiEpisode = true,
-                EpisodeTitle = "Endlich.frei",
-                FileExtension = "mkv",
-                IsSeries = true,
-                OriginalString = "Narcos.S02E01E02E04.Endlich.frei.German.DD51.DL.1080p.NetflixUHD.AAC.x264.mkv",
-                RemovedTokens = new List<string>() { "AAC", "German", "x264" },
-                Resolutions = new List<ResolutionsMap> { ResolutionsMap.FullHD_1080p, ResolutionsMap.UltraHD_2160p },
-                Season = 2,
-                State = State.OK_SUCCESS,
-                Title = "Narcos",
-                Year = -1,
-                DetectedOldSpacingChar = '.',
-                AudioCodec = "AAC",
-                VideoCodec = "x264",
-                ReleaseGroup = string.Empty
-            };
-            testData.Add(new TestData()
-            {
-                Actual = id.OriginalString,
-                FullTitle = "Narcos.S02E01E02E04.Endlich.frei",
-                ParsedString = "Narcos.S02E01E02E04.Endlich.frei.1080p.AAC.German.x264.mkv",
-                Expected = id,
-                Settings = new ParserSettings(true),
-                Comment = "Test017"
-            });
+			// Multi Episode - Test017
+			id = new SeriesID
+			{
+				Episodes = new List<int>() { 1, 2, 4 },
+				IsMultiEpisode = true,
+				EpisodeTitle = "Endlich.frei",
+				FileExtension = ".mkv",
+				IsSeries = true,
+				OriginalString = "Narcos.S02E01E02E04.Endlich.frei.German.DD51.DL.1080p.NetflixUHD.AAC.x264.mkv",
+				RemovedTokens = new List<string>() { "AAC", "German", "x264" },
+				Resolutions = new List<ResolutionsMap> { ResolutionsMap.FullHD_1080p, ResolutionsMap.UltraHD_2160p },
+				Season = 2,
+				State = State.OK_SUCCESS,
+				Title = "Narcos",
+				Year = -1,
+				DetectedOldSpacingChar = '.',
+				AudioCodec = "AAC",
+				VideoCodec = "x264",
+				ReleaseGroup = string.Empty
+			};
+			testData.Add(new TestData()
+			{
+				Actual = id.OriginalString,
+				FullTitle = "Narcos.S02E01E02E04.Endlich.frei",
+				ParsedString = "Narcos.S02E01E02E04.Endlich.frei.1080p.AAC.German.x264.mkv",
+				Expected = id,
+				Settings = new ParserSettings(true),
+				Comment = "Test017"
+			});
 
 
 			//_data.Add(new TestData() { actual = "The.Big.Bang.Theory.S09E12.Der.romantische.Asteroid.GERMAN.DL.DUBBED.1080p.WebHD.x264", expected = "x" });     // Usual

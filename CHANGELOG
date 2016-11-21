@@ -1,5 +1,18 @@
 # Changelog #
 
+##7.1.0 (2016-??-??)##
+###New###
+- Fileextension handling changed: Default is now the global dot net default (with dot E.g.: m4v -> .m4v)
+
+###Fix###
+ - Possible Nullpointer on GetFileExtension()
+ - Some code optimization
+ - Added a property for the year regex string
+
+
+---
+
+
 ##7.0.0 (2016-10-16)##
 ###New###
 - !! Now supporting .Net Core !!

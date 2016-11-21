@@ -55,70 +55,80 @@ namespace SeriesIDParser
 		/// </summary>
 		public ParserSettings(bool preFillLists = false)
 		{
-		    if (!preFillLists)
-		    {
-		        return;
-		    }
+			if (!preFillLists)
+			{
+				return;
+			}
 
-		    // ### Resolution Detection
-		    _detectUltraHD8kTokens = new List<string>() { "8k", "4320k" };
-		    _detectUltraHDTokens = new List<string>() { "NetflixUHD", "UHD", "2160p" };
-		    _detectFullHDTokens = new List<string>() { "FullHD", "1080p", "1080i" };
-		    _detectHDTokens = new List<string>() { "HDTV", "720p", "HD" };
-		    _detectSDTokens = new List<string>() { "DVDRIP", "DVD", "SD" };
+			// ### Resolution Detection
+			_detectUltraHD8kTokens = new List<string>() { "8k", "4320k" };
+			_detectUltraHDTokens = new List<string>() { "NetflixUHD", "UHD", "2160p" };
+			_detectFullHDTokens = new List<string>() { "FullHD", "1080p", "1080i" };
+			_detectHDTokens = new List<string>() { "HDTV", "720p", "HD" };
+			_detectSDTokens = new List<string>() { "DVDRIP", "DVD", "SD" };
 
-		    // ### Fileextensions
-		    _fileExtensions = new List<string>() { "3G2", "3GP", "AMV", "ASF", "AVI", "DRC", "F4A", "F4B", "F4P", "F4V",
-		        "FLV", "GIF", "GIFV", "M2V", "M4P", "M4V", "MKV", "MNG", "MOV", "MP2",
-		        "MP4", "MPE", "MPEG", "MPG", "MPV", "MXF", "NSV", "OGG", "OGV", "QT",
-		        "RM", "RMVB", "ROQ", "SVI", "VOB", "WEBM", "WMV", "YUV" };
+			// ### Fileextensions
+			_fileExtensions = new List<string>() { ".3G2", ".3GP", ".AMV", ".ASF", ".AVI", ".DRC", ".F4A", ".F4B", ".F4P", ".F4V",
+				".FLV", ".GIF", ".GIFV", ".M2V", ".M4P", ".M4V", ".MKV", ".MNG", ".MOV", ".MP2",
+				".MP4", ".MPE", ".MPEG", ".MPG", ".MPV", ".MXF", ".NSV", ".OGG", ".OGV", ".QT",
+				".RM", ".RMVB", ".ROQ", ".SVI", ".VOB", ".WEBM", ".WMV", ".YUV" };
 
-		    // ### Remove 
-		    _removeAndListTokens = new List<string>() { "DUBBED", "SYNCED", "iTunes", "BluRay", "WebHD",
-		        "Netflix", "WebRIP", "DOKU", "EXTENDED", "UNRATED",
-		        "AmazonHD", "German", "Remastered", "HDRip", "Remux" };
+			// ### Remove 
+			_removeAndListTokens = new List<string>() { "DUBBED", "SYNCED", "iTunes", "BluRay", "WebHD",
+				"Netflix", "WebRIP", "DOKU", "EXTENDED", "UNRATED",
+				"AmazonHD", "German", "Remastered", "HDRip", "Remux" };
 
-		    //_removeAndListTokensOnLanguageParserIsDisabled = new List<string>() { "GERMAN" };
+			//_removeAndListTokensOnLanguageParserIsDisabled = new List<string>() { "GERMAN" };
 
-		    _removeWithoutListTokens = new List<string>() { " ", "MIRROR", "WEB", "BD9", "DD20",
-		        "DD51", "DD5.1", "Web-DL", "DL", "HDDVDRip",
-		        "AC3D",	"THEATRICAL" };
+			_removeWithoutListTokens = new List<string>() { " ", "MIRROR", "WEB", "BD9", "DD20",
+				"DD51", "DD5.1", "Web-DL", "DL", "HDDVDRip",
+				"AC3D",	"THEATRICAL" };
 
-		    // ### Parsing
-		    _videoCodecs = new List<string>() { "x264", "h264", "x265", "AVC", "XviD",
-		        "FFmpeg", "VP7", "VP8", "VP9",
-		        "MPEG-4", "MPEG-2", "MPEG4", "MPEG2" };
+			// ### Parsing
+			_videoCodecs = new List<string>() { "x264", "h264", "x265", "AVC", "XviD",
+				"FFmpeg", "VP7", "VP8", "VP9",
+				"MPEG-4", "MPEG-2", "MPEG4", "MPEG2" };
 
-		    _audioCodecs = new List<string>() { "DTSHD", "DTS", "AAC", "MP3", "MPEG3", "MPEG-3" };
+			_audioCodecs = new List<string>() { "DTSHD", "DTS", "AAC", "MP3", "MPEG3", "MPEG-3" };
 
-		    //_languages = new List<string>() { "English", "Chinese", "Hindi", "Spanish",
-		    //"French", "Arabic", "Russian", "Portuguese",
-		    //"Bengalese", "German", "Japanese", "Korean" };
+			//_languages = new List<string>() { "English", "Chinese", "Hindi", "Spanish",
+			//"French", "Arabic", "Russian", "Portuguese",
+			//"Bengalese", "German", "Japanese", "Korean" };
 
-		    // ### Other Stuff
-		    _possibleSpacingChars = new List<char>() { '.', ',', '-', ' ', '+', '*' };
+			// ### Other Stuff
+			_possibleSpacingChars = new List<char>() { '.', ',', '-', ' ', '+', '*' };
 		}
 
-        internal ParserSettings()
-        {
+		internal ParserSettings()
+		{
 
-        }
+		}
 
 
 		#region Properties
 		// ### Parsing
 		// ############################################################
-		#region Parsing
+        #region Parsing
 
-		private string _seasonAndEpisodeParseRegex = @"S(?<season>\d{1,4})(E(?<episode>\d{1,4}))+";
-		/// <summary>
+        private string _seasonAndEpisodeParseRegex = @"S(?<season>\d{1,4})(E(?<episode>\d{1,4}))+";
+        /// <summary>
         /// Defines the regex-string that parses the season and episode id from the input string. Default: 'S(?<season>\d{1,4})(E(?<episode>\d{1,4}))+'
-		/// </summary>
-		public string SeasonAndEpisodeParseRegex
-		{
-			get { return _seasonAndEpisodeParseRegex; }
-			set { _seasonAndEpisodeParseRegex = value; }
-		}
+        /// </summary>
+        public string SeasonAndEpisodeParseRegex
+        {
+            get { return _seasonAndEpisodeParseRegex; }
+            set { _seasonAndEpisodeParseRegex = value; }
+        }
+
+        private string _yearParseRegex = @"(\d{4})";
+        /// <summary>
+        /// Defines the regex-string that parses the year from the input string. Default: '(\d{4})'
+        /// </summary>
+        public string YearParseRegex
+        {
+            get { return _yearParseRegex; }
+            set { _yearParseRegex = value; }
+        }
 
 
 		private List<string> _fileExtensions = new List<string>();
@@ -232,29 +242,29 @@ namespace SeriesIDParser
 		{
 			get { return _newSpacingChar; }
 			set { _newSpacingChar = value; }
-        }
+		}
 
 
-        private string _idStringFormaterSeason = "S{0:00}";
-        /// <summary>
-        /// Defines the String.Format-string that formats the season for the id-string. Do NOT use larger than four digits per octet. Default: 'S{0:00}'
-        /// </summary>
-        public string IDStringFormaterSeason
-        {
-            get { return _idStringFormaterSeason; }
-            set { _idStringFormaterSeason = value; }
-        }
+		private string _idStringFormaterSeason = "S{0:00}";
+		/// <summary>
+		/// Defines the String.Format-string that formats the season for the id-string. Do NOT use larger than four digits per octet. Default: 'S{0:00}'
+		/// </summary>
+		public string IDStringFormaterSeason
+		{
+			get { return _idStringFormaterSeason; }
+			set { _idStringFormaterSeason = value; }
+		}
 
 
-        private string _idStringFormaterEpisode = "E{0:00}";
-        /// <summary>
-        /// Defines the String.Format-string that formats the episode for the id-string. Do NOT use larger than four digits per octet. Default: 'E{1:00}'
-        /// </summary>
-        public string IDStringFormaterEpisode
-        {
-            get { return _idStringFormaterEpisode; }
-            set { _idStringFormaterEpisode = value; }
-        }
+		private string _idStringFormaterEpisode = "E{0:00}";
+		/// <summary>
+		/// Defines the String.Format-string that formats the episode for the id-string. Do NOT use larger than four digits per octet. Default: 'E{1:00}'
+		/// </summary>
+		public string IDStringFormaterEpisode
+		{
+			get { return _idStringFormaterEpisode; }
+			set { _idStringFormaterEpisode = value; }
+		}
 
 
 		private string _resolutionStringUnknown = "UNKNOWN";

@@ -132,7 +132,7 @@ namespace SeriesIDParserCore
 					}
 
 					// Get and remove year
-					_year = Helper.GetYear(fullTitle);
+					_year = Helper.GetYear(fullTitle, _parserSettings.YearParseRegex);
 					fullTitle = fullTitle.Replace(_year.ToString(), "");
 
 					// Remove double spacer
