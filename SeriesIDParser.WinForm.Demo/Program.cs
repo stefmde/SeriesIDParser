@@ -29,7 +29,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace SeriesIDParser_WinForm_Demo
+namespace SeriesIDParser.WinForm.Demo
 {
 	static class Program
 	{
@@ -41,7 +41,7 @@ namespace SeriesIDParser_WinForm_Demo
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-			Application.Run(new Form1());
+			Application.Run(new DemoApp());
 		}
 	}
 }

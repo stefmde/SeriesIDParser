@@ -32,16 +32,37 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-[assembly: InternalsVisibleTo("SeriesIDParser_Test")]
+
 namespace SeriesIDParser
 {
 	/// <summary>
 	/// The result object representing the series or movie string
 	/// </summary>
-	public partial class SeriesID
+	public class SeriesID
 	{
+		#region Fields
+
 		private readonly ParserSettings _parserSettings = new ParserSettings(true);
 		private DateTime _parseStartTime = new DateTime();
+		private State _state;
+		private List<ResolutionsMap> _resolutions;
+		private string _originalString;
+		private char _detectedOldSpacingChar;
+		private string _fileExtension;
+		private string _releaseGroup;
+		private List<string> _removedTokens;
+		private string _audioCodec;
+		private string _videoCodec;
+		private int _year;
+		private string _title;
+		private string _episodeTitle;
+		private bool _isSeries;
+		private List<int> _episodes;
+		private int _season;
+		private TimeSpan _processingDuration;
+		private Exception _exception;
+
+		#endregion Fields
 
 		/// <summary>
 		/// ctor with optional settings. Null settings are overriden with default settings
@@ -56,22 +77,6 @@ namespace SeriesIDParser
 		}
 
 
-		/// <summary>
-		/// </summary>
-		/// <returns>FullTitle and resolution. string.Empty on error</returns>
-		public override string ToString()
-		{
-			if (_state.HasFlag(State.OK_SUCCESS))
-			{
-				return FullTitle + " -- " + Helper.GetResolutionString(_parserSettings, _resolutions);
-			}
-			else
-			{
-				return string.Empty;
-			}
-		}
-
-
 
 		// ############################################################
 		// ### Core Function
@@ -81,14 +86,13 @@ namespace SeriesIDParser
 		/// The primary parsing function
 		/// </summary>
 		/// <param name="input">The series or movie string who get parsed. Must be atleast five chars</param>
-		/// <returns>The SeriesID object that represents the series or movie string</returns>
-		public SeriesID Parse(string input)
+		/// <returns>The SeriesIDResult object that represents the series or movie string</returns>
+		public ParserResult Parse(string input)
 		{
 			ResetObject();
 			_originalString = input.Trim();
 			string fullTitle = _originalString;
 			bool warningOrErrorOccurred = false;
-			Regex removeRegex;
 			_detectedOldSpacingChar = Helper.GetSpacingChar(input, _parserSettings);
 
 			try
@@ -127,7 +131,7 @@ namespace SeriesIDParser
 					// remove fileextension
 					if (_fileExtension != null)
 					{
-						removeRegex = new Regex(_fileExtension, RegexOptions.IgnoreCase);
+						Regex removeRegex = new Regex(_fileExtension, RegexOptions.IgnoreCase);
 						fullTitle = removeRegex.Replace(fullTitle, "");
 					}
 
@@ -156,26 +160,25 @@ namespace SeriesIDParser
 					_isSeries = Helper.IsSeries(_parserSettings, fullTitle);
 					_season = Helper.GetSeasonID(_parserSettings, fullTitle);
 					_episodes = Helper.GetEpisodeIDs(_parserSettings, fullTitle);
-					_isMultiEpisode = _episodes.Count > 1;
 				}
 				else
 				{
 					// ERROR
-					_state |= State.ERR_EMPTY_OR_TO_SHORT_ARGUMENT;
+					_state |= State.ErrEmptyOrToShortArgument;
 					_resolutions = Helper.MaintainUnknownResolution(_resolutions);
-					return this;
+					return GenerateResult();
 				}
 
 				// SERIES
 				if (!warningOrErrorOccurred)
 				{
-					_state |= State.OK_SUCCESS;
+					_state |= State.OkSuccess;
 				}
 
 				_resolutions = Helper.MaintainUnknownResolution(_resolutions);
 				_processingDuration = DateTime.Now - _parseStartTime;
 
-				return this;
+				return GenerateResult();
 			}
 			catch (Exception ex)
 			{
@@ -189,20 +192,25 @@ namespace SeriesIDParser
 				else
 				{
 					// ERROR
-					_state |= State.ERR_UNKNOWN_ERROR;
-					return this;
+					_state |= State.ErrUnknownError;
+					return GenerateResult();
 				}
 			}
 		}
-
-
-
 
 
 		// ############################################################
 		// ### Local Helper Functions
 		// ############################################################
 		#region HelperFunctions
+
+		private ParserResult GenerateResult()
+		{
+			return new ParserResult(_originalString, _parserSettings, _audioCodec, _videoCodec, _processingDuration, 
+				_resolutions, _season, _episodes, _year, _detectedOldSpacingChar, _exception, _isSeries, _removedTokens, 
+				_state, _fileExtension, _title, _episodeTitle, _releaseGroup);
+		}
+
 		/// <summary>
 		/// Clears and resets the object for the new execution
 		/// </summary>
@@ -213,10 +221,10 @@ namespace SeriesIDParser
 			_fileExtension = string.Empty;
 			_isSeries = false;
 			_originalString = string.Empty;
-			_removedTokens.Clear();
+			_removedTokens = new List<string>();
 			_resolutions = new List<ResolutionsMap>();
 			_season = -1;
-			_state = State.UNKNOWN;
+			_state = State.Unknown;
 			_title = string.Empty;
 			_year = -1;
 			_detectedOldSpacingChar = new char();

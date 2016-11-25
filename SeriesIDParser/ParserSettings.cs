@@ -34,22 +34,11 @@ using System.IO;
 namespace SeriesIDParser
 {
 	/// <summary>
-	/// The properties for the ResolutionOutputBehavior
-	/// </summary>
-	public enum ResolutionOutputBehavior
-	{
-		AllFoundResolutions,
-		HighestResolution,
-		LowestResolution
-	}
-
-	/// <summary>
 	/// The settings who can give to the SeriesIDParser to modify the behavior. Object is prefilled with the default values and list entries
 	/// </summary>
 	//[Serializable]
 	public class ParserSettings
 	{
-
 		/// <summary>
 		/// Prefill ctor
 		/// </summary>
@@ -61,42 +50,42 @@ namespace SeriesIDParser
 			}
 
 			// ### Resolution Detection
-			_detectUltraHD8kTokens = new List<string>() { "8k", "4320k" };
-			_detectUltraHDTokens = new List<string>() { "NetflixUHD", "UHD", "2160p" };
-			_detectFullHDTokens = new List<string>() { "FullHD", "1080p", "1080i" };
-			_detectHDTokens = new List<string>() { "HDTV", "720p", "HD" };
-			_detectSDTokens = new List<string>() { "DVDRIP", "DVD", "SD" };
+			DetectUltraHD8kTokens = new List<string>() { "8k", "4320k" };
+			DetectUltraHDTokens = new List<string>() { "NetflixUHD", "UHD", "2160p" };
+			DetectFullHDTokens = new List<string>() { "FullHD", "1080p", "1080i" };
+			DetectHDTokens = new List<string>() { "HDTV", "720p", "HD" };
+			DetectSDTokens = new List<string>() { "DVDRIP", "DVD", "SD" };
 
 			// ### Fileextensions
-			_fileExtensions = new List<string>() { ".3G2", ".3GP", ".AMV", ".ASF", ".AVI", ".DRC", ".F4A", ".F4B", ".F4P", ".F4V",
+			FileExtensions = new List<string>() { ".3G2", ".3GP", ".AMV", ".ASF", ".AVI", ".DRC", ".F4A", ".F4B", ".F4P", ".F4V",
 				".FLV", ".GIF", ".GIFV", ".M2V", ".M4P", ".M4V", ".MKV", ".MNG", ".MOV", ".MP2",
 				".MP4", ".MPE", ".MPEG", ".MPG", ".MPV", ".MXF", ".NSV", ".OGG", ".OGV", ".QT",
 				".RM", ".RMVB", ".ROQ", ".SVI", ".VOB", ".WEBM", ".WMV", ".YUV" };
 
 			// ### Remove 
-			_removeAndListTokens = new List<string>() { "DUBBED", "SYNCED", "iTunes", "BluRay", "WebHD",
+			RemoveAndListTokens = new List<string>() { "DUBBED", "SYNCED", "iTunes", "BluRay", "WebHD",
 				"Netflix", "WebRIP", "DOKU", "EXTENDED", "UNRATED",
 				"AmazonHD", "German", "Remastered", "HDRip", "Remux" };
 
 			//_removeAndListTokensOnLanguageParserIsDisabled = new List<string>() { "GERMAN" };
 
-			_removeWithoutListTokens = new List<string>() { " ", "MIRROR", "WEB", "BD9", "DD20",
+			RemoveWithoutListTokens = new List<string>() { " ", "MIRROR", "WEB", "BD9", "DD20",
 				"DD51", "DD5.1", "Web-DL", "DL", "HDDVDRip",
 				"AC3D",	"THEATRICAL" };
 
 			// ### Parsing
-			_videoCodecs = new List<string>() { "x264", "h264", "x265", "AVC", "XviD",
+			VideoCodecs = new List<string>() { "x264", "h264", "x265", "AVC", "XviD",
 				"FFmpeg", "VP7", "VP8", "VP9",
 				"MPEG-4", "MPEG-2", "MPEG4", "MPEG2" };
 
-			_audioCodecs = new List<string>() { "DTSHD", "DTS", "AAC", "MP3", "MPEG3", "MPEG-3" };
+			AudioCodecs = new List<string>() { "DTSHD", "DTS", "AAC", "MP3", "MPEG3", "MPEG-3" };
 
 			//_languages = new List<string>() { "English", "Chinese", "Hindi", "Spanish",
 			//"French", "Arabic", "Russian", "Portuguese",
 			//"Bengalese", "German", "Japanese", "Korean" };
 
 			// ### Other Stuff
-			_possibleSpacingChars = new List<char>() { '.', ',', '-', ' ', '+', '*' };
+			PossibleSpacingChars = new List<char>() { '.', ',', '-', ' ', '+', '*' };
 		}
 
 		internal ParserSettings()
@@ -104,352 +93,207 @@ namespace SeriesIDParser
 
 		}
 
-
 		#region Properties
 		// ### Parsing
 		// ############################################################
-        #region Parsing
+		#region Parsing
 
-        private string _seasonAndEpisodeParseRegex = @"S(?<season>\d{1,4})(E(?<episode>\d{1,4}))+";
-        /// <summary>
-        /// Defines the regex-string that parses the season and episode id from the input string. Default: 'S(?<season>\d{1,4})(E(?<episode>\d{1,4}))+'
-        /// </summary>
-        public string SeasonAndEpisodeParseRegex
-        {
-            get { return _seasonAndEpisodeParseRegex; }
-            set { _seasonAndEpisodeParseRegex = value; }
-        }
+		/// <summary>
+		/// Defines the regex-string that parses the season and episode id from the input string. Default: 'S(?<season>\d{1,4})(E(?<episode>\d{1,4}))+'
+		/// </summary>
+		public string SeasonAndEpisodeParseRegex { get; set; } = @"S(?<season>\d{1,4})(E(?<episode>\d{1,4}))+";
 
-        private string _yearParseRegex = @"(\d{4})";
-        /// <summary>
-        /// Defines the regex-string that parses the year from the input string. Default: '(\d{4})'
-        /// </summary>
-        public string YearParseRegex
-        {
-            get { return _yearParseRegex; }
-            set { _yearParseRegex = value; }
-        }
+		/// <summary>
+		/// Defines the regex-string that parses the year from the input string. Default: '(\d{4})'
+		/// </summary>
+		public string YearParseRegex { get; set; } = @"(\d{4})";
 
 
-		private List<string> _fileExtensions = new List<string>();
 		/// <summary>
 		/// Defines the prefilled list with the posible extension to garantee a better detection
 		/// </summary>
-		public List<string> FileExtensions
-		{
-			get { return _fileExtensions; }
-			set { _fileExtensions = value; }
-		}
+		public List<string> FileExtensions { get; set; } = new List<string>();
 
 
-		private List<string> _videoCodecs = new List<string>();
 		/// <summary>
 		/// Defines the prefilled list with the posible Videocodecs
 		/// </summary>
-		public List<string> VideoCodecs
-		{
-			get { return _videoCodecs; }
-			set { _videoCodecs = value; }
-		}
+		public List<string> VideoCodecs { get; set; } = new List<string>();
 
 
-		private List<string> _audioCodecs = new List<string>();
 		/// <summary>
 		/// Defines the prefilled list with the posible Audiocodecs
 		/// </summary>
-		public List<string> AudioCodecs
-		{
-			get { return _audioCodecs; }
-			set { _audioCodecs = value; }
-		}
+		public List<string> AudioCodecs { get; set; } = new List<string>();
 
 
-		private List<char> _possibleSpacingChars = new List<char>();
 		/// <summary>
 		/// Defines the prefilled list with the posible spacing chars for the given string to detect the char
 		/// </summary>
-		public List<char> PossibleSpacingChars
-		{
-			get { return _possibleSpacingChars; }
-			set { _possibleSpacingChars = value; }
-		}
+		public List<char> PossibleSpacingChars { get; set; } = new List<char>();
 
 
-		private char _releaseGroupSeperator = '-';
 		/// <summary>
 		/// Defines the prefilled list with the posible spacing chars for the given string to detect the char
 		/// </summary>
-		public char ReleaseGroupSeperator
-		{
-			get { return _releaseGroupSeperator; }
-			set { _releaseGroupSeperator = value; }
-		}
+		public char ReleaseGroupSeperator { get; set; } = '-';
 
 
 		// ### Language ############################################################
-		private List<string> _languages = new List<string>();
 		/// <summary>
 		/// Defines the prefilled list with the languages for the output. Language parsing is Instable!
 		/// </summary>
-		public List<string> Languages
-		{
-			get { return _languages; }
-			set { _languages = value; }
-		}
+		public List<string> Languages { get; set; } = new List<string>();
 
 
-		private bool _activateLanguageParser = false;
 		/// <summary>
 		/// Activates the parsing of the language. Default: false. Language parsing is Instable!
 		/// </summary>
-		public bool ActivateLanguageParser
-		{
-			get { return _activateLanguageParser; }
-			set { _activateLanguageParser = value; }
-		}
+		public bool ActivateLanguageParser { get; set; } = false;
 
 
-		private bool _removeLanguageTokenOnFound = false;
 		/// <summary>
 		/// Removes the language token if it is found. Default: false. Language parsing is Instable!
 		/// </summary>
-		public bool RemoveLanguageTokenOnFound
-		{
-			get { return _removeLanguageTokenOnFound; }
-			set { _removeLanguageTokenOnFound = value; }
-		}
+		public bool RemoveLanguageTokenOnFound { get; set; } = false;
 
-		private List<string> _removeAndListTokensOnLanguageParserIsDisabled = new List<string>();
 		/// <summary>
 		/// Prefilled tokens list who should be removed from input string if the language parser is disabled. Language parsing is Instable!
 		/// </summary>
-		public List<string> RemoveAndListTokensOnLanguageParserIsDisabled
-		{
-			get { return _removeAndListTokensOnLanguageParserIsDisabled; }
-			set { _removeAndListTokensOnLanguageParserIsDisabled = value; }
-		}
+		public List<string> RemoveAndListTokensOnLanguageParserIsDisabled { get; set; } = new List<string>();
+
 		#endregion Parsing
 
 
 		// ### Output
 		// ############################################################
 		#region Output
-		private char _newSpacingChar = '.';
+
 		/// <summary>
 		/// Defines the new spacing char between the tokens in the output string. Default: '.'
 		/// </summary>
-		public char NewSpacingChar
-		{
-			get { return _newSpacingChar; }
-			set { _newSpacingChar = value; }
-		}
+		public char NewSpacingChar { get; set; } = '.';
 
 
-		private string _idStringFormaterSeason = "S{0:00}";
 		/// <summary>
 		/// Defines the String.Format-string that formats the season for the id-string. Do NOT use larger than four digits per octet. Default: 'S{0:00}'
 		/// </summary>
-		public string IDStringFormaterSeason
-		{
-			get { return _idStringFormaterSeason; }
-			set { _idStringFormaterSeason = value; }
-		}
+		public string IDStringFormaterSeason { get; set; } = "S{0:00}";
 
 
-		private string _idStringFormaterEpisode = "E{0:00}";
 		/// <summary>
 		/// Defines the String.Format-string that formats the episode for the id-string. Do NOT use larger than four digits per octet. Default: 'E{1:00}'
 		/// </summary>
-		public string IDStringFormaterEpisode
-		{
-			get { return _idStringFormaterEpisode; }
-			set { _idStringFormaterEpisode = value; }
-		}
+		public string IDStringFormaterEpisode { get; set; } = "E{0:00}";
 
 
-		private string _resolutionStringUnknown = "UNKNOWN";
 		/// <summary>
 		/// Defines the string who is convertet from the enum Resolutions to something readable for e.g. the ParsedString. Default: 'UNKNOWN'
 		/// </summary>
-		public string ResolutionStringUnknown
-		{
-			get { return _resolutionStringUnknown; }
-			set { _resolutionStringUnknown = value; }
-		}
+		public string ResolutionStringUnknown { get; set; } = "UNKNOWN";
 
 
-		private string _resolutionStringSD = "SD";
 		/// <summary>
 		/// Defines the string who is convertet from the enum Resolutions to something readable for e.g. the ParsedString. Default: 'SD'
 		/// </summary>
-		public string ResolutionStringSD
-		{
-			get { return _resolutionStringSD; }
-			set { _resolutionStringSD = value; }
-		}
+		public string ResolutionStringSD { get; set; } = "SD";
 
 
-		private string _resolutionStringHD = "720p";
 		/// <summary>
 		/// Defines the string who is convertet from the enum Resolutions to something readable for e.g. the ParsedString. Default: '720p'
 		/// </summary>
-		public string ResolutionStringHD
-		{
-			get { return _resolutionStringHD; }
-			set { _resolutionStringHD = value; }
-		}
+		public string ResolutionStringHD { get; set; } = "720p";
 
 
-		private string _resolutionStringFullHD = "1080p";
 		/// <summary>
 		/// Defines the string who is convertet from the enum Resolutions to something readable for e.g. the ParsedString. Default: '1080p'
 		/// </summary>
-		public string ResolutionStringFullHD
-		{
-			get { return _resolutionStringFullHD; }
-			set { _resolutionStringFullHD = value; }
-		}
+		public string ResolutionStringFullHD { get; set; } = "1080p";
 
 
-		private string _resolutionStringUltraHD = "2160p";
 		/// <summary>
 		/// Defines the string who is convertet from the enum Resolutions to something readable for e.g. the ParsedString. Default: '2160p'
 		/// </summary>
-		public string ResolutionStringUltraHD
-		{
-			get { return _resolutionStringUltraHD; }
-			set { _resolutionStringUltraHD = value; }
-		}
+		public string ResolutionStringUltraHD { get; set; } = "2160p";
 
 
-		private string _resolutionStringUltraHD8K = "4320p";
 		/// <summary>
 		/// Defines the string who is convertet from the enum Resolutions to something readable for e.g. the ParsedString. Default: '4320p'
 		/// </summary>
-		public string ResolutionStringUltraHD8k
-		{
-			get { return _resolutionStringUltraHD8K; }
-			set { _resolutionStringUltraHD8K = value; }
-		}
+		public string ResolutionStringUltraHD8k { get; set; } = "4320p";
 
-	
-		private ResolutionOutputBehavior _resolutionStringOutput = ResolutionOutputBehavior.LowestResolution;
+
 		/// <summary>
 		/// Defines how the resolution is formated in the output strings e.g. ParsedString. Default: LowesrResolution
 		/// </summary>
-		public ResolutionOutputBehavior ResolutionStringOutput
-		{
-			get { return _resolutionStringOutput; }
-			set { _resolutionStringOutput = value; }
-		}
+		public ResolutionOutputBehavior ResolutionStringOutput { get; set; } = ResolutionOutputBehavior.LowestResolution;
+
 		#endregion Output
 
 
 		// ### Resolution Detection
 		// ############################################################
 		#region ResolutionDetection
-		private List<string> _detectUltraHD8kTokens = new List<string>();
+
 		/// <summary>
 		/// Defines the prefilled list to detect the UHD8k strings
 		/// </summary>
-		public List<string> DetectUltraHD8kTokens
-		{
-			get { return _detectUltraHD8kTokens; }
-			set { _detectUltraHD8kTokens = value; }
-		}
+		public List<string> DetectUltraHD8kTokens { get; set; } = new List<string>();
 
 
-		private List<string> _detectUltraHDTokens = new List<string>();
 		/// <summary>
 		/// Defines the prefilled list to detect the UHD4k strings
 		/// </summary>
-		public List<string> DetectUltraHDTokens
-		{
-			get { return _detectUltraHDTokens; }
-			set { _detectUltraHDTokens = value; }
-		}
+		public List<string> DetectUltraHDTokens { get; set; } = new List<string>();
 
 
-		private List<string> _detectFullHDTokens = new List<string>();
 		/// <summary>
 		/// Defines the prefilled list to detect the FullHD strings
 		/// </summary>
-		public List<string> DetectFullHDTokens
-		{
-			get { return _detectFullHDTokens; }
-			set { _detectFullHDTokens = value; }
-		}
+		public List<string> DetectFullHDTokens { get; set; } = new List<string>();
 
 
-		private List<string> _detectHDTokens = new List<string>();
 		/// <summary>
 		/// Defines the prefilled list to detect the HD strings
 		/// </summary>
-		public List<string> DetectHDTokens
-		{
-			get { return _detectHDTokens; }
-			set { _detectHDTokens = value; }
-		}
+		public List<string> DetectHDTokens { get; set; } = new List<string>();
 
 
-		private List<string> _detectSDTokens = new List<string>();
 		/// <summary>
 		/// Defines the prefilled list to detect the SD strings
 		/// </summary>
-		public List<string> DetectSDTokens
-		{
-			get { return _detectSDTokens; }
-			set { _detectSDTokens = value; }
-		}
+		public List<string> DetectSDTokens { get; set; } = new List<string>();
+
 		#endregion ResolutionDetection
 
 
 		// ### Remove and Replace
 		// ############################################################
 		#region RemoveAndReplace
-		private List<string> _removeAndListTokens = new List<string>();
+
 		/// <summary>
 		/// Defines the prefilled list with the tokens who should removed from the title string but re-added to the parsed string and the deletedtokens list
 		/// </summary>
-		public List<string> RemoveAndListTokens
-		{
-			get { return _removeAndListTokens; }
-			set { _removeAndListTokens = value; }
-		}
+		public List<string> RemoveAndListTokens { get; set; } = new List<string>();
 
 
-		private List<string> _removeWithoutListTokens = new List<string>();
 		/// <summary>
 		/// Defines the prefilled list with the tokens who should removed from the title string
 		/// </summary>
-		public List<string> RemoveWithoutListTokens
-		{
-			get { return _removeWithoutListTokens; }
-			set { _removeWithoutListTokens = value; }
-		}
+		public List<string> RemoveWithoutListTokens { get; set; } = new List<string>();
 
 
-
-		private List<KeyValuePair<string, string>> _replaceRegexAndListTokens = new List<KeyValuePair<string, string>>();
 		/// <summary>
 		/// Defines the empty list with the KeyValuePair to replace (regex, replace)
 		/// </summary>
-		public List<KeyValuePair<string, string>> ReplaceRegexAndListTokens
-		{
-			get { return _replaceRegexAndListTokens; }
-			set { _replaceRegexAndListTokens = value; }
-		}
+		public List<KeyValuePair<string, string>> ReplaceRegexAndListTokens { get; set; } = new List<KeyValuePair<string, string>>();
 
 
-		private List<KeyValuePair<string, string>> _replaceRegexWithoutListTokens = new List<KeyValuePair<string, string>>();
 		/// <summary>
 		/// Defines the empty list with the KeyValuePair to replace (regex, replace)
 		/// </summary>
-		public List<KeyValuePair<string, string>> ReplaceRegexWithoutListTokens
-		{
-			get { return _replaceRegexWithoutListTokens; }
-			set { _replaceRegexWithoutListTokens = value; }
-		}
+		public List<KeyValuePair<string, string>> ReplaceRegexWithoutListTokens { get; set; } = new List<KeyValuePair<string, string>>();
+
 		#endregion RemoveAndReplace
 
 
@@ -496,18 +340,15 @@ namespace SeriesIDParser
 		}
 		#endregion DeSerialisazion
 
+
 		// ### Remove and Replace
 		// ############################################################
 		#region OtherStuff
-		private bool _throwExceptionInsteadOfErrorFlag = false;
+
 		/// <summary>
 		/// Throws an exception instead of setting an error state. Default: false
 		/// </summary>
-		public bool ThrowExceptionInsteadOfErrorFlag
-		{
-			get { return _throwExceptionInsteadOfErrorFlag; }
-			set { _throwExceptionInsteadOfErrorFlag = value; }
-		}
+		public bool ThrowExceptionInsteadOfErrorFlag { get; set; } = false;
 
 		#endregion OtherStuff
 		#endregion Properties

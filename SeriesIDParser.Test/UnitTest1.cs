@@ -27,44 +27,46 @@ using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SeriesIDParser;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 
-namespace SeriesIDParser_Test
+namespace SeriesIDParser.Test
 {
+	[ExcludeFromCodeCoverage]
 	[TestClass]
 	public class UnitTest1
 	{
 
-		[TestMethod]
-		public void MainFunctionTest()
-		{
-			PrepareTest pt = new PrepareTest();
-			List<TestData> testData = pt.GetTestData();
+		//[TestMethod]
+		//public void MainFunctionTest()
+		//{
+		//	PrepareTest pt = new PrepareTest();
+		//	List<TestData> testData = pt.GetTestData();
 
-			foreach (TestData td in testData)
-			{
-				SeriesID idp = new SeriesID(td.Settings);
-				SeriesID id = idp.Parse(td.Actual);
-				Assert.AreEqual(td.FullTitle, id.FullTitle, td.Comment + "-FullTitle ");
-				Assert.AreEqual(td.ParsedString, id.ParsedString, td.Comment + "-ParsedString ");
-				Assert.AreEqual(td.Expected.IsMultiEpisode, id.IsMultiEpisode, td.Comment + "-IsMultiEpisode ");
-				CollectionAssert.AreEqual(td.Expected.Episodes.ToList(), id.Episodes.ToList(), td.Comment + "-Episodes ");
-				Assert.AreEqual(td.Expected.EpisodeTitle, id.EpisodeTitle, td.Comment + "-EpisodeTitle ");
-				Assert.AreEqual(td.Expected.FileExtension, id.FileExtension, td.Comment + "-FileExtension ");
-				Assert.AreEqual(td.Expected.IsSeries, id.IsSeries, td.Comment + "-IsSeries ");
-				Assert.AreEqual(td.Actual, id.OriginalString, td.Comment + "-OriginalString manipulated ");
-				CollectionAssert.AreEqual(td.Expected.RemovedTokens.OrderBy(x => x).ToList(), id.RemovedTokens.OrderBy(x => x).ToList(), td.Comment + "-RemovedTokens ");
-				CollectionAssert.AreEqual(td.Expected.Resolutions.OrderBy(x => x).ToList(), id.Resolutions.OrderBy(x => x).ToList(), td.Comment + "-Resolution ");
-				Assert.AreEqual(td.Expected.Season, id.Season, td.Comment + "-Season ");
-				Assert.AreEqual(td.Expected.State, id.State, td.Comment + "-State ");
-				Assert.AreEqual(td.Expected.Title, id.Title, td.Comment + "-Title ");
-				Assert.AreEqual(td.Expected.Year, id.Year, td.Comment + "-Year ");
-				Assert.AreEqual(td.Expected.DetectedOldSpacingChar, id.DetectedOldSpacingChar, td.Comment + "-DetectedOldSpacingChar ");
-				Assert.AreEqual(td.Expected.AudioCodec, id.AudioCodec, td.Comment + "-AudioCodec ");
-				Assert.AreEqual(td.Expected.VideoCodec, id.VideoCodec, td.Comment + "-VideoCodec ");
-			}
-		}
+		//	foreach (TestData td in testData)
+		//	{
+		//		SeriesID idp = new SeriesID(td.Settings);
+		//		SeriesID id = idp.Parse(td.Actual);
+		//		Assert.AreEqual(td.FullTitle, id.FullTitle, td.Comment + "-FullTitle ");
+		//		Assert.AreEqual(td.ParsedString, id.ParsedString, td.Comment + "-ParsedString ");
+		//		Assert.AreEqual(td.Expected.IsMultiEpisode, id.IsMultiEpisode, td.Comment + "-IsMultiEpisode ");
+		//		CollectionAssert.AreEqual(td.Expected.Episodes.ToList(), id.Episodes.ToList(), td.Comment + "-Episodes ");
+		//		Assert.AreEqual(td.Expected.EpisodeTitle, id.EpisodeTitle, td.Comment + "-EpisodeTitle ");
+		//		Assert.AreEqual(td.Expected.FileExtension, id.FileExtension, td.Comment + "-FileExtension ");
+		//		Assert.AreEqual(td.Expected.IsSeries, id.IsSeries, td.Comment + "-IsSeries ");
+		//		Assert.AreEqual(td.Actual, id.OriginalString, td.Comment + "-OriginalString manipulated ");
+		//		CollectionAssert.AreEqual(td.Expected.RemovedTokens.OrderBy(x => x).ToList(), id.RemovedTokens.OrderBy(x => x).ToList(), td.Comment + "-RemovedTokens ");
+		//		CollectionAssert.AreEqual(td.Expected.Resolutions.OrderBy(x => x).ToList(), id.Resolutions.OrderBy(x => x).ToList(), td.Comment + "-Resolution ");
+		//		Assert.AreEqual(td.Expected.Season, id.Season, td.Comment + "-Season ");
+		//		Assert.AreEqual(td.Expected.State, id.State, td.Comment + "-State ");
+		//		Assert.AreEqual(td.Expected.Title, id.Title, td.Comment + "-Title ");
+		//		Assert.AreEqual(td.Expected.Year, id.Year, td.Comment + "-Year ");
+		//		Assert.AreEqual(td.Expected.DetectedOldSpacingChar, id.DetectedOldSpacingChar, td.Comment + "-DetectedOldSpacingChar ");
+		//		Assert.AreEqual(td.Expected.AudioCodec, id.AudioCodec, td.Comment + "-AudioCodec ");
+		//		Assert.AreEqual(td.Expected.VideoCodec, id.VideoCodec, td.Comment + "-VideoCodec ");
+		//	}
+		//}
 
 
 		[TestMethod]
@@ -108,13 +110,13 @@ namespace SeriesIDParser_Test
 		[TestMethod]
 		public void GetYearTest()
 		{
-            ParserSettings ps = new ParserSettings(true);
+			ParserSettings ps = new ParserSettings(true);
 
-            Assert.AreEqual(2013, Helper.GetYear("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv", ps.YearParseRegex), "Should give a year");
-            Assert.AreEqual(-1, Helper.GetYear("Der.Hobbit.Smaugs.Einoede.1899.EXTENDED.German.DL.1080p.BluRay.x264.mkv", ps.YearParseRegex), "Should give no year");
-            Assert.AreEqual(1900, Helper.GetYear("Der.Hobbit.Smaugs.Einoede.1900.EXTENDED.German.DL.1080p.BluRay.x264.mkv", ps.YearParseRegex), "Should give a year");
-            Assert.AreEqual(-1, Helper.GetYear("Der.Hobbit.Smaugs.Einoede." + DateTime.Now.AddYears(1) + ".EXTENDED.German.DL.1080p.BluRay.x264.mkv", ps.YearParseRegex), "Should give no year");
-            Assert.AreEqual(2013, Helper.GetYear("Der,Hobbit-Smaugs;Einoedex2013?EXTENDED(German)DL/1080p*BluRay+x264#mkv", ps.YearParseRegex), "Should give a year");
+			Assert.AreEqual(2013, Helper.GetYear("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv", ps.YearParseRegex), "Should give a year");
+			Assert.AreEqual(-1, Helper.GetYear("Der.Hobbit.Smaugs.Einoede.1899.EXTENDED.German.DL.1080p.BluRay.x264.mkv", ps.YearParseRegex), "Should give no year");
+			Assert.AreEqual(1900, Helper.GetYear("Der.Hobbit.Smaugs.Einoede.1900.EXTENDED.German.DL.1080p.BluRay.x264.mkv", ps.YearParseRegex), "Should give a year");
+			Assert.AreEqual(-1, Helper.GetYear("Der.Hobbit.Smaugs.Einoede." + DateTime.Now.AddYears(1) + ".EXTENDED.German.DL.1080p.BluRay.x264.mkv", ps.YearParseRegex), "Should give no year");
+			Assert.AreEqual(2013, Helper.GetYear("Der,Hobbit-Smaugs;Einoedex2013?EXTENDED(German)DL/1080p*BluRay+x264#mkv", ps.YearParseRegex), "Should give a year");
 		}
 
 
@@ -208,7 +210,7 @@ namespace SeriesIDParser_Test
 				Helper.GetResolutionString(ps, new List<ResolutionsMap> { ResolutionsMap.FullHD_1080p }),
 				"(2) Should give one full HD");
 			Assert.AreEqual(ps.ResolutionStringFullHD,
-				Helper.GetResolutionString(ps, new List<ResolutionsMap> { ResolutionsMap.UNKNOWN, ResolutionsMap.UltraHD8K_4320p, ResolutionsMap.FullHD_1080p }),
+				Helper.GetResolutionString(ps, new List<ResolutionsMap> { ResolutionsMap.Unknown, ResolutionsMap.UltraHD8K_4320p, ResolutionsMap.FullHD_1080p }),
 				"(3) Should give one full HD");
 			Assert.AreEqual(ps.ResolutionStringUnknown,
 				Helper.GetResolutionString(ps, new List<ResolutionsMap>()),
@@ -223,7 +225,7 @@ namespace SeriesIDParser_Test
 				Helper.GetResolutionString(ps, new List<ResolutionsMap> { ResolutionsMap.FullHD_1080p }),
 				"(11) Should give one full HD");
 			Assert.AreEqual(ps.ResolutionStringUltraHD8k,
-				Helper.GetResolutionString(ps, new List<ResolutionsMap> { ResolutionsMap.UNKNOWN, ResolutionsMap.UltraHD8K_4320p, ResolutionsMap.FullHD_1080p }),
+				Helper.GetResolutionString(ps, new List<ResolutionsMap> { ResolutionsMap.Unknown, ResolutionsMap.UltraHD8K_4320p, ResolutionsMap.FullHD_1080p }),
 				"(12) Should give one UHD");
 			Assert.AreEqual(ps.ResolutionStringUnknown,
 				Helper.GetResolutionString(ps, new List<ResolutionsMap>()),
@@ -238,7 +240,7 @@ namespace SeriesIDParser_Test
 				Helper.GetResolutionString(ps, new List<ResolutionsMap> { ResolutionsMap.FullHD_1080p }),
 				"(21) Should give one full HD");
 			Assert.AreEqual(ps.ResolutionStringFullHD  + ps.NewSpacingChar + ps.ResolutionStringUltraHD8k,
-				Helper.GetResolutionString(ps, new List<ResolutionsMap> { ResolutionsMap.UNKNOWN, ResolutionsMap.UltraHD8K_4320p, ResolutionsMap.FullHD_1080p }),
+				Helper.GetResolutionString(ps, new List<ResolutionsMap> { ResolutionsMap.Unknown, ResolutionsMap.UltraHD8K_4320p, ResolutionsMap.FullHD_1080p }),
 				"(22) Should give UHD HD");
 			Assert.AreEqual(ps.ResolutionStringUnknown,
 				Helper.GetResolutionString(ps, new List<ResolutionsMap>()),

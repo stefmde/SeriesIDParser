@@ -6,8 +6,8 @@
     <ProjectGuid>{6F30FEEF-A65B-4E54-8014-AD9FC2D440CC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SeriesIDParser_Test</RootNamespace>
-    <AssemblyName>SeriesIDParser_Test</AssemblyName>
+    <RootNamespace>SeriesIDParser.Test</RootNamespace>
+    <AssemblyName>SeriesIDParser.Test</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -51,6 +51,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="FullTests.cs" />
     <Compile Include="PrepareTest.cs" />
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -47,11 +47,11 @@ namespace SeriesIDParser
 		internal static string GetResolutionString(ParserSettings settings, IList<ResolutionsMap> res)
 		{
 			// TODO: Only 72% Covered
-			string output = ResolutionsMap.UNKNOWN.ToString() + settings.NewSpacingChar;
+			string output = ResolutionsMap.Unknown.ToString() + settings.NewSpacingChar;
 
-			if (res != null && res.Count > 0 && !(res.Count == 1 && res.Contains(ResolutionsMap.UNKNOWN)))
+			if (res != null && res.Count > 0 && !(res.Count == 1 && res.Contains(ResolutionsMap.Unknown)))
 			{
-				res.Remove(ResolutionsMap.UNKNOWN);
+				res.Remove(ResolutionsMap.Unknown);
 				res = res.OrderBy(x => x).ToList();
 
 				if (settings.ResolutionStringOutput == ResolutionOutputBehavior.HighestResolution)
@@ -435,11 +435,11 @@ namespace SeriesIDParser
 		{
 			if (resolutions.Count == 0)
 			{
-				resolutions.Add(ResolutionsMap.UNKNOWN);
+				resolutions.Add(ResolutionsMap.Unknown);
 			}
 			else
 			{
-				resolutions.Remove(ResolutionsMap.UNKNOWN);
+				resolutions.Remove(ResolutionsMap.Unknown);
 			}
 
 			return resolutions;
@@ -592,7 +592,7 @@ namespace SeriesIDParser
 				}
 				else
 				{
-					state |= State.WARN_ERR_OR_WARN_OCCURRED | State.WARN_NO_TITLE_FOUND;
+					state |= State.WarnErrorOrWarningOccurred | State.WarnNoTitleFound;
 					warningOrError = true;
 				}
 			}
@@ -602,7 +602,7 @@ namespace SeriesIDParser
 
 				if (!warningOrError)
 				{
-					state |= State.OK_SUCCESS;
+					state |= State.OkSuccess;
 				}
 			}
 
