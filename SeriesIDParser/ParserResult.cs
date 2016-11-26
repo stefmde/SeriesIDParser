@@ -25,6 +25,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -231,6 +232,12 @@ namespace SeriesIDParser
 		/// Contains tokens whoi are removed by the parser as string list
 		/// </summary>
 		public IEnumerable<string> RemovedTokens { get; internal set; }
+
+
+		/// <summary>
+		/// Contains the FileInfo that is given to the parser
+		/// </summary>
+		public FileInfo FileInfo { get; internal set; }
 
 
 		/// <summary>

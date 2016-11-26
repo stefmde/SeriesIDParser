@@ -8,6 +8,7 @@
 - Property ParserSettingsUsed are now available in the SeriesIDResult object
 - Properties FullTitle, ParsedString and IDString are now cached to improve performance on multiple access
 - UnitTests are now excluded from code coverage check
+- UnitTests are now in multiple files and functions
 - Parser properties refactored
 - Extension methodes added
 
