@@ -1,6 +1,6 @@
 # Changelog #
 
-##8.0.0 (2016-??-??)##
+##8.0.0 (2016-11-26)##
 ###New###
 - Fileextension handling changed: Default is now the global dot net default (with dot E.g.: m4v -> .m4v)
 - Switches from single class to worker class (SeriesIDParser) and  result class (SeriesIDResult)
@@ -11,11 +11,11 @@
 - UnitTests are now in multiple files and functions
 - Parser properties refactored
 - Extension methodes added
+ - Added a property for the year regex string
 
 ###Fix###
  - Possible Nullpointer on GetFileExtension()
  - Some code optimization
- - Added a property for the year regex string
 
 
 ---

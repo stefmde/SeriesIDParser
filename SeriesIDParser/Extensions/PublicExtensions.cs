@@ -27,17 +27,13 @@ namespace SeriesIDParser.Extensions
 		public static ParserResult ParseSeriesID(this FileInfo input)
 		{
 			SeriesID sid = new SeriesID();
-			ParserResult pr = sid.Parse(input.Name);
-			pr.FileInfo = input;
-			return pr;
+			return sid.Parse(input);
 		}
 
 		public static ParserResult ParseSeriesID(this FileInfo input, ParserSettings settings)
 		{
 			SeriesID sid = new SeriesID(settings);
-			ParserResult pr = sid.Parse(input.Name);
-			pr.FileInfo = input;
-			return pr;
+			return sid.Parse(input);
 		}
 		#endregion
 	}

@@ -352,6 +352,5 @@ namespace SeriesIDParser
 
 		#endregion OtherStuff
 		#endregion Properties
-
 	}
 }

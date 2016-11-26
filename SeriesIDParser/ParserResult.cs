@@ -51,13 +51,13 @@ namespace SeriesIDParser
 		{
 			_parserSettings = parserSettings;
 			AudioCodec = audioCodec;
+			VideoCodec = videoCodec;
 			Episodes = episodes;
 			EpisodeTitle = episodeTitle;
 			ProcessingDuration = processingDuration;
 			ReleaseGroup = releaseGroup;
 			Resolutions = resolutions;
 			Season = season;
-			VideoCodec = videoCodec;
 			Year = year;
 			DetectedOldSpacingChar = detectedOldSpacingChar;
 			Exception = exception;
@@ -70,12 +70,12 @@ namespace SeriesIDParser
 		}
 
 		/// <summary>
-		/// Use only for unit tests
+		/// Use only for unit tests. Do NOT set to public
 		/// </summary>
-		internal ParserResult()
-		{
+		//internal ParserResult()
+		//{
 
-		}
+		//}
 		#endregion
 
 		#region Properties
@@ -293,7 +293,7 @@ namespace SeriesIDParser
 				return State.HasFlag(State.OkSuccess) ? _audioCodec : string.Empty;
 			}
 
-			internal set { _audioCodec = value; }
+			internal set { _audioCodec =  value ?? String.Empty; }
 		}
 
 
@@ -308,7 +308,7 @@ namespace SeriesIDParser
 				return State.HasFlag(State.OkSuccess) ? _videoCodec : null;
 			}
 
-			internal set { _videoCodec = value; }
+			internal set { _videoCodec = value ?? String.Empty; }
 		}
 
 

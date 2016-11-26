@@ -72,22 +72,47 @@ namespace SeriesIDParser
 		{
 			if (settings != null)
 			{
-				this._parserSettings = settings;
+				_parserSettings = settings;
 			}
 		}
 
 
 
 		// ############################################################
-		// ### Core Function
+		// ### Wrapper Functions
 		// ############################################################
-
+		#region WrapperFunctions
 		/// <summary>
 		/// The primary parsing function
 		/// </summary>
 		/// <param name="input">The series or movie string who get parsed. Must be atleast five chars</param>
 		/// <returns>The SeriesIDResult object that represents the series or movie string</returns>
 		public ParserResult Parse(string input)
+		{
+			return CoreParser(input);
+		}
+
+
+
+		/// <summary>
+		/// The primary parsing function
+		/// </summary>
+		/// <param name="input">The series or movie FileInfo who get parsed.</param>
+		/// <returns>The SeriesIDResult object that represents the series or movie string</returns>
+		public ParserResult Parse(FileInfo input)
+		{
+			ParserResult parserResult = CoreParser(input.Name);
+			parserResult.FileInfo = input;
+			return parserResult;
+		}
+		#endregion WrapperFunctions
+
+
+
+		// ############################################################
+		// ### Core Function
+		// ############################################################
+		private ParserResult CoreParser(string input)
 		{
 			ResetObject();
 			_originalString = input.Trim();
@@ -97,77 +122,51 @@ namespace SeriesIDParser
 
 			try
 			{
-				if (_originalString.Length >= 5)
-				{
-					// Todo remove fileextension instantly
-					_fileExtension = Helper.GetFileExtension(input, _parserSettings.FileExtensions);
-					_resolutions = Helper.GetResolutions(_parserSettings, _detectedOldSpacingChar, ref fullTitle);
-					_releaseGroup = Helper.GetReleaseGroup(fullTitle, _parserSettings, _fileExtension);
-					fullTitle = Helper.RemoveReleaseGroup(fullTitle, _parserSettings, _releaseGroup);
-					_removedTokens = Helper.RemoveTokens(_parserSettings, _detectedOldSpacingChar, ref fullTitle);
-
-					_audioCodec = Helper.FindTokens(ref fullTitle, _detectedOldSpacingChar.ToString(), _parserSettings.AudioCodecs, true).LastOrDefault();
-					if (_audioCodec == null)
-					{
-						_audioCodec = string.Empty;
-					}
-					else
-					{
-						_removedTokens.Add(_audioCodec);
-					}
-
-					_videoCodec = Helper.FindTokens(ref fullTitle, _detectedOldSpacingChar.ToString(), _parserSettings.VideoCodecs, true).LastOrDefault();
-					if (_videoCodec == null)
-					{
-						_videoCodec = string.Empty;
-					}
-					else
-					{
-						_removedTokens.Add(_videoCodec);
-					}
-
-					_removedTokens = _removedTokens.OrderBy(x => x).ToList();
-
-					// remove fileextension
-					if (_fileExtension != null)
-					{
-						Regex removeRegex = new Regex(_fileExtension, RegexOptions.IgnoreCase);
-						fullTitle = removeRegex.Replace(fullTitle, "");
-					}
-
-					// Get and remove year
-					_year = Helper.GetYear(fullTitle, _parserSettings.YearParseRegex);
-					fullTitle = fullTitle.Replace(_year.ToString(), "");
-
-					// Remove double spacer
-					while (fullTitle.Contains(_detectedOldSpacingChar.ToString() + _detectedOldSpacingChar.ToString()))
-					{
-						fullTitle = fullTitle.Replace(_detectedOldSpacingChar.ToString() + _detectedOldSpacingChar.ToString(), _detectedOldSpacingChar.ToString());
-					}
-
-					// Convert to new spacer
-					fullTitle = fullTitle.Replace(_detectedOldSpacingChar.ToString(), _parserSettings.NewSpacingChar.ToString());
-
-					// Remove trailing spacer
-					fullTitle = fullTitle.Trim().Trim(_detectedOldSpacingChar).Trim(_parserSettings.NewSpacingChar);
-
-
-					// ###################################################################
-					// ### Try get Season and Episode ID
-					// ###################################################################
-					_title = Helper.GetTitle(_parserSettings, _detectedOldSpacingChar, fullTitle, ref warningOrErrorOccurred, ref _state);
-					_episodeTitle = Helper.GetEpisodeTitle(_parserSettings, fullTitle);
-					_isSeries = Helper.IsSeries(_parserSettings, fullTitle);
-					_season = Helper.GetSeasonID(_parserSettings, fullTitle);
-					_episodes = Helper.GetEpisodeIDs(_parserSettings, fullTitle);
-				}
-				else
+				if (_originalString.Length < 5)
 				{
 					// ERROR
 					_state |= State.ErrEmptyOrToShortArgument;
 					_resolutions = Helper.MaintainUnknownResolution(_resolutions);
 					return GenerateResult();
 				}
+
+				// Todo remove fileextension instantly
+				_fileExtension = Helper.GetFileExtension(input, _parserSettings.FileExtensions);
+				_resolutions = Helper.GetResolutions(_parserSettings, _detectedOldSpacingChar, ref fullTitle);
+				_releaseGroup = Helper.GetReleaseGroup(fullTitle, _parserSettings, _fileExtension);
+				fullTitle = Helper.RemoveReleaseGroup(fullTitle, _parserSettings, _releaseGroup);
+				_removedTokens = Helper.RemoveTokens(_parserSettings, _detectedOldSpacingChar, ref fullTitle);
+
+				fullTitle = GetCodecs(fullTitle);
+
+				_removedTokens = _removedTokens.OrderBy(x => x).ToList();
+
+				// remove fileextension
+				if (_fileExtension != null)
+				{
+					Regex removeRegex = new Regex(_fileExtension, RegexOptions.IgnoreCase);
+					fullTitle = removeRegex.Replace(fullTitle, "");
+				}
+
+				// Get and remove year
+				_year = Helper.GetYear(fullTitle, _parserSettings.YearParseRegex);
+				fullTitle = fullTitle.Replace(_year.ToString(), "");
+
+				// Remove double spacer
+				while (fullTitle.Contains(_detectedOldSpacingChar + _detectedOldSpacingChar.ToString()))
+				{
+					fullTitle = fullTitle.Replace(_detectedOldSpacingChar + _detectedOldSpacingChar.ToString(),
+						_detectedOldSpacingChar.ToString());
+				}
+
+				// Convert to new spacer
+				fullTitle = fullTitle.Replace(_detectedOldSpacingChar.ToString(), _parserSettings.NewSpacingChar.ToString());
+
+				// Remove trailing spacer
+				fullTitle = fullTitle.Trim().Trim(_detectedOldSpacingChar).Trim(_parserSettings.NewSpacingChar);
+
+				// Try get Season and Episode ID
+				warningOrErrorOccurred = GetSeriesDetails(fullTitle, warningOrErrorOccurred);
 
 				// SERIES
 				if (!warningOrErrorOccurred)
@@ -189,27 +188,77 @@ namespace SeriesIDParser
 				{
 					throw;
 				}
-				else
-				{
-					// ERROR
-					_state |= State.ErrUnknownError;
-					return GenerateResult();
-				}
+
+				// ERROR
+				_state |= State.ErrUnknownError;
+				return GenerateResult();
 			}
 		}
+
 
 
 		// ############################################################
 		// ### Local Helper Functions
 		// ############################################################
 		#region HelperFunctions
+		/// <summary>
+		/// Get audio and video codec
+		/// </summary>
+		/// <param name="fullTitle"></param>
+		/// <returns></returns>
+		private string GetCodecs(string fullTitle)
+		{
+			_audioCodec =
+				Helper.FindTokens(ref fullTitle, _detectedOldSpacingChar.ToString(), _parserSettings.AudioCodecs, true)
+					.LastOrDefault();
+			if (_audioCodec != null)
+			{
+				_removedTokens.Add(_audioCodec);
+			}
 
+			_videoCodec =
+				Helper.FindTokens(ref fullTitle, _detectedOldSpacingChar.ToString(), _parserSettings.VideoCodecs, true)
+					.LastOrDefault();
+			if (_videoCodec != null)
+			{
+				_removedTokens.Add(_videoCodec);
+			}
+
+			return fullTitle;
+		}
+
+
+
+		/// <summary>
+		/// Get Series Details
+		/// </summary>
+		/// <param name="fullTitle"></param>
+		/// <param name="warningOrErrorOccurred"></param>
+		/// <returns></returns>
+		private bool GetSeriesDetails(string fullTitle, bool warningOrErrorOccurred)
+		{
+			_title = Helper.GetTitle(_parserSettings, _detectedOldSpacingChar, fullTitle, ref warningOrErrorOccurred, ref _state);
+			_episodeTitle = Helper.GetEpisodeTitle(_parserSettings, fullTitle);
+			_isSeries = Helper.IsSeries(_parserSettings, fullTitle);
+			_season = Helper.GetSeasonID(_parserSettings, fullTitle);
+			_episodes = Helper.GetEpisodeIDs(_parserSettings, fullTitle);
+			return warningOrErrorOccurred;
+		}
+
+
+
+		/// <summary>
+		/// ctor wrapper for ParserResult
+		/// </summary>
+		/// <returns></returns>
 		private ParserResult GenerateResult()
 		{
 			return new ParserResult(_originalString, _parserSettings, _audioCodec, _videoCodec, _processingDuration, 
 				_resolutions, _season, _episodes, _year, _detectedOldSpacingChar, _exception, _isSeries, _removedTokens, 
 				_state, _fileExtension, _title, _episodeTitle, _releaseGroup);
 		}
+
+
 
 		/// <summary>
 		/// Clears and resets the object for the new execution
