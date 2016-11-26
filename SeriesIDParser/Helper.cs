@@ -682,5 +682,30 @@ namespace SeriesIDParser
 
 			return isSeries;
 		}
+
+
+
+		/// <summary>
+		/// Gets all series and movie files in a directory
+		/// </summary>
+		/// <param name="path"></param>
+		/// <param name="parserSettings"></param>
+		/// <param name="searchOption"></param>
+		/// <returns></returns>
+		internal static IEnumerable<string> GetSeriesAndMovieFiles(string path, ParserSettings parserSettings = null, SearchOption searchOption = SearchOption.AllDirectories)
+		{
+			List<string> files = new List<string>();
+
+			if (parserSettings == null)
+			{
+				parserSettings = new ParserSettings(true);
+			}
+
+			files = Directory.GetFiles(path, "*.*", searchOption).Select(d => d)
+				.Where(f => parserSettings.FileExtensions.Select(d => d.ToLower())
+			   .Contains(Path.GetExtension(f).ToLower())).ToList();
+
+			return files;
+		}
 	}
 }

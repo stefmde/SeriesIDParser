@@ -105,6 +105,40 @@ namespace SeriesIDParser
 			parserResult.FileInfo = input;
 			return parserResult;
 		}
+
+
+
+		/// <summary>
+		/// Get all files in a path parsed
+		/// </summary>
+		/// <param name="path"></param>
+		/// <param name="searchOption"></param>
+		/// <returns></returns>
+		public IEnumerable<ParserResult> ParsePath(string path, SearchOption searchOption = SearchOption.AllDirectories)
+		{
+			List<ParserResult> results = new List<ParserResult>();
+			List<string> files = new List<string>(Helper.GetSeriesAndMovieFiles(path, _parserSettings, searchOption));
+
+			foreach (string file in files)
+			{
+				results.Add(CoreParser(file));
+			}
+
+			return results;
+		}
+
+
+
+		/// <summary>
+		/// Get all files in a path parsed
+		/// </summary>
+		/// <param name="path"></param>
+		/// <param name="searchOption"></param>
+		/// <returns></returns>
+		public IEnumerable<ParserResult> ParsePath(DirectoryInfo path, SearchOption searchOption = SearchOption.AllDirectories)
+		{
+			return ParsePath(path.Name, searchOption);
+		}
 		#endregion WrapperFunctions
 
 

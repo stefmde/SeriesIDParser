@@ -35,6 +35,34 @@ namespace SeriesIDParser.Extensions
 			SeriesID sid = new SeriesID(settings);
 			return sid.Parse(input);
 		}
+		#endregion FileInfo
+
+		#region DirectoryInfo
+		public static IEnumerable<ParserResult> ParseSeriesID(this DirectoryInfo path, SearchOption searchOption = SearchOption.AllDirectories)
+		{
+			SeriesID sid = new SeriesID();
+			return sid.ParsePath(path, searchOption);
+		}
+
+		public static IEnumerable<ParserResult> ParseSeriesID(this DirectoryInfo path, ParserSettings settings = null, SearchOption searchOption = SearchOption.AllDirectories)
+		{
+			SeriesID sid = new SeriesID(settings);
+			return sid.ParsePath(path, searchOption);
+		}
+		#endregion DirectoryInfo
+
+		#region Path
+		public static IEnumerable<ParserResult> ParseSeriesIDPath(this string path, SearchOption searchOption = SearchOption.AllDirectories)
+		{
+			SeriesID sid = new SeriesID();
+			return sid.ParsePath(path, searchOption);
+		}
+
+		public static IEnumerable<ParserResult> ParseSeriesIDPath(this string path, ParserSettings settings = null, SearchOption searchOption = SearchOption.AllDirectories)
+		{
+			SeriesID sid = new SeriesID(settings);
+			return sid.ParsePath(path, searchOption);
+		}
 		#endregion
 	}
 }
