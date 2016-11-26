@@ -52,7 +52,12 @@
   </Choose>
   <ItemGroup>
     <Compile Include="FullTests.cs" />
-    <Compile Include="PrepareTest.cs" />
+    <Compile Include="GetFileExtensionTests.cs" />
+    <Compile Include="GetResolutionStringTests.cs" />
+    <Compile Include="GetSpacingCharTests.cs" />
+    <Compile Include="GetYearTests.cs" />
+    <Compile Include="ReplaceTokensTests.cs" />
+    <Compile Include="SerializationTests.cs" />
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

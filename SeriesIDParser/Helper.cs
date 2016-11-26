@@ -242,7 +242,7 @@ namespace SeriesIDParser
 		/// <returns>returns null or the found extension</returns>
 		internal static string GetFileExtension(string input, List<string> extensions)
 		{
-			string extension = null;
+			string extension = string.Empty;
 			if (!string.IsNullOrEmpty(input))
 			{
 				string tempExtension = Path.GetExtension(input);
