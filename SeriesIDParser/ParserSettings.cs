@@ -188,9 +188,9 @@ namespace SeriesIDParser
 
 
 		/// <summary>
-		/// Defines the string who is convertet from the enum Resolutions to something readable for e.g. the ParsedString. Default: 'UNKNOWN'
+		/// Defines the string who is convertet from the enum Resolutions to something readable for e.g. the ParsedString. Default: 'Unknown'
 		/// </summary>
-		public string ResolutionStringUnknown { get; set; } = "UNKNOWN";
+		public string ResolutionStringUnknown { get; set; } = "Unknown";
 
 
 		/// <summary>

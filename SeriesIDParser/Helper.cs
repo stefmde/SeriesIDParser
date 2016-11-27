@@ -28,10 +28,13 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
+
+[assembly: InternalsVisibleTo("SeriesIDParser.Test")]
 namespace SeriesIDParser
 {
 	internal static class Helper
@@ -44,7 +47,7 @@ namespace SeriesIDParser
 		/// <returns></returns>
 		internal static string GetResolutionString(ParserSettings settings, IList<ResolutionsMap> res)
 		{
-			// TODO: Only 72% Covered
+			// TODO: Only 69% Covered
 			string output = ResolutionsMap.Unknown.ToString() + settings.NewSpacingChar;
 
 			if (res != null && res.Count > 0 && !(res.Count == 1 && res.Contains(ResolutionsMap.Unknown)))

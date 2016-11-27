@@ -2,6 +2,18 @@
 
 ##8.1.0 (2016-11-27)##
 ###New###
+- Added unit tests for Helper.GetResolutionString()
+
+###Fix###
+ - Wrong default unknown string in ParserSettings
+
+
+---
+
+
+
+##8.1.0 (2016-11-27)##
+###New###
 - Added Methods to parse full directories
 - Added Extension Methodes to parse full directories
 - Unit tests for extension methodes now at 100% soft coverage
