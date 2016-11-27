@@ -51,6 +51,8 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Constants.cs" />
+    <Compile Include="ExtensionTests.cs" />
     <Compile Include="FullPathTests.cs" />
     <Compile Include="FullTests.cs" />
     <Compile Include="GetFileExtensionTests.cs" />

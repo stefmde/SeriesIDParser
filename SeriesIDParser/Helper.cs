@@ -701,6 +701,11 @@ namespace SeriesIDParser
 				parserSettings = new ParserSettings(true);
 			}
 
+			if (path == null)
+			{
+				return files;
+			}
+
 			files = Directory.GetFiles(path, "*.*", searchOption).Select(d => d)
 				.Where(f => parserSettings.FileExtensions.Select(d => d.ToLower())
 			   .Contains(Path.GetExtension(f).ToLower())).ToList();

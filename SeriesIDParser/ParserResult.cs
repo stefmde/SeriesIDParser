@@ -351,7 +351,7 @@ namespace SeriesIDParser
 				return State.HasFlag(State.OkSuccess) && IsSeries ? _episodes : new List<int>();
 			}
 
-			internal set { _episodes = new List<int>(value); }
+			internal set { _episodes = value != null ? new List<int>(value) : new List<int>(); }
 		}
 
 

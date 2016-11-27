@@ -101,7 +101,7 @@ namespace SeriesIDParser
 		/// <returns>The SeriesIDResult object that represents the series or movie string</returns>
 		public ParserResult Parse(FileInfo input)
 		{
-			ParserResult parserResult = CoreParser(input.Name);
+			ParserResult parserResult = CoreParser(input?.Name ?? String.Empty);
 			parserResult.FileInfo = input;
 			return parserResult;
 		}
@@ -117,11 +117,17 @@ namespace SeriesIDParser
 		public IEnumerable<ParserResult> ParsePath(string path, SearchOption searchOption = SearchOption.AllDirectories)
 		{
 			List<ParserResult> results = new List<ParserResult>();
+
+			if (string.IsNullOrEmpty(path))
+			{
+				return results;
+			}
+
 			List<string> files = new List<string>(Helper.GetSeriesAndMovieFiles(path, _parserSettings, searchOption));
 
 			foreach (string file in files)
 			{
-				results.Add(CoreParser(file));
+				results.Add(CoreParser( Path.GetFileName(file)));
 			}
 
 			return results;
@@ -137,7 +143,7 @@ namespace SeriesIDParser
 		/// <returns></returns>
 		public IEnumerable<ParserResult> ParsePath(DirectoryInfo path, SearchOption searchOption = SearchOption.AllDirectories)
 		{
-			return ParsePath(path.Name, searchOption);
+			return ParsePath(path?.FullName ?? String.Empty, searchOption);
 		}
 		#endregion WrapperFunctions
 

@@ -23,6 +23,8 @@ namespace SeriesIDParser.Extensions
 		}
 		#endregion String
 
+		// ####################
+
 		#region FileInfo
 		public static ParserResult ParseSeriesID(this FileInfo input)
 		{
@@ -37,25 +39,29 @@ namespace SeriesIDParser.Extensions
 		}
 		#endregion FileInfo
 
+		// ####################
+
 		#region DirectoryInfo
-		public static IEnumerable<ParserResult> ParseSeriesID(this DirectoryInfo path, SearchOption searchOption = SearchOption.AllDirectories)
+		public static IEnumerable<ParserResult> ParseSeriesIDPath(this DirectoryInfo path)
 		{
 			SeriesID sid = new SeriesID();
-			return sid.ParsePath(path, searchOption);
+			return sid.ParsePath(path);
 		}
 
-		public static IEnumerable<ParserResult> ParseSeriesID(this DirectoryInfo path, ParserSettings settings = null, SearchOption searchOption = SearchOption.AllDirectories)
+		public static IEnumerable<ParserResult> ParseSeriesIDPath(this DirectoryInfo path, ParserSettings settings = null, SearchOption searchOption = SearchOption.AllDirectories)
 		{
 			SeriesID sid = new SeriesID(settings);
 			return sid.ParsePath(path, searchOption);
 		}
 		#endregion DirectoryInfo
 
+		// ####################
+
 		#region Path
-		public static IEnumerable<ParserResult> ParseSeriesIDPath(this string path, SearchOption searchOption = SearchOption.AllDirectories)
+		public static IEnumerable<ParserResult> ParseSeriesIDPath(this string path)
 		{
 			SeriesID sid = new SeriesID();
-			return sid.ParsePath(path, searchOption);
+			return sid.ParsePath(path);
 		}
 
 		public static IEnumerable<ParserResult> ParseSeriesIDPath(this string path, ParserSettings settings = null, SearchOption searchOption = SearchOption.AllDirectories)

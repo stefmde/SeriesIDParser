@@ -13,16 +13,13 @@ namespace SeriesIDParser.Test
 	[TestClass]
 	public class FullPathTests
 	{
-		private const string Path = @"D:\Test";
-		private const string MovieFile = "D:\\Test\\Der.Regenmacher.1997.German.1080p.BluRay.x264.mkv";
-		private const string SeriesFile = "D:\\Test\\Gotham.S02E01.Glueck.oder.Wahrheit.1080p.BluRay.DUBBED.German.x264.mkv";
-
 		[TestMethod]
 		public void FullPathTestAsString()
 		{
 			ParserSettings parserSettings = new ParserSettings(true);
 			SeriesID seriesIDParser = new SeriesID(parserSettings);
-			IEnumerable<ParserResult> parserResults = seriesIDParser.ParsePath(Path);
+			IEnumerable<ParserResult> parserResults = seriesIDParser.ParsePath(Constants.Path);
+			Assert.IsTrue(parserResults.Count() == 2);
 		}
 
 
@@ -31,8 +28,9 @@ namespace SeriesIDParser.Test
 		{
 			ParserSettings parserSettings = new ParserSettings(true);
 			SeriesID seriesIDParser = new SeriesID(parserSettings);
-			DirectoryInfo directoryInfo = new DirectoryInfo(Path);
+			DirectoryInfo directoryInfo = new DirectoryInfo(Constants.Path);
 			IEnumerable<ParserResult> parserResults = seriesIDParser.ParsePath(directoryInfo);
+			Assert.IsTrue(parserResults.Count() == 2);
 		}
 
 
@@ -41,8 +39,9 @@ namespace SeriesIDParser.Test
 		{
 			ParserSettings parserSettings = new ParserSettings(true);
 			SeriesID seriesIDParser = new SeriesID(parserSettings);
-			FileInfo fileInfo = new FileInfo(MovieFile);
+			FileInfo fileInfo = new FileInfo(Constants.MovieFilePath);
 			ParserResult parserResult = seriesIDParser.Parse(fileInfo);
+			Assert.IsTrue(parserResult != null);
 		}
 
 	}
