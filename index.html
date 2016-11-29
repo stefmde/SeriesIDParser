@@ -1,33 +1,43 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
-    <meta charset='utf-8'>
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
-
     <title>SeriesIDParser by stefmde</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-dark.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
   </head>
-
   <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/stefmde/SeriesIDParser">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/stefmde/SeriesIDParser/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/stefmde/SeriesIDParser/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
 
-    <header>
-      <div class="container">
-        <h1>SeriesIDParser</h1>
-        <h2># Parses series or movie strings to a object to handle it with applications.</h2>
+    <div class="wrapper">
 
-        <section id="downloads">
-          <a href="https://github.com/stefmde/SeriesIDParser/zipball/master" class="btn">Download as .zip</a>
-          <a href="https://github.com/stefmde/SeriesIDParser/tarball/master" class="btn">Download as .tar.gz</a>
-          <a href="https://github.com/stefmde/SeriesIDParser" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
-        </section>
-      </div>
-    </header>
+      <section>
+        <div id="title">
+          <h1>SeriesIDParser</h1>
+          <p>Parses series or movie strings to a object to handle it with applications.</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/stefmde">stefmde</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
+        </div>
 
-    <div class="container">
-      <section id="main_content">
         <p><img src="https://raw.githubusercontent.com/stefmde/SeriesIDParser/master/Stuff/LibraryIcon/gray/icon_gray_256px.png" alt="Project icon"></p>
 
 <h1>
@@ -50,6 +60,7 @@
 <li>Some properties are only available with series and some only with movies</li>
 <li>Computed properties are automatically cached if the are queried the first time</li>
 <li>Properties are only filled if the are found in the input string</li>
+<li>The ParserSettings provides methodes to serialize the object to a file or deserialize them from a file</li>
 </ol>
 
 <h3>
@@ -69,43 +80,44 @@
 <td>OriginalString</td>
 <td>string</td>
 <td>-</td>
-<td>-</td>
+<td>Contains the input string without modifications</td>
 </tr>
 <tr>
 <td>ParsedString</td>
 <td>string</td>
 <td>-</td>
-<td>-</td>
+<td>Similar to the input string but according to guideline (ParserSettings). Can be used to rename files</td>
 </tr>
 <tr>
 <td>Title</td>
 <td>string</td>
 <td>-</td>
-<td>-</td>
+<td>Contains the plain title</td>
 </tr>
 <tr>
 <td>EpisodeTitle</td>
 <td>string</td>
 <td>-</td>
-<td>-</td>
+<td>Contains the episode/subtitle if available</td>
 </tr>
 <tr>
 <td>FullTitle</td>
 <td>string</td>
 <td>-</td>
-<td>-</td>
+<td>Contains the title + IDString + EpisodeTitle</td>
 </tr>
 <tr>
 <td>IsSeries</td>
 <td>bool</td>
 <td>-</td>
-<td>-</td>
+<td>Is <code>True</code> if the input string is recognized as series</td>
 </tr>
 <tr>
 <td>IsMultiEpisode</td>
 <td>bool</td>
 <td>-</td>
-<td>-</td>
+<td>Is <code>True</code> if the input string contains something like that <code>S01E01E02</code>
+</td>
 </tr>
 <tr>
 <td>Season</td>
@@ -117,19 +129,20 @@
 <td>Episodes</td>
 <td>int list</td>
 <td>-</td>
-<td>-</td>
+<td>Contains the Episode ID's if available. Could be more than one, depends on <code>IsMultiEpisode</code>
+</td>
 </tr>
 <tr>
 <td>IDString</td>
 <td>string</td>
 <td>-</td>
-<td>-</td>
+<td>Contains the Season ID and the Episode ID's combined as string</td>
 </tr>
 <tr>
 <td>Resolutions</td>
 <td>enum list Resolutions</td>
 <td>-</td>
-<td>-</td>
+<td>One string can contain more than one Resolution</td>
 </tr>
 <tr>
 <td>Year</td>
@@ -147,13 +160,13 @@
 <td>RemovedTokens</td>
 <td>string list</td>
 <td>-</td>
-<td>-</td>
+<td>Contains the tokens who are removed from the string and are not contained in the output</td>
 </tr>
 <tr>
 <td>State</td>
 <td>enum State</td>
 <td>-</td>
-<td>-</td>
+<td>The object state. Should be checked before using the result</td>
 </tr>
 <tr>
 <td>DetectedOldSpacingChar</td>
@@ -189,13 +202,13 @@
 <td>FileInfo</td>
 <td>FileInfo</td>
 <td>8.0</td>
-<td>-</td>
+<td>Is contained if the extension method with the FileInfo is used</td>
 </tr>
 <tr>
 <td>ParserSettings</td>
 <td>ParserSettings</td>
 <td>8.0</td>
-<td>-</td>
+<td>Contains the given parser settings who are used to generate the result object</td>
 </tr>
 <tr>
 <td>??</td>
@@ -223,47 +236,47 @@
 <tr>
 <td>OriginalString</td>
 <td>Knight.Rider.S01E07.Die.grosse.Duerre.1982.German.DVDRip.XviD-c0nFuSed.mkv</td>
-<td>-</td>
+<td></td>
 </tr>
 <tr>
 <td>ParsedString</td>
 <td>Knight.Rider.S01E07.Die.grosse.Duerre.1982.SD.German.XviD.mkv</td>
-<td>-</td>
+<td></td>
 </tr>
 <tr>
 <td>Title</td>
 <td>Knight.Rider</td>
-<td>-</td>
+<td></td>
 </tr>
 <tr>
 <td>EpisodeTitle</td>
 <td>Die.grosse.Duerre</td>
-<td>-</td>
+<td></td>
 </tr>
 <tr>
 <td>FullTitle</td>
 <td>Knight.Rider.S01E07.Die.grosse.Duerre</td>
-<td>-</td>
+<td></td>
 </tr>
 <tr>
 <td>IsSeries</td>
 <td>True</td>
-<td>-</td>
+<td></td>
 </tr>
 <tr>
 <td>IsMultiEpisode</td>
 <td>False</td>
-<td>-</td>
+<td></td>
 </tr>
 <tr>
 <td>Season</td>
 <td>1</td>
-<td>-</td>
+<td></td>
 </tr>
 <tr>
 <td>Episodes</td>
 <td>7</td>
-<td>-</td>
+<td></td>
 </tr>
 <tr>
 <td>IDString</td>
@@ -273,22 +286,22 @@
 <tr>
 <td>Resolutions</td>
 <td>SD_Any</td>
-<td>-</td>
+<td></td>
 </tr>
 <tr>
 <td>Year</td>
 <td>1982</td>
-<td>-</td>
+<td></td>
 </tr>
 <tr>
 <td>FileExtension</td>
 <td>.mkv</td>
-<td>-</td>
+<td></td>
 </tr>
 <tr>
 <td>RemovedTokens</td>
 <td>German, XviD</td>
-<td>-</td>
+<td></td>
 </tr>
 <tr>
 <td>State</td>
@@ -298,42 +311,42 @@
 <tr>
 <td>DetectedOldSpacingChar</td>
 <td>.</td>
-<td>-</td>
+<td></td>
 </tr>
 <tr>
 <td>ProcessingDuration</td>
 <td>0,5018 ms</td>
-<td>-</td>
+<td></td>
 </tr>
 <tr>
 <td>ReleaseGroup</td>
 <td>c0nFuSed</td>
-<td>-</td>
+<td></td>
 </tr>
 <tr>
 <td>AudioCodec</td>
 <td>-</td>
-<td>-</td>
+<td></td>
 </tr>
 <tr>
 <td>VideoCodec</td>
 <td>XviD</td>
-<td>-</td>
+<td></td>
 </tr>
 <tr>
 <td>FileInfo</td>
 <td>-</td>
-<td>-</td>
+<td></td>
 </tr>
 <tr>
 <td>ParserSettings</td>
 <td>ParserSettings</td>
-<td>-</td>
+<td></td>
 </tr>
 <tr>
 <td>??</td>
 <td>??</td>
-<td>-</td>
+<td></td>
 </tr>
 </tbody>
 </table>
@@ -355,47 +368,47 @@
 <tr>
 <td>OriginalString</td>
 <td>Manhattan.Project.Der.atomare.Alptraum.1986.German.DL.1080p.HDTV.x264.mkv</td>
-<td>-</td>
+<td></td>
 </tr>
 <tr>
 <td>ParsedString</td>
 <td>Manhattan.Project.Der.atomare.Alptraum.1986.720p.German.x264.mkv</td>
-<td>-</td>
+<td></td>
 </tr>
 <tr>
 <td>Title</td>
 <td>Manhattan.Project.Der.atomare.Alptraum</td>
-<td>-</td>
+<td></td>
 </tr>
 <tr>
 <td>EpisodeTitle</td>
 <td>-</td>
-<td>-</td>
+<td></td>
 </tr>
 <tr>
 <td>FullTitle</td>
 <td>Manhattan.Project.Der.atomare.Alptraum</td>
-<td>-</td>
+<td></td>
 </tr>
 <tr>
 <td>IsSeries</td>
 <td>False</td>
-<td>-</td>
+<td></td>
 </tr>
 <tr>
 <td>IsMultiEpisode</td>
 <td>False</td>
-<td>-</td>
+<td></td>
 </tr>
 <tr>
 <td>Season</td>
 <td>-1</td>
-<td>-</td>
+<td></td>
 </tr>
 <tr>
 <td>Episodes</td>
 <td>-</td>
-<td>-</td>
+<td></td>
 </tr>
 <tr>
 <td>IDString</td>
@@ -405,67 +418,67 @@
 <tr>
 <td>Resolutions</td>
 <td>FullHD_1080p, HD_720p</td>
-<td>-</td>
+<td></td>
 </tr>
 <tr>
 <td>Year</td>
 <td>1986</td>
-<td>-</td>
+<td></td>
 </tr>
 <tr>
 <td>FileExtension</td>
 <td>.mkv</td>
-<td>-</td>
+<td></td>
 </tr>
 <tr>
 <td>RemovedTokens</td>
 <td>German, x264</td>
-<td>-</td>
+<td></td>
 </tr>
 <tr>
 <td>State</td>
 <td>OkSuccess</td>
-<td>-</td>
+<td></td>
 </tr>
 <tr>
 <td>DetectedOldSpacingChar</td>
 <td>.</td>
-<td>-</td>
+<td></td>
 </tr>
 <tr>
 <td>ProcessingDuration</td>
 <td>0,5282 ms</td>
-<td>-</td>
+<td></td>
 </tr>
 <tr>
 <td>ReleaseGroup</td>
 <td>c0nFuSed</td>
-<td>-</td>
+<td></td>
 </tr>
 <tr>
 <td>AudioCodec</td>
 <td>-</td>
-<td>-</td>
+<td></td>
 </tr>
 <tr>
 <td>VideoCodec</td>
 <td>x264</td>
-<td>-</td>
+<td></td>
 </tr>
 <tr>
 <td>FileInfo</td>
 <td>-</td>
-<td>-</td>
+<td></td>
 </tr>
 <tr>
 <td>ParserSettings</td>
 <td>ParserSettings</td>
-<td>-</td>
+<td></td>
 </tr>
 <tr>
 <td>??</td>
 <td>??</td>
-<td>-</td>
+<td></td>
 </tr>
 </tbody>
 </table>
@@ -517,11 +530,46 @@ ParserResult parserResult = sid.Parse(parseMe);</pre></div>
 <h4>
 <a id="single-file" class="anchor" href="#single-file" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Single File</h4>
 
+<p>There are extension methodes for the following types available</p>
+
+<ul>
+<li>String -&gt; String.ParseSeriesID</li>
+<li>FileInfo -&gt; FileInfo.ParseSeriesID
+Those extensions can be used for a single file and return a ParserResult object</li>
+</ul>
+
+<h5>
+<a id="examples" class="anchor" href="#examples" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Examples</h5>
+
+<div class="highlight highlight-source-cs"><pre><span class="pl-c">// The string source who should be parsed</span>
+<span class="pl-k">string</span> parseMe = <span class="pl-s"><span class="pl-pds">"</span>Knight.Rider.S01E07.Die.grosse.Duerre.1982.German.DVDRip.XviD.mkv<span class="pl-pds">"</span></span>;
+
+<span class="pl-c">// Parse the string</span>
+ParserResult result = parseMe.ParseSeriesID();</pre></div>
+
 <h4>
 <a id="path" class="anchor" href="#path" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Path</h4>
-      </section>
-    </div>
 
+<p>There are extension methodes for the following types available</p>
+
+<ul>
+<li>String -&gt; String.ParseSeriesIDPath</li>
+<li>DirectoryInfo -&gt; DirectoryInfo.ParseSeriesIDPath
+Those extensions can be used for a path and return a IEnumerable object-list</li>
+</ul>
+
+<h5>
+<a id="examples-1" class="anchor" href="#examples-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Examples</h5>
+
+<div class="highlight highlight-source-cs"><pre><span class="pl-c">// The string source who should be parsed</span>
+<span class="pl-k">string</span> parseDir = <span class="pl-s"><span class="pl-pds">@"C:\MyMovieFiles"</span></span>;
+
+<span class="pl-c">// Parse the string</span>
+IEnumerable&lt;ParserResult&gt; result = parseDir.ParseSeriesIDPath();</pre></div>
+      </section>
+
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
     
   </body>
 </html>
