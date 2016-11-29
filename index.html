@@ -1,33 +1,43 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
-    <meta charset='utf-8'>
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
-
     <title>SeriesIDParser by stefmde</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-dark.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
   </head>
-
   <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/stefmde/SeriesIDParser">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/stefmde/SeriesIDParser/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/stefmde/SeriesIDParser/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
 
-    <header>
-      <div class="container">
-        <h1>SeriesIDParser</h1>
-        <h2># Parses series or movie strings to a object to handle it with applications.</h2>
+    <div class="wrapper">
 
-        <section id="downloads">
-          <a href="https://github.com/stefmde/SeriesIDParser/zipball/master" class="btn">Download as .zip</a>
-          <a href="https://github.com/stefmde/SeriesIDParser/tarball/master" class="btn">Download as .tar.gz</a>
-          <a href="https://github.com/stefmde/SeriesIDParser" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
-        </section>
-      </div>
-    </header>
+      <section>
+        <div id="title">
+          <h1>SeriesIDParser</h1>
+          <p># Parses series or movie strings to a object to handle it with applications.</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/stefmde">stefmde</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
+        </div>
 
-    <div class="container">
-      <section id="main_content">
         <p><img src="https://raw.githubusercontent.com/stefmde/SeriesIDParser/master/Stuff/LibraryIcon/gray/icon_gray_256px.png" alt="Project icon"></p>
 
 <h1>
@@ -36,7 +46,172 @@
 <p>This page should give you a short overview in how to use this project</p>
 
 <h2>
-<a id="the-easy-way" class="anchor" href="#the-easy-way" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>The easy way</h2>
+<a id="description" class="anchor" href="#description" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Description</h2>
+
+<h3>
+<a id="result-object" class="anchor" href="#result-object" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Result Object</h3>
+
+<p>Sample Input: <code>Knight.Rider.S01E07.Die.grosse.Duerre.1982.German.DVDRip.XviD-c0nFuSed.mkv</code></p>
+
+<table>
+<thead>
+<tr>
+<th>ParserResult.*</th>
+<th>Type</th>
+<th>Available Version</th>
+<th>Sample</th>
+<th>Comment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OriginalString</td>
+<td>string</td>
+<td>-</td>
+<td>Knight.Rider.S01E07.Die.grosse.Duerre.1982.German.DVDRip.XviD-c0nFuSed.mkv</td>
+<td>-</td>
+</tr>
+<tr>
+<td>ParsedString</td>
+<td>string</td>
+<td>-</td>
+<td>Knight.Rider.S01E07.Die.grosse.Duerre.1982.SD.German.XviD.mkv</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Title</td>
+<td>string</td>
+<td>-</td>
+<td>Knight.Rider</td>
+<td>-</td>
+</tr>
+<tr>
+<td>EpisodeTitle</td>
+<td>string</td>
+<td>-</td>
+<td>Die.grosse.Duerre</td>
+<td>-</td>
+</tr>
+<tr>
+<td>FullTitle</td>
+<td>string</td>
+<td>-</td>
+<td>Knight.Rider.S01E07.Die.grosse.Duerre</td>
+<td>-</td>
+</tr>
+<tr>
+<td>IsSeries</td>
+<td>bool</td>
+<td>-</td>
+<td>True</td>
+<td>-</td>
+</tr>
+<tr>
+<td>IsMultiEpisode</td>
+<td>bool</td>
+<td>-</td>
+<td>False</td>
+<td>v</td>
+</tr>
+<tr>
+<td>Season</td>
+<td>int</td>
+<td>-</td>
+<td>1</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Episodes</td>
+<td>int list</td>
+<td>-</td>
+<td>7</td>
+<td>-</td>
+</tr>
+<tr>
+<td>IDString</td>
+<td>string</td>
+<td>-</td>
+<td>S01E07</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Resolutions</td>
+<td>enum list Resolutions</td>
+<td>-</td>
+<td>SD_Any</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Year</td>
+<td>int</td>
+<td>-</td>
+<td>1982</td>
+<td>-</td>
+</tr>
+<tr>
+<td>FileExtension</td>
+<td>string</td>
+<td>-</td>
+<td>.mkv</td>
+<td>-</td>
+</tr>
+<tr>
+<td>RemovedTokens</td>
+<td>string list</td>
+<td>-</td>
+<td>German, XviD</td>
+<td>-</td>
+</tr>
+<tr>
+<td>State</td>
+<td>enum State</td>
+<td>-</td>
+<td>OkSuccess</td>
+<td>-</td>
+</tr>
+<tr>
+<td>DetectedOldSpacingChar</td>
+<td>char</td>
+<td>-</td>
+<td>.</td>
+<td>-</td>
+</tr>
+<tr>
+<td>ProcessingDuration</td>
+<td>TimeSpan</td>
+<td>-</td>
+<td>0,5018 ms</td>
+<td>-</td>
+</tr>
+<tr>
+<td>ReleaseGroup</td>
+<td>string</td>
+<td>-</td>
+<td>c0nFuSed</td>
+<td>-</td>
+</tr>
+<tr>
+<td>AudioCodec</td>
+<td>string</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>VideoCodec</td>
+<td>string</td>
+<td>-</td>
+<td>XviD</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+
+<h2>
+<a id="code-samples" class="anchor" href="#code-samples" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Code Samples</h2>
+
+<h3>
+<a id="the-easy-way" class="anchor" href="#the-easy-way" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>The easy way</h3>
 
 <p>Here you dont need some configuration or anything like that</p>
 
@@ -50,9 +225,13 @@ SeriesID sid = <span class="pl-k">new</span> SeriesID();
 ParserResult parserResult = sid.Parse(parseMe);</pre></div>
 
 <p>Now you can access all properties in the <code>ParserResult</code> object</p>
-      </section>
-    </div>
 
+<h3>
+<a id="custom-parsersettings" class="anchor" href="#custom-parsersettings" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Custom ParserSettings</h3>
+      </section>
+
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
     
   </body>
 </html>
