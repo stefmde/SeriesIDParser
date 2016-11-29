@@ -45,11 +45,13 @@
 
 <p>This page should give you a short overview in how to use this project</p>
 
-<h2>
-<a id="description" class="anchor" href="#description" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Description</h2>
+<hr>
 
-<h3>
-<a id="what-you-should-know-before-you-start" class="anchor" href="#what-you-should-know-before-you-start" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>What you should know before you start</h3>
+<h1>
+<a id="description" class="anchor" href="#description" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Description</h1>
+
+<h2>
+<a id="what-you-should-know-before-you-start" class="anchor" href="#what-you-should-know-before-you-start" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>What you should know before you start</h2>
 
 <ol>
 <li>If you dont pass a ParserSettings object to the ctor of SeriesID it will use the default settings</li>
@@ -63,8 +65,8 @@
 <li>The ParserSettings provides methodes to serialize the object to a file or deserialize them from a file</li>
 </ol>
 
-<h3>
-<a id="result-object" class="anchor" href="#result-object" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Result Object</h3>
+<h2>
+<a id="result-object" class="anchor" href="#result-object" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Result Object</h2>
 
 <table>
 <thead>
@@ -219,8 +221,8 @@
 </tbody>
 </table>
 
-<h3>
-<a id="sample-result-series" class="anchor" href="#sample-result-series" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Sample Result Series</h3>
+<h2>
+<a id="sample-result-series" class="anchor" href="#sample-result-series" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Sample Result Series</h2>
 
 <p>Sample Input: <code>Knight.Rider.S01E07.Die.grosse.Duerre.1982.German.DVDRip.XviD-c0nFuSed.mkv</code></p>
 
@@ -327,8 +329,8 @@
 </tbody>
 </table>
 
-<h3>
-<a id="sample-result-movie" class="anchor" href="#sample-result-movie" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Sample Result Movie</h3>
+<h2>
+<a id="sample-result-movie" class="anchor" href="#sample-result-movie" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Sample Result Movie</h2>
 
 <p>Sample Input: <code>Manhattan.Project.Der.atomare.Alptraum.1986.German.DL.1080p.HDTV.x264.mkv</code></p>
 
@@ -435,11 +437,13 @@
 </tbody>
 </table>
 
-<h2>
-<a id="code-samples" class="anchor" href="#code-samples" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Code Samples</h2>
+<hr>
 
-<h3>
-<a id="the-easy-way" class="anchor" href="#the-easy-way" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>The easy way</h3>
+<h1>
+<a id="code-samples" class="anchor" href="#code-samples" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Code Samples</h1>
+
+<h2>
+<a id="the-easy-way" class="anchor" href="#the-easy-way" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>The easy way</h2>
 
 <p>Here you dont need some configuration or anything like that. If no settings is passed to it, it will use the default settings.</p>
 
@@ -454,8 +458,8 @@ ParserResult parserResult = sid.Parse(parseMe);</pre></div>
 
 <p>Now you can access all properties in the <code>ParserResult</code> object</p>
 
-<h3>
-<a id="custom-parsersettings" class="anchor" href="#custom-parsersettings" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Custom ParserSettings</h3>
+<h2>
+<a id="custom-parsersettings" class="anchor" href="#custom-parsersettings" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Custom ParserSettings</h2>
 
 <p>If you want to change how the parser handles something, you can edit the parser settings and pass it to the ctor</p>
 
@@ -476,11 +480,11 @@ ParserResult parserResult = sid.Parse(parseMe);</pre></div>
 
 <p>Now you can access all properties in the <code>ParserResult</code> object</p>
 
-<h3>
-<a id="extension-methodes" class="anchor" href="#extension-methodes" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Extension Methodes</h3>
+<h2>
+<a id="extension-methodes" class="anchor" href="#extension-methodes" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Extension Methodes</h2>
 
-<h4>
-<a id="single-file" class="anchor" href="#single-file" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Single File</h4>
+<h3>
+<a id="single-file" class="anchor" href="#single-file" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Single File</h3>
 
 <p>There are extension methodes for the following types available</p>
 
@@ -490,8 +494,8 @@ ParserResult parserResult = sid.Parse(parseMe);</pre></div>
 Those extensions can be used for a single file and return a ParserResult object</li>
 </ul>
 
-<h5>
-<a id="examples" class="anchor" href="#examples" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Examples</h5>
+<h4>
+<a id="examples" class="anchor" href="#examples" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Examples</h4>
 
 <div class="highlight highlight-source-cs"><pre><span class="pl-c">// The string source who should be parsed</span>
 <span class="pl-k">string</span> parseMe = <span class="pl-s"><span class="pl-pds">"</span>Knight.Rider.S01E07.Die.grosse.Duerre.1982.German.DVDRip.XviD.mkv<span class="pl-pds">"</span></span>;
@@ -499,8 +503,8 @@ Those extensions can be used for a single file and return a ParserResult object<
 <span class="pl-c">// Parse the string</span>
 ParserResult result = parseMe.ParseSeriesID();</pre></div>
 
-<h4>
-<a id="path" class="anchor" href="#path" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Path</h4>
+<h3>
+<a id="path" class="anchor" href="#path" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Path</h3>
 
 <p>There are extension methodes for the following types available</p>
 
@@ -510,8 +514,8 @@ ParserResult result = parseMe.ParseSeriesID();</pre></div>
 Those extensions can be used for a path and return a IEnumerable object-list</li>
 </ul>
 
-<h5>
-<a id="examples-1" class="anchor" href="#examples-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Examples</h5>
+<h4>
+<a id="examples-1" class="anchor" href="#examples-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Examples</h4>
 
 <div class="highlight highlight-source-cs"><pre><span class="pl-c">// The string source who should be parsed</span>
 <span class="pl-k">string</span> parseDir = <span class="pl-s"><span class="pl-pds">@"C:\MyMovieFiles"</span></span>;
