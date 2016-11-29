@@ -1,43 +1,33 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
+    <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
     <title>SeriesIDParser by stefmde</title>
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/github-dark.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script src="javascripts/respond.js"></script>
-    <!--[if lt IE 9]>
-      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <!--[if lt IE 8]>
-    <link rel="stylesheet" href="stylesheets/ie.css">
-    <![endif]-->
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-
   </head>
+
   <body>
-      <div id="header">
-        <nav>
-          <li class="fork"><a href="https://github.com/stefmde/SeriesIDParser">View On GitHub</a></li>
-          <li class="downloads"><a href="https://github.com/stefmde/SeriesIDParser/zipball/master">ZIP</a></li>
-          <li class="downloads"><a href="https://github.com/stefmde/SeriesIDParser/tarball/master">TAR</a></li>
-          <li class="title">DOWNLOADS</li>
-        </nav>
-      </div><!-- end header -->
 
-    <div class="wrapper">
+    <header>
+      <div class="container">
+        <h1>SeriesIDParser</h1>
+        <h2># Parses series or movie strings to a object to handle it with applications.</h2>
 
-      <section>
-        <div id="title">
-          <h1>SeriesIDParser</h1>
-          <p># Parses series or movie strings to a object to handle it with applications.</p>
-          <hr>
-          <span class="credits left">Project maintained by <a href="https://github.com/stefmde">stefmde</a></span>
-          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
-        </div>
+        <section id="downloads">
+          <a href="https://github.com/stefmde/SeriesIDParser/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/stefmde/SeriesIDParser/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/stefmde/SeriesIDParser" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
 
+    <div class="container">
+      <section id="main_content">
         <p><img src="https://raw.githubusercontent.com/stefmde/SeriesIDParser/master/Stuff/LibraryIcon/gray/icon_gray_256px.png" alt="Project icon"></p>
 
 <h1>
@@ -47,6 +37,20 @@
 
 <h2>
 <a id="description" class="anchor" href="#description" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Description</h2>
+
+<h3>
+<a id="what-you-should-know-before-you-start" class="anchor" href="#what-you-should-know-before-you-start" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>What you should know before you start</h3>
+
+<ol>
+<li>If you dont pass a ParserSettings object to the ctor of SeriesID it will use the default settings</li>
+<li>You can create a ParserSettings object with empty lists with the empty ctor</li>
+<li>You can create a ParserSettings object with default values in the lists with a <code>true</code> in the ctor</li>
+<li>Before you use the ParserResult object you should check for a <code>NULL</code> in the <code>Exception</code> property and a <code>OKSuccess</code> in the <code>State</code> Property</li>
+<li>If it is possible, properties are always <code>String.Empty</code> is they don't have a value. Otherweise they are <code>NULL</code>. Check the property comments to see it exactly.</li>
+<li>Some properties are only available with series and some only with movies</li>
+<li>Computed properties are automatically cached if the are queried the first time</li>
+<li>Properties are only filled if the are found in the input string</li>
+</ol>
 
 <h3>
 <a id="result-object" class="anchor" href="#result-object" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Result Object</h3>
@@ -188,6 +192,12 @@
 <td>-</td>
 </tr>
 <tr>
+<td>ParserSettings</td>
+<td>ParserSettings</td>
+<td>8.0</td>
+<td>-</td>
+</tr>
+<tr>
 <td>??</td>
 <td>??</td>
 <td>8.0</td>
@@ -313,6 +323,11 @@
 <tr>
 <td>FileInfo</td>
 <td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>ParserSettings</td>
+<td>ParserSettings</td>
 <td>-</td>
 </tr>
 <tr>
@@ -443,6 +458,11 @@
 <td>-</td>
 </tr>
 <tr>
+<td>ParserSettings</td>
+<td>ParserSettings</td>
+<td>-</td>
+</tr>
+<tr>
 <td>??</td>
 <td>??</td>
 <td>-</td>
@@ -456,7 +476,7 @@
 <h3>
 <a id="the-easy-way" class="anchor" href="#the-easy-way" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>The easy way</h3>
 
-<p>Here you dont need some configuration or anything like that</p>
+<p>Here you dont need some configuration or anything like that. If no settings is passed to it, it will use the default settings.</p>
 
 <div class="highlight highlight-source-cs"><pre><span class="pl-c">// The string source who should be parsed</span>
 <span class="pl-k">string</span> parseMe = <span class="pl-s"><span class="pl-pds">"</span>Knight.Rider.S01E07.Die.grosse.Duerre.1982.German.DVDRip.XviD.mkv<span class="pl-pds">"</span></span>;
@@ -472,12 +492,36 @@ ParserResult parserResult = sid.Parse(parseMe);</pre></div>
 <h3>
 <a id="custom-parsersettings" class="anchor" href="#custom-parsersettings" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Custom ParserSettings</h3>
 
+<p>If you want to change how the parser handles something, you can edit the parser settings and pass it to the ctor</p>
+
+<div class="highlight highlight-source-cs"><pre><span class="pl-c">// The string source who should be parsed</span>
+<span class="pl-k">string</span> parseMe = <span class="pl-s"><span class="pl-pds">"</span>Knight.Rider.S01E07.Die.grosse.Duerre.1982.German.DVDRip.XviD.mkv<span class="pl-pds">"</span></span>;
+
+<span class="pl-c">// Generate the ParserSettings object</span>
+ParserSettings ps = <span class="pl-k">new</span> ParserSettings();
+
+<span class="pl-c">// Modify a settings property</span>
+ps.NewSpacingChar = <span class="pl-s"><span class="pl-pds">'</span>-<span class="pl-pds">'</span></span>;
+
+<span class="pl-c">// Creating the parser object with custom settings</span>
+SeriesID sid = <span class="pl-k">new</span> SeriesID(ps);
+
+<span class="pl-c">// Getting the result</span>
+ParserResult parserResult = sid.Parse(parseMe);</pre></div>
+
+<p>Now you can access all properties in the <code>ParserResult</code> object</p>
+
 <h3>
 <a id="extension-methodes" class="anchor" href="#extension-methodes" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Extension Methodes</h3>
-      </section>
 
+<h4>
+<a id="single-file" class="anchor" href="#single-file" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Single File</h4>
+
+<h4>
+<a id="path" class="anchor" href="#path" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Path</h4>
+      </section>
     </div>
-    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+
     
   </body>
 </html>
