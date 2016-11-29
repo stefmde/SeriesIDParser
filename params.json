@@ -1,6 +1,6 @@
 {
   "name": "SeriesIDParser",
   "tagline": "# Parses series or movie strings to a object to handle it with applications.",
-  "body": "![Project icon](https://raw.githubusercontent.com/stefmde/SeriesIDParser/master/Stuff/LibraryIcon/gray/icon_gray_256px.png)\r\n# SeriesIDParser Page\r\nThis page should give you a short overview in how to use this project\r\n",
+  "body": "![Project icon](https://raw.githubusercontent.com/stefmde/SeriesIDParser/master/Stuff/LibraryIcon/gray/icon_gray_256px.png)\r\n# SeriesIDParser Page\r\nThis page should give you a short overview in how to use this project\r\n\r\n## The easy way\r\nHere you dont need some configuration or anything like that\r\n```C#\r\n// The string source who should be parsed\r\nstring parseMe = \"Knight.Rider.S01E07.Die.grosse.Duerre.1982.German.DVDRip.XviD.mkv\";\r\n\r\n// Creating the parser object with default settings(empty ctor)\r\nSeriesID sid = new SeriesID();\r\n\r\n// Getting the result\r\nParserResult parserResult = sid.Parse(parseMe);\r\n```\r\nNow you can access all properties in the `ParserResult` object",
   "note": "Don't delete this file! It's used internally to help with page regeneration."
 }

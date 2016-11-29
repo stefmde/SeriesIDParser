@@ -34,6 +34,22 @@
 <a id="seriesidparser-page" class="anchor" href="#seriesidparser-page" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>SeriesIDParser Page</h1>
 
 <p>This page should give you a short overview in how to use this project</p>
+
+<h2>
+<a id="the-easy-way" class="anchor" href="#the-easy-way" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>The easy way</h2>
+
+<p>Here you dont need some configuration or anything like that</p>
+
+<div class="highlight highlight-source-cs"><pre><span class="pl-c">// The string source who should be parsed</span>
+<span class="pl-k">string</span> parseMe = <span class="pl-s"><span class="pl-pds">"</span>Knight.Rider.S01E07.Die.grosse.Duerre.1982.German.DVDRip.XviD.mkv<span class="pl-pds">"</span></span>;
+
+<span class="pl-c">// Creating the parser object with default settings(empty ctor)</span>
+SeriesID sid = <span class="pl-k">new</span> SeriesID();
+
+<span class="pl-c">// Getting the result</span>
+ParserResult parserResult = sid.Parse(parseMe);</pre></div>
+
+<p>Now you can access all properties in the <code>ParserResult</code> object</p>
       </section>
     </div>
 
