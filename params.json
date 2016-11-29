@@ -1,0 +1,6 @@
+{
+  "name": "SeriesIDParser",
+  "tagline": "# Parses series or movie strings to a object to handle it with applications.",
+  "body": "![Project icon](https://raw.githubusercontent.com/stefmde/SeriesIDParser/master/Stuff/LibraryIcon/gray/icon_gray_256px.png)\r\n# SeriesIDParser Page\r\nThis page should give you a short overview in how to use this project\r\n",
+  "note": "Don't delete this file! It's used internally to help with page regeneration."
+}
