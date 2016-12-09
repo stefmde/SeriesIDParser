@@ -29,7 +29,8 @@ using SeriesIDParser;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-
+using SeriesIDParser.Models;
+using SeriesIDParser.Worker;
 
 namespace SeriesIDParser.Test
 {
@@ -102,19 +103,19 @@ namespace SeriesIDParser.Test
 			List<ResolutionsMap> actualResolutions = new List<ResolutionsMap>();
 
 			// Try get 8K
-			actualResolutions.AddRange(Helper.GetResolutionByResMap(ps.DetectUltraHD8kTokens, ResolutionsMap.UltraHD8K_4320p, seperator, ref actualTitle));
+			actualResolutions.AddRange(ParserHelperWorker.GetResolutionByResMap(ps.DetectUltraHD8kTokens, ResolutionsMap.UltraHD8K_4320p, seperator, ref actualTitle));
 
 			// Try get 4K
-			actualResolutions.AddRange(Helper.GetResolutionByResMap(ps.DetectUltraHDTokens, ResolutionsMap.UltraHD_2160p, seperator, ref actualTitle));
+			actualResolutions.AddRange(ParserHelperWorker.GetResolutionByResMap(ps.DetectUltraHDTokens, ResolutionsMap.UltraHD_2160p, seperator, ref actualTitle));
 
 			// Try get FullHD
-			actualResolutions.AddRange(Helper.GetResolutionByResMap(ps.DetectFullHDTokens, ResolutionsMap.FullHD_1080p, seperator, ref actualTitle));
+			actualResolutions.AddRange(ParserHelperWorker.GetResolutionByResMap(ps.DetectFullHDTokens, ResolutionsMap.FullHD_1080p, seperator, ref actualTitle));
 
 			// Try get HD
-			actualResolutions.AddRange(Helper.GetResolutionByResMap(ps.DetectHDTokens, ResolutionsMap.HD_720p, seperator, ref actualTitle));
+			actualResolutions.AddRange(ParserHelperWorker.GetResolutionByResMap(ps.DetectHDTokens, ResolutionsMap.HD_720p, seperator, ref actualTitle));
 
 			// Try get SD
-			actualResolutions.AddRange(Helper.GetResolutionByResMap(ps.DetectSDTokens, ResolutionsMap.SD_Any, seperator, ref actualTitle));
+			actualResolutions.AddRange(ParserHelperWorker.GetResolutionByResMap(ps.DetectSDTokens, ResolutionsMap.SD_Any, seperator, ref actualTitle));
 
 			actualResolutions = actualResolutions.Distinct().ToList();
 

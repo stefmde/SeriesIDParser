@@ -22,54 +22,15 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace SeriesIDParser
+namespace SeriesIDParser.Core
 {
-	#region ParserResult
-	/// <summary>
-	/// Representing the series or movie resolution
-	/// </summary>
-	public enum ResolutionsMap
-	{
-		Unknown = 0,
-		SD_Any = 1,
-		HD_720p = 2,
-		FullHD_1080p = 3,
-		UltraHD_2160p = 4,
-		UltraHD8K_4320p = 5
-	}
+    public class HelperWorker
+    {
 
-	/// <summary>
-	/// Representing the object success state
-	/// </summary>
-	[Flags]
-	public enum State
-	{
-		Unknown = 0,
-		OkSuccess = 1,
-		WarnErrorOrWarningOccurred = 2,
-		WarnNoTitleFound = 4,
-		ErrEmptyOrToShortArgument = 8,
-		ErrIDNotFound = 16,
-		ErrUnknownError = 32
-	} 
-	#endregion
-
-	#region ParserSettings
-	/// <summary>
-	/// The properties for the ResolutionOutputBehavior
-	/// </summary>
-	public enum ResolutionOutputBehavior
-	{
-		AllFoundResolutions,
-		HighestResolution,
-		LowestResolution
-	} 
-	#endregion
+    }
 }

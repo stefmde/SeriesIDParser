@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SeriesIDParser.Extensions;
+using SeriesIDParser.Models;
 
 namespace SeriesIDParser.Test
 {

@@ -34,6 +34,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using SeriesIDParser.Extensions;
+using SeriesIDParser.Models;
 
 namespace SeriesIDParser.WinForm.Demo
 {
