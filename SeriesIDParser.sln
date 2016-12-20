@@ -17,10 +17,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Net Core", ".Net Core", "{
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SeriesIDParserCore.Console.Demo", "SeriesIDParserCore.Console.Demo\SeriesIDParserCore.Console.Demo.xproj", "{D7D1B627-B679-4C4A-9353-EF23A6FD37CA}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{2F3FF583-0540-4E50-9E11-23A9737D90AF}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SeriesIDParser.Core", "SeriesIDParser.Core\SeriesIDParser.Core.xproj", "{69D55947-2E40-44EC-8907-F923365F74E5}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,10 +43,6 @@ Global
 		{D7D1B627-B679-4C4A-9353-EF23A6FD37CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D7D1B627-B679-4C4A-9353-EF23A6FD37CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D7D1B627-B679-4C4A-9353-EF23A6FD37CA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{69D55947-2E40-44EC-8907-F923365F74E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{69D55947-2E40-44EC-8907-F923365F74E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{69D55947-2E40-44EC-8907-F923365F74E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{69D55947-2E40-44EC-8907-F923365F74E5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -61,6 +53,5 @@ Global
 		{3A90193D-8664-42CD-B49D-DCD2B9E6CB4D} = {AE0C9F53-3F9B-48FA-862F-1080F8A5D172}
 		{958064FF-C77F-478C-9243-3E374D2BDAC0} = {14D5AB57-4404-46A8-B523-724060BB7DA0}
 		{D7D1B627-B679-4C4A-9353-EF23A6FD37CA} = {14D5AB57-4404-46A8-B523-724060BB7DA0}
-		{69D55947-2E40-44EC-8907-F923365F74E5} = {2F3FF583-0540-4E50-9E11-23A9737D90AF}
 	EndGlobalSection
 EndGlobal

@@ -1,9 +1,13 @@
 {
+  "copyright": "Copyright © 2016 - 2017 Stefan Müller",
+  "description": "Parses series or movie strings to detailed object",
+  "language": "en",
   "title": "SeriesIDParserCore",
-  "version": "7.0.0-*",
+  "version": "8.2.0-*",
 
   "dependencies": {
     "NETStandard.Library": "1.6.0",
+    "Newtonsoft.Json": "9.0.1",
     "System.Xml.XmlSerializer": "4.0.11"
   },
 

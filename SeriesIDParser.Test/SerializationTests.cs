@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SeriesIDParser.Models;
 
 namespace SeriesIDParser.Test
 {
@@ -29,7 +30,7 @@ namespace SeriesIDParser.Test
 			expectedParserSettings.ThrowExceptionInsteadOfErrorFlag = true;
 
 			// Serialization
-			string ps1String = ParserSettings.SerializeToXML(expectedParserSettings);
+			string ps1String = ParserSettings. SerializeToXML(expectedParserSettings);
 			ParserSettings actualParserSettings = ParserSettings.DeSerializeFromXML(ps1String);
 
 			// Compare

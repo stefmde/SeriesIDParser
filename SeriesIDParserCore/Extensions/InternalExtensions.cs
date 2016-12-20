@@ -22,15 +22,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 [assembly: InternalsVisibleTo("SeriesIDParser.Test")]
-namespace SeriesIDParser.Extensions
+namespace SeriesIDParserCore.Extensions
 {
 	internal static class InternalExtensions
 	{

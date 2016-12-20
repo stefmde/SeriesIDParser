@@ -22,22 +22,20 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text;
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+using SeriesIDParserCore.Models;
 
-namespace SeriesIDParserCore
+[assembly: InternalsVisibleTo("SeriesIDParser.Test")]
+namespace SeriesIDParserCore.Worker
 {
-	internal static class Helper
+	internal static class HelperWorker
 	{
-
-
 		/// <summary>
 		/// Gets the Resolutions depending on the found Resolutions and the ParserSettings
 		/// </summary>
@@ -46,12 +44,12 @@ namespace SeriesIDParserCore
 		/// <returns></returns>
 		internal static string GetResolutionString(ParserSettings settings, IList<ResolutionsMap> res)
 		{
-			// TODO: Only 72% Covered
-			string output = ResolutionsMap.UNKNOWN.ToString() + settings.NewSpacingChar;
+			// TODO: Only 69% Covered
+			string output = ResolutionsMap.Unknown.ToString() + settings.NewSpacingChar;
 
-			if (res != null && res.Count > 0 && !(res.Count == 1 && res.Contains(ResolutionsMap.UNKNOWN)))
+			if (res != null && res.Count > 0 && !(res.Count == 1 && res.Contains(ResolutionsMap.Unknown)))
 			{
-				res.Remove(ResolutionsMap.UNKNOWN);
+				res.Remove(ResolutionsMap.Unknown);
 				res = res.OrderBy(x => x).ToList();
 
 				if (settings.ResolutionStringOutput == ResolutionOutputBehavior.HighestResolution)
@@ -146,13 +144,15 @@ namespace SeriesIDParserCore
 			return output;
 		}
 
-	    /// <summary>
-	    /// Tries to get the year from a given string. Have to be between now and 1900
-	    /// </summary>
-	    /// <param name="title">String who should be analized</param>
-	    /// <param name="regex">The regex string who parses the year</param>
-	    /// <returns>-1 or the found year</returns>
-	    internal static int GetYear(string title, string regex)
+
+
+		/// <summary>
+		/// Tries to get the year from a given string. Have to be between now and 1900
+		/// </summary>
+		/// <param name="title">String who should be analized</param>
+		/// <param name="regex">The regex string who parses the year</param>
+		/// <returns>-1 or the found year</returns>
+		internal static int GetYear(string title, string regex)
 		{
 			int year = -1;
 
@@ -161,18 +161,17 @@ namespace SeriesIDParserCore
 
 			foreach (Match match in matches)
 			{
-				if (match.Success)
+				if (!match.Success)
 				{
-					int tempYear = -1;
+					continue;
+				}
 
-					if (int.TryParse(match.Value, out tempYear))
-					{
-						if (tempYear >= 1900 && tempYear <= DateTime.Now.Year)
-						{
-							year = tempYear;
-							break;
-						}
-					}
+				int tempYear = -1;
+
+				if (int.TryParse(match.Value, out tempYear) && tempYear >= 1900 && tempYear <= DateTime.Now.Year)
+				{
+					year = tempYear;
+					break;
 				}
 			}
 
@@ -193,6 +192,8 @@ namespace SeriesIDParserCore
 
 		//}
 
+
+
 		private struct CharRating
 		{
 			internal char Char;
@@ -203,16 +204,13 @@ namespace SeriesIDParserCore
 		/// Tries to get the spacing char from a given string
 		/// </summary>
 		/// <param name="input">The string who should be analized</param>
+		/// <param name="settings">ParserSettings to get the PossibleSpacingChars</param>
 		/// <returns>returns an empty string or the spacing char</returns>
 		internal static char GetSpacingChar(string input, ParserSettings settings)
 		{
 			char foundChar = new char();
 
-			List<CharRating> charRating = new List<CharRating>();
-			foreach (char item in settings.PossibleSpacingChars)
-			{
-				charRating.Add(new CharRating { Char = item, Count = 0 });
-			}
+			List<CharRating> charRating = settings.PossibleSpacingChars.Select(item => new CharRating { Char = item, Count = 0 }).ToList();
 
 			for (int i = 0; i < charRating.Count; i++)
 			{
@@ -234,23 +232,26 @@ namespace SeriesIDParserCore
 		}
 
 
+
 		/// <summary>
 		/// Tries to get the file extension from a given string
 		/// </summary>
 		/// <param name="input">The string who should be analized</param>
 		/// <param name="extensions">The list with the posible extensions</param>
 		/// <returns>returns null or the found extension</returns>
-		internal static string GetFileExtension(string input, List<string> extensions)
+		internal static string GetFileExtension(string input, IEnumerable<string> extensions)
 		{
-			string extension = null;
-			if (!string.IsNullOrEmpty(input))
+			string extension = string.Empty;
+			if (string.IsNullOrEmpty(input))
 			{
-				string tempExtension = Path.GetExtension(input);
+				return extension;
+			}
 
-				if (extensions.Any(x => x.Equals( tempExtension, StringComparison.OrdinalIgnoreCase)))
-				{
-					extension = tempExtension.ToLower();
-				}
+			string tempExtension = Path.GetExtension(input);
+
+			if (extensions.Any(x => x.Equals(tempExtension, StringComparison.OrdinalIgnoreCase)))
+			{
+				extension = tempExtension.ToLower();
 			}
 
 			return extension;
@@ -267,7 +268,7 @@ namespace SeriesIDParserCore
 		/// <param name="addRemovedToList">Should the removed tokens be added to the removed list?</param>
 		/// <param name="removeTokensFromInput">Should the found token should be removed from the ref input?</param>
 		/// <returns>returns the cleaned string</returns>
-		internal static List<string> FindTokens(ref string fullTitle, string oldSpacingChar, List<string> removeTokens, bool addRemovedToList, bool removeTokensFromInput = true)
+		internal static IEnumerable<string> FindTokens(ref string fullTitle, string oldSpacingChar, List<string> removeTokens, bool addRemovedToList, bool removeTokensFromInput = true)
 		{
 			// TODO: Only 95% Covered
 			string ret = fullTitle;
@@ -320,15 +321,6 @@ namespace SeriesIDParserCore
 
 
 
-
-
-
-
-
-
-
-
-
 		/// <summary>
 		/// Replaces tokens from the string
 		/// </summary>
@@ -342,9 +334,7 @@ namespace SeriesIDParserCore
 			// TODO: Only 72% Covered
 			string ret = input;
 			List<string> foundTokens = new List<string>();
-
-
-			if (replaceList == null || (replaceList != null && replaceList.Count == 0))
+			if (replaceList == null || (replaceList != null && !replaceList.Any()))
 			{
 				ret = input;
 			}
@@ -356,30 +346,24 @@ namespace SeriesIDParserCore
 			else
 			{
 				string spacerEscaped = Regex.Escape(oldSpacingChar);
-
 				foreach (KeyValuePair<string, string> replacePair in replaceList)
 				{
 					Regex removeRegex = removeRegex = new Regex(spacerEscaped + replacePair.Key + spacerEscaped, RegexOptions.IgnoreCase);
-
 					// Regex
 					while (removeRegex.IsMatch(ret))
 					{
 						ret = removeRegex.Replace(ret, replacePair.Value);
-
 						if (addRemovedToList)
 						{
 							foundTokens.Add(replacePair.Key);
 						}
 					}
-
 					// Plain
 					while (ret.EndsWith(oldSpacingChar + replacePair.Key, StringComparison.OrdinalIgnoreCase))
 					{
 						// Search with spacer but remove without spacer
 						removeRegex = new Regex(replacePair.Key, RegexOptions.IgnoreCase);
-
 						ret = removeRegex.Replace(ret, replacePair.Value);
-
 						if (addRemovedToList)
 						{
 							foundTokens.Add(replacePair.Key);
@@ -389,11 +373,8 @@ namespace SeriesIDParserCore
 			}
 
 			input = ret;
-
 			return foundTokens;
 		}
-
-
 
 
 
@@ -431,15 +412,17 @@ namespace SeriesIDParserCore
 		/// <summary>
 		/// Function Adds a Unknown Resolution mark or removes it if needed
 		/// </summary>
+		/// <param name="resolutions"></param>
+		/// <returns></returns>
 		internal static List<ResolutionsMap> MaintainUnknownResolution(List<ResolutionsMap> resolutions)
 		{
 			if (resolutions.Count == 0)
 			{
-				resolutions.Add(ResolutionsMap.UNKNOWN);
+				resolutions.Add(ResolutionsMap.Unknown);
 			}
 			else
 			{
-				resolutions.Remove(ResolutionsMap.UNKNOWN);
+				resolutions.Remove(ResolutionsMap.Unknown);
 			}
 
 			return resolutions;
@@ -447,25 +430,32 @@ namespace SeriesIDParserCore
 
 
 
+		/// <summary>
+		/// Get Resolutions from fullTitle string
+		/// </summary>
+		/// <param name="ps"></param>
+		/// <param name="oldSpacer"></param>
+		/// <param name="fullTitle"></param>
+		/// <returns></returns>
 		internal static List<ResolutionsMap> GetResolutions(ParserSettings ps, char oldSpacer, ref string fullTitle)
 		{
 			List<ResolutionsMap> tempFoundResolutions = new List<ResolutionsMap>();
 			List<ResolutionsMap> foundResolutions = new List<ResolutionsMap>();
 
 			// Try get 8K
-			tempFoundResolutions.AddRange(Helper.GetResolutionByResMap(ps.DetectUltraHD8kTokens, ResolutionsMap.UltraHD8K_4320p, oldSpacer, ref fullTitle));
+			tempFoundResolutions.AddRange(GetResolutionByResMap(ps.DetectUltraHD8kTokens, ResolutionsMap.UltraHD8K_4320p, oldSpacer, ref fullTitle));
 
 			// Try get 4K
-			tempFoundResolutions.AddRange(Helper.GetResolutionByResMap(ps.DetectUltraHDTokens, ResolutionsMap.UltraHD_2160p, oldSpacer, ref fullTitle));
+			tempFoundResolutions.AddRange(GetResolutionByResMap(ps.DetectUltraHDTokens, ResolutionsMap.UltraHD_2160p, oldSpacer, ref fullTitle));
 
 			// Try get FullHD
-			tempFoundResolutions.AddRange(Helper.GetResolutionByResMap(ps.DetectFullHDTokens, ResolutionsMap.FullHD_1080p, oldSpacer, ref fullTitle));
+			tempFoundResolutions.AddRange(GetResolutionByResMap(ps.DetectFullHDTokens, ResolutionsMap.FullHD_1080p, oldSpacer, ref fullTitle));
 
 			// Try get HD
-			tempFoundResolutions.AddRange(Helper.GetResolutionByResMap(ps.DetectHDTokens, ResolutionsMap.HD_720p, oldSpacer, ref fullTitle));
+			tempFoundResolutions.AddRange(GetResolutionByResMap(ps.DetectHDTokens, ResolutionsMap.HD_720p, oldSpacer, ref fullTitle));
 
 			// Try get SD
-			tempFoundResolutions.AddRange(Helper.GetResolutionByResMap(ps.DetectSDTokens, ResolutionsMap.SD_Any, oldSpacer, ref fullTitle));
+			tempFoundResolutions.AddRange(GetResolutionByResMap(ps.DetectSDTokens, ResolutionsMap.SD_Any, oldSpacer, ref fullTitle));
 
 			foreach (ResolutionsMap res in tempFoundResolutions)
 			{
@@ -480,17 +470,23 @@ namespace SeriesIDParserCore
 
 
 
-
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="ps"></param>
+		/// <param name="oldSpacer"></param>
+		/// <param name="fullTitle"></param>
+		/// <returns></returns>
 		internal static List<string> RemoveTokens(ParserSettings ps, char oldSpacer, ref string fullTitle)
 		{
 			List<string> tempFoundResolutions = new List<string>();
 			List<string> foundResolutions = new List<string>();
 
-			tempFoundResolutions.AddRange(Helper.FindTokens(ref fullTitle, oldSpacer.ToString(), ps.RemoveAndListTokens, true));
-			tempFoundResolutions.AddRange(Helper.FindTokens(ref fullTitle, oldSpacer.ToString(), ps.RemoveWithoutListTokens, false));
+			tempFoundResolutions.AddRange(FindTokens(ref fullTitle, oldSpacer.ToString(), ps.RemoveAndListTokens, true));
+			tempFoundResolutions.AddRange(FindTokens(ref fullTitle, oldSpacer.ToString(), ps.RemoveWithoutListTokens, false));
 
-			tempFoundResolutions.AddRange(Helper.ReplaceTokens(ref fullTitle, oldSpacer.ToString(), ps.ReplaceRegexAndListTokens, true));
-			tempFoundResolutions.AddRange(Helper.ReplaceTokens(ref fullTitle, oldSpacer.ToString(), ps.ReplaceRegexWithoutListTokens, false));
+			tempFoundResolutions.AddRange(ReplaceTokens(ref fullTitle, oldSpacer.ToString(), ps.ReplaceRegexAndListTokens, true));
+			tempFoundResolutions.AddRange(ReplaceTokens(ref fullTitle, oldSpacer.ToString(), ps.ReplaceRegexWithoutListTokens, false));
 
 			foreach (string item in tempFoundResolutions)
 			{
@@ -504,6 +500,7 @@ namespace SeriesIDParserCore
 		}
 
 
+
 		/// <summary>
 		/// Trys to get the release group
 		/// </summary>
@@ -511,23 +508,26 @@ namespace SeriesIDParserCore
 		/// <param name="fullTitle">The fullTitle who worked on</param>
 		/// <param name="fileExtension">The file extension is there is one without the dot</param>
 		/// <returns>the release group string if there is one or string.Empty</returns>
-		internal static string GetReleaseGroup( string fullTitle, ParserSettings ps, string fileExtension)
+		internal static string GetReleaseGroup(string fullTitle, ParserSettings ps, string fileExtension)
 		{
 			string group = string.Empty;
 
-			if (fullTitle.Length > 30)
+			if (fullTitle.Length <= 30)
 			{
-				string tmpTitle = fullTitle.Substring(fullTitle.Length - 20, 20);
-
-				if (tmpTitle.Count(x => x == ps.ReleaseGroupSeperator) > 0)
-				{
-					int seperatorIndex = fullTitle.LastIndexOf(ps.ReleaseGroupSeperator);
-					group = fullTitle.Substring(seperatorIndex + 1).Replace("." + fileExtension, "").Trim();
-				}
+				return group;
 			}
 
-			return group;
+			string tmpTitle = fullTitle.Substring(fullTitle.Length - 20, 20);
+
+			if (tmpTitle.Count(x => x == ps.ReleaseGroupSeperator) > 0)
+			{
+				int seperatorIndex = fullTitle.LastIndexOf(ps.ReleaseGroupSeperator);
+				group = string.IsNullOrEmpty(fileExtension) ? fullTitle.Substring(seperatorIndex + 1) : fullTitle.Substring(seperatorIndex + 1).Replace(fileExtension, "");
+			}
+
+			return group.Trim();
 		}
+
 
 
 		/// <summary>
@@ -564,18 +564,21 @@ namespace SeriesIDParserCore
 			Match match = seRegex.Match(fullTitle.ToUpper());
 			string episodeTitle = string.Empty;
 
-			if (IsSeries(ps, fullTitle))
+			if (!IsSeries(ps, fullTitle))
 			{
-				int episodeTitleStartIndex = match.Index + match.Length + 1;
+				return episodeTitle;
+			}
 
-				if (fullTitle.Length > episodeTitleStartIndex)
-				{
-					episodeTitle = fullTitle.Substring(episodeTitleStartIndex);
-				}
+			int episodeTitleStartIndex = match.Index + match.Length + 1;
+
+			if (fullTitle.Length > episodeTitleStartIndex)
+			{
+				episodeTitle = fullTitle.Substring(episodeTitleStartIndex);
 			}
 
 			return episodeTitle;
 		}
+
 
 
 		internal static string GetTitle(ParserSettings ps, char oldSpacingChar, string fullTitle, ref bool warningOrError, ref State state)
@@ -592,7 +595,7 @@ namespace SeriesIDParserCore
 				}
 				else
 				{
-					state |= State.WARN_ERR_OR_WARN_OCCURRED | State.WARN_NO_TITLE_FOUND;
+					state |= State.WarnErrorOrWarningOccurred | State.WarnNoTitleFound;
 					warningOrError = true;
 				}
 			}
@@ -602,12 +605,13 @@ namespace SeriesIDParserCore
 
 				if (!warningOrError)
 				{
-					state |= State.OK_SUCCESS;
+					state |= State.OkSuccess;
 				}
 			}
 
 			return title;
 		}
+
 
 
 		/// <summary>
@@ -634,27 +638,6 @@ namespace SeriesIDParserCore
 
 
 		/// <summary>
-		/// Gets the first found episode id. Default/Error: -1
-		/// </summary>
-		/// <param name="ps">Currently used settings for the parser</param>
-		/// <param name="fullTitle">The fullTitle who worked on</param>
-		/// <returns>First episode as int</returns>
-		[Obsolete]
-		internal static int GetEpisodeID(ParserSettings ps, string fullTitle)
-		{
-			int episode = -1;
-			List<int> episodes = GetEpisodeIDs(ps, fullTitle);
-
-			if (episodes.Count > 0)
-			{
-				episode = episodes.FirstOrDefault();
-			}
-
-			return episode;
-		}
-		
-
-		/// <summary>
 		/// Gets the EpisodeID's from a given string as int list. Default/Error: -1
 		/// </summary>
 		/// <param name="ps">Currently used settings for the parser</param>
@@ -672,16 +655,7 @@ namespace SeriesIDParserCore
 				CaptureCollection cc = match.Groups["episode"].Captures;
 				int temp = -1;
 
-				// TODO Resharper suggestion: episodes.AddRange(from object item in cc where int.TryParse(item.ToString(), NumberStyles.Number, new CultureInfo(CultureInfo.CurrentCulture.ToString()), out temp) select temp);
-
-				foreach (object item in cc)
-				{
-					if (int.TryParse(item.ToString(), NumberStyles.Number,
-						new CultureInfo(CultureInfo.CurrentCulture.ToString()), out temp))
-					{
-						episodes.Add(temp);
-					}
-				}
+				episodes.AddRange(from object item in cc where int.TryParse(item.ToString(), NumberStyles.Number, new CultureInfo(CultureInfo.CurrentCulture.ToString()), out temp) select temp);
 			}
 
 			return episodes;
@@ -709,5 +683,34 @@ namespace SeriesIDParserCore
 			return isSeries;
 		}
 
+
+
+		/// <summary>
+		/// Gets all series and movie files in a directory
+		/// </summary>
+		/// <param name="path"></param>
+		/// <param name="parserSettings"></param>
+		/// <param name="searchOption"></param>
+		/// <returns></returns>
+		internal static IEnumerable<string> GetSeriesAndMovieFiles(string path, ParserSettings parserSettings = null, SearchOption searchOption = SearchOption.AllDirectories)
+		{
+			List<string> files = new List<string>();
+
+			if (parserSettings == null)
+			{
+				parserSettings = new ParserSettings(true);
+			}
+
+			if (path == null)
+			{
+				return files;
+			}
+
+			files = Directory.GetFiles(path, "*.*", searchOption).Select(d => d)
+				.Where(f => parserSettings.FileExtensions.Select(d => d.ToLower())
+			   .Contains(Path.GetExtension(f).ToLower())).ToList();
+
+			return files;
+		}
 	}
 }
