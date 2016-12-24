@@ -5,9 +5,12 @@
 - Added unit tests for Helper.GetResolutionString()
 - Core-Uproject updated to match native .Net functionality
 - Restructorized Projects
+- Changelog is now part of the solution
+- Moved some unit test files to the repo
 
 ###Fix###
  - Wrong default unknown string in ParserSettings
+ - Exception on not existing path in extensions
 
 
 ---

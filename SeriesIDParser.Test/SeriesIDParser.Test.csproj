@@ -52,15 +52,15 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Constants.cs" />
-    <Compile Include="ExtensionTests.cs" />
-    <Compile Include="FullPathTests.cs" />
-    <Compile Include="FullTests.cs" />
-    <Compile Include="GetFileExtensionTests.cs" />
-    <Compile Include="GetResolutionStringTests.cs" />
-    <Compile Include="GetSpacingCharTests.cs" />
-    <Compile Include="GetYearTests.cs" />
-    <Compile Include="ReplaceTokensTests.cs" />
-    <Compile Include="SerializationTests.cs" />
+    <Compile Include="Tests\ExtensionTests.cs" />
+    <Compile Include="Tests\FullPathTests.cs" />
+    <Compile Include="Tests\FullTests.cs" />
+    <Compile Include="Tests\GetFileExtensionTests.cs" />
+    <Compile Include="Tests\GetResolutionStringTests.cs" />
+    <Compile Include="Tests\GetSpacingCharTests.cs" />
+    <Compile Include="Tests\GetYearTests.cs" />
+    <Compile Include="Tests\ReplaceTokensTests.cs" />
+    <Compile Include="Tests\SerializationTests.cs" />
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

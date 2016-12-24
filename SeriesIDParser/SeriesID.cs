@@ -119,7 +119,7 @@ namespace SeriesIDParser
 		{
 			List<ParserResult> results = new List<ParserResult>();
 
-			if (string.IsNullOrEmpty(path))
+			if (string.IsNullOrEmpty(path) || !Directory.Exists(path))
 			{
 				return results;
 			}

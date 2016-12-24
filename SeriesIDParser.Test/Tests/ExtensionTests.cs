@@ -15,6 +15,8 @@ namespace SeriesIDParser.Test
 	[TestClass]
 	public class ExtensionTests
 	{
+		// ### Single File - String
+		// ##################################################
 		[TestMethod]
 		public void ParseSeriesIDStringDefault()
 		{
@@ -48,6 +50,8 @@ namespace SeriesIDParser.Test
 		}
 
 
+		// ### Single File - FileInfo
+		// ##################################################
 		[TestMethod]
 		public void ParseSeriesIDFileInfoDefault()
 		{
@@ -82,11 +86,48 @@ namespace SeriesIDParser.Test
 		}
 
 
+		// ### Multi - String
+		// ##################################################
+		[TestMethod]
+		public void ParseSeriesIDPathStringDefault()
+		{
+			ParserSettings parserSettings = new ParserSettings(true);
+			string directoryInfo = Constants.TestDataDirectoryCleanRoot;
+			IEnumerable<ParserResult> parserResults = directoryInfo.ParseSeriesIDPath();
+			Assert.IsTrue(parserResults.Count() == 2);
+			Assert.IsTrue(parserResults.LastOrDefault(x => x.IsSeries).Season == 2);
+			Assert.IsTrue(parserResults.LastOrDefault(x => !x.IsSeries).Title == "Der.Regenmacher");
+		}
+
+
+		[TestMethod]
+		public void ParseSeriesIDPathNullString()
+		{
+			ParserSettings parserSettings = new ParserSettings(true);
+			string directoryInfo = null;
+			IEnumerable<ParserResult> parserResults = directoryInfo.ParseSeriesIDPath(parserSettings);
+			Assert.IsTrue(!parserResults.Any());
+		}
+
+
+		[TestMethod]
+		public void ParseSeriesIDPathNullSettings()
+		{
+			string directoryInfo = Constants.TestDataDirectoryCleanRoot;
+			IEnumerable<ParserResult> parserResults = directoryInfo.ParseSeriesIDPath(null);
+			Assert.IsTrue(parserResults.Count() == 2);
+			Assert.IsTrue(parserResults.LastOrDefault(x => x.IsSeries).Season == 2);
+			Assert.IsTrue(parserResults.LastOrDefault(x => !x.IsSeries).Title == "Der.Regenmacher");
+		}
+
+
+		// ### Multi - DirectoryInfo
+		// ##################################################
 		[TestMethod]
 		public void ParseSeriesIDPathDirectoryInfoDefault()
 		{
 			ParserSettings parserSettings = new ParserSettings(true);
-			DirectoryInfo directoryInfo = new DirectoryInfo(Constants.Path);
+			DirectoryInfo directoryInfo = new DirectoryInfo(Constants.TestDataDirectoryCleanRoot);
 			IEnumerable<ParserResult> parserResults = directoryInfo.ParseSeriesIDPath();
 			Assert.IsTrue(parserResults.Count() == 2);
 			Assert.IsTrue(parserResults.LastOrDefault(x => x.IsSeries).Season == 2);
@@ -109,40 +150,7 @@ namespace SeriesIDParser.Test
 		public void ParseSeriesIDPathDirectoryInfoNullSetting()
 		{
 			ParserSettings parserSettings = new ParserSettings(true);
-			DirectoryInfo directoryInfo = new DirectoryInfo(Constants.Path);
-			IEnumerable<ParserResult> parserResults = directoryInfo.ParseSeriesIDPath(null);
-			Assert.IsTrue(parserResults.Count() == 2);
-			Assert.IsTrue(parserResults.LastOrDefault(x => x.IsSeries).Season == 2);
-			Assert.IsTrue(parserResults.LastOrDefault(x => !x.IsSeries).Title == "Der.Regenmacher");
-		}
-
-
-		[TestMethod]
-		public void ParseSeriesIDPathStringDefault()
-		{
-			ParserSettings parserSettings = new ParserSettings(true);
-			string directoryInfo = Constants.Path;
-			IEnumerable<ParserResult> parserResults = directoryInfo.ParseSeriesIDPath();
-			Assert.IsTrue(parserResults.Count() == 2);
-			Assert.IsTrue(parserResults.LastOrDefault(x => x.IsSeries).Season == 2);
-			Assert.IsTrue(parserResults.LastOrDefault(x => !x.IsSeries).Title == "Der.Regenmacher");
-		}
-
-
-		[TestMethod]
-		public void ParseSeriesIDPathNullString()
-		{
-			ParserSettings parserSettings = new ParserSettings(true);
-			string directoryInfo = null;
-			IEnumerable<ParserResult> parserResults = directoryInfo.ParseSeriesIDPath(parserSettings);
-			Assert.IsTrue(!parserResults.Any());
-		}
-
-
-		[TestMethod]
-		public void ParseSeriesIDPathNullSettings()
-		{
-			string directoryInfo = Constants.Path;
+			DirectoryInfo directoryInfo = new DirectoryInfo(Constants.TestDataDirectoryCleanRoot);
 			IEnumerable<ParserResult> parserResults = directoryInfo.ParseSeriesIDPath(null);
 			Assert.IsTrue(parserResults.Count() == 2);
 			Assert.IsTrue(parserResults.LastOrDefault(x => x.IsSeries).Season == 2);

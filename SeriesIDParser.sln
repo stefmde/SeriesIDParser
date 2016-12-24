@@ -17,6 +17,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Net Core", ".Net Core", "{
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SeriesIDParserCore.Console.Demo", "SeriesIDParserCore.Console.Demo\SeriesIDParserCore.Console.Demo.xproj", "{D7D1B627-B679-4C4A-9353-EF23A6FD37CA}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{909F3691-1D4F-4F86-BCAB-65BC62A1D5F6}"
+	ProjectSection(SolutionItems) = preProject
+		CHANGELOG = CHANGELOG
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
