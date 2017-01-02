@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SeriesIDParser.Models;
 
-namespace SeriesIDParser.Test
+namespace SeriesIDParser.Test.Tests
 {
 	[ExcludeFromCodeCoverage]
 	[TestClass]
@@ -184,7 +182,7 @@ namespace SeriesIDParser.Test
 		[TestMethod]
 		public void FullTestCustomSpacer()
 		{
-			ParserSettings parserSettings = new ParserSettings(true) { NewSpacingChar = '-' };
+			ParserSettings parserSettings = new ParserSettings(true) { NewSpacingChar = '-', CacheMode = CacheMode.None};
 			SeriesID seriesIDParser = new SeriesID(parserSettings);
 			ParserResult parserResult = seriesIDParser.Parse("Dubai.Airport.S01E05.Teil5.GERMAN.DOKU.HDTV.720p.x264.mkv");
 

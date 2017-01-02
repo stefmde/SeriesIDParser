@@ -1,5 +1,21 @@
 # Changelog #
 
+
+
+##9.0.0 (2016-12-??)##
+###New###
+- Full object caching. Prevents parsing the same object multiple times
+- Added ParserSetting CacheEnabled; Default: True
+- Added ParserSetting CacheItemCountLimit; Default: 10.000
+
+###Fix###
+ - Wrong default unknown string in ParserSettings
+ - Exception on not existing path in extensions
+
+
+ ---
+
+
 ##8.2.0 (2016-12-24)##
 ###New###
 - Added unit tests for Helper.GetResolutionString()

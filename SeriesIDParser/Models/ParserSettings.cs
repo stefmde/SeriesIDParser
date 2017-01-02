@@ -378,6 +378,25 @@ namespace SeriesIDParser.Models
 		#endregion RemoveAndReplace
 
 
+		// ### Cache
+		// ############################################################
+
+		#region Cache
+
+		/// <summary>
+		/// Enables the internal object cache. This gives a speed up on multiple access of the same object but a little slow down on single access. 
+		/// See Enum doc for more info. Default: CacheMode.Advanced
+		/// </summary>
+		public CacheMode CacheMode { get; set; } = CacheMode.Advanced;
+
+		/// <summary>
+		/// Caps the object count stored in the cache to reduce the RAM impact. Default: 10.000
+		/// </summary>
+		public int CacheItemCountLimit { get; set; } = 10000;
+
+		#endregion Cache
+
+
 		// ### De/Serialization
 		// ############################################################
 

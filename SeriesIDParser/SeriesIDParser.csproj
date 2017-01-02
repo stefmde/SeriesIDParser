@@ -49,10 +49,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Caching\MediaDataCache.cs" />
     <Compile Include="Extensions\InternalExtensions.cs" />
     <Compile Include="Extensions\ParserExtensions.cs" />
     <Compile Include="Extensions\ParserResultExtensions.cs" />
+    <Compile Include="Models\CacheDictionary.cs" />
     <Compile Include="Models\Enums.cs" />
+    <Compile Include="Models\MediaData.cs" />
     <Compile Include="Models\ParserResult.cs" />
     <Compile Include="Models\ParserSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

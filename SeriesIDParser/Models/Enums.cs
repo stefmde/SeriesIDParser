@@ -64,9 +64,39 @@ namespace SeriesIDParser.Models
 	/// </summary>
 	public enum ResolutionOutputBehavior
 	{
+		/// <summary>
+		/// Value is not set or unknown. May cause an exception
+		/// </summary>
+		Unknown,
 		AllFoundResolutions,
 		HighestResolution,
 		LowestResolution
+	}
+
+	/// <summary>
+	/// The properties for the ResolutionOutputBehavior
+	/// </summary>
+	public enum CacheMode
+	{
+		/// <summary>
+		/// Value is not set or unknown. May cause an exception
+		/// </summary>
+		Unknown,
+
+		/// <summary>
+		/// Cache is running, used and is looking for exact names. Slower but way more exact. Default
+		/// </summary>
+		Advanced,
+
+		/// <summary>
+		/// Cache is running, used and but it is looking for lower and invariant names. Faster but less exact. May cause not 1:1 matching OriginalString's
+		/// </summary>
+		Simple,
+
+		/// <summary>
+		/// Cache is disabled. Every string is fully parsed
+		/// </summary>
+		None
 	}
 	#endregion
 }
