@@ -78,6 +78,11 @@ namespace SeriesIDParser
 				_parserSettings = settings;
 			}
 
+			if (_parserSettings.CacheMode == CacheMode.Unknown)
+			{
+				throw new ArgumentException( "ParserSettings.CacheMode.Unknown is not a valid argument" );
+			}
+
 			if (_parserSettings.CacheMode == CacheMode.Advanced || _parserSettings.CacheMode == CacheMode.Simple)
 			{
 				_cacheEnabled = true;
@@ -307,17 +312,6 @@ namespace SeriesIDParser
 			_episodes = HelperWorker.GetEpisodeIDs( _parserSettings, fullTitle );
 			return warningOrErrorOccurred;
 		}
-
-		///// <summary>
-		///// ctor wrapper for ParserResult
-		///// </summary>
-		///// <returns></returns>
-		//private ParserResult GenerateResult()
-		//{
-		//	return new ParserResult(_originalString, _parserSettings, _audioCodec, _videoCodec, _processingDuration,
-		//		_resolutions, _season, _episodes, _year, _detectedOldSpacingChar, _exception, _isSeries, _removedTokens,
-		//		_state, _fileExtension, _title, _episodeTitle, _releaseGroup);
-		//}
 
 		/// <summary>
 		///     ctor wrapper for ParserResult

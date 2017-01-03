@@ -50,6 +50,8 @@ namespace SeriesIDParser.Test.Tests
 			expectedParserSettings.NewSpacingChar = 'x';
 			expectedParserSettings.PossibleSpacingChars.Remove( '.' );
 			expectedParserSettings.ThrowExceptionInsteadOfErrorFlag = true;
+			expectedParserSettings.CacheItemCountLimit = 15;
+			expectedParserSettings.CacheMode = CacheMode.Simple;
 
 			// Serialization
 			string ps1String = ParserSettings.SerializeToXML( expectedParserSettings );
@@ -82,6 +84,8 @@ namespace SeriesIDParser.Test.Tests
 										"ReplaceRegexWithoutListTokens " );
 			Assert.AreEqual( expectedParserSettings.ResolutionStringOutput, actualParserSettings.ResolutionStringOutput, "ResolutionStringOutput " );
 			Assert.AreEqual( expectedParserSettings.ResolutionStringUnknown, actualParserSettings.ResolutionStringUnknown, "ResolutionStringUnknown " );
+			Assert.AreEqual( expectedParserSettings.CacheItemCountLimit, actualParserSettings.CacheItemCountLimit, "CacheItemCountLimit " );
+			Assert.AreEqual( expectedParserSettings.CacheMode, actualParserSettings.CacheMode, "CacheMode " );
 		}
 	}
 }

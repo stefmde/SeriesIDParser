@@ -2,14 +2,19 @@
 
 
 
-##9.0.0 (2016-12-??)##
+##9.0.0 (2017-01-03)##
 ###New###
-- Full object caching. Prevents parsing the same object multiple times
+- Added full object caching. Prevents parsing the same object multiple times
 - Added ParserSetting CacheMode; Default: Advanced
 - Added ParserSetting CacheItemCountLimit; Default: 10.000
 - Added way more code comments
 - Added some 'Unknown' values in enums
 - Added some benchmark unit tests
+- Added unit tests for caching
+- Added new ParserSettings to Serilization unit tests
+- Added exception on wrong caching mode
+- Removed old legacy UnitTest1.cs file
+- Removed some useless comments
 
 ###Fix###
  - Wrong default unknown string in ParserSettings
@@ -109,6 +114,7 @@
 ###Fix###
  - Code organization
 
+
 ---
 
 
@@ -139,6 +145,7 @@
 - Issue#007 - Add Raw and/or Regex replace
 - Some smaller fixes
 
+
 ---
 
 
@@ -148,6 +155,7 @@
 
 ###Fix###
 - Fixed an error that could cause wrong resolutions in wrong strings
+
 
 ---
 
@@ -160,6 +168,7 @@
 ###Fix###
 - -
 
+
 ---
 
 
@@ -170,6 +179,7 @@
 
 ###Fix###
 - -
+
 
 ---
 
@@ -188,6 +198,7 @@
 ###Fix###
 - No more need for a static object
 
+
 ---
 
 
@@ -200,6 +211,7 @@
 ###Fix###
 - -
 
+
 ---
 
 
@@ -211,6 +223,7 @@
 
 ###Fix###
 - Tokens can't be duplicated any more
+
 
 ---
 
