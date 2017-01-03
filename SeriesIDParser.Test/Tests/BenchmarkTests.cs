@@ -2,7 +2,7 @@
 // MIT License
 // 
 // Copyright(c) 2016 - 2017
-// Stefan Müller, Stefm, https://gitlab.com/u/Stefm, https://github.com/Stefmde
+// Stefan Müller, Stefm, https://Stefm.de, https://github.com/stefmde/SeriesIDParser
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -30,6 +30,9 @@ using SeriesIDParser.Models;
 
 namespace SeriesIDParser.Test.Tests
 {
+	/// <summary>
+	///     Runs some benchmarktests against the library. Results in TestExplorer -> Summary/Details
+	/// </summary>
 	[ExcludeFromCodeCoverage]
 	[TestClass]
 	public class BenchmarkTests
@@ -38,6 +41,9 @@ namespace SeriesIDParser.Test.Tests
 
 		// ### Series
 		// ##################################################
+		/// <summary>
+		///     Benchmarks a series string without cache
+		/// </summary>
 		[TestMethod]
 		public void BenchmarkSeriesNoCache()
 		{
@@ -60,6 +66,9 @@ namespace SeriesIDParser.Test.Tests
 								singleDuration.Ticks + "ticks" );
 		}
 
+		/// <summary>
+		///     Benchmarks a series string with cache
+		/// </summary>
 		[TestMethod]
 		public void BenchmarkSeriesCache()
 		{
@@ -81,6 +90,9 @@ namespace SeriesIDParser.Test.Tests
 
 		// ### Movie
 		// ##################################################
+		/// <summary>
+		///     Benchmarks a movie string without cache
+		/// </summary>
 		[TestMethod]
 		public void BenchmarkMovieNoCache()
 		{
@@ -103,6 +115,9 @@ namespace SeriesIDParser.Test.Tests
 								singleDuration.Ticks + "ticks" );
 		}
 
+		/// <summary>
+		///     Benchmarks a movie string with cache
+		/// </summary>
 		[TestMethod]
 		public void BenchmarkMovieCache()
 		{

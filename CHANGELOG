@@ -5,8 +5,11 @@
 ##9.0.0 (2016-12-??)##
 ###New###
 - Full object caching. Prevents parsing the same object multiple times
-- Added ParserSetting CacheEnabled; Default: True
+- Added ParserSetting CacheMode; Default: Advanced
 - Added ParserSetting CacheItemCountLimit; Default: 10.000
+- Added way more code comments
+- Added some 'Unknown' values in enums
+- Added some benchmark unit tests
 
 ###Fix###
  - Wrong default unknown string in ParserSettings

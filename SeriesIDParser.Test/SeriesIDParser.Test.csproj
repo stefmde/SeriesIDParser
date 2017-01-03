@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="Constants.cs" />
     <Compile Include="Tests\BenchmarkTests.cs" />
+    <Compile Include="Tests\CacheTests.cs" />
     <Compile Include="Tests\ExtensionTests.cs" />
     <Compile Include="Tests\FullPathTests.cs" />
     <Compile Include="Tests\FullTests.cs" />
@@ -62,7 +63,6 @@
     <Compile Include="Tests\GetYearTests.cs" />
     <Compile Include="Tests\ReplaceTokensTests.cs" />
     <Compile Include="Tests\SerializationTests.cs" />
-    <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
