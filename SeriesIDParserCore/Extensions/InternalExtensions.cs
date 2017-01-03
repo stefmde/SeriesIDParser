@@ -23,7 +23,11 @@
 // SOFTWARE.
 
 
+using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Text;
+using SeriesIDParserCore.Models;
 
 [assembly: InternalsVisibleTo( "SeriesIDParser.Test" )]
 
@@ -31,12 +35,22 @@ namespace SeriesIDParserCore.Extensions
 {
 	internal static class InternalExtensions
 	{
-		/// <summary>
-		/// Check to see if a flags enumeration has a specific flag set.
-		/// </summary>
-		/// <param name="variable">Flags enumeration to check</param>
-		/// <param name="value">Flag to check for</param>
-		/// <returns></returns>
+		internal static ParserResult ToParserResult( this MediaData mediaData, ParserSettings parserSettings )
+		{
+			ParserResult result = new ParserResult( mediaData.OriginalString, parserSettings, mediaData.AudioCodec, mediaData.VideoCodec,
+													mediaData.ProcessingDuration, mediaData.Resolutions, mediaData.Season, mediaData.Episodes, mediaData.Year,
+													mediaData.DetectedOldSpacingChar, mediaData.Exception, mediaData.IsSeries, mediaData.RemovedTokens, mediaData.State,
+													mediaData.FileExtension, mediaData.Title, mediaData.EpisodeTitle, mediaData.ReleaseGroup );
+
+			return result;
+		}
+
+		///// <summary>
+		///// Check to see if a flags enumeration has a specific flag set.
+		///// </summary>
+		///// <param name="variable">Flags enumeration to check</param>
+		///// <param name="value">Flag to check for</param>
+		///// <returns></returns>
 		//internal static bool HasFlag(this Enum variable, Enum value)
 		//{
 		//	if (variable == null)

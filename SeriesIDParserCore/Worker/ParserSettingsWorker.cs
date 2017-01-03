@@ -34,7 +34,7 @@ using SeriesIDParserCore.Models;
 
 namespace SeriesIDParserCore.Worker
 {
-	public class ParserSettingsWorker
+	internal static class ParserSettingsWorker
 	{
 		// ### De/Serialization
 		// ############################################################

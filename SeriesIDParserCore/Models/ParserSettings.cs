@@ -25,8 +25,8 @@
 
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using SeriesIDParserCore.Worker;
 using Newtonsoft.Json;
+using SeriesIDParserCore.Worker;
 
 [assembly: InternalsVisibleTo( "SeriesIDParser.Test" )]
 
@@ -42,6 +42,7 @@ namespace SeriesIDParserCore.Models
 		/// <summary>
 		///     Prefill ctor
 		/// </summary>
+		/// <param name="preFillLists">Set to true if the lists should be prefilled with the default values</param>
 		public ParserSettings( bool preFillLists = false )
 		{
 			if (!preFillLists)
@@ -161,8 +162,8 @@ namespace SeriesIDParserCore.Models
 
 		#region Parsing
 		/// <summary>
-		///     Defines the regex-string that parses the season and episode id from the input string. Default: 'S(?
-		///     <season>\d{1,4})(E(?<episode>\d{1,4}))+'
+		///     Defines the regex-string that parses the season and episode id from the input string.
+		///     Default: 'S(?&lt;season&gt;\d{1,4})(E(?&lt;episode&gt;\d{1,4}))+'
 		/// </summary>
 		public string SeasonAndEpisodeParseRegex { get; set; } = @"S(?<season>\d{1,4})(E(?<episode>\d{1,4}))+";
 
@@ -337,6 +338,23 @@ namespace SeriesIDParserCore.Models
 		/// </summary>
 		public List<KeyValuePair<string, string>> ReplaceRegexWithoutListTokens { get; set; } = new List<KeyValuePair<string, string>>();
 		#endregion RemoveAndReplace
+
+		// ### Cache
+		// ############################################################
+
+		#region Cache
+		/// <summary>
+		///     Enables the internal object cache. This gives a speed up on multiple access of the same object but a little slow
+		///     down on single access.
+		///     See Enum doc for more info. Default: CacheMode.Advanced
+		/// </summary>
+		public CacheMode CacheMode { get; set; } = CacheMode.Advanced;
+
+		/// <summary>
+		///     Caps the object count stored in the cache to reduce the RAM impact. Default: 10.000
+		/// </summary>
+		public int CacheItemCountLimit { get; set; } = 10000;
+		#endregion Cache
 
 		// ### De/Serialization
 		// ############################################################

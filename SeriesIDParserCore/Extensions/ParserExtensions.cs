@@ -23,24 +23,41 @@
 // SOFTWARE.
 
 
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Text;
 using SeriesIDParserCore.Models;
 
 [assembly: InternalsVisibleTo( "SeriesIDParser.Test" )]
 
 namespace SeriesIDParserCore.Extensions
 {
+	/// <summary>
+	///     Provides some extensions to use the SeriesIDParser
+	/// </summary>
 	public static class ParserExtensions
 	{
 		#region String
+		/// <summary>
+		///     SeriesIDParser extension to parse a string
+		/// </summary>
+		/// <param name="input"></param>
+		/// <returns></returns>
 		public static ParserResult ParseSeriesID( this string input )
 		{
 			SeriesID sid = new SeriesID();
 			return sid.Parse( input );
 		}
 
+		/// <summary>
+		///     SeriesIDParser extension to parse a string with custom ParserSettings
+		/// </summary>
+		/// <param name="input"></param>
+		/// <param name="settings"></param>
+		/// <returns></returns>
 		public static ParserResult ParseSeriesID( this string input, ParserSettings settings )
 		{
 			SeriesID sid = new SeriesID( settings );
@@ -51,12 +68,23 @@ namespace SeriesIDParserCore.Extensions
 		// ####################
 
 		#region FileInfo
+		/// <summary>
+		///     SeriesIDParser extension to parse a FileInfo
+		/// </summary>
+		/// <param name="input"></param>
+		/// <returns></returns>
 		public static ParserResult ParseSeriesID( this FileInfo input )
 		{
 			SeriesID sid = new SeriesID();
 			return sid.Parse( input );
 		}
 
+		/// <summary>
+		///     SeriesIDParser extension to parse a FileInfo with custom ParserSettings
+		/// </summary>
+		/// <param name="input"></param>
+		/// <param name="settings"></param>
+		/// <returns></returns>
 		public static ParserResult ParseSeriesID( this FileInfo input, ParserSettings settings )
 		{
 			SeriesID sid = new SeriesID( settings );
@@ -67,12 +95,24 @@ namespace SeriesIDParserCore.Extensions
 		// ####################
 
 		#region DirectoryInfo
+		/// <summary>
+		///     SeriesIDParser extension to parse an entire directory by DirectoryInfo
+		/// </summary>
+		/// <param name="path"></param>
+		/// <returns></returns>
 		public static IEnumerable<ParserResult> ParseSeriesIDPath( this DirectoryInfo path )
 		{
 			SeriesID sid = new SeriesID();
 			return sid.ParsePath( path );
 		}
 
+		/// <summary>
+		///     SeriesIDParser extension to parse an entire directory by DirectoryInfo with custom ParserSettings and SearchOption
+		/// </summary>
+		/// <param name="path"></param>
+		/// <param name="settings"></param>
+		/// <param name="searchOption"></param>
+		/// <returns></returns>
 		public static IEnumerable<ParserResult> ParseSeriesIDPath( this DirectoryInfo path, ParserSettings settings = null,
 																	SearchOption searchOption = SearchOption.AllDirectories )
 		{
@@ -84,12 +124,24 @@ namespace SeriesIDParserCore.Extensions
 		// ####################
 
 		#region Path
+		/// <summary>
+		///     SeriesIDParser extension to parse an entire directory by string path
+		/// </summary>
+		/// <param name="path"></param>
+		/// <returns></returns>
 		public static IEnumerable<ParserResult> ParseSeriesIDPath( this string path )
 		{
 			SeriesID sid = new SeriesID();
 			return sid.ParsePath( path );
 		}
 
+		/// <summary>
+		///     SeriesIDParser extension to parse an entire directory by string path with custom ParserSettings and SearchOption
+		/// </summary>
+		/// <param name="path"></param>
+		/// <param name="settings"></param>
+		/// <param name="searchOption"></param>
+		/// <returns></returns>
 		public static IEnumerable<ParserResult> ParseSeriesIDPath( this string path, ParserSettings settings = null,
 																	SearchOption searchOption = SearchOption.AllDirectories )
 		{

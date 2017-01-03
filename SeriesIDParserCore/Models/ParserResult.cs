@@ -35,6 +35,9 @@ using SeriesIDParserCore.Worker;
 
 namespace SeriesIDParserCore.Models
 {
+	/// <summary>
+	///     This object is part of the SeriesIDParser and contains the result for a single parsed string
+	/// </summary>
 	public class ParserResult
 	{
 		#region Fields

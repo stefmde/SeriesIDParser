@@ -23,15 +23,21 @@
 // SOFTWARE.
 
 
+using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Text;
+using Newtonsoft.Json;
 using SeriesIDParserCore.Models;
 using SeriesIDParserCore.Worker;
-using Newtonsoft.Json;
 
 [assembly: InternalsVisibleTo( "SeriesIDParser.Test" )]
 
 namespace SeriesIDParserCore.Extensions
 {
+	/// <summary>
+	///     Provides some extensions for the ParserSettings from the SeriesIDParser
+	/// </summary>
 	public static class ParserResultExtensions
 	{
 		#region DeSerialisazion

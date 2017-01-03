@@ -53,7 +53,7 @@ namespace SeriesIDParser.Worker
 			{
 				x.Serialize( ms, parserSettings );
 				ms.Position = 0;
-				using (StreamReader sr = new StreamReader( ms, Encoding.Default ))
+				using (StreamReader sr = new StreamReader( ms, Encoding.Unicode ))
 				{
 					data = sr.ReadToEnd();
 				}
@@ -86,7 +86,7 @@ namespace SeriesIDParser.Worker
 		internal static ParserSettings DeSerializeFromXML( string xml )
 		{
 			XmlSerializer x = new XmlSerializer( typeof(ParserSettings) );
-			byte[] xmlBytes = Encoding.Default.GetBytes( xml );
+			byte[] xmlBytes = Encoding.Unicode.GetBytes( xml );
 			using (MemoryStream ms = new MemoryStream( xmlBytes ))
 			{
 				return (ParserSettings) x.Deserialize( ms );

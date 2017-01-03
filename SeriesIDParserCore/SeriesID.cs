@@ -27,7 +27,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
+using SeriesIDParserCore.Caching;
+using SeriesIDParserCore.Extensions;
 using SeriesIDParserCore.Models;
 using SeriesIDParserCore.Worker;
 
@@ -58,6 +61,8 @@ namespace SeriesIDParserCore
 		private int _season;
 		private TimeSpan _processingDuration;
 		private Exception _exception;
+		private FileInfo _fileInfo;
+		private readonly bool _cacheEnabled;
 		#endregion Fields
 
 		/// <summary>
@@ -69,6 +74,21 @@ namespace SeriesIDParserCore
 			if (settings != null)
 			{
 				_parserSettings = settings;
+			}
+
+			if (_parserSettings.CacheMode == CacheMode.Unknown)
+			{
+				throw new ArgumentException( "ParserSettings.CacheMode.Unknown is not a valid argument" );
+			}
+
+			if (_parserSettings.CacheMode == CacheMode.Advanced || _parserSettings.CacheMode == CacheMode.Simple)
+			{
+				_cacheEnabled = true;
+			}
+
+			if (_cacheEnabled && !MediaDataCache.InstanceExists)
+			{
+				MediaDataCache.Create( _parserSettings );
 			}
 		}
 
@@ -84,7 +104,23 @@ namespace SeriesIDParserCore
 		/// <returns>The SeriesIDResult object that represents the series or movie string</returns>
 		public ParserResult Parse( string input )
 		{
-			return CoreParser( input );
+			if (_cacheEnabled)
+			{
+				ParserResult parserResult;
+				if (MediaDataCache.Instance.TryGetAsParserResult( input, out parserResult ))
+				{
+					return parserResult;
+				}
+			}
+
+			MediaData mediaData = CoreParser( input );
+
+			if (_cacheEnabled)
+			{
+				MediaDataCache.Instance.Add( input, mediaData );
+			}
+
+			return mediaData.ToParserResult( _parserSettings );
 		}
 
 		/// <summary>
@@ -94,9 +130,8 @@ namespace SeriesIDParserCore
 		/// <returns>The SeriesIDResult object that represents the series or movie string</returns>
 		public ParserResult Parse( FileInfo input )
 		{
-			ParserResult parserResult = CoreParser( input?.Name ?? String.Empty );
-			parserResult.FileInfo = input;
-			return parserResult;
+			_fileInfo = input;
+			return CoreParser( input?.Name ?? String.Empty ).ToParserResult( _parserSettings );
 		}
 
 		/// <summary>
@@ -109,7 +144,7 @@ namespace SeriesIDParserCore
 		{
 			List<ParserResult> results = new List<ParserResult>();
 
-			if (string.IsNullOrEmpty( path ))
+			if (string.IsNullOrEmpty( path ) || !Directory.Exists( path ))
 			{
 				return results;
 			}
@@ -118,7 +153,19 @@ namespace SeriesIDParserCore
 
 			foreach (string file in files)
 			{
-				results.Add( CoreParser( Path.GetFileName( file ) ) );
+				string fileName = Path.GetFileName( file );
+
+				if (_cacheEnabled)
+				{
+					MediaData mediaData;
+					if (MediaDataCache.Instance.TryGet( fileName, out mediaData ))
+					{
+						results.Add( mediaData.ToParserResult( _parserSettings ) );
+						continue;
+					}
+				}
+
+				results.Add( CoreParser( fileName ).ToParserResult( _parserSettings ) );
 			}
 
 			return results;
@@ -139,11 +186,11 @@ namespace SeriesIDParserCore
 		// ############################################################
 		// ### Core Function
 		// ############################################################
-		private ParserResult CoreParser( string input )
+		private MediaData CoreParser( string input )
 		{
 			ResetObject();
-			_originalString = input.Trim();
-			string fullTitle = _originalString;
+			_originalString = input;
+			string fullTitle = _originalString.Trim();
 			bool warningOrErrorOccurred = false;
 			_detectedOldSpacingChar = HelperWorker.GetSpacingChar( input, _parserSettings );
 
@@ -154,7 +201,7 @@ namespace SeriesIDParserCore
 					// ERROR
 					_state |= State.ErrEmptyOrToShortArgument;
 					_resolutions = HelperWorker.MaintainUnknownResolution( _resolutions );
-					return GenerateResult();
+					return GenerateMediaData();
 				}
 
 				// Todo remove fileextension instantly
@@ -203,7 +250,7 @@ namespace SeriesIDParserCore
 				_resolutions = HelperWorker.MaintainUnknownResolution( _resolutions );
 				_processingDuration = DateTime.Now - _parseStartTime;
 
-				return GenerateResult();
+				return GenerateMediaData();
 			}
 			catch (Exception ex)
 			{
@@ -217,7 +264,7 @@ namespace SeriesIDParserCore
 
 				// ERROR
 				_state |= State.ErrUnknownError;
-				return GenerateResult();
+				return GenerateMediaData();
 			}
 		}
 
@@ -268,10 +315,29 @@ namespace SeriesIDParserCore
 		///     ctor wrapper for ParserResult
 		/// </summary>
 		/// <returns></returns>
-		private ParserResult GenerateResult()
+		private MediaData GenerateMediaData()
 		{
-			return new ParserResult( _originalString, _parserSettings, _audioCodec, _videoCodec, _processingDuration, _resolutions, _season, _episodes, _year,
-									_detectedOldSpacingChar, _exception, _isSeries, _removedTokens, _state, _fileExtension, _title, _episodeTitle, _releaseGroup );
+			return new MediaData()
+					{
+						OriginalString = _originalString,
+						AudioCodec = _audioCodec,
+						VideoCodec = _videoCodec,
+						ProcessingDuration = _processingDuration,
+						Resolutions = _resolutions,
+						Season = _season,
+						Episodes = _episodes,
+						Year = _year,
+						DetectedOldSpacingChar = _detectedOldSpacingChar,
+						Exception = _exception,
+						IsSeries = _isSeries,
+						RemovedTokens = _removedTokens,
+						State = _state,
+						FileExtension = _fileExtension,
+						Title = _title,
+						EpisodeTitle = _episodeTitle,
+						ReleaseGroup = _releaseGroup,
+						FileInfo = _fileInfo
+					};
 		}
 
 		/// <summary>
