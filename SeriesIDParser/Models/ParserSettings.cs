@@ -52,10 +52,10 @@ namespace SeriesIDParser.Models
 
 			// ### Resolution Detection
 			DetectUltraHD8kTokens = new List<string>() {"8k", "4320k"};
-			DetectUltraHDTokens = new List<string>() {"NetflixUHD", "UHD", "2160p"};
+			DetectUltraHDTokens = new List<string>() {"NetflixUHD", "UHD", "2160p", "Ultra.HD", "UltraHD" };
 			DetectFullHDTokens = new List<string>() {"FullHD", "1080p", "1080i"};
 			DetectHDTokens = new List<string>() {"HDTV", "720p", "HD"};
-			DetectSDTokens = new List<string>() {"DVDRIP", "DVD", "SD"};
+			DetectSDTokens = new List<string>() {"DVDR", "DVDRIP", "DVD", "SD"};
 
 			// ### Fileextensions
 			FileExtensions = new List<string>()
@@ -113,11 +113,19 @@ namespace SeriesIDParser.Models
 									"DOKU",
 									"EXTENDED",
 									"UNRATED",
+									"UNCUT",
 									"AmazonHD",
 									"German",
 									"Remastered",
 									"HDRip",
-									"Remux"
+									"Remux",
+									"10bit",
+									"PAL",
+									"7.1",
+									"5.1",
+									"BT2020",
+									"BT.2020",
+									"HDR"
 								};
 
 			//_removeAndListTokensOnLanguageParserIsDisabled = new List<string>() { "GERMAN" };
@@ -134,14 +142,14 @@ namespace SeriesIDParser.Models
 										"Web-DL",
 										"DL",
 										"HDDVDRip",
-										"AC3D",
-										"THEATRICAL"
+										"THEATRICAL",
+										"RETAIL"
 									};
 
 			// ### Parsing
-			VideoCodecs = new List<string>() {"x264", "h264", "x265", "AVC", "XviD", "FFmpeg", "VP7", "VP8", "VP9", "MPEG-4", "MPEG-2", "MPEG4", "MPEG2"};
+			VideoCodecs = new List<string>() {"x264", "h264", "x265", "AVC", "XviD", "FFmpeg", "VP7", "VP8", "VP9", "MPEG-4", "MPEG-2", "MPEG4", "MPEG2", "HEVC" };
 
-			AudioCodecs = new List<string>() {"DTSHD", "DTS", "AAC", "MP3", "MPEG3", "MPEG-3"};
+			AudioCodecs = new List<string>() {"DTSHD", "DTS", "AAC", "MP3", "MPEG3", "MPEG-3", "TrueHD.Atmos", "TrueHD", "AC3D", "AC3"};
 
 			//_languages = new List<string>() { "English", "Chinese", "Hindi", "Spanish",
 			//"French", "Arabic", "Russian", "Portuguese",
