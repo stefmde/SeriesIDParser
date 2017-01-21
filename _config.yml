@@ -1,0 +1,8 @@
+title: SeriesIDParser
+description: Parses series or movie strings to a object to handle it with applications.
+google_analytics: 
+show_downloads: true
+theme: jekyll-theme-midnight
+
+gems:
+  - jekyll-mentions
