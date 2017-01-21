@@ -1,0 +1,42 @@
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 128 128">
+  <defs>
+    <linearGradient id="linear-gradient" x1="41.97" y1="-787.43" x2="136.76" y2="-686.59" gradientTransform="matrix(1, 0, 0, -1, 0, -648.86)" gradientUnits="userSpaceOnUse">
+      <stop offset="0.02" stop-color="#e343e6"/>
+      <stop offset="0.4" stop-color="#c40b55"/>
+      <stop offset="0.47" stop-color="#c40b55"/>
+      <stop offset="0.65" stop-color="#ec841b"/>
+      <stop offset="0.95" stop-color="#ffbd00"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-2" x1="32.4" y1="-782.86" x2="127.18" y2="-682.03" gradientTransform="matrix(1, 0, 0, -1, 0, -648.86)" gradientUnits="userSpaceOnUse">
+      <stop offset="0.02" stop-color="#e343e6"/>
+      <stop offset="0.4" stop-color="#c40b55"/>
+      <stop offset="0.47" stop-color="#c40b55"/>
+      <stop offset="0.7" stop-color="#ec841b"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-3" x1="3.31" y1="-746.5" x2="89.24" y2="-665.67" gradientTransform="matrix(1, 0, 0, -1, 0, -648.86)" gradientUnits="userSpaceOnUse">
+      <stop offset="0.02" stop-color="#e343e6"/>
+      <stop offset="0.66" stop-color="#c40b55"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-4" x1="91.28" y1="-627.71" x2="89.38" y2="-692.79" gradientTransform="matrix(1, 0, 0, -1, 0, -648.86)" gradientUnits="userSpaceOnUse">
+      <stop offset="0.5" stop-color="#c40b55"/>
+      <stop offset="0.61" stop-color="#cd2648"/>
+      <stop offset="0.78" stop-color="#d84739"/>
+      <stop offset="0.87" stop-color="#dc5333"/>
+    </linearGradient>
+  </defs>
+  <title>icon_ReSharper</title>
+  <g>
+    <g>
+      <polygon points="91.2 27.8 65.8 67 106.8 128 128 42.2 91.2 27.8" fill="url(#linear-gradient)"/>
+      <polygon points="93.4 28.6 89.6 0 34.4 61.4 50.4 77.2 38 128 106.8 128 93.4 28.6" fill="url(#linear-gradient-2)"/>
+    </g>
+    <polygon points="89.6 0 21.2 0 0 86 101.6 86 89.6 0" fill="url(#linear-gradient-3)"/>
+    <polygon points="101.2 86 93.4 28.6 89.6 0 76.4 42 101.2 86" fill="url(#linear-gradient-4)"/>
+  </g>
+  <g>
+    <rect x="24" y="24.16" width="79.8" height="79.8" transform="matrix(1, 0, 0, 1, -0.16, 0.16)"/>
+    <rect x="31.8" y="89" width="30" height="5" transform="translate(-0.24 0.12) rotate(-0.15)" fill="#fff"/>
+    <path d="M31.4,34.6H46.6c4.2,0,7.4,1.2,9.6,3.4A10.43,10.43,0,0,1,59,45.6h0a10.37,10.37,0,0,1-2,6.6A12.57,12.57,0,0,1,51.8,56L60,67.8H51.4L44.6,57.6h-6V67.8H31.4V34.6Zm14.8,16a6.56,6.56,0,0,0,4.2-1.2A4.12,4.12,0,0,0,51.8,46h0a4.39,4.39,0,0,0-1.6-3.6A6.56,6.56,0,0,0,46,41.2H38.8v9.6Z" fill="#fff"/>
+    <path d="M66,60.4H62.4v-6H67l1.2-7H64v-6h5.2l1.2-7h6.2l-1.2,7h6.8l1.2-7h6.2l-1.2,7H92v6H87.4l-1.2,7h4.2v6H85.2l-1.2,7H77.8l1.2-7H72.2l-1.2,7H64.8Zm14-6,1.2-7H74.4l-1.2,7H80Z" fill="#fff"/>
+  </g>
+</svg>
