@@ -37,10 +37,11 @@ body
     margin: 6px auto;
 }
 
-.navigation .github
+.navigation .github, .navigation .owner
 {
 	float: left;
     margin-left: 0px;
+	margin-left: 6px;
 }
 
 .navigation .download
