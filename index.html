@@ -1,0 +1,512 @@
+<html>
+	<head>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/atom-one-dark.min.css">
+		<link rel="stylesheet" href="Styles.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script>
+		<script>hljs.initHighlightingOnLoad();</script>
+	</head>
+	<body>
+	
+	<div class="header">
+		<div class="navigation">
+			<li class="github"><a href="https://github.com/stefmde/SeriesIDParser">View On GitHub</a></li>
+          
+            <li class="download"><a href="https://github.com/stefmde/SeriesIDParser/zipball/gh-pages">ZIP</a></li>
+            <li class="download"><a href="https://github.com/stefmde/SeriesIDParser/tarball/gh-pages">TAR</a></li>
+            <li class="title">DOWNLOADS</li>
+        </div>
+	</div>
+	
+	
+	<div class="wrapper">	
+		<div class="contentBox">
+		
+			<img class="projectIcon" src="https://raw.githubusercontent.com/stefmde/SeriesIDParser/master/Stuff/LibraryIcon/gray/icon_gray_256px.png" alt="Project icon">
+			<h1>SeriesIDParser</h1>
+			<p>Parses series or movie strings to a object to handle it with applications.</p>
+			<hr>
+			
+			<h2>Project info</h2>
+			Project maintained by <a href="https://github.com/stefmde">stefmde</a>
+			
+			<br>
+			<h3>Sponsors and supporters</h3>
+			<a href="https://www.jetbrains.com/">
+				<img src="https://github.com/stefmde/SeriesIDParser/raw/gh-pages/Stuff/JetbrainsLogos/logo_JetBrains_3_crop.png" alt="Jetbrains">
+			</a>
+			
+			<a href="https://www.jetbrains.com/resharper/"><img src="https://github.com/stefmde/SeriesIDParser/raw/gh-pages/Stuff/JetbrainsLogos/icon_ReSharper.png" alt="ReSharper"></a>
+			
+			
+			<hr>
+			
+			<br>
+			<h2>Description</h2>
+			<p>This page should give you a short overview in how to use this project.</p>
+			<h3>What you should know before you start</h3>
+			
+			<ol>
+				<li>If you dont pass a ParserSettings object to the ctor of SeriesID it will use the default settings</li>
+				<li>You can create a ParserSettings object with empty lists with the empty ctor</li>
+				<li>You can create a ParserSettings object with default values in the lists with a true in the ctor</li>
+				<li>Before you use the ParserResult object you should check for a NULL in the Exception property and a OKSuccess in the State Property</li>
+				<li>If it is possible, properties are always String.Empty is they don’t have a value. Otherweise they are NULL. Check the property comments to see it exactly.</li>
+				<li>Some properties are only available with series and some only with movies</li>
+				<li>Computed properties are automatically cached if the are queried the first time</li>
+				<li>Properties are only filled if the are found in the input string</li>
+				<li>The ParserSettings provides methodes to serialize the object to a file or deserialize them from a file</li>
+			</ol>
+
+			
+			<br>
+			<br>
+			<h3>Result Object</h3>
+			<table>
+			  <thead>
+				<tr>
+				  <th>ParserResult.*</th>
+				  <th>Type</th>
+				  <th>Available Version</th>
+				  <th>Comment</th>
+				</tr>
+			  </thead>
+			  <tbody>
+				<tr>
+				  <td>OriginalString</td>
+				  <td>string</td>
+				  <td>3.0</td>
+				  <td>Contains the input string without modifications</td>
+				</tr>
+				<tr>
+				  <td>ParsedString</td>
+				  <td>string</td>
+				  <td>3.0</td>
+				  <td>Similar to the input string but according to guideline (ParserSettings). Can be used to rename files</td>
+				</tr>
+				<tr>
+				  <td>Title</td>
+				  <td>string</td>
+				  <td>2.0</td>
+				  <td>Contains the plain title</td>
+				</tr>
+				<tr>
+				  <td>EpisodeTitle</td>
+				  <td>string</td>
+				  <td>1.0</td>
+				  <td>Contains the episode/subtitle if available</td>
+				</tr>
+				<tr>
+				  <td>FullTitle</td>
+				  <td>string</td>
+				  <td>1.0</td>
+				  <td>Contains the title + IDString + EpisodeTitle</td>
+				</tr>
+				<tr>
+				  <td>IsSeries</td>
+				  <td>bool</td>
+				  <td>2.0</td>
+				  <td>Is <span class="keyword">True</span> if the input string is recognized as series</td>
+				</tr>
+				<tr>
+				  <td>IsMultiEpisode</td>
+				  <td>bool</td>
+				  <td>8.0</td>
+				  <td>Is <span class="keyword">True</span> if the input string contains something like that <span class="keyword">S01E01E02</span>
+			</td>
+				</tr>
+				<tr>
+				  <td>Season</td>
+				  <td>int</td>
+				  <td>1.0</td>
+				  <td>-</td>
+				</tr>
+				<tr>
+				  <td>Episodes</td>
+				  <td>int list</td>
+				  <td>6.1</td>
+				  <td>Contains the Episode ID’s if available. Could be more than one, depends on <span class="keyword">IsMultiEpisode</span>
+			</td>
+				</tr>
+				<tr>
+				  <td>IDString</td>
+				  <td>string</td>
+				  <td>1.0</td>
+				  <td>Contains the Season ID and the Episode ID’s combined as string</td>
+				</tr>
+				<tr>
+				  <td>Exception</td>
+				  <td>Exception</td>
+				  <td>1.0</td>
+				  <td>Contains the Exception if it is occoured or NULL if not</td>
+				</tr>
+				<tr>
+				  <td>Resolutions</td>
+				  <td>enum list Resolutions</td>
+				  <td>6.0</td>
+				  <td>One string can contain more than one Resolution</td>
+				</tr>
+				<tr>
+				  <td>Year</td>
+				  <td>int</td>
+				  <td>2.0</td>
+				  <td>-</td>
+				</tr>
+				<tr>
+				  <td>FileExtension</td>
+				  <td>string</td>
+				  <td>3.0</td>
+				  <td>-</td>
+				</tr>
+				<tr>
+				  <td>RemovedTokens</td>
+				  <td>string list</td>
+				  <td>3.0</td>
+				  <td>Contains the tokens who are removed from the string and are not contained in the output</td>
+				</tr>
+				<tr>
+				  <td>State</td>
+				  <td>enum State</td>
+				  <td>1.0</td>
+				  <td>The object state. Should be checked before using the result</td>
+				</tr>
+				<tr>
+				  <td>DetectedOldSpacingChar</td>
+				  <td>char</td>
+				  <td>6.0</td>
+				  <td>-</td>
+				</tr>
+				<tr>
+				  <td>ProcessingDuration</td>
+				  <td>TimeSpan</td>
+				  <td>6.0</td>
+				  <td>-</td>
+				</tr>
+				<tr>
+				  <td>ReleaseGroup</td>
+				  <td>string</td>
+				  <td>6.1</td>
+				  <td>-</td>
+				</tr>
+				<tr>
+				  <td>AudioCodec</td>
+				  <td>string</td>
+				  <td>6.1</td>
+				  <td>-</td>
+				</tr>
+				<tr>
+				  <td>VideoCodec</td>
+				  <td>string</td>
+				  <td>6.1</td>
+				  <td>-</td>
+				</tr>
+				<tr>
+				  <td>FileInfo</td>
+				  <td>FileInfo</td>
+				  <td>8.0</td>
+				  <td>Is contained if the extension method with the FileInfo is used</td>
+				</tr>
+				<tr>
+				  <td>ParserSettingsUsed</td>
+				  <td>ParserSettings</td>
+				  <td>8.0</td>
+				  <td>Contains the given parser settings who are used to generate the result object</td>
+				</tr>
+			  </tbody>
+			</table>
+			
+			
+			<br>
+			<br>
+			<h3>Sample Result Series</h3>
+			<p>Sample Input: <span class="keyword">Knight.Rider.S01E07.Die.grosse.Duerre.1982.German.DVDRip.XviD-c0nFuSed.mkv</span></p>
+
+			<table>
+			  <thead>
+				<tr>
+				  <th>ParserResult.*</th>
+				  <th>Sample</th>
+				</tr>
+			  </thead>
+			  <tbody>
+				<tr>
+				  <td>OriginalString</td>
+				  <td>Knight.Rider.S01E07.Die.grosse.Duerre.1982.German.DVDRip.XviD-c0nFuSed.mkv</td>
+				</tr>
+				<tr>
+				  <td>ParsedString</td>
+				  <td>Knight.Rider.S01E07.Die.grosse.Duerre.1982.SD.German.XviD.mkv</td>
+				</tr>
+				<tr>
+				  <td>Title</td>
+				  <td>Knight.Rider</td>
+				</tr>
+				<tr>
+				  <td>EpisodeTitle</td>
+				  <td>Die.grosse.Duerre</td>
+				</tr>
+				<tr>
+				  <td>FullTitle</td>
+				  <td>Knight.Rider.S01E07.Die.grosse.Duerre</td>
+				</tr>
+				<tr>
+				  <td>IsSeries</td>
+				  <td>True</td>
+				</tr>
+				<tr>
+				  <td>IsMultiEpisode</td>
+				  <td>False</td>
+				</tr>
+				<tr>
+				  <td>Season</td>
+				  <td>1</td>
+				</tr>
+				<tr>
+				  <td>Episodes</td>
+				  <td>7</td>
+				</tr>
+				<tr>
+				  <td>IDString</td>
+				  <td>S01E07</td>
+				</tr>
+				<tr>
+				  <td>Exception</td>
+				  <td>NULL</td>
+				</tr>
+				<tr>
+				  <td>Resolutions</td>
+				  <td>SD_Any</td>
+				</tr>
+				<tr>
+				  <td>Year</td>
+				  <td>1982</td>
+				</tr>
+				<tr>
+				  <td>FileExtension</td>
+				  <td>.mkv</td>
+				</tr>
+				<tr>
+				  <td>RemovedTokens</td>
+				  <td>German, XviD</td>
+				</tr>
+				<tr>
+				  <td>State</td>
+				  <td>OkSuccess</td>
+				</tr>
+				<tr>
+				  <td>DetectedOldSpacingChar</td>
+				  <td>.</td>
+				</tr>
+				<tr>
+				  <td>ProcessingDuration</td>
+				  <td>0,5018 ms</td>
+				</tr>
+				<tr>
+				  <td>ReleaseGroup</td>
+				  <td>c0nFuSed</td>
+				</tr>
+				<tr>
+				  <td>AudioCodec</td>
+				  <td>-</td>
+				</tr>
+				<tr>
+				  <td>VideoCodec</td>
+				  <td>XviD</td>
+				</tr>
+				<tr>
+				  <td>FileInfo</td>
+				  <td>-</td>
+				</tr>
+				<tr>
+				  <td>ParserSettingsUsed</td>
+				  <td>ParserSettings</td>
+				</tr>
+			  </tbody>
+			</table>
+
+			<br>
+			<br>
+			<h3>Sample Result Movie</h3>
+			<p>Sample Input: <span class="keyword">Manhattan.Project.Der.atomare.Alptraum.1986.German.DL.1080p.HDTV.x264.mkv</span></p>
+
+			<table>
+			  <thead>
+				<tr>
+				  <th>ParserResult.*</th>
+				  <th>Sample</th>
+				</tr>
+			  </thead>
+			  <tbody>
+				<tr>
+				  <td>OriginalString</td>
+				  <td>Manhattan.Project.Der.atomare.Alptraum.1986.German.DL.1080p.HDTV.x264.mkv</td>
+				</tr>
+				<tr>
+				  <td>ParsedString</td>
+				  <td>Manhattan.Project.Der.atomare.Alptraum.1986.720p.German.x264.mkv</td>
+				</tr>
+				<tr>
+				  <td>Title</td>
+				  <td>Manhattan.Project.Der.atomare.Alptraum</td>
+				</tr>
+				<tr>
+				  <td>EpisodeTitle</td>
+				  <td>-</td>
+				</tr>
+				<tr>
+				  <td>FullTitle</td>
+				  <td>Manhattan.Project.Der.atomare.Alptraum</td>
+				</tr>
+				<tr>
+				  <td>IsSeries</td>
+				  <td>False</td>
+				</tr>
+				<tr>
+				  <td>IsMultiEpisode</td>
+				  <td>False</td>
+				</tr>
+				<tr>
+				  <td>Season</td>
+				  <td>-1</td>
+				</tr>
+				<tr>
+				  <td>Episodes</td>
+				  <td>-</td>
+				</tr>
+				<tr>
+				  <td>IDString</td>
+				  <td>-</td>
+				</tr>
+				<tr>
+				  <td>Exception</td>
+				  <td>NULL</td>
+				</tr>
+				<tr>
+				  <td>Resolutions</td>
+				  <td>FullHD_1080p, HD_720p</td>
+				</tr>
+				<tr>
+				  <td>Year</td>
+				  <td>1986</td>
+				</tr>
+				<tr>
+				  <td>FileExtension</td>
+				  <td>.mkv</td>
+				</tr>
+				<tr>
+				  <td>RemovedTokens</td>
+				  <td>German, x264</td>
+				</tr>
+				<tr>
+				  <td>State</td>
+				  <td>OkSuccess</td>
+				</tr>
+				<tr>
+				  <td>DetectedOldSpacingChar</td>
+				  <td>.</td>
+				</tr>
+				<tr>
+				  <td>ProcessingDuration</td>
+				  <td>0,5282 ms</td>
+				</tr>
+				<tr>
+				  <td>ReleaseGroup</td>
+				  <td>c0nFuSed</td>
+				</tr>
+				<tr>
+				  <td>AudioCodec</td>
+				  <td>-</td>
+				</tr>
+				<tr>
+				  <td>VideoCodec</td>
+				  <td>x264</td>
+				</tr>
+				<tr>
+				  <td>FileInfo</td>
+				  <td>-</td>
+				</tr>
+				<tr>
+				  <td>ParserSettingsUsed</td>
+				  <td>ParserSettings</td>
+				</tr>
+			  </tbody>
+			</table>
+
+			<br>
+			<hr>
+			<br>
+			<h2>Code Samples</h2>
+			<h3>The easy way</h3>
+			<p>Here you dont need some configuration or anything like that. If no settings is passed to it, it will use the default settings.</p>
+			<pre><code class="cs">// The string source who should be parsed
+string parseMe = “Knight.Rider.S01E07.Die.grosse.Duerre.1982.German.DVDRip.XviD.mkv”;
+
+// Creating the parser object with default settings(empty ctor)
+SeriesID sid = new SeriesID();
+
+// Getting the result
+ParserResult parserResult = sid.Parse(parseMe);</code></pre>
+
+			<p>Now you can access all properties in the <span class="keyword">ParserResult</span> object</p>
+			
+			
+			<br>
+			<h3>Custom ParserSettings</h3>
+			<p>If you want to change how the parser handles something, you can edit the parser settings and pass it to the ctor</p>
+			<pre><code class="cs">// The string source who should be parsed
+string parseMe = “Knight.Rider.S01E07.Die.grosse.Duerre.1982.German.DVDRip.XviD.mkv”;
+
+// Generate the ParserSettings object
+ParserSettings ps = new ParserSettings();
+
+// Modify a settings property
+ps.NewSpacingChar = ‘-‘;
+
+// Creating the parser object with custom settings
+SeriesID sid = new SeriesID(ps);
+
+// Getting the result
+ParserResult parserResult = sid.Parse(parseMe);</code></pre>
+
+			<p>Now you can access all properties in the <span class="keyword">ParserResult</span> object</p>
+
+
+			<br>
+			<h3>Extension Methodes</h3>
+			<h4>Single File</h4>
+			<p>There are extension methodes for the following types available</p>
+			
+			<ul>
+				<li>String -&gt; String.ParseSeriesID</li>
+				<li>FileInfo -&gt; FileInfo.ParseSeriesID</li>
+			</ul>
+			
+			<p>Those extensions can be used for a single file and return a ParserResult object</p>
+			<pre><code class="cs">// The string source who should be parsed
+string parseMe = "Knight.Rider.S01E07.Die.grosse.Duerre.1982.German.DVDRip.XviD.mkv";
+
+// Parse the string
+ParserResult result = parseMe.ParseSeriesID();</code></pre>
+
+
+			<br>
+			<h4 id="path">Path</h4>
+			<p>There are extension methodes for the following types available</p>
+
+			<ul>
+				<li>String -&gt; String.ParseSeriesIDPath</li>
+				<li>DirectoryInfo -&gt; DirectoryInfo.ParseSeriesIDPath</li>
+			</ul>
+
+			<p>Those extensions can be used for a path and return a <span class="keyword">IEnumerable<parserresult></span> object-list</p>
+			<pre><code class="cs">// The string source who should be parsed
+string parseDir = @"C:\MyMovieFiles";
+
+// Parse the string
+IEnumerable &lt;ParserResult&gt; result = parseDir.ParseSeriesIDPath();</code></pre>
+			
+			
+
+		</div>
+	</div>
+	</body>
+</html>
