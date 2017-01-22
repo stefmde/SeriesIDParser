@@ -26,7 +26,7 @@
 using System;
 using System.Runtime.CompilerServices;
 
-[assembly: InternalsVisibleTo( "SeriesIDParser.Test" )]
+[assembly: InternalsVisibleTo("SeriesIDParser.Test")]
 
 namespace SeriesIDParser.Models
 {
@@ -38,7 +38,7 @@ namespace SeriesIDParser.Models
 	public enum ResolutionsMap
 	{
 		/// <summary>
-		///     Value is not set or unknown. May cause an exception
+		///     Value is not set or unknown. May cause or caused by an exception
 		/// </summary>
 		Unknown = 0,
 
@@ -75,7 +75,7 @@ namespace SeriesIDParser.Models
 	public enum State
 	{
 		/// <summary>
-		///     Value is not set or unknown. May cause an exception
+		///     Value is not set or unknown. May cause or caused by an exception
 		/// </summary>
 		Unknown = 0,
 
@@ -109,6 +109,21 @@ namespace SeriesIDParser.Models
 		/// </summary>
 		ErrUnknownError = 32
 	}
+
+	/// <summary>
+	/// Defindes if the given movie or series is 2D, 3D and which type of it
+	/// </summary>
+	public enum DimensionalType
+	{
+		/// <summary>
+		///     Value is not set or unknown. May cause or caused by an exception
+		/// </summary>
+		Unknown = 0,
+		Dimension_2DAny = 1,
+		Dimension_3DAny = 2,
+		Dimension_3DHSBS = 4,
+		Dimension_3DHOU = 8
+	}
 	#endregion
 
 	#region ParserSettings
@@ -118,7 +133,7 @@ namespace SeriesIDParser.Models
 	public enum ResolutionOutputBehavior
 	{
 		/// <summary>
-		///     Value is not set or unknown. May cause an exception
+		///     Value is not set or unknown. May cause or caused by an exception
 		/// </summary>
 		Unknown,
 
@@ -144,7 +159,7 @@ namespace SeriesIDParser.Models
 	public enum CacheMode
 	{
 		/// <summary>
-		///     Value is not set or unknown. May cause an exception
+		///     Value is not set or unknown. May cause or caused by an exception
 		/// </summary>
 		Unknown,
 

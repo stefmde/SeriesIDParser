@@ -128,5 +128,10 @@ namespace SeriesIDParser.Models
 		///     Contains the release group string if countained in the source. string.Empty on error
 		/// </summary>
 		internal string ReleaseGroup { get; set; } = string.Empty;
+
+		/// <summary>
+		///     Contains the dimensionalType of the object e.g. Dimension_3DHOU
+		/// </summary>
+		public DimensionalType DimensionalType { get; set; } = DimensionalType.Unknown;
 	}
 }
