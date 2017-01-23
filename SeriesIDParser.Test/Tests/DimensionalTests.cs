@@ -51,6 +51,5 @@ namespace SeriesIDParser.Test.Tests
 			Assert.AreEqual("Dubai.Airport.S01E05.Teil5", parserResult.FullTitle, "-FullTitle ");
 			Assert.AreEqual("Dubai.Airport.S01E05.Teil5.720p.DOKU.German.x264.mkv", parserResult.ParsedString, "-ParsedString ");
 		}
-
 	}
 }

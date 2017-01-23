@@ -48,7 +48,7 @@ namespace SeriesIDParser.WinForm.Demo
 			Text += " - SeriesIDParser Assembly v" + typeof(SeriesID).Assembly.GetName().Version;
 		}
 
-		private void btnParse_Click( object sender, EventArgs e )
+		private void btnParse_Click(object sender, EventArgs e)
 		{
 			// Use the following three lines as a example for editing the parser settings
 			// ParserSettings ps = new ParserSettings();
@@ -60,40 +60,42 @@ namespace SeriesIDParser.WinForm.Demo
 			SeriesID sid = new SeriesID();
 
 			// Getting the result methode 1 - function call
-			ParserResult parserResult = sid.Parse( tbxInput.Text );
+			ParserResult parserResult = sid.Parse(tbxInput.Text);
 
 			// Getting the result methode 2 - extension method call
 			parserResult = tbxInput.Text.ParseSeriesID();
 
 
 			dataGridViewResult.Rows.Clear();
-			dataGridViewResult.Rows.Add( "OriginalString", "string", parserResult.OriginalString );
-			dataGridViewResult.Rows.Add( "ParsedString", "string", parserResult.ParsedString );
-			dataGridViewResult.Rows.Add( "Title", "string", parserResult.Title );
-			dataGridViewResult.Rows.Add( "EpisodeTitle", "string", parserResult.EpisodeTitle );
-			dataGridViewResult.Rows.Add( "FullTitle", "string", parserResult.FullTitle );
-			dataGridViewResult.Rows.Add( "IsSeries", "bool", parserResult.IsSeries );
-			dataGridViewResult.Rows.Add( "IsMultiEpisode", "bool", parserResult.IsMultiEpisode );
-			dataGridViewResult.Rows.Add( "Season", "int", parserResult.Season );
-			dataGridViewResult.Rows.Add( "Episodes", "int list", string.Join( ", ", parserResult.Episodes ) );
-			dataGridViewResult.Rows.Add( "IDString", "string", parserResult.IDString );
-			dataGridViewResult.Rows.Add( "Resolutions", "enum list Resolutions", string.Join( ", ", parserResult.Resolutions ) );
-			dataGridViewResult.Rows.Add( "Year", "int", parserResult.Year );
-			dataGridViewResult.Rows.Add( "FileExtension", "string", parserResult.FileExtension );
-			dataGridViewResult.Rows.Add( "RemovedTokens", "string list", string.Join( ", ", parserResult.RemovedTokens ) );
-			dataGridViewResult.Rows.Add( "State", "enum State", parserResult.State );
-			dataGridViewResult.Rows.Add( "DetectedOldSpacingChar", "char", parserResult.DetectedOldSpacingChar );
-			dataGridViewResult.Rows.Add( "ProcessingDuration", "TimeSpan", parserResult.ProcessingDuration.TotalMilliseconds + " ms" );
-			dataGridViewResult.Rows.Add( "ReleaseGroup", "string", parserResult.ReleaseGroup );
-			dataGridViewResult.Rows.Add( "AudioCodec", "string", parserResult.AudioCodec );
-			dataGridViewResult.Rows.Add( "VideoCodec", "string", parserResult.VideoCodec );
+			dataGridViewResult.Rows.Add("OriginalString", "string", parserResult.OriginalString);
+			dataGridViewResult.Rows.Add("ParsedString", "string", parserResult.ParsedString);
+			dataGridViewResult.Rows.Add("Title", "string", parserResult.Title);
+			dataGridViewResult.Rows.Add("EpisodeTitle", "string", parserResult.EpisodeTitle);
+			dataGridViewResult.Rows.Add("FullTitle", "string", parserResult.FullTitle);
+			dataGridViewResult.Rows.Add("IsSeries", "bool", parserResult.IsSeries);
+			dataGridViewResult.Rows.Add("IsMultiEpisode", "bool", parserResult.IsMultiEpisode);
+			dataGridViewResult.Rows.Add("Season", "int", parserResult.Season);
+			dataGridViewResult.Rows.Add("Episodes", "int list", string.Join(", ", parserResult.Episodes));
+			dataGridViewResult.Rows.Add("IDString", "string", parserResult.IDString);
+			dataGridViewResult.Rows.Add("Resolutions", "enum list Resolutions", string.Join(", ", parserResult.Resolutions));
+			dataGridViewResult.Rows.Add("Year", "int", parserResult.Year);
+			dataGridViewResult.Rows.Add("FileExtension", "string", parserResult.FileExtension);
+			dataGridViewResult.Rows.Add("RemovedTokens", "string list", string.Join(", ", parserResult.RemovedTokens));
+			dataGridViewResult.Rows.Add("State", "enum State", parserResult.State);
+			dataGridViewResult.Rows.Add("DetectedOldSpacingChar", "char", parserResult.DetectedOldSpacingChar);
+			dataGridViewResult.Rows.Add("ProcessingDuration", "TimeSpan", parserResult.ProcessingDuration.TotalMilliseconds + " ms");
+			dataGridViewResult.Rows.Add("ReleaseGroup", "string", parserResult.ReleaseGroup);
+			dataGridViewResult.Rows.Add("AudioCodec", "string", parserResult.AudioCodec);
+			dataGridViewResult.Rows.Add("VideoCodec", "string", parserResult.VideoCodec);
+			dataGridViewResult.Rows.Add("Is3D", "bool", parserResult.Is3D);
+			dataGridViewResult.Rows.Add("DimensionalType", "enum DimensionalType", parserResult.DimensionalType);
 
 			tbxException.Clear();
 			if (parserResult.Exception != null)
 			{
-				tbxException.AppendText( parserResult.Exception.Message + Environment.NewLine );
-				tbxException.AppendText( parserResult.Exception.Source + Environment.NewLine );
-				tbxException.AppendText( parserResult.Exception.StackTrace + Environment.NewLine );
+				tbxException.AppendText(parserResult.Exception.Message + Environment.NewLine);
+				tbxException.AppendText(parserResult.Exception.Source + Environment.NewLine);
+				tbxException.AppendText(parserResult.Exception.StackTrace + Environment.NewLine);
 			}
 		}
 	}
