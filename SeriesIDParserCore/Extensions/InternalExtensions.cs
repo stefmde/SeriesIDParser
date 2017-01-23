@@ -24,12 +24,15 @@
 
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading.Tasks;
+using SeriesIDParserCore.Caching;
 using SeriesIDParserCore.Models;
 
-[assembly: InternalsVisibleTo( "SeriesIDParser.Test" )]
+[assembly: InternalsVisibleTo( "SeriesIDParserCore.Test" )]
 
 namespace SeriesIDParserCore.Extensions
 {
@@ -40,7 +43,7 @@ namespace SeriesIDParserCore.Extensions
 			ParserResult result = new ParserResult( mediaData.OriginalString, parserSettings, mediaData.AudioCodec, mediaData.VideoCodec,
 													mediaData.ProcessingDuration, mediaData.Resolutions, mediaData.Season, mediaData.Episodes, mediaData.Year,
 													mediaData.DetectedOldSpacingChar, mediaData.Exception, mediaData.IsSeries, mediaData.RemovedTokens, mediaData.State,
-													mediaData.FileExtension, mediaData.Title, mediaData.EpisodeTitle, mediaData.ReleaseGroup );
+													mediaData.FileExtension, mediaData.Title, mediaData.EpisodeTitle, mediaData.ReleaseGroup, mediaData.DimensionalType );
 
 			return result;
 		}

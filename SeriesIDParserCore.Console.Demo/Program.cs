@@ -27,6 +27,7 @@ using System;
 using System.Linq;
 using System.Reflection;
 using SeriesIDParserCore.Models;
+
 // ReSharper disable MissingXmlDoc
 
 namespace SeriesIDParserCore.Console.Demo
@@ -36,10 +37,10 @@ namespace SeriesIDParserCore.Console.Demo
 	{
 		public static void Main( string[] args )
 		{
-			System.Console.WriteLine("SeriesIDParserCore assembly version " + typeof(SeriesID).GetTypeInfo().Assembly.GetName().Version );
+			System.Console.WriteLine( "SeriesIDParserCore assembly version " + typeof(SeriesID).GetTypeInfo().Assembly.GetName().Version );
 			System.Console.WriteLine( Environment.NewLine );
 
-			System.Console.Write( "Example: Knight.Rider.S01E07.Die.grosse.Duerre.1982.German.DVDRip.XviD-c0nFuSed.mkv" );
+			System.Console.Write( "Example: Knight.Rider.S01E07.Die.grosse.Duerre.3D.HOU.1982.German.DVDRip.XviD-c0nFuSed.mkv" );
 			System.Console.WriteLine( Environment.NewLine );
 
 			System.Console.Write( "Enter string to parse: " );
@@ -83,6 +84,8 @@ namespace SeriesIDParserCore.Console.Demo
 			System.Console.WriteLine( "ReleaseGroup (string): {0}", parserResult.ReleaseGroup );
 			System.Console.WriteLine( "AudioCodec (string): {0}", parserResult.AudioCodec );
 			System.Console.WriteLine( "VideoCodec (string): {0}", parserResult.VideoCodec );
+			System.Console.WriteLine( "Is3D (string): {0}", parserResult.Is3D );
+			System.Console.WriteLine( "DimensionalType (string): {0}", parserResult.DimensionalType );
 
 			if (parserResult.Exception != null)
 			{

@@ -28,7 +28,7 @@ using System.Runtime.CompilerServices;
 using Newtonsoft.Json;
 using SeriesIDParserCore.Worker;
 
-[assembly: InternalsVisibleTo( "SeriesIDParser.Test" )]
+[assembly: InternalsVisibleTo( "SeriesIDParserCore.Test" )]
 
 namespace SeriesIDParserCore.Models
 {
@@ -52,10 +52,15 @@ namespace SeriesIDParserCore.Models
 
 			// ### Resolution Detection
 			DetectUltraHD8kTokens = new List<string>() {"8k", "4320k"};
-			DetectUltraHDTokens = new List<string>() {"NetflixUHD", "UHD", "2160p"};
+			DetectUltraHDTokens = new List<string>() {"NetflixUHD", "UHD", "2160p", "Ultra.HD", "UltraHD"};
 			DetectFullHDTokens = new List<string>() {"FullHD", "1080p", "1080i"};
 			DetectHDTokens = new List<string>() {"HDTV", "720p", "HD"};
-			DetectSDTokens = new List<string>() {"DVDRIP", "DVD", "SD"};
+			DetectSDTokens = new List<string>() {"DVDR", "DVDRIP", "DVD", "SD"};
+
+			// ### Dimensional Detection
+			DetectAny3DTokens = new List<string>() {"3D"};
+			DetectHou3DTokens = new List<string>() {"HOU", "H-OU"};
+			DetectHsbs3DTokens = new List<string>() {"HSBS", "H-SBS"};
 
 			// ### Fileextensions
 			FileExtensions = new List<string>()
@@ -113,11 +118,19 @@ namespace SeriesIDParserCore.Models
 									"DOKU",
 									"EXTENDED",
 									"UNRATED",
+									"UNCUT",
 									"AmazonHD",
 									"German",
 									"Remastered",
 									"HDRip",
-									"Remux"
+									"Remux",
+									"10bit",
+									"PAL",
+									"7.1",
+									"5.1",
+									"BT2020",
+									"BT.2020",
+									"HDR"
 								};
 
 			//_removeAndListTokensOnLanguageParserIsDisabled = new List<string>() { "GERMAN" };
@@ -134,14 +147,31 @@ namespace SeriesIDParserCore.Models
 										"Web-DL",
 										"DL",
 										"HDDVDRip",
-										"AC3D",
-										"THEATRICAL"
+										"THEATRICAL",
+										"RETAIL",
+										"3D"
 									};
 
 			// ### Parsing
-			VideoCodecs = new List<string>() {"x264", "h264", "x265", "AVC", "XviD", "FFmpeg", "VP7", "VP8", "VP9", "MPEG-4", "MPEG-2", "MPEG4", "MPEG2"};
+			VideoCodecs = new List<string>()
+						{
+							"x264",
+							"h264",
+							"x265",
+							"AVC",
+							"XviD",
+							"FFmpeg",
+							"VP7",
+							"VP8",
+							"VP9",
+							"MPEG-4",
+							"MPEG-2",
+							"MPEG4",
+							"MPEG2",
+							"HEVC"
+						};
 
-			AudioCodecs = new List<string>() {"DTSHD", "DTS", "AAC", "MP3", "MPEG3", "MPEG-3"};
+			AudioCodecs = new List<string>() {"DTSHD", "DTS", "AAC", "MP3", "MPEG3", "MPEG-3", "TrueHD.Atmos", "TrueHD", "AC3D", "AC3"};
 
 			//_languages = new List<string>() { "English", "Chinese", "Hindi", "Spanish",
 			//"French", "Arabic", "Russian", "Portuguese",
@@ -281,7 +311,51 @@ namespace SeriesIDParserCore.Models
 		///     Defines how the resolution is formated in the output strings e.g. ParsedString. Default: LowesrResolution
 		/// </summary>
 		public ResolutionOutputBehavior ResolutionStringOutput { get; set; } = ResolutionOutputBehavior.LowestResolution;
+
+		/// <summary>
+		///     Defines the string who is convertet from the enum DimensionalType to something readable for e.g. the ParsedString.
+		///     Default: '3D'
+		/// </summary>
+		public string DimensionalString3DAny { get; set; } = "3D";
+
+		/// <summary>
+		///     Defines the string who is convertet from the enum DimensionalType to something readable for e.g. the ParsedString.
+		///     Default: '3D.HSBS'
+		/// </summary>
+		public string DimensionalString3DHSBS { get; set; } = "3D.HSBS";
+
+		/// <summary>
+		///     Defines the string who is convertet from the enum DimensionalType to something readable for e.g. the ParsedString.
+		///     Default: '3D.HOU'
+		/// </summary>
+		public string DimensionalString3DHOU { get; set; } = "3D.HOU";
+
+		/// <summary>
+		///     Defines the string who is convertet from the enum DimensionalType to something readable for e.g. the ParsedString.
+		///     Default: empty
+		/// </summary>
+		public string DimensionalString2DAny { get; set; } = "";
 		#endregion Output
+
+		// ### Dimensional Detection
+		// ############################################################
+
+		#region DimensionalDetection
+		/// <summary>
+		///     Defines the prefilled list to detect the HSBS 3D strings
+		/// </summary>
+		public List<string> DetectHsbs3DTokens { get; set; } = new List<string>();
+
+		/// <summary>
+		///     Defines the prefilled list to detect the HOU 3D strings
+		/// </summary>
+		public List<string> DetectHou3DTokens { get; set; } = new List<string>();
+
+		/// <summary>
+		///     Defines the prefilled list to detect the Any 3D strings
+		/// </summary>
+		public List<string> DetectAny3DTokens { get; set; } = new List<string>();
+		#endregion DimensionalDetection
 
 		// ### Resolution Detection
 		// ############################################################

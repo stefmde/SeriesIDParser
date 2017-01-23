@@ -148,11 +148,28 @@ namespace SeriesIDParser.Models
 										"DL",
 										"HDDVDRip",
 										"THEATRICAL",
-										"RETAIL"
+										"RETAIL",
+										"3D"
 									};
 
 			// ### Parsing
-			VideoCodecs = new List<string>() { "x264", "h264", "x265", "AVC", "XviD", "FFmpeg", "VP7", "VP8", "VP9", "MPEG-4", "MPEG-2", "MPEG4", "MPEG2", "HEVC" };
+			VideoCodecs = new List<string>()
+						{
+							"x264",
+							"h264",
+							"x265",
+							"AVC",
+							"XviD",
+							"FFmpeg",
+							"VP7",
+							"VP8",
+							"VP9",
+							"MPEG-4",
+							"MPEG-2",
+							"MPEG4",
+							"MPEG2",
+							"HEVC"
+						};
 
 			AudioCodecs = new List<string>() { "DTSHD", "DTS", "AAC", "MP3", "MPEG3", "MPEG-3", "TrueHD.Atmos", "TrueHD", "AC3D", "AC3" };
 
@@ -312,6 +329,12 @@ namespace SeriesIDParser.Models
 		///     Default: '3D.HOU'
 		/// </summary>
 		public string DimensionalString3DHOU { get; set; } = "3D.HOU";
+
+		/// <summary>
+		///     Defines the string who is convertet from the enum DimensionalType to something readable for e.g. the ParsedString.
+		///     Default: empty
+		/// </summary>
+		public string DimensionalString2DAny { get; set; } = "";
 		#endregion Output
 
 		// ### Dimensional Detection

@@ -157,6 +157,13 @@ namespace SeriesIDParser.Models
 					sb.Append(_parserSettings.NewSpacingChar);
 					sb.Append(HelperWorker.GetResolutionString(_parserSettings, _resolutions));
 
+					string dimensionalType = HelperWorker.GetDimensionalTypeString(_parserSettings, DimensionalType);
+					if (!string.IsNullOrEmpty(dimensionalType))
+					{
+						sb.Append(_parserSettings.NewSpacingChar);
+						sb.Append(dimensionalType);
+					}
+
 					if (RemovedTokens != null && RemovedTokens.Any())
 					{
 						foreach (string remToken in RemovedTokens)

@@ -54,6 +54,7 @@
     <Compile Include="Constants.cs" />
     <Compile Include="Tests\BenchmarkTests.cs" />
     <Compile Include="Tests\CacheTests.cs" />
+    <Compile Include="Tests\DimensionalTests.cs" />
     <Compile Include="Tests\ExtensionTests.cs" />
     <Compile Include="Tests\FullPathTests.cs" />
     <Compile Include="Tests\FullTests.cs" />

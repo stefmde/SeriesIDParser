@@ -111,7 +111,7 @@ namespace SeriesIDParser.Models
 	}
 
 	/// <summary>
-	/// Defindes if the given movie or series is 2D, 3D and which type of it
+	///     Defindes if the given movie or series is 2D, 3D and which type of it
 	/// </summary>
 	public enum DimensionalType
 	{

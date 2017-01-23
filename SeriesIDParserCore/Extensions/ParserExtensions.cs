@@ -29,9 +29,10 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading.Tasks;
 using SeriesIDParserCore.Models;
 
-[assembly: InternalsVisibleTo( "SeriesIDParser.Test" )]
+[assembly: InternalsVisibleTo( "SeriesIDParserCore.Test" )]
 
 namespace SeriesIDParserCore.Extensions
 {

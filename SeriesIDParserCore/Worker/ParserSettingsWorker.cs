@@ -30,7 +30,7 @@ using System.Xml.Serialization;
 using Newtonsoft.Json;
 using SeriesIDParserCore.Models;
 
-[assembly: InternalsVisibleTo( "SeriesIDParser.Test" )]
+[assembly: InternalsVisibleTo( "SeriesIDParserCore.Test" )]
 
 namespace SeriesIDParserCore.Worker
 {

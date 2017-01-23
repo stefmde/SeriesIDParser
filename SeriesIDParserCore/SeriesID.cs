@@ -27,8 +27,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using SeriesIDParserCore.Caching;
 using SeriesIDParserCore.Extensions;
 using SeriesIDParserCore.Models;
@@ -62,6 +64,7 @@ namespace SeriesIDParserCore
 		private TimeSpan _processingDuration;
 		private Exception _exception;
 		private FileInfo _fileInfo;
+		private DimensionalType _dimensionalType = DimensionalType.Unknown;
 		private readonly bool _cacheEnabled;
 		#endregion Fields
 
@@ -209,6 +212,7 @@ namespace SeriesIDParserCore
 				_resolutions = HelperWorker.GetResolutions( _parserSettings, _detectedOldSpacingChar, ref fullTitle );
 				_releaseGroup = HelperWorker.GetReleaseGroup( fullTitle, _parserSettings, _fileExtension );
 				fullTitle = HelperWorker.RemoveReleaseGroup( fullTitle, _parserSettings, _releaseGroup );
+				_dimensionalType = HelperWorker.GetDimensionalType( _parserSettings, _detectedOldSpacingChar, ref fullTitle );
 				_removedTokens = HelperWorker.RemoveTokens( _parserSettings, _detectedOldSpacingChar, ref fullTitle );
 
 				fullTitle = GetCodecs( fullTitle );
@@ -336,7 +340,8 @@ namespace SeriesIDParserCore
 						Title = _title,
 						EpisodeTitle = _episodeTitle,
 						ReleaseGroup = _releaseGroup,
-						FileInfo = _fileInfo
+						FileInfo = _fileInfo,
+						DimensionalType = _dimensionalType
 					};
 		}
 
@@ -360,6 +365,7 @@ namespace SeriesIDParserCore
 			_processingDuration = new TimeSpan();
 			_parseStartTime = DateTime.Now;
 			_releaseGroup = string.Empty;
+			_dimensionalType = DimensionalType.Unknown;
 		}
 		#endregion HelperFunctions
 	}

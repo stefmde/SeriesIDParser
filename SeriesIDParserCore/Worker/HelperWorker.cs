@@ -32,7 +32,7 @@ using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using SeriesIDParserCore.Models;
 
-[assembly: InternalsVisibleTo( "SeriesIDParser.Test" )]
+[assembly: InternalsVisibleTo( "SeriesIDParserCore.Test" )]
 
 namespace SeriesIDParserCore.Worker
 {
@@ -372,36 +372,6 @@ namespace SeriesIDParserCore.Worker
 		}
 
 		/// <summary>
-		///     Gets the resolutions of a given string
-		/// </summary>
-		/// <param name="resolutionMap">The token that could match the given resolution</param>
-		/// <param name="res">The given resolution wo is targeted by the ResMap tokens</param>
-		/// <param name="oldSpacingChar">the spacing char in the given string</param>
-		/// <param name="fullTitle">The given string who should be analized</param>
-		internal static List<ResolutionsMap> GetResolutionByResMap( List<string> resolutionMap, ResolutionsMap res, char oldSpacingChar,
-																	ref string fullTitle )
-		{
-			string spacer = Regex.Escape( oldSpacingChar.ToString() );
-			List<ResolutionsMap> foundResolutions = new List<ResolutionsMap>();
-
-			foreach (string item in resolutionMap)
-			{
-				Regex removeRegex = new Regex( spacer + item + spacer, RegexOptions.IgnoreCase );
-
-				if (removeRegex.IsMatch( fullTitle ))
-				{
-					// Search with spacer but remove without spacer
-					removeRegex = new Regex( item, RegexOptions.IgnoreCase );
-					foundResolutions.Add( res );
-
-					fullTitle = removeRegex.Replace( fullTitle, "" );
-				}
-			}
-
-			return foundResolutions;
-		}
-
-		/// <summary>
 		///     Function Adds a Unknown Resolution mark or removes it if needed
 		/// </summary>
 		/// <param name="resolutions"></param>
@@ -456,6 +426,92 @@ namespace SeriesIDParserCore.Worker
 			}
 
 			return foundResolutions;
+		}
+
+		/// <summary>
+		///     Gets the resolutions of a given string
+		/// </summary>
+		/// <param name="resolutionMap">The token that could match the given resolution</param>
+		/// <param name="res">The given resolution wo is targeted by the ResMap tokens</param>
+		/// <param name="oldSpacingChar">the spacing char in the given string</param>
+		/// <param name="fullTitle">The given string who should be analized</param>
+		internal static List<ResolutionsMap> GetResolutionByResMap( List<string> resolutionMap, ResolutionsMap res, char oldSpacingChar,
+																	ref string fullTitle )
+		{
+			string spacer = Regex.Escape( oldSpacingChar.ToString() );
+			List<ResolutionsMap> foundResolutions = new List<ResolutionsMap>();
+
+			foreach (string item in resolutionMap)
+			{
+				Regex removeRegex = new Regex( spacer + item + spacer, RegexOptions.IgnoreCase );
+
+				if (removeRegex.IsMatch( fullTitle ))
+				{
+					// Search with spacer but remove without spacer
+					removeRegex = new Regex( item, RegexOptions.IgnoreCase );
+					foundResolutions.Add( res );
+
+					fullTitle = removeRegex.Replace( fullTitle, "" );
+				}
+			}
+
+			return foundResolutions;
+		}
+
+		internal static DimensionalType GetDimensionalType( ParserSettings ps, char oldSpacer, ref string fullTitle )
+		{
+			List<DimensionalType> tempDimensionalTypes = new List<DimensionalType>();
+			DimensionalType foundDimensionalType;
+
+			// Try get 3D HSBS
+			tempDimensionalTypes.AddRange( GetDimensionalTypeByResMap( ps.DetectHsbs3DTokens, DimensionalType.Dimension_3DHSBS, oldSpacer, ref fullTitle ) );
+
+			// Try get 3D HOU
+			tempDimensionalTypes.AddRange( GetDimensionalTypeByResMap( ps.DetectHou3DTokens, DimensionalType.Dimension_3DHOU, oldSpacer, ref fullTitle ) );
+
+			// Try get 3D Any
+			if (tempDimensionalTypes.Count == 0)
+			{
+				tempDimensionalTypes.AddRange( GetDimensionalTypeByResMap( ps.DetectAny3DTokens, DimensionalType.Dimension_3DAny, oldSpacer, ref fullTitle ) );
+			}
+
+			if (tempDimensionalTypes.Count == 0)
+			{
+				foundDimensionalType = DimensionalType.Dimension_2DAny;
+			}
+			else if (tempDimensionalTypes.Count == 1)
+			{
+				foundDimensionalType = tempDimensionalTypes.LastOrDefault();
+			}
+			else
+			{
+				foundDimensionalType = DimensionalType.Dimension_3DAny;
+			}
+
+			return foundDimensionalType;
+		}
+
+		internal static List<DimensionalType> GetDimensionalTypeByResMap( List<string> dimensionalTypeMap, DimensionalType type, char oldSpacingChar,
+																		ref string fullTitle )
+		{
+			string spacer = Regex.Escape( oldSpacingChar.ToString() );
+			List<DimensionalType> foundDimensionalType = new List<DimensionalType>();
+
+			foreach (string item in dimensionalTypeMap)
+			{
+				Regex removeRegex = new Regex( spacer + item + spacer, RegexOptions.IgnoreCase );
+
+				if (removeRegex.IsMatch( fullTitle ))
+				{
+					// Search with spacer but remove without spacer
+					removeRegex = new Regex( item, RegexOptions.IgnoreCase );
+					foundDimensionalType.Add( type );
+
+					fullTitle = removeRegex.Replace( fullTitle, "" );
+				}
+			}
+
+			return foundDimensionalType;
 		}
 
 		/// <summary>
@@ -689,6 +745,23 @@ namespace SeriesIDParserCore.Worker
 						.ToList();
 
 			return files;
+		}
+
+		public static string GetDimensionalTypeString( ParserSettings parserSettings, DimensionalType dimensionalType )
+		{
+			switch (dimensionalType)
+			{
+				case DimensionalType.Dimension_3DAny:
+					return parserSettings.DimensionalString3DAny;
+				case DimensionalType.Dimension_2DAny:
+					return parserSettings.DimensionalString2DAny;
+				case DimensionalType.Dimension_3DHSBS:
+					return parserSettings.DimensionalString3DHSBS;
+				case DimensionalType.Dimension_3DHOU:
+					return parserSettings.DimensionalString3DHOU;
+				default:
+					return string.Empty;
+			}
 		}
 	}
 }

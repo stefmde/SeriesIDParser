@@ -31,7 +31,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using SeriesIDParserCore.Worker;
 
-[assembly: InternalsVisibleTo( "SeriesIDParser.Test" )]
+[assembly: InternalsVisibleTo( "SeriesIDParserCore.Test" )]
 
 namespace SeriesIDParserCore.Models
 {
@@ -53,7 +53,8 @@ namespace SeriesIDParserCore.Models
 		#region ctor
 		internal ParserResult( string originalString, ParserSettings parserSettings, string audioCodec, string videoCodec, TimeSpan processingDuration,
 								IEnumerable<ResolutionsMap> resolutions, int season, IEnumerable<int> episodes, int year, char detectedOldSpacingChar, Exception exception,
-								bool isSeries, IEnumerable<string> removedTokens, State state, string fileExtension, string title, string episodeTitle, string releaseGroup )
+								bool isSeries, IEnumerable<string> removedTokens, State state, string fileExtension, string title, string episodeTitle, string releaseGroup,
+								DimensionalType dimensionalType )
 		{
 			_parserSettings = parserSettings;
 			AudioCodec = audioCodec;
@@ -73,6 +74,8 @@ namespace SeriesIDParserCore.Models
 			FileExtension = fileExtension;
 			OriginalString = originalString;
 			Title = title;
+			DimensionalType = dimensionalType;
+			Is3D = ((int) DimensionalType) > 1;
 		}
 
 		/// <summary>
@@ -153,6 +156,13 @@ namespace SeriesIDParserCore.Models
 
 					sb.Append( _parserSettings.NewSpacingChar );
 					sb.Append( HelperWorker.GetResolutionString( _parserSettings, _resolutions ) );
+
+					string dimensionalType = HelperWorker.GetDimensionalTypeString( _parserSettings, DimensionalType );
+					if (!string.IsNullOrEmpty( dimensionalType ))
+					{
+						sb.Append( _parserSettings.NewSpacingChar );
+						sb.Append( dimensionalType );
+					}
 
 					if (RemovedTokens != null && RemovedTokens.Any())
 					{
@@ -259,6 +269,11 @@ namespace SeriesIDParserCore.Models
 		public State State { get; private set; } = State.Unknown;
 
 		/// <summary>
+		///     Contains the dimensionalType of the object e.g. Dimension_3DHOU
+		/// </summary>
+		public DimensionalType DimensionalType { get; private set; } = DimensionalType.Unknown;
+
+		/// <summary>
 		///     Contains the Exception if any occours. Default: null
 		/// </summary>
 		public Exception Exception { get; private set; } = null;
@@ -267,6 +282,11 @@ namespace SeriesIDParserCore.Models
 		///     Specifies if the object contains a series or a movie. Default: false
 		/// </summary>
 		public bool IsSeries { get; private set; }
+
+		/// <summary>
+		///     Specifies if the movie is a 3D series or a movie. Default: false
+		/// </summary>
+		public bool Is3D { get; private set; }
 
 		private string _audioCodec;
 

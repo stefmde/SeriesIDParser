@@ -7,8 +7,10 @@
 - Changed XML Serializer from default to unicode to match core version
 - Added up to 20 tokens to the ParserSettings to better match the upcomming 4k content
 - Added 3D Detection
-- Added some ParserSettings for 3D Detection: DetectAny3DTokens, DetectHou3DTokens, DetectHsbs3DTokens, DimensionalString3DAny, DimensionalString3DHSBS, DimensionalString3DHOU
-- Added some properties to the ParserResult object for 3D Detection: 
+- Added some ParserSettings for 3D Detection: DetectAny3DTokens, DetectHou3DTokens, DetectHsbs3DTokens, DimensionalString3DAny, DimensionalString3DHSBS, DimensionalString3DHOU, DimensionalString2DAny
+- Added some properties to the ParserResult object for 3D Detection: Is3D, DimensionalType
+- Merged v9.0 features in SeriesIDParserCore
+- New properties added to demo apps
 
 ###Fix###
  - 
