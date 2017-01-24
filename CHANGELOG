@@ -11,6 +11,7 @@
 - Added some properties to the ParserResult object for 3D Detection: Is3D, DimensionalType
 - Merged v9.0 features in SeriesIDParserCore
 - New properties added to demo apps
+- More unit tests to cover new features
 
 ###Fix###
  - 

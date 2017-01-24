@@ -59,8 +59,8 @@ namespace SeriesIDParserCore.Models
 
 			// ### Dimensional Detection
 			DetectAny3DTokens = new List<string>() {"3D"};
-			DetectHou3DTokens = new List<string>() {"HOU", "H-OU"};
-			DetectHsbs3DTokens = new List<string>() {"HSBS", "H-SBS"};
+			DetectHou3DTokens = new List<string>() { "HOU", "H-OU", "3DHOU", "3D-HOU" };
+			DetectHsbs3DTokens = new List<string>() { "HSBS", "H-SBS", "3DHSBS", "3D-HSBS" };
 
 			// ### Fileextensions
 			FileExtensions = new List<string>()
