@@ -26,7 +26,7 @@
 using System;
 using System.Runtime.CompilerServices;
 
-[assembly: InternalsVisibleTo("SeriesIDParser.Test")]
+[assembly: InternalsVisibleTo( "SeriesIDParser.Test" )]
 
 namespace SeriesIDParser.Models
 {

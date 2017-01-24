@@ -28,7 +28,7 @@ using System.Runtime.CompilerServices;
 using Newtonsoft.Json;
 using SeriesIDParser.Worker;
 
-[assembly: InternalsVisibleTo("SeriesIDParser.Test")]
+[assembly: InternalsVisibleTo( "SeriesIDParser.Test" )]
 
 namespace SeriesIDParser.Models
 {
@@ -43,7 +43,7 @@ namespace SeriesIDParser.Models
 		///     Prefill ctor
 		/// </summary>
 		/// <param name="preFillLists">Set to true if the lists should be prefilled with the default values</param>
-		public ParserSettings(bool preFillLists = false)
+		public ParserSettings( bool preFillLists = false )
 		{
 			if (!preFillLists)
 			{
@@ -51,16 +51,16 @@ namespace SeriesIDParser.Models
 			}
 
 			// ### Resolution Detection
-			DetectUltraHD8kTokens = new List<string>() { "8k", "4320k" };
-			DetectUltraHDTokens = new List<string>() { "NetflixUHD", "UHD", "2160p", "Ultra.HD", "UltraHD" };
-			DetectFullHDTokens = new List<string>() { "FullHD", "1080p", "1080i" };
-			DetectHDTokens = new List<string>() { "HDTV", "720p", "HD" };
-			DetectSDTokens = new List<string>() { "DVDR", "DVDRIP", "DVD", "SD" };
+			DetectUltraHD8kTokens = new List<string>() {"8k", "4320k"};
+			DetectUltraHDTokens = new List<string>() {"NetflixUHD", "UHD", "2160p", "Ultra.HD", "UltraHD"};
+			DetectFullHDTokens = new List<string>() {"FullHD", "1080p", "1080i"};
+			DetectHDTokens = new List<string>() {"HDTV", "720p", "HD"};
+			DetectSDTokens = new List<string>() {"DVDR", "DVDRIP", "DVD", "SD"};
 
 			// ### Dimensional Detection
-			DetectAny3DTokens = new List<string>() { "3D" };
-			DetectHou3DTokens = new List<string>() { "HOU", "H-OU", "3DHOU", "3D-HOU" };
-			DetectHsbs3DTokens = new List<string>() { "HSBS", "H-SBS", "3DHSBS", "3D-HSBS" };
+			DetectAny3DTokens = new List<string>() {"3D"};
+			DetectHou3DTokens = new List<string>() {"HOU", "H-OU", "3DHOU", "3D-HOU"};
+			DetectHsbs3DTokens = new List<string>() {"HSBS", "H-SBS", "3DHSBS", "3D-HSBS"};
 
 			// ### Fileextensions
 			FileExtensions = new List<string>()
@@ -171,14 +171,14 @@ namespace SeriesIDParser.Models
 							"HEVC"
 						};
 
-			AudioCodecs = new List<string>() { "DTSHD", "DTS", "AAC", "MP3", "MPEG3", "MPEG-3", "TrueHD.Atmos", "TrueHD", "AC3D", "AC3" };
+			AudioCodecs = new List<string>() {"DTSHD", "DTS", "AAC", "MP3", "MPEG3", "MPEG-3", "TrueHD.Atmos", "TrueHD", "AC3D", "AC3"};
 
 			//_languages = new List<string>() { "English", "Chinese", "Hindi", "Spanish",
 			//"French", "Arabic", "Russian", "Portuguese",
 			//"Bengalese", "German", "Japanese", "Korean" };
 
 			// ### Other Stuff
-			PossibleSpacingChars = new List<char>() { '.', ',', '-', ' ', '+', '*' };
+			PossibleSpacingChars = new List<char>() {'.', ',', '-', ' ', '+', '*'};
 		}
 
 		internal ParserSettings()
@@ -439,9 +439,9 @@ namespace SeriesIDParser.Models
 		/// </summary>
 		/// <param name="parserSettings">The object that should be converted to an xml string</param>
 		/// <returns>The xml string representing this object</returns>
-		public static string SerializeToXML(ParserSettings parserSettings)
+		public static string SerializeToXML( ParserSettings parserSettings )
 		{
-			return ParserSettingsWorker.SerializeToXML(parserSettings);
+			return ParserSettingsWorker.SerializeToXML( parserSettings );
 		}
 
 		/// <summary>
@@ -450,9 +450,9 @@ namespace SeriesIDParser.Models
 		/// <param name="parserSettings">The object that should be converted to an xml string</param>
 		/// <param name="jsonSerializerSettings">JsonSerializerSettings for the Newtonsoft JsonConvert</param>
 		/// <returns>The json string representing this object</returns>
-		public static string SerializeToJson(ParserSettings parserSettings, JsonSerializerSettings jsonSerializerSettings = null)
+		public static string SerializeToJson( ParserSettings parserSettings, JsonSerializerSettings jsonSerializerSettings = null )
 		{
-			return ParserSettingsWorker.SerializeToJson(parserSettings, jsonSerializerSettings);
+			return ParserSettingsWorker.SerializeToJson( parserSettings, jsonSerializerSettings );
 		}
 
 		/// <summary>
@@ -460,9 +460,9 @@ namespace SeriesIDParser.Models
 		/// </summary>
 		/// <param name="xml">The xml string representing this object</param>
 		/// <returns>The object generated out of the xml content</returns>
-		public static ParserSettings DeSerializeFromXML(string xml)
+		public static ParserSettings DeSerializeFromXML( string xml )
 		{
-			return ParserSettingsWorker.DeSerializeFromXML(xml);
+			return ParserSettingsWorker.DeSerializeFromXML( xml );
 		}
 
 		/// <summary>
@@ -471,9 +471,9 @@ namespace SeriesIDParser.Models
 		/// <param name="json">The json string representing this object</param>
 		/// <param name="jsonSerializerSettings">JsonSerializerSettings for the Newtonsoft JsonConvert</param>
 		/// <returns>The json string representing this object</returns>
-		public static ParserSettings DeSerializeFromJson(string json, JsonSerializerSettings jsonSerializerSettings = null)
+		public static ParserSettings DeSerializeFromJson( string json, JsonSerializerSettings jsonSerializerSettings = null )
 		{
-			return ParserSettingsWorker.DeSerializeFromJson(json, jsonSerializerSettings);
+			return ParserSettingsWorker.DeSerializeFromJson( json, jsonSerializerSettings );
 		}
 		#endregion DeSerialisazion
 

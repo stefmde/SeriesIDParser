@@ -7,7 +7,7 @@
 				"type": "platform",
 				"version": "1.0.1"
 			},
-			"SeriesIDParserCore": "9.0.0-*"  },
+			"SeriesIDParserCore": "9.1.0-*"  },
 	"frameworks": {
 		"netcoreapp1.0": {
 			"imports": "dnxcore50"

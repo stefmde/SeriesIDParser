@@ -31,7 +31,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using SeriesIDParser.Worker;
 
-[assembly: InternalsVisibleTo("SeriesIDParser.Test")]
+[assembly: InternalsVisibleTo( "SeriesIDParser.Test" )]
 
 namespace SeriesIDParser.Models
 {
@@ -51,10 +51,10 @@ namespace SeriesIDParser.Models
 		#endregion PropertiesCache
 
 		#region ctor
-		internal ParserResult(string originalString, ParserSettings parserSettings, string audioCodec, string videoCodec, TimeSpan processingDuration,
+		internal ParserResult( string originalString, ParserSettings parserSettings, string audioCodec, string videoCodec, TimeSpan processingDuration,
 								IEnumerable<ResolutionsMap> resolutions, int season, IEnumerable<int> episodes, int year, char detectedOldSpacingChar, Exception exception,
 								bool isSeries, IEnumerable<string> removedTokens, State state, string fileExtension, string title, string episodeTitle, string releaseGroup,
-								DimensionalType dimensionalType)
+								DimensionalType dimensionalType )
 		{
 			_parserSettings = parserSettings;
 			AudioCodec = audioCodec;
@@ -75,7 +75,7 @@ namespace SeriesIDParser.Models
 			OriginalString = originalString;
 			Title = title;
 			DimensionalType = dimensionalType;
-			Is3D = ((int)DimensionalType) > 1;
+			Is3D = ((int) DimensionalType) > 1;
 		}
 
 		/// <summary>
@@ -88,12 +88,12 @@ namespace SeriesIDParser.Models
 		{
 			get
 			{
-				if (!State.HasFlag(State.OkSuccess))
+				if (!State.HasFlag( State.OkSuccess ))
 				{
 					return string.Empty;
 				}
 
-				if (!string.IsNullOrEmpty(_cacheFullTitle))
+				if (!string.IsNullOrEmpty( _cacheFullTitle ))
 				{
 					return _cacheFullTitle;
 				}
@@ -102,21 +102,21 @@ namespace SeriesIDParser.Models
 
 				if (IsSeries)
 				{
-					if (!string.IsNullOrEmpty(Title))
+					if (!string.IsNullOrEmpty( Title ))
 					{
-						sb.Append(Title);
+						sb.Append( Title );
 					}
 
-					if (!string.IsNullOrEmpty(IDString))
+					if (!string.IsNullOrEmpty( IDString ))
 					{
-						sb.Append(_parserSettings.NewSpacingChar);
-						sb.Append(IDString);
+						sb.Append( _parserSettings.NewSpacingChar );
+						sb.Append( IDString );
 					}
 
-					if (!string.IsNullOrEmpty(_episodeTitle))
+					if (!string.IsNullOrEmpty( _episodeTitle ))
 					{
-						sb.Append(_parserSettings.NewSpacingChar);
-						sb.Append(_episodeTitle);
+						sb.Append( _parserSettings.NewSpacingChar );
+						sb.Append( _episodeTitle );
 					}
 
 					_cacheFullTitle = sb.ToString();
@@ -138,43 +138,43 @@ namespace SeriesIDParser.Models
 		{
 			get
 			{
-				if (State.HasFlag(State.OkSuccess))
+				if (State.HasFlag( State.OkSuccess ))
 				{
-					if (!string.IsNullOrEmpty(_cacheParsedString))
+					if (!string.IsNullOrEmpty( _cacheParsedString ))
 					{
 						return _cacheParsedString;
 					}
 
 					StringBuilder sb = new StringBuilder();
-					sb.Append(FullTitle);
+					sb.Append( FullTitle );
 
 					if (_year > -1)
 					{
-						sb.Append(_parserSettings.NewSpacingChar);
-						sb.Append(_year);
+						sb.Append( _parserSettings.NewSpacingChar );
+						sb.Append( _year );
 					}
 
-					sb.Append(_parserSettings.NewSpacingChar);
-					sb.Append(HelperWorker.GetResolutionString(_parserSettings, _resolutions));
+					sb.Append( _parserSettings.NewSpacingChar );
+					sb.Append( HelperWorker.GetResolutionString( _parserSettings, _resolutions ) );
 
-					string dimensionalType = HelperWorker.GetDimensionalTypeString(_parserSettings, DimensionalType);
-					if (!string.IsNullOrEmpty(dimensionalType))
+					string dimensionalType = HelperWorker.GetDimensionalTypeString( _parserSettings, DimensionalType );
+					if (!string.IsNullOrEmpty( dimensionalType ))
 					{
-						sb.Append(_parserSettings.NewSpacingChar);
-						sb.Append(dimensionalType);
+						sb.Append( _parserSettings.NewSpacingChar );
+						sb.Append( dimensionalType );
 					}
 
 					if (RemovedTokens != null && RemovedTokens.Any())
 					{
 						foreach (string remToken in RemovedTokens)
 						{
-							sb.Append(_parserSettings.NewSpacingChar + remToken);
+							sb.Append( _parserSettings.NewSpacingChar + remToken );
 						}
 					}
 
-					if (!string.IsNullOrEmpty(FileExtension))
+					if (!string.IsNullOrEmpty( FileExtension ))
 					{
-						sb.Append(FileExtension);
+						sb.Append( FileExtension );
 					}
 
 					_cacheParsedString = sb.ToString();
@@ -195,19 +195,19 @@ namespace SeriesIDParser.Models
 		{
 			get
 			{
-				if (State.HasFlag(State.OkSuccess) && IsSeries)
+				if (State.HasFlag( State.OkSuccess ) && IsSeries)
 				{
-					if (!string.IsNullOrEmpty(_cacheIDString))
+					if (!string.IsNullOrEmpty( _cacheIDString ))
 					{
 						return _cacheIDString;
 					}
 
 					StringBuilder sb = new StringBuilder();
-					sb.Append(string.Format(_parserSettings.IDStringFormaterSeason, _season));
+					sb.Append( string.Format( _parserSettings.IDStringFormaterSeason, _season ) );
 
 					foreach (int episode in _episodes)
 					{
-						sb.Append(string.Format(_parserSettings.IDStringFormaterEpisode, episode));
+						sb.Append( string.Format( _parserSettings.IDStringFormaterEpisode, episode ) );
 					}
 
 					_cacheIDString = sb.ToString();
@@ -224,7 +224,7 @@ namespace SeriesIDParser.Models
 		/// <summary>
 		///     Shows if a Episode is a MultiEpisode with more than one Episode in one file. Default: false
 		/// </summary>
-		public bool IsMultiEpisode => State.HasFlag(State.OkSuccess) && Episodes.Count() > 1;
+		public bool IsMultiEpisode => State.HasFlag( State.OkSuccess ) && Episodes.Count() > 1;
 		#endregion PropertiesComputed
 
 		#region PropertiesDefault
@@ -295,7 +295,7 @@ namespace SeriesIDParser.Models
 		/// </summary>
 		public string AudioCodec
 		{
-			get { return State.HasFlag(State.OkSuccess) ? _audioCodec : string.Empty; }
+			get { return State.HasFlag( State.OkSuccess ) ? _audioCodec : string.Empty; }
 
 			private set { _audioCodec = value ?? String.Empty; }
 		}
@@ -307,7 +307,7 @@ namespace SeriesIDParser.Models
 		/// </summary>
 		public string VideoCodec
 		{
-			get { return State.HasFlag(State.OkSuccess) ? _videoCodec : null; }
+			get { return State.HasFlag( State.OkSuccess ) ? _videoCodec : null; }
 
 			private set { _videoCodec = value ?? String.Empty; }
 		}
@@ -322,7 +322,7 @@ namespace SeriesIDParser.Models
 			get
 			{
 				//return FailSafeProperties<string>(_episodeTitle);
-				return State.HasFlag(State.OkSuccess) && IsSeries ? _episodeTitle : string.Empty;
+				return State.HasFlag( State.OkSuccess ) && IsSeries ? _episodeTitle : string.Empty;
 			}
 
 			private set { _episodeTitle = value; }
@@ -335,7 +335,7 @@ namespace SeriesIDParser.Models
 		/// </summary>
 		public int Season
 		{
-			get { return State.HasFlag(State.OkSuccess) && IsSeries ? _season : -1; }
+			get { return State.HasFlag( State.OkSuccess ) && IsSeries ? _season : -1; }
 
 			private set { _season = value; }
 		}
@@ -347,9 +347,9 @@ namespace SeriesIDParser.Models
 		/// </summary>
 		public IEnumerable<int> Episodes
 		{
-			get { return State.HasFlag(State.OkSuccess) && IsSeries ? _episodes : new List<int>(); }
+			get { return State.HasFlag( State.OkSuccess ) && IsSeries ? _episodes : new List<int>(); }
 
-			private set { _episodes = value != null ? new List<int>(value) : new List<int>(); }
+			private set { _episodes = value != null ? new List<int>( value ) : new List<int>(); }
 		}
 
 		private int _year;
@@ -359,7 +359,7 @@ namespace SeriesIDParser.Models
 		/// </summary>
 		public int Year
 		{
-			get { return State.HasFlag(State.OkSuccess) ? _year : -1; }
+			get { return State.HasFlag( State.OkSuccess ) ? _year : -1; }
 
 			private set { _year = value; }
 		}
@@ -371,7 +371,7 @@ namespace SeriesIDParser.Models
 		/// </summary>
 		public TimeSpan ProcessingDuration
 		{
-			get { return State.HasFlag(State.OkSuccess) ? _processingDuration : new TimeSpan(); }
+			get { return State.HasFlag( State.OkSuccess ) ? _processingDuration : new TimeSpan(); }
 
 			private set { _processingDuration = value; }
 		}
@@ -383,9 +383,9 @@ namespace SeriesIDParser.Models
 		/// </summary>
 		public IEnumerable<ResolutionsMap> Resolutions
 		{
-			get { return State.HasFlag(State.OkSuccess) ? _resolutions : new List<ResolutionsMap>() { ResolutionsMap.Unknown }; }
+			get { return State.HasFlag( State.OkSuccess ) ? _resolutions : new List<ResolutionsMap>() {ResolutionsMap.Unknown}; }
 
-			private set { _resolutions = new List<ResolutionsMap>(value); }
+			private set { _resolutions = new List<ResolutionsMap>( value ); }
 		}
 
 		private string _releaseGroup;
@@ -395,7 +395,7 @@ namespace SeriesIDParser.Models
 		/// </summary>
 		public string ReleaseGroup
 		{
-			get { return State.HasFlag(State.OkSuccess) ? _releaseGroup : string.Empty; }
+			get { return State.HasFlag( State.OkSuccess ) ? _releaseGroup : string.Empty; }
 
 			private set { _releaseGroup = value; }
 		}
@@ -407,9 +407,9 @@ namespace SeriesIDParser.Models
 		/// <returns>FullTitle and resolution. string.Empty on error</returns>
 		public override string ToString()
 		{
-			if (State.HasFlag(State.OkSuccess))
+			if (State.HasFlag( State.OkSuccess ))
 			{
-				return FullTitle + " -- " + HelperWorker.GetResolutionString(_parserSettings, _resolutions);
+				return FullTitle + " -- " + HelperWorker.GetResolutionString( _parserSettings, _resolutions );
 			}
 			else
 			{
