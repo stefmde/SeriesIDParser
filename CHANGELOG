@@ -2,7 +2,7 @@
 
 
 
-##9.1.0 (2017-01-??)##
+##9.1.0 (2017-01-24)##
 ###New###
 - Changed XML Serializer from default to unicode to match core version
 - Added up to 20 tokens to the ParserSettings to better match the upcomming 4k content
