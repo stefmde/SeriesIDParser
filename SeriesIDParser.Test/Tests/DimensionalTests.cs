@@ -96,14 +96,28 @@ namespace SeriesIDParser.Test.Tests
 		[TestMethod]
 		public void DimensionalTestMissingSpacerHOU()
 		{
-			ParserSettings parserSettings = new ParserSettings( true );
-			SeriesID seriesIDParser = new SeriesID( parserSettings );
-			ParserResult parserResult = seriesIDParser.Parse( "Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.3DHOU.German.DL.1080p.BluRay.x264.mkv" );
+			ParserSettings parserSettings = new ParserSettings(true);
+			SeriesID seriesIDParser = new SeriesID(parserSettings);
+			ParserResult parserResult = seriesIDParser.Parse("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.3DHOU.German.DL.1080p.BluRay.x264.mkv");
 
-			Assert.AreEqual( "Der.Hobbit.Smaugs.Einoede", parserResult.FullTitle, "-FullTitle " );
-			Assert.AreEqual( "Der.Hobbit.Smaugs.Einoede.2013.1080p.3D.HOU.BluRay.EXTENDED.German.x264.mkv", parserResult.ParsedString, "-ParsedString " );
-			Assert.AreEqual( true, parserResult.Is3D, "-Is3D " );
-			Assert.AreEqual( DimensionalType.Dimension_3DHOU, parserResult.DimensionalType, "-DimensionalType " );
+			Assert.AreEqual("Der.Hobbit.Smaugs.Einoede", parserResult.FullTitle, "-FullTitle ");
+			Assert.AreEqual("Der.Hobbit.Smaugs.Einoede.2013.1080p.3D.HOU.BluRay.EXTENDED.German.x264.mkv", parserResult.ParsedString, "-ParsedString ");
+			Assert.AreEqual(true, parserResult.Is3D, "-Is3D ");
+			Assert.AreEqual(DimensionalType.Dimension_3DHOU, parserResult.DimensionalType, "-DimensionalType ");
+		}
+
+		[TestMethod]
+		public void DimensionalTest2DToken()
+		{
+			ParserSettings parserSettings = new ParserSettings(true);
+			parserSettings.DimensionalString2DAny = "2D";
+			SeriesID seriesIDParser = new SeriesID(parserSettings);
+			ParserResult parserResult = seriesIDParser.Parse("Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv");
+
+			Assert.AreEqual("Der.Hobbit.Smaugs.Einoede", parserResult.FullTitle, "-FullTitle ");
+			Assert.AreEqual("Der.Hobbit.Smaugs.Einoede.2013.1080p.2D.BluRay.EXTENDED.German.x264.mkv", parserResult.ParsedString, "-ParsedString ");
+			Assert.AreEqual(false, parserResult.Is3D, "-Is3D ");
+			Assert.AreEqual(DimensionalType.Dimension_2DAny, parserResult.DimensionalType, "-DimensionalType ");
 		}
 	}
 }
