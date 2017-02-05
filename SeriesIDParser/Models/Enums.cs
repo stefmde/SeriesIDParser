@@ -26,7 +26,7 @@
 using System;
 using System.Runtime.CompilerServices;
 
-[assembly: InternalsVisibleTo( "SeriesIDParser.Test" )]
+[assembly: InternalsVisibleTo("SeriesIDParser.Test")]
 
 namespace SeriesIDParser.Models
 {
@@ -107,7 +107,12 @@ namespace SeriesIDParser.Models
 		/// <summary>
 		///     An unexpected error occurred. Result is inconsistant or invalid
 		/// </summary>
-		ErrUnknownError = 32
+		ErrUnknownError = 32,
+
+		/// <summary>
+		///     An unexpected error occurred. Result is inconsistant or invalid
+		/// </summary>
+		WarnUnknownWarning = 64
 	}
 
 	/// <summary>
