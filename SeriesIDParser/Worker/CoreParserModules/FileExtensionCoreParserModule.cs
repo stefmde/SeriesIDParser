@@ -24,6 +24,7 @@
 
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -42,34 +43,31 @@ namespace SeriesIDParser.Worker.CoreParserModules
 		/// <inheritdoc />
 		public string Description { get; } = "Parses and removes the FileExtension";
 
-		/// <inheritdoc />
-		public CoreParserModuleStateResult CoreParserModuleStateResult { get; internal set; }
-
 		private State _state = State.Unknown;
 
-		private string _errorOrWarningMessage;
+		private string _errorOrWarningMessage = String.Empty;
 
 		/// <inheritdoc />
-		public CoreParserResult Parse(CoreParserResult inputResult)
+		public CoreParserResult Parse( CoreParserResult inputResult )
 		{
 			CoreParserResult outputResult = inputResult;
-			string extension = HelperWorker.GetFileExtension(inputResult.ModifiedString, inputResult.ParserSettings.FileExtensions);
+			string extension = HelperWorker.GetFileExtension( inputResult.ModifiedString, inputResult.ParserSettings.FileExtensions );
 
-			if (string.IsNullOrEmpty(extension))
+			if (string.IsNullOrEmpty( extension ))
 			{
-				_state = State.WarnUnknownWarning;
+				_state = State.Notice;
 				_errorOrWarningMessage = "No FileExtension found";
 			}
 			else
 			{
 				outputResult.MediaData.FileExtension = extension.ToLower();
 
-				Regex removeRegex = new Regex(outputResult.MediaData.FileExtension, RegexOptions.IgnoreCase);
-				outputResult.ModifiedString = removeRegex.Replace(outputResult.ModifiedString, "");
-				_state = State.OkSuccess;
+				Regex removeRegex = new Regex( outputResult.MediaData.FileExtension, RegexOptions.IgnoreCase );
+				outputResult.ModifiedString = removeRegex.Replace( outputResult.ModifiedString, "" );
+				_state = State.Success;
 			}
 
-			CoreParserModuleStateResult = new CoreParserModuleStateResult(Name, _state, _errorOrWarningMessage, null);
+			outputResult.MediaData.ModuleStates.Add( new CoreParserModuleStateResult( Name, new List<CoreParserModuleSubState>() {new CoreParserModuleSubState( _state, _errorOrWarningMessage )} ) );
 
 			return outputResult;
 		}

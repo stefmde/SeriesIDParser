@@ -26,7 +26,7 @@
 using System;
 using System.Runtime.CompilerServices;
 
-[assembly: InternalsVisibleTo("SeriesIDParser.Test")]
+[assembly: InternalsVisibleTo( "SeriesIDParser.Test" )]
 
 namespace SeriesIDParser.Models
 {
@@ -71,48 +71,32 @@ namespace SeriesIDParser.Models
 	/// <summary>
 	///     Representing the object success state
 	/// </summary>
-	[Flags]
 	public enum State
 	{
 		/// <summary>
-		///     Value is not set or unknown. May cause or caused by an exception
+		///     Value is not set or unknown. Probably a marker for an exception
 		/// </summary>
 		Unknown = 0,
 
 		/// <summary>
+		///     Everything looks fine. Result should be consistant and valid but there are some notices
+		/// </summary>
+		Notice = 1,
+
+		/// <summary>
 		///     Everything looks fine. Result should be consistant and valid
 		/// </summary>
-		OkSuccess = 1,
+		Success = 1,
 
 		/// <summary>
-		///     Flag is set if one or more errors or warnings occurred. See other flags for details
+		///     One or more warning occoured. Result could be constistant but don't have to be
 		/// </summary>
-		WarnErrorOrWarningOccurred = 2,
+		Warning = 2,
 
 		/// <summary>
-		///     Unable to detect the Title-String. Result may be inconsistant or invalid
+		///     One or more errors occoured. Result is probably invalid and shouldn't be used
 		/// </summary>
-		WarnNoTitleFound = 4,
-
-		/// <summary>
-		///     The input string length is to short. Result is inconsistant or invalid
-		/// </summary>
-		ErrEmptyOrToShortArgument = 8,
-
-		/// <summary>
-		///     Unable to detect the ID-String. Result may be inconsistant or invalid
-		/// </summary>
-		ErrIDNotFound = 16,
-
-		/// <summary>
-		///     An unexpected error occurred. Result is inconsistant or invalid
-		/// </summary>
-		ErrUnknownError = 32,
-
-		/// <summary>
-		///     An unexpected error occurred. Result is inconsistant or invalid
-		/// </summary>
-		WarnUnknownWarning = 64
+		Error = 4
 	}
 
 	/// <summary>
@@ -124,9 +108,25 @@ namespace SeriesIDParser.Models
 		///     Value is not set or unknown. May cause or caused by an exception
 		/// </summary>
 		Unknown = 0,
+
+		/// <summary>
+		///     Movie is any type of 2D
+		/// </summary>
 		Dimension_2DAny = 1,
+
+		/// <summary>
+		///     Movie is any type of 3D
+		/// </summary>
 		Dimension_3DAny = 2,
+
+		/// <summary>
+		///     Movie is type of HSBS 3D
+		/// </summary>
 		Dimension_3DHSBS = 4,
+
+		/// <summary>
+		///     Movie is type of HOU 3D
+		/// </summary>
 		Dimension_3DHOU = 8
 	}
 	#endregion

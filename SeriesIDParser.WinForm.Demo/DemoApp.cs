@@ -55,7 +55,6 @@ namespace SeriesIDParser.WinForm.Demo
 			// ps.NewSpacingChar = '-';
 			// SeriesID sid = new SeriesID(ps);
 
-
 			// Creating the parser object with default settings(empty ctor)
 			SeriesID sid = new SeriesID();
 
@@ -64,7 +63,6 @@ namespace SeriesIDParser.WinForm.Demo
 
 			// Getting the result methode 2 - extension method call
 			parserResult = tbxInput.Text.ParseSeriesID();
-
 
 			dataGridViewResult.Rows.Clear();
 			dataGridViewResult.Rows.Add( "OriginalString", "string", parserResult.OriginalString );
@@ -82,7 +80,7 @@ namespace SeriesIDParser.WinForm.Demo
 			dataGridViewResult.Rows.Add( "FileExtension", "string", parserResult.FileExtension );
 			dataGridViewResult.Rows.Add( "RemovedTokens", "string list", string.Join( ", ", parserResult.RemovedTokens ) );
 			dataGridViewResult.Rows.Add( "State", "enum State", parserResult.State );
-			dataGridViewResult.Rows.Add( "DetectedOldSpacingChar", "char", parserResult.DetectedOldSpacingChar );
+			dataGridViewResult.Rows.Add( "DetectedOldSpacingChar", "char", parserResult.OldSpacingChar );
 			dataGridViewResult.Rows.Add( "ProcessingDuration", "TimeSpan", parserResult.ProcessingDuration.TotalMilliseconds + " ms" );
 			dataGridViewResult.Rows.Add( "ReleaseGroup", "string", parserResult.ReleaseGroup );
 			dataGridViewResult.Rows.Add( "AudioCodec", "string", parserResult.AudioCodec );

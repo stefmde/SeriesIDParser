@@ -23,6 +23,7 @@
 // SOFTWARE.
 
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using SeriesIDParser.Models;
@@ -40,33 +41,31 @@ namespace SeriesIDParser.Worker.CoreParserModules
 		/// <inheritdoc />
 		public string Description { get; } = "Parses and removes the DimensionalType";
 
-		/// <inheritdoc />
-		public CoreParserModuleStateResult CoreParserModuleStateResult { get; internal set; }
-
 		private State _state = State.Unknown;
 
-		private string _errorOrWarningMessage;
+		private string _errorOrWarningMessage = String.Empty;
 
 		/// <inheritdoc />
-		public CoreParserResult Parse(CoreParserResult inputResult)
+		public CoreParserResult Parse( CoreParserResult inputResult )
 		{
 			CoreParserResult outputResult = inputResult;
 			string modifiedString = inputResult.ModifiedString;
 
-			DimensionalType dimensionalType = HelperWorker.GetDimensionalType(inputResult.ParserSettings, inputResult.MediaData.DetectedOldSpacingChar, ref modifiedString);
+			DimensionalType dimensionalType = HelperWorker.GetDimensionalType( inputResult.ParserSettings, inputResult.MediaData.DetectedOldSpacingChar, ref modifiedString );
 
 			if (dimensionalType == DimensionalType.Unknown)
 			{
-				_state = State.WarnUnknownWarning;
+				_state = State.Warning;
 				_errorOrWarningMessage = "No DimensionalType found";
 			}
 			else
 			{
 				outputResult.ModifiedString = modifiedString;
 				outputResult.MediaData.DimensionalType = dimensionalType;
-				_state = State.OkSuccess;
+				_state = State.Success;
 			}
-			CoreParserModuleStateResult = new CoreParserModuleStateResult(Name, _state, _errorOrWarningMessage, null);
+
+			outputResult.MediaData.ModuleStates.Add( new CoreParserModuleStateResult( Name, new List<CoreParserModuleSubState>() {new CoreParserModuleSubState( _state, _errorOrWarningMessage )} ) );
 
 			return outputResult;
 		}

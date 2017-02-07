@@ -24,19 +24,22 @@
 
 
 using System;
+using System.Collections.Generic;
 
 namespace SeriesIDParser.Models
 {
 	internal class CoreParserResult
 	{
 		internal readonly string OriginalString;
+
 		internal readonly ParserSettings ParserSettings;
 
 		internal MediaData MediaData { get; set; }
 
 		internal String ModifiedString { get; set; }
 
-		internal CoreParserResult(string originalString, ParserSettings parserSettings)
+
+		internal CoreParserResult( string originalString, ParserSettings parserSettings )
 		{
 			OriginalString = originalString;
 			ModifiedString = originalString;

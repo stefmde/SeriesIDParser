@@ -23,6 +23,8 @@
 // SOFTWARE.
 
 
+using System;
+using System.Collections.Generic;
 using SeriesIDParser.Models;
 
 namespace SeriesIDParser.Worker.CoreParserModules
@@ -38,25 +40,22 @@ namespace SeriesIDParser.Worker.CoreParserModules
 		/// <inheritdoc />
 		public string Description { get; } = "Parses and removes the SeriesDetails like Season- and EpisodeID, EpisodeTitle and so on..";
 
-		/// <inheritdoc />
-		public CoreParserModuleStateResult CoreParserModuleStateResult { get; internal set; }
-
 		private State _state = State.Unknown;
 
-		private string _errorOrWarningMessage;
+		private string _errorOrWarningMessage = String.Empty;
 
 		/// <inheritdoc />
-		public CoreParserResult Parse(CoreParserResult inputResult)
+		public CoreParserResult Parse( CoreParserResult inputResult )
 		{
 			CoreParserResult outputResult = inputResult;
 
-			outputResult.MediaData.EpisodeTitle = HelperWorker.GetEpisodeTitle(inputResult.ParserSettings, inputResult.ModifiedString);
-			outputResult.MediaData.IsSeries = HelperWorker.IsSeries(inputResult.ParserSettings, inputResult.ModifiedString);
-			outputResult.MediaData.Season = HelperWorker.GetSeasonID(inputResult.ParserSettings, inputResult.ModifiedString);
-			outputResult.MediaData.Episodes = HelperWorker.GetEpisodeIDs(inputResult.ParserSettings, inputResult.ModifiedString);
+			outputResult.MediaData.EpisodeTitle = HelperWorker.GetEpisodeTitle( inputResult.ParserSettings, inputResult.ModifiedString );
+			outputResult.MediaData.IsSeries = HelperWorker.IsSeries( inputResult.ParserSettings, inputResult.ModifiedString );
+			outputResult.MediaData.Season = HelperWorker.GetSeasonID( inputResult.ParserSettings, inputResult.ModifiedString );
+			outputResult.MediaData.Episodes = HelperWorker.GetEpisodeIDs( inputResult.ParserSettings, inputResult.ModifiedString );
 
-			_state ^= State.OkSuccess;
-			CoreParserModuleStateResult = new CoreParserModuleStateResult(Name, _state, _errorOrWarningMessage, null);
+			_state = State.Success;
+			outputResult.MediaData.ModuleStates.Add( new CoreParserModuleStateResult( Name, new List<CoreParserModuleSubState>() {new CoreParserModuleSubState( _state, _errorOrWarningMessage )} ) );
 
 			return outputResult;
 		}

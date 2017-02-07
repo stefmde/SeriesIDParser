@@ -114,8 +114,7 @@ namespace SeriesIDParser.Extensions
 		/// <param name="settings"></param>
 		/// <param name="searchOption"></param>
 		/// <returns></returns>
-		public static IEnumerable<ParserResult> ParseSeriesIDPath( this DirectoryInfo path, ParserSettings settings = null,
-																	SearchOption searchOption = SearchOption.AllDirectories )
+		public static IEnumerable<ParserResult> ParseSeriesIDPath( this DirectoryInfo path, ParserSettings settings = null, SearchOption searchOption = SearchOption.AllDirectories )
 		{
 			SeriesID sid = new SeriesID( settings );
 			return sid.ParsePath( path, searchOption );
@@ -143,8 +142,7 @@ namespace SeriesIDParser.Extensions
 		/// <param name="settings"></param>
 		/// <param name="searchOption"></param>
 		/// <returns></returns>
-		public static IEnumerable<ParserResult> ParseSeriesIDPath( this string path, ParserSettings settings = null,
-																	SearchOption searchOption = SearchOption.AllDirectories )
+		public static IEnumerable<ParserResult> ParseSeriesIDPath( this string path, ParserSettings settings = null, SearchOption searchOption = SearchOption.AllDirectories )
 		{
 			SeriesID sid = new SeriesID( settings );
 			return sid.ParsePath( path, searchOption );

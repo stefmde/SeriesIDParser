@@ -24,6 +24,7 @@
 
 
 using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using SeriesIDParser.Models;
 
@@ -40,32 +41,29 @@ namespace SeriesIDParser.Worker.CoreParserModules
 		/// <inheritdoc />
 		public string Description { get; } = "Parses the Year";
 
-		/// <inheritdoc />
-		public CoreParserModuleStateResult CoreParserModuleStateResult { get; internal set; }
-
 		private State _state = State.Unknown;
 
-		private string _errorOrWarningMessage;
+		private string _errorOrWarningMessage = String.Empty;
 
 		/// <inheritdoc />
-		public CoreParserResult Parse(CoreParserResult inputResult)
+		public CoreParserResult Parse( CoreParserResult inputResult )
 		{
 			CoreParserResult outputResult = inputResult;
-			int year = HelperWorker.GetYear(inputResult.ModifiedString, inputResult.ParserSettings.YearParseRegex);
+			int year = HelperWorker.GetYear( inputResult.ModifiedString, inputResult.ParserSettings.YearParseRegex );
 
 			if (year == -1)
 			{
-				_state = State.WarnUnknownWarning;
+				_state = State.Notice;
 				_errorOrWarningMessage = "No Year found";
 			}
 			else
 			{
 				outputResult.MediaData.Year = year;
-				_state = State.OkSuccess;
-				outputResult.ModifiedString = outputResult.ModifiedString.Replace(year.ToString(), "");
+				_state = State.Success;
+				outputResult.ModifiedString = outputResult.ModifiedString.Replace( year.ToString(), "" );
 			}
 
-			CoreParserModuleStateResult = new CoreParserModuleStateResult(Name, _state, _errorOrWarningMessage, null);
+			outputResult.MediaData.ModuleStates.Add( new CoreParserModuleStateResult( Name, new List<CoreParserModuleSubState>() {new CoreParserModuleSubState( _state, _errorOrWarningMessage )} ) );
 
 			return outputResult;
 		}

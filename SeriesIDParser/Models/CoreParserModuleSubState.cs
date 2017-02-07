@@ -24,30 +24,27 @@
 
 
 using System;
-using System.Collections.Generic;
-using System.Runtime.Serialization;
 
 namespace SeriesIDParser.Models
 {
-	public class CoreParserModuleStateResult
+	public class CoreParserModuleSubState
 	{
-		public CoreParserModuleStateResult( string moduleName, List<CoreParserModuleSubState> state )
+		public CoreParserModuleSubState( State state, string message )
 		{
-			ModuleName = moduleName;
-			CoreParserModuleSubState = state;
+			State = state;
+
+			if (message == null)
+			{
+				Message = String.Empty;
+			}
+			else
+			{
+				Message = message;
+			}
 		}
 
-		public CoreParserModuleStateResult( string moduleName, List<CoreParserModuleSubState> state, Exception exception = null )
-		{
-			ModuleName = moduleName;
-			Exception = exception;
-			CoreParserModuleSubState = state;
-		}
+		public State State { get; }
 
-		public string ModuleName { get; }
-
-		public List<CoreParserModuleSubState> CoreParserModuleSubState { get; }
-
-		public Exception Exception { get; internal set; }
+		public string Message { get; }
 	}
 }

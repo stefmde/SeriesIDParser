@@ -41,35 +41,31 @@ namespace SeriesIDParser.Worker.CoreParserModules
 		/// <inheritdoc />
 		public string Description { get; } = "Parses and removes the Tokens";
 
-		/// <inheritdoc />
-		public CoreParserModuleStateResult CoreParserModuleStateResult { get; internal set; }
-
 		private State _state = State.Unknown;
 
-		private string _errorOrWarningMessage;
+		private string _errorOrWarningMessage = String.Empty;
 
 		/// <inheritdoc />
-		public CoreParserResult Parse(CoreParserResult inputResult)
+		public CoreParserResult Parse( CoreParserResult inputResult )
 		{
 			CoreParserResult outputResult = inputResult;
 			string modifiedString = inputResult.ModifiedString;
 
-			List<string> foundTokens = HelperWorker.RemoveTokens(inputResult.ParserSettings, inputResult.MediaData.DetectedOldSpacingChar,
-																	ref modifiedString);
+			List<string> foundTokens = HelperWorker.RemoveTokens( inputResult.ParserSettings, inputResult.MediaData.DetectedOldSpacingChar, ref modifiedString );
 
 			if (foundTokens.Any())
 			{
 				outputResult.ModifiedString = modifiedString;
 				outputResult.MediaData.RemovedTokens = foundTokens;
-				_state = State.OkSuccess;
+				_state = State.Success;
 			}
 			else
 			{
-				_state = State.WarnUnknownWarning;
+				_state = State.Warning;
 				_errorOrWarningMessage = "No Tokens found";
 			}
 
-			CoreParserModuleStateResult = new CoreParserModuleStateResult(Name, _state, _errorOrWarningMessage, null);
+			outputResult.MediaData.ModuleStates.Add( new CoreParserModuleStateResult( Name, new List<CoreParserModuleSubState>() {new CoreParserModuleSubState( _state, _errorOrWarningMessage )} ) );
 
 			return outputResult;
 		}

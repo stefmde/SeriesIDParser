@@ -46,7 +46,7 @@ namespace SeriesIDParser
 	{
 		#region Fields
 		private CoreParserResult _coreParserResult;
-		private readonly ParserSettings _parserSettings = new ParserSettings(true);
+		private readonly ParserSettings _parserSettings = new ParserSettings( true );
 		private readonly DateTime _parseStartTime = new DateTime();
 		private FileInfo _fileInfo;
 		private readonly bool _cacheEnabled;
@@ -56,7 +56,7 @@ namespace SeriesIDParser
 		///     ctor with optional settings. Null settings are overriden with default settings
 		/// </summary>
 		/// <param name="settings"></param>
-		public SeriesID(ParserSettings settings = null)
+		public SeriesID( ParserSettings settings = null )
 		{
 			if (settings != null)
 			{
@@ -65,7 +65,7 @@ namespace SeriesIDParser
 
 			if (_parserSettings.CacheMode == CacheMode.Unknown)
 			{
-				throw new ArgumentException("ParserSettings.CacheMode.Unknown is not a valid argument");
+				throw new ArgumentException( "ParserSettings.CacheMode.Unknown is not a valid argument" );
 			}
 
 			if (_parserSettings.CacheMode == CacheMode.Advanced || _parserSettings.CacheMode == CacheMode.Simple)
@@ -75,7 +75,7 @@ namespace SeriesIDParser
 
 			if (_cacheEnabled && !MediaDataCache.InstanceExists)
 			{
-				MediaDataCache.Create(_parserSettings);
+				MediaDataCache.Create( _parserSettings );
 			}
 		}
 
@@ -89,25 +89,25 @@ namespace SeriesIDParser
 		/// </summary>
 		/// <param name="input">The series or movie string who get parsed. Must be atleast five chars</param>
 		/// <returns>The SeriesIDResult object that represents the series or movie string</returns>
-		public ParserResult Parse(string input)
+		public ParserResult Parse( string input )
 		{
 			if (_cacheEnabled)
 			{
 				ParserResult parserResult;
-				if (MediaDataCache.Instance.TryGetAsParserResult(input, out parserResult))
+				if (MediaDataCache.Instance.TryGetAsParserResult( input, out parserResult ))
 				{
 					return parserResult;
 				}
 			}
 
-			MediaData mediaData = CoreParser(input);
+			MediaData mediaData = CoreParser( input );
 
 			if (_cacheEnabled)
 			{
-				MediaDataCache.Instance.Add(input, mediaData);
+				MediaDataCache.Instance.Add( input, mediaData );
 			}
 
-			return mediaData.ToParserResult(_parserSettings);
+			return mediaData.ToParserResult( _parserSettings );
 		}
 
 		/// <summary>
@@ -115,10 +115,10 @@ namespace SeriesIDParser
 		/// </summary>
 		/// <param name="input">The series or movie FileInfo who get parsed.</param>
 		/// <returns>The SeriesIDResult object that represents the series or movie string</returns>
-		public ParserResult Parse(FileInfo input)
+		public ParserResult Parse( FileInfo input )
 		{
 			_fileInfo = input;
-			return CoreParser(input?.Name ?? String.Empty).ToParserResult(_parserSettings);
+			return CoreParser( input?.Name ?? String.Empty ).ToParserResult( _parserSettings );
 		}
 
 		/// <summary>
@@ -127,32 +127,32 @@ namespace SeriesIDParser
 		/// <param name="path"></param>
 		/// <param name="searchOption"></param>
 		/// <returns></returns>
-		public IEnumerable<ParserResult> ParsePath(string path, SearchOption searchOption = SearchOption.AllDirectories)
+		public IEnumerable<ParserResult> ParsePath( string path, SearchOption searchOption = SearchOption.AllDirectories )
 		{
 			List<ParserResult> results = new List<ParserResult>();
 
-			if (string.IsNullOrEmpty(path) || !Directory.Exists(path))
+			if (string.IsNullOrEmpty( path ) || !Directory.Exists( path ))
 			{
 				return results;
 			}
 
-			List<string> files = new List<string>(HelperWorker.GetSeriesAndMovieFiles(path, _parserSettings, searchOption));
+			List<string> files = new List<string>( HelperWorker.GetSeriesAndMovieFiles( path, _parserSettings, searchOption ) );
 
 			foreach (string file in files)
 			{
-				string fileName = Path.GetFileName(file);
+				string fileName = Path.GetFileName( file );
 
 				if (_cacheEnabled)
 				{
 					MediaData mediaData;
-					if (MediaDataCache.Instance.TryGet(fileName, out mediaData))
+					if (MediaDataCache.Instance.TryGet( fileName, out mediaData ))
 					{
-						results.Add(mediaData.ToParserResult(_parserSettings));
+						results.Add( mediaData.ToParserResult( _parserSettings ) );
 						continue;
 					}
 				}
 
-				results.Add(CoreParser(fileName).ToParserResult(_parserSettings));
+				results.Add( CoreParser( fileName ).ToParserResult( _parserSettings ) );
 			}
 
 			return results;
@@ -164,46 +164,40 @@ namespace SeriesIDParser
 		/// <param name="path"></param>
 		/// <param name="searchOption"></param>
 		/// <returns></returns>
-		public IEnumerable<ParserResult> ParsePath(DirectoryInfo path, SearchOption searchOption = SearchOption.AllDirectories)
+		public IEnumerable<ParserResult> ParsePath( DirectoryInfo path, SearchOption searchOption = SearchOption.AllDirectories )
 		{
-			return ParsePath(path?.FullName ?? String.Empty, searchOption);
+			return ParsePath( path?.FullName ?? String.Empty, searchOption );
 		}
 		#endregion WrapperFunctions
 
 		// ############################################################
 		// ### Core Function
 		// ############################################################
-		private MediaData CoreParser(string input)
+		private MediaData CoreParser( string input )
 		{
-			bool warningOrErrorOccurred = false;
-
 			try
 			{
-				_coreParserResult = new CoreParserResult(input, _parserSettings);
+				_coreParserResult = new CoreParserResult( input, _parserSettings );
 
 				if (input.Length < 5)
 				{
 					// ERROR
-					_coreParserResult.MediaData.State |= State.ErrEmptyOrToShortArgument;
-					_coreParserResult.MediaData.Resolutions = HelperWorker.MaintainUnknownResolution(_coreParserResult.MediaData.Resolutions.ToList());
+					_coreParserResult.MediaData.State = State.Error;
+					_coreParserResult.MediaData.Resolutions = HelperWorker.MaintainUnknownResolution( _coreParserResult.MediaData.Resolutions.ToList() );
 					return _coreParserResult.MediaData;
 				}
 
-				// ModuleName, State, Message
-
-				List<CoreParserModuleStateResult> coreParserModuleStateResults = new List<CoreParserModuleStateResult>();
 				IEnumerable<ICoreParser> coreParserModules = HelperWorker.GetAllCoreParsers();
 
 				foreach (ICoreParser coreParserModule in coreParserModules)
 				{
 					try
 					{
-						_coreParserResult = coreParserModule.Parse(_coreParserResult);
-						coreParserModuleStateResults.Add(coreParserModule.CoreParserModuleStateResult);
+						_coreParserResult = coreParserModule.Parse( _coreParserResult );
 					}
 					catch (Exception ex)
 					{
-						coreParserModuleStateResults.Add(new CoreParserModuleStateResult(coreParserModule.Name, State.ErrUnknownError, "Exception on executing module occoured. See exception for more details." + ex));
+						_coreParserResult.MediaData.ModuleStates.Add(new CoreParserModuleStateResult(coreParserModule.Name, new List<CoreParserModuleSubState>() { new CoreParserModuleSubState(State.Error, "Exception on executing module occoured. See exception for more details.") }, ex));
 
 						// Throw exception if the flag is set
 						if (_parserSettings.ThrowExceptionInsteadOfErrorFlag)
@@ -213,14 +207,35 @@ namespace SeriesIDParser
 					}
 				}
 
-				_coreParserResult.MediaData.RemovedTokens = _coreParserResult.MediaData.RemovedTokens.OrderBy(x => x).ToList();
-				_coreParserResult.MediaData.Resolutions = HelperWorker.MaintainUnknownResolution(_coreParserResult.MediaData.Resolutions.ToList());
-				_coreParserResult.MediaData.State = coreParserModuleStateResults.GroupBy(x => x.State).Select(x => x.First()).ToList();
+				_coreParserResult.MediaData.RemovedTokens = _coreParserResult.MediaData.RemovedTokens.OrderBy( x => x ).ToList();
+				_coreParserResult.MediaData.Resolutions = HelperWorker.MaintainUnknownResolution( _coreParserResult.MediaData.Resolutions.ToList() );
 
+				int errors = 0;
+				int warnings = 0;
+				int notice = 0;
 
-				if (!warningOrErrorOccurred)
+				foreach (CoreParserModuleStateResult coreParserModuleStateResult in _coreParserResult.MediaData.ModuleStates)
 				{
-					_coreParserResult.MediaData.State |= State.OkSuccess;
+					errors += coreParserModuleStateResult.CoreParserModuleSubState.Count(x => x.State == State.Error);
+					warnings += coreParserModuleStateResult.CoreParserModuleSubState.Count(x => x.State == State.Warning || x.State == State.Unknown);
+					notice += coreParserModuleStateResult.CoreParserModuleSubState.Count(x => x.State == State.Notice);
+				}
+
+				if (errors > 0)
+				{
+					_coreParserResult.MediaData.State = State.Error;
+				}
+				else if (warnings > 0)
+				{
+					_coreParserResult.MediaData.State = State.Warning;
+				}
+				else if (notice > 0)
+				{
+					_coreParserResult.MediaData.State = State.Notice;
+				}
+				else
+				{
+					_coreParserResult.MediaData.State = State.Success;
 				}
 
 				_coreParserResult.MediaData.ProcessingDuration = DateTime.Now - _parseStartTime;
@@ -238,12 +253,12 @@ namespace SeriesIDParser
 				}
 
 				// ERROR
-				_coreParserResult.MediaData.State |= State.ErrUnknownError;
-				return _coreParserResult.MediaData; ;
+				_coreParserResult.MediaData.State = State.Error;
+				return _coreParserResult.MediaData;
+
+				;
 			}
 		}
-
-
 
 		// ############################################################
 		// ### Local Helper Functions

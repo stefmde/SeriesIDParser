@@ -75,6 +75,11 @@ namespace SeriesIDParser.Models
 		internal State State { get; set; } = State.Unknown;
 
 		/// <summary>
+		/// Contains the state informations provided by each module
+		/// </summary>
+		public List<CoreParserModuleStateResult> ModuleStates { get; internal set; } = new List<CoreParserModuleStateResult>();
+
+		/// <summary>
 		///     Contains the Exception if any occours. Default: null
 		/// </summary>
 		internal Exception Exception { get; set; } = null;

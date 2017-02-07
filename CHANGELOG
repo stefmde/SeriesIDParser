@@ -2,6 +2,20 @@
 
 
 
+##9.1.0 (2017-??-??)##
+###New###
+- Now you can easily write your own modules
+- Enum State changed
+- Renamed DetectedOldSpacingChar -> OldSpacingChar
+- Added Property ModuleStates to ParserResult to show the state(s) of each single CoreParser if you want so see them
+
+###Fix###
+ - 
+
+
+ ---
+
+
 ##9.1.0 (2017-01-24)##
 ###New###
 - Changed XML Serializer from default to unicode to match core version

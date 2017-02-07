@@ -23,6 +23,8 @@
 // SOFTWARE.
 
 
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using SeriesIDParser.Models;
 
@@ -39,34 +41,32 @@ namespace SeriesIDParser.Worker.CoreParserModules
 		/// <inheritdoc />
 		public string Description { get; } = "Parses and removes the Codecs";
 
-		/// <inheritdoc />
-		public CoreParserModuleStateResult CoreParserModuleStateResult { get; internal set; }
-
 		private State _state = State.Unknown;
 
-		private string _errorOrWarningMessage;
+		private string _errorOrWarningMessage = String.Empty;
 
 		/// <inheritdoc />
-		public CoreParserResult Parse(CoreParserResult inputResult)
+		public CoreParserResult Parse( CoreParserResult inputResult )
 		{
 			CoreParserResult outputResult = inputResult;
 			string modifiedString = inputResult.ModifiedString;
 
-			outputResult.MediaData.AudioCodec = HelperWorker.FindTokens(ref modifiedString, inputResult.MediaData.DetectedOldSpacingChar.ToString(), inputResult.ParserSettings.AudioCodecs, true).LastOrDefault();
+			outputResult.MediaData.AudioCodec = HelperWorker.FindTokens( ref modifiedString, inputResult.MediaData.DetectedOldSpacingChar.ToString(), inputResult.ParserSettings.AudioCodecs, true ).LastOrDefault();
 			if (outputResult.MediaData.AudioCodec != null)
 			{
-				outputResult.MediaData.RemovedTokens.Add(outputResult.MediaData.AudioCodec);
+				outputResult.MediaData.RemovedTokens.Add( outputResult.MediaData.AudioCodec );
 			}
 
-			outputResult.MediaData.VideoCodec = HelperWorker.FindTokens(ref modifiedString, inputResult.MediaData.DetectedOldSpacingChar.ToString(), inputResult.ParserSettings.VideoCodecs, true).LastOrDefault();
+			outputResult.MediaData.VideoCodec = HelperWorker.FindTokens( ref modifiedString, inputResult.MediaData.DetectedOldSpacingChar.ToString(), inputResult.ParserSettings.VideoCodecs, true ).LastOrDefault();
 			if (outputResult.MediaData.VideoCodec != null)
 			{
-				outputResult.MediaData.RemovedTokens.Add(outputResult.MediaData.VideoCodec);
+				outputResult.MediaData.RemovedTokens.Add( outputResult.MediaData.VideoCodec );
 			}
 
 			outputResult.ModifiedString = modifiedString;
-			_state = State.OkSuccess;
-			CoreParserModuleStateResult = new CoreParserModuleStateResult(Name, _state, _errorOrWarningMessage, null);
+			_state = State.Success;
+
+			outputResult.MediaData.ModuleStates.Add( new CoreParserModuleStateResult( Name, new List<CoreParserModuleSubState>() {new CoreParserModuleSubState( _state, _errorOrWarningMessage )} ) );
 
 			return outputResult;
 		}

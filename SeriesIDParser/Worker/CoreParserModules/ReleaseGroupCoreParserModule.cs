@@ -23,6 +23,8 @@
 // SOFTWARE.
 
 
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using SeriesIDParser.Models;
 
@@ -39,44 +41,39 @@ namespace SeriesIDParser.Worker.CoreParserModules
 		/// <inheritdoc />
 		public string Description { get; } = "Parses and removes the FileExtensionReleaseGroup";
 
-		/// <inheritdoc />
-		public CoreParserModuleStateResult CoreParserModuleStateResult { get; internal set; }
-
 		private State _state = State.Unknown;
 
-		private string _errorOrWarningMessage;
+		private string _errorOrWarningMessage = String.Empty;
 
 		/// <inheritdoc />
-		public CoreParserResult Parse(CoreParserResult inputResult)
+		public CoreParserResult Parse( CoreParserResult inputResult )
 		{
 			CoreParserResult outputResult = inputResult;
 
 			if (inputResult.ModifiedString.Length >= 30)
 			{
-				string tmpTitle = inputResult.ModifiedString.Substring(inputResult.ModifiedString.Length - 20, 20);
+				string tmpTitle = inputResult.ModifiedString.Substring( inputResult.ModifiedString.Length - 20, 20 );
 
-				if (tmpTitle.Any(x => x == inputResult.ParserSettings.ReleaseGroupSeperator))
+				if (tmpTitle.Any( x => x == inputResult.ParserSettings.ReleaseGroupSeperator ))
 				{
-					int seperatorIndex = inputResult.ModifiedString.LastIndexOf(inputResult.ParserSettings.ReleaseGroupSeperator);
-					outputResult.MediaData.ReleaseGroup = string.IsNullOrEmpty(inputResult.MediaData.FileExtension)
-								? inputResult.ModifiedString.Substring(seperatorIndex + 1).Trim()
-								: inputResult.ModifiedString.Substring(seperatorIndex + 1).Replace(inputResult.MediaData.FileExtension, "").Trim();
-					outputResult.ModifiedString = outputResult.ModifiedString.Remove(seperatorIndex).Trim();
-					_state = State.OkSuccess;
+					int seperatorIndex = inputResult.ModifiedString.LastIndexOf( inputResult.ParserSettings.ReleaseGroupSeperator );
+					outputResult.MediaData.ReleaseGroup = string.IsNullOrEmpty( inputResult.MediaData.FileExtension ) ? inputResult.ModifiedString.Substring( seperatorIndex + 1 ).Trim() : inputResult.ModifiedString.Substring( seperatorIndex + 1 ).Replace( inputResult.MediaData.FileExtension, "" ).Trim();
+					outputResult.ModifiedString = outputResult.ModifiedString.Remove( seperatorIndex ).Trim();
+					_state = State.Success;
 				}
 				else
 				{
-					_state = State.WarnUnknownWarning;
+					_state = State.Notice;
 					_errorOrWarningMessage = "No ReleaseGroup found";
 				}
 			}
 			else
 			{
-				_state = State.WarnUnknownWarning;
+				_state = State.Notice;
 				_errorOrWarningMessage = "String to short to parse for ReleaseGroup";
 			}
 
-			CoreParserModuleStateResult = new CoreParserModuleStateResult(Name, _state, _errorOrWarningMessage, null);
+			outputResult.MediaData.ModuleStates.Add( new CoreParserModuleStateResult( Name, new List<CoreParserModuleSubState>() {new CoreParserModuleSubState( _state, _errorOrWarningMessage )} ) );
 
 			return outputResult;
 		}

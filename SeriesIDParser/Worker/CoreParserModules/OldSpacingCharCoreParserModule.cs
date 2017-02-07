@@ -24,11 +24,13 @@
 
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using SeriesIDParser.Models;
 
-[assembly: InternalsVisibleTo("SeriesIDParser.Test")]
+[assembly: InternalsVisibleTo( "SeriesIDParser.Test" )]
+
 namespace SeriesIDParser.Worker.CoreParserModules
 {
 	internal class OldSpacingCharCoreParserModule : ICoreParser
@@ -42,32 +44,29 @@ namespace SeriesIDParser.Worker.CoreParserModules
 		/// <inheritdoc />
 		public string Description { get; } = "Parses the OldSpacingChar";
 
-		/// <inheritdoc />
-		public CoreParserModuleStateResult CoreParserModuleStateResult { get; internal set; }
-
 		private State _state = State.Unknown;
 
-		private string _errorOrWarningMessage;
+		private string _errorOrWarningMessage = String.Empty;
 
 		/// <inheritdoc />
-		public CoreParserResult Parse(CoreParserResult inputResult)
+		public CoreParserResult Parse( CoreParserResult inputResult )
 		{
 			CoreParserResult outputResult = inputResult;
 
-			char spacer = HelperWorker.GetSpacingChar(inputResult.ModifiedString, inputResult.ParserSettings);
+			char spacer = HelperWorker.GetSpacingChar( inputResult.ModifiedString, inputResult.ParserSettings );
 
 			if (spacer != new char())
 			{
 				outputResult.MediaData.DetectedOldSpacingChar = spacer;
-				_state = State.OkSuccess;
+				_state = State.Success;
 			}
 			else
 			{
-				_state = State.ErrUnknownError;
+				_state = State.Error;
 				_errorOrWarningMessage = "No OldSpacingChar found";
 			}
 
-			CoreParserModuleStateResult = new CoreParserModuleStateResult(Name, _state, _errorOrWarningMessage, null);
+			outputResult.MediaData.ModuleStates.Add( new CoreParserModuleStateResult( Name, new List<CoreParserModuleSubState>() {new CoreParserModuleSubState( _state, _errorOrWarningMessage )} ) );
 
 			return outputResult;
 		}

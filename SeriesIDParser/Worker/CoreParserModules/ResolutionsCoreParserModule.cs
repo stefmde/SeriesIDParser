@@ -23,6 +23,7 @@
 // SOFTWARE.
 
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using SeriesIDParser.Models;
@@ -40,35 +41,31 @@ namespace SeriesIDParser.Worker.CoreParserModules
 		/// <inheritdoc />
 		public string Description { get; } = "Parses and removes the Resolutions";
 
-		/// <inheritdoc />
-		public CoreParserModuleStateResult CoreParserModuleStateResult { get; internal set; }
-
 		private State _state = State.Unknown;
 
-		private string _errorOrWarningMessage;
+		private string _errorOrWarningMessage = String.Empty;
 
 		/// <inheritdoc />
-		public CoreParserResult Parse(CoreParserResult inputResult)
+		public CoreParserResult Parse( CoreParserResult inputResult )
 		{
 			CoreParserResult outputResult = inputResult;
 			string modifiedString = inputResult.ModifiedString;
 
-			List<ResolutionsMap> foundResolutions = HelperWorker.GetResolutions(inputResult.ParserSettings, inputResult.MediaData.DetectedOldSpacingChar,
-																				ref modifiedString);
+			List<ResolutionsMap> foundResolutions = HelperWorker.GetResolutions( inputResult.ParserSettings, inputResult.MediaData.DetectedOldSpacingChar, ref modifiedString );
 
 			if (foundResolutions.Any())
 			{
 				outputResult.MediaData.Resolutions = foundResolutions;
 				outputResult.ModifiedString = modifiedString;
-				_state = State.OkSuccess;
+				_state = State.Success;
 			}
 			else
 			{
-				_state = State.WarnUnknownWarning;
+				_state = State.Warning;
 				_errorOrWarningMessage = "No Resolutions found";
 			}
 
-			CoreParserModuleStateResult = new CoreParserModuleStateResult(Name, _state, _errorOrWarningMessage, null);
+			outputResult.MediaData.ModuleStates.Add( new CoreParserModuleStateResult( Name, new List<CoreParserModuleSubState>() {new CoreParserModuleSubState( _state, _errorOrWarningMessage )} ) );
 
 			return outputResult;
 		}

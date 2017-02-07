@@ -68,7 +68,7 @@ namespace SeriesIDParser.Test.Tests
 		public void ParseSeriesIDStringEmptyInput()
 		{
 			ParserResult parserResult = String.Empty.ParseSeriesID();
-			Assert.IsTrue( parserResult.State == State.ErrEmptyOrToShortArgument );
+			Assert.IsTrue( parserResult.State == State.Error );
 			Assert.IsTrue( parserResult.Exception == null );
 		}
 
@@ -91,7 +91,7 @@ namespace SeriesIDParser.Test.Tests
 			FileInfo file = new FileInfo( Constants.SeriesFilePath );
 			file = null;
 			ParserResult parserResult = file.ParseSeriesID( parserSettings );
-			Assert.IsTrue( parserResult.State == State.ErrEmptyOrToShortArgument );
+			Assert.IsTrue( parserResult.State == State.Error );
 			Assert.IsTrue( parserResult.Exception == null );
 		}
 

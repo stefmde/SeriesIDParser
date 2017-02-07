@@ -23,6 +23,8 @@
 // SOFTWARE.
 
 
+using System;
+using System.Collections.Generic;
 using SeriesIDParser.Models;
 
 namespace SeriesIDParser.Worker.CoreParserModules
@@ -38,37 +40,34 @@ namespace SeriesIDParser.Worker.CoreParserModules
 		/// <inheritdoc />
 		public string Description { get; } = "Parses and removes the Title";
 
-		/// <inheritdoc />
-		public CoreParserModuleStateResult CoreParserModuleStateResult { get; internal set; }
-
 		private State _state = State.Unknown;
 
-		private string _errorOrWarningMessage;
+		private string _errorOrWarningMessage = String.Empty;
 
 		/// <inheritdoc />
-		public CoreParserResult Parse(CoreParserResult inputResult)
+		public CoreParserResult Parse( CoreParserResult inputResult )
 		{
 			CoreParserResult outputResult = inputResult;
 			string oldSpacingChar = inputResult.MediaData.DetectedOldSpacingChar.ToString();
-			bool warningOrErrorOccurred = false;
-			State state = State.Unknown;
+			State state = State.Notice;
+			_errorOrWarningMessage = "Unable to verify state";
 
 			// Remove double spacer
-			while (outputResult.ModifiedString.Contains(inputResult.MediaData + oldSpacingChar))
+			while (outputResult.ModifiedString.Contains( inputResult.MediaData + oldSpacingChar ))
 			{
-				outputResult.ModifiedString = outputResult.ModifiedString.Replace(oldSpacingChar + oldSpacingChar, oldSpacingChar);
+				outputResult.ModifiedString = outputResult.ModifiedString.Replace( oldSpacingChar + oldSpacingChar, oldSpacingChar );
 			}
 
 			// Convert to new spacer
-			outputResult.ModifiedString = outputResult.ModifiedString.Replace(oldSpacingChar, inputResult.ParserSettings.NewSpacingChar.ToString());
+			outputResult.ModifiedString = outputResult.ModifiedString.Replace( oldSpacingChar, inputResult.ParserSettings.NewSpacingChar.ToString() );
 
 			// Remove trailing spacer
-			outputResult.ModifiedString = outputResult.ModifiedString.Trim().Trim(inputResult.MediaData.DetectedOldSpacingChar).Trim(inputResult.ParserSettings.NewSpacingChar);
+			outputResult.ModifiedString = outputResult.ModifiedString.Trim().Trim( inputResult.MediaData.DetectedOldSpacingChar ).Trim( inputResult.ParserSettings.NewSpacingChar );
 
-			outputResult.MediaData.Title = HelperWorker.GetTitle(inputResult.ParserSettings, inputResult.MediaData.DetectedOldSpacingChar, outputResult.ModifiedString, ref warningOrErrorOccurred, ref state);
+			outputResult.MediaData.Title = HelperWorker.GetTitle( inputResult.ParserSettings, inputResult.MediaData.DetectedOldSpacingChar, outputResult.ModifiedString );
 			_state = state;
 
-			CoreParserModuleStateResult = new CoreParserModuleStateResult(Name, _state, _errorOrWarningMessage, null);
+			outputResult.MediaData.ModuleStates.Add( new CoreParserModuleStateResult( Name, new List<CoreParserModuleSubState>() {new CoreParserModuleSubState( _state, _errorOrWarningMessage )} ) );
 
 			return outputResult;
 		}
