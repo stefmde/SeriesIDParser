@@ -42,7 +42,7 @@ namespace SeriesIDParser.Models
 		/// <summary>
 		///     Contains tokens whoi are removed by the parser as string list
 		/// </summary>
-		internal IEnumerable<string> RemovedTokens { get; set; } = new List<string>();
+		internal IList<string> RemovedTokens { get; set; } = new List<string>();
 
 		/// <summary>
 		///     Contains the FileInfo that is given to the parser
