@@ -54,6 +54,7 @@
     <Compile Include="Extensions\ParserExtensions.cs" />
     <Compile Include="Extensions\ParserResultExtensions.cs" />
     <Compile Include="Models\CacheDictionary.cs" />
+    <Compile Include="Models\CoreParserModuleStateResult.cs" />
     <Compile Include="Models\CoreParserResult.cs" />
     <Compile Include="Models\Enums.cs" />
     <Compile Include="Models\ICoreParser.cs" />

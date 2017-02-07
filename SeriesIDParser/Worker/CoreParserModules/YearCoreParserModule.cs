@@ -41,47 +41,31 @@ namespace SeriesIDParser.Worker.CoreParserModules
 		public string Description { get; } = "Parses the Year";
 
 		/// <inheritdoc />
-		public State State { get; internal set; } = State.Unknown;
+		public CoreParserModuleStateResult CoreParserModuleStateResult { get; internal set; }
 
-		/// <inheritdoc />
-		public string ErrorOrWarningMessage { get; internal set; }
+		private State _state = State.Unknown;
+
+		private string _errorOrWarningMessage;
 
 		/// <inheritdoc />
 		public CoreParserResult Parse(CoreParserResult inputResult)
 		{
 			CoreParserResult outputResult = inputResult;
-			int year = -1;
-
-			Regex yearRegex = new Regex(inputResult.ParserSettings.YearParseRegex);
-			MatchCollection matches = yearRegex.Matches(inputResult.OriginalString);
-
-			foreach (Match match in matches)
-			{
-				if (!match.Success)
-				{
-					continue;
-				}
-
-				int tempYear = -1;
-
-				if (int.TryParse(match.Value, out tempYear) && tempYear >= 1900 && tempYear <= DateTime.Now.Year)
-				{
-					year = tempYear;
-					State = State.OkSuccess;
-					break;
-				}
-			}
+			int year = HelperWorker.GetYear(inputResult.ModifiedString, inputResult.ParserSettings.YearParseRegex);
 
 			if (year == -1)
 			{
-				State = State.WarnUnknownWarning;
-				ErrorOrWarningMessage = "No Year found";
+				_state = State.WarnUnknownWarning;
+				_errorOrWarningMessage = "No Year found";
 			}
 			else
 			{
 				outputResult.MediaData.Year = year;
+				_state = State.OkSuccess;
 				outputResult.ModifiedString = outputResult.ModifiedString.Replace(year.ToString(), "");
 			}
+
+			CoreParserModuleStateResult = new CoreParserModuleStateResult(Name, _state, _errorOrWarningMessage, null);
 
 			return outputResult;
 		}
@@ -89,7 +73,7 @@ namespace SeriesIDParser.Worker.CoreParserModules
 		/// <inheritdoc />
 		public override string ToString()
 		{
-			return "Name: " + Name + " Priority: " + Priority + " State: " + State;
+			return "Name: " + Name + " Priority: " + Priority + " State: " + _state;
 		}
 	}
 }

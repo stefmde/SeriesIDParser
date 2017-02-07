@@ -41,10 +41,11 @@ namespace SeriesIDParser.Worker.CoreParserModules
 		public string Description { get; } = "Parses and removes the DimensionalType";
 
 		/// <inheritdoc />
-		public State State { get; internal set; } = State.Unknown;
+		public CoreParserModuleStateResult CoreParserModuleStateResult { get; internal set; }
 
-		/// <inheritdoc />
-		public string ErrorOrWarningMessage { get; internal set; }
+		private State _state = State.Unknown;
+
+		private string _errorOrWarningMessage;
 
 		/// <inheritdoc />
 		public CoreParserResult Parse(CoreParserResult inputResult)
@@ -52,45 +53,20 @@ namespace SeriesIDParser.Worker.CoreParserModules
 			CoreParserResult outputResult = inputResult;
 			string modifiedString = inputResult.ModifiedString;
 
-			List<DimensionalType> tempDimensionalTypes = new List<DimensionalType>();
-			DimensionalType foundDimensionalType;
+			DimensionalType dimensionalType = HelperWorker.GetDimensionalType(inputResult.ParserSettings, inputResult.MediaData.DetectedOldSpacingChar, ref modifiedString);
 
-			// Try get 3D HSBS
-			tempDimensionalTypes.AddRange(HelperWorker.GetDimensionalTypeByResMap(inputResult.ParserSettings.DetectHsbs3DTokens, DimensionalType.Dimension_3DHSBS, inputResult.MediaData.DetectedOldSpacingChar, ref modifiedString));
-
-			// Try get 3D HOU
-			tempDimensionalTypes.AddRange(HelperWorker.GetDimensionalTypeByResMap(inputResult.ParserSettings.DetectHou3DTokens, DimensionalType.Dimension_3DHOU, inputResult.MediaData.DetectedOldSpacingChar, ref modifiedString));
-
-			// Try get 3D Any
-			if (tempDimensionalTypes.Count == 0)
+			if (dimensionalType == DimensionalType.Unknown)
 			{
-				tempDimensionalTypes.AddRange(HelperWorker.GetDimensionalTypeByResMap(inputResult.ParserSettings.DetectAny3DTokens, DimensionalType.Dimension_3DAny, inputResult.MediaData.DetectedOldSpacingChar, ref modifiedString));
-			}
-
-			if (tempDimensionalTypes.Count == 0)
-			{
-				foundDimensionalType = DimensionalType.Dimension_2DAny;
-			}
-			else if (tempDimensionalTypes.Count == 1)
-			{
-				foundDimensionalType = tempDimensionalTypes.LastOrDefault();
-			}
-			else
-			{
-				foundDimensionalType = DimensionalType.Dimension_3DAny;
-			}
-
-			if (foundDimensionalType == DimensionalType.Unknown)
-			{
-				State = State.WarnUnknownWarning;
-				ErrorOrWarningMessage = "No DimensionalType found";
+				_state = State.WarnUnknownWarning;
+				_errorOrWarningMessage = "No DimensionalType found";
 			}
 			else
 			{
 				outputResult.ModifiedString = modifiedString;
-				outputResult.MediaData.DimensionalType = foundDimensionalType;
-				State = State.OkSuccess;
+				outputResult.MediaData.DimensionalType = dimensionalType;
+				_state = State.OkSuccess;
 			}
+			CoreParserModuleStateResult = new CoreParserModuleStateResult(Name, _state, _errorOrWarningMessage, null);
 
 			return outputResult;
 		}
@@ -98,7 +74,7 @@ namespace SeriesIDParser.Worker.CoreParserModules
 		/// <inheritdoc />
 		public override string ToString()
 		{
-			return "Name: " + Name + " Priority: " + Priority + " State: " + State;
+			return "Name: " + Name + " Priority: " + Priority + " State: " + _state;
 		}
 	}
 }

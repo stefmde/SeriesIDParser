@@ -40,10 +40,11 @@ namespace SeriesIDParser.Worker.CoreParserModules
 		public string Description { get; } = "Parses and removes the FileExtensionReleaseGroup";
 
 		/// <inheritdoc />
-		public State State { get; internal set; } = State.Unknown;
+		public CoreParserModuleStateResult CoreParserModuleStateResult { get; internal set; }
 
-		/// <inheritdoc />
-		public string ErrorOrWarningMessage { get; internal set; }
+		private State _state = State.Unknown;
+
+		private string _errorOrWarningMessage;
 
 		/// <inheritdoc />
 		public CoreParserResult Parse(CoreParserResult inputResult)
@@ -61,19 +62,21 @@ namespace SeriesIDParser.Worker.CoreParserModules
 								? inputResult.ModifiedString.Substring(seperatorIndex + 1).Trim()
 								: inputResult.ModifiedString.Substring(seperatorIndex + 1).Replace(inputResult.MediaData.FileExtension, "").Trim();
 					outputResult.ModifiedString = outputResult.ModifiedString.Remove(seperatorIndex).Trim();
-					State = State.OkSuccess;
+					_state = State.OkSuccess;
 				}
 				else
 				{
-					State = State.WarnUnknownWarning;
-					ErrorOrWarningMessage = "No ReleaseGroup found";
+					_state = State.WarnUnknownWarning;
+					_errorOrWarningMessage = "No ReleaseGroup found";
 				}
 			}
 			else
 			{
-				State = State.WarnUnknownWarning;
-				ErrorOrWarningMessage = "String to short to parse for ReleaseGroup";
+				_state = State.WarnUnknownWarning;
+				_errorOrWarningMessage = "String to short to parse for ReleaseGroup";
 			}
+
+			CoreParserModuleStateResult = new CoreParserModuleStateResult(Name, _state, _errorOrWarningMessage, null);
 
 			return outputResult;
 		}
@@ -81,7 +84,7 @@ namespace SeriesIDParser.Worker.CoreParserModules
 		/// <inheritdoc />
 		public override string ToString()
 		{
-			return "Name: " + Name + " Priority: " + Priority + " State: " + State;
+			return "Name: " + Name + " Priority: " + Priority + " State: " + _state;
 		}
 	}
 }

@@ -43,10 +43,11 @@ namespace SeriesIDParser.Worker.CoreParserModules
 		public string Description { get; } = "Parses the OldSpacingChar";
 
 		/// <inheritdoc />
-		public State State { get; internal set; } = State.Unknown;
+		public CoreParserModuleStateResult CoreParserModuleStateResult { get; internal set; }
 
-		/// <inheritdoc />
-		public string ErrorOrWarningMessage { get; internal set; }
+		private State _state = State.Unknown;
+
+		private string _errorOrWarningMessage;
 
 		/// <inheritdoc />
 		public CoreParserResult Parse(CoreParserResult inputResult)
@@ -58,13 +59,15 @@ namespace SeriesIDParser.Worker.CoreParserModules
 			if (spacer != new char())
 			{
 				outputResult.MediaData.DetectedOldSpacingChar = spacer;
-				State = State.OkSuccess;
+				_state = State.OkSuccess;
 			}
 			else
 			{
-				State = State.ErrUnknownError;
-				ErrorOrWarningMessage = "No OldSpacingChar found";
+				_state = State.ErrUnknownError;
+				_errorOrWarningMessage = "No OldSpacingChar found";
 			}
+
+			CoreParserModuleStateResult = new CoreParserModuleStateResult(Name, _state, _errorOrWarningMessage, null);
 
 			return outputResult;
 		}
@@ -72,7 +75,7 @@ namespace SeriesIDParser.Worker.CoreParserModules
 		/// <inheritdoc />
 		public override string ToString()
 		{
-			return "Name: " + Name + " Priority: " + Priority + " State: " + State;
+			return "Name: " + Name + " Priority: " + Priority + " State: " + _state;
 		}
 	}
 }

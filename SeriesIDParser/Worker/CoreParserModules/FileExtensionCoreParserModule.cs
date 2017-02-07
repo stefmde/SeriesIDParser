@@ -43,30 +43,33 @@ namespace SeriesIDParser.Worker.CoreParserModules
 		public string Description { get; } = "Parses and removes the FileExtension";
 
 		/// <inheritdoc />
-		public State State { get; internal set; } = State.Unknown;
+		public CoreParserModuleStateResult CoreParserModuleStateResult { get; internal set; }
 
-		/// <inheritdoc />
-		public string ErrorOrWarningMessage { get; internal set; }
+		private State _state = State.Unknown;
+
+		private string _errorOrWarningMessage;
 
 		/// <inheritdoc />
 		public CoreParserResult Parse(CoreParserResult inputResult)
 		{
 			CoreParserResult outputResult = inputResult;
-			string tempExtension = Path.GetExtension(inputResult.OriginalString);
+			string extension = HelperWorker.GetFileExtension(inputResult.ModifiedString, inputResult.ParserSettings.FileExtensions);
 
-			if (inputResult.ParserSettings.FileExtensions.Any(x => x.Equals(tempExtension, StringComparison.OrdinalIgnoreCase)))
+			if (string.IsNullOrEmpty(extension))
 			{
-				outputResult.MediaData.FileExtension = tempExtension.ToLower();
-
-				Regex removeRegex = new Regex(outputResult.MediaData.FileExtension, RegexOptions.IgnoreCase);
-				outputResult.ModifiedString = removeRegex.Replace(outputResult.ModifiedString, "");
-				State = State.OkSuccess;
+				_state = State.WarnUnknownWarning;
+				_errorOrWarningMessage = "No FileExtension found";
 			}
 			else
 			{
-				State = State.WarnUnknownWarning;
-				ErrorOrWarningMessage = "No FileExtension found";
+				outputResult.MediaData.FileExtension = extension.ToLower();
+
+				Regex removeRegex = new Regex(outputResult.MediaData.FileExtension, RegexOptions.IgnoreCase);
+				outputResult.ModifiedString = removeRegex.Replace(outputResult.ModifiedString, "");
+				_state = State.OkSuccess;
 			}
+
+			CoreParserModuleStateResult = new CoreParserModuleStateResult(Name, _state, _errorOrWarningMessage, null);
 
 			return outputResult;
 		}
@@ -74,7 +77,7 @@ namespace SeriesIDParser.Worker.CoreParserModules
 		/// <inheritdoc />
 		public override string ToString()
 		{
-			return "Name: " + Name + " Priority: " + Priority + " State: " + State;
+			return "Name: " + Name + " Priority: " + Priority + " State: " + _state;
 		}
 	}
 }

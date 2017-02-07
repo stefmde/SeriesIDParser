@@ -41,10 +41,11 @@ namespace SeriesIDParser.Worker.CoreParserModules
 		public string Description { get; } = "Parses and removes the Resolutions";
 
 		/// <inheritdoc />
-		public State State { get; internal set; } = State.Unknown;
+		public CoreParserModuleStateResult CoreParserModuleStateResult { get; internal set; }
 
-		/// <inheritdoc />
-		public string ErrorOrWarningMessage { get; internal set; }
+		private State _state = State.Unknown;
+
+		private string _errorOrWarningMessage;
 
 		/// <inheritdoc />
 		public CoreParserResult Parse(CoreParserResult inputResult)
@@ -52,43 +53,22 @@ namespace SeriesIDParser.Worker.CoreParserModules
 			CoreParserResult outputResult = inputResult;
 			string modifiedString = inputResult.ModifiedString;
 
-			List<ResolutionsMap> tempFoundResolutions = new List<ResolutionsMap>();
-			List<ResolutionsMap> foundResolutions = new List<ResolutionsMap>();
-
-			// Try get 8K
-			tempFoundResolutions.AddRange(HelperWorker.GetResolutionByResMap(inputResult.ParserSettings.DetectUltraHD8kTokens, ResolutionsMap.UltraHD8K_4320p, inputResult.MediaData.DetectedOldSpacingChar, ref modifiedString));
-
-			// Try get 4K
-			tempFoundResolutions.AddRange(HelperWorker.GetResolutionByResMap(inputResult.ParserSettings.DetectUltraHDTokens, ResolutionsMap.UltraHD_2160p, inputResult.MediaData.DetectedOldSpacingChar, ref modifiedString));
-
-			// Try get FullHD
-			tempFoundResolutions.AddRange(HelperWorker.GetResolutionByResMap(inputResult.ParserSettings.DetectFullHDTokens, ResolutionsMap.FullHD_1080p, inputResult.MediaData.DetectedOldSpacingChar, ref modifiedString));
-
-			// Try get HD
-			tempFoundResolutions.AddRange(HelperWorker.GetResolutionByResMap(inputResult.ParserSettings.DetectHDTokens, ResolutionsMap.HD_720p, inputResult.MediaData.DetectedOldSpacingChar, ref modifiedString));
-
-			// Try get SD
-			tempFoundResolutions.AddRange(HelperWorker.GetResolutionByResMap(inputResult.ParserSettings.DetectSDTokens, ResolutionsMap.SD_Any, inputResult.MediaData.DetectedOldSpacingChar, ref modifiedString));
-
-			foreach (ResolutionsMap res in tempFoundResolutions)
-			{
-				if (!foundResolutions.Contains(res))
-				{
-					foundResolutions.Add(res);
-				}
-			}
+			List<ResolutionsMap> foundResolutions = HelperWorker.GetResolutions(inputResult.ParserSettings, inputResult.MediaData.DetectedOldSpacingChar,
+																				ref modifiedString);
 
 			if (foundResolutions.Any())
 			{
 				outputResult.MediaData.Resolutions = foundResolutions;
 				outputResult.ModifiedString = modifiedString;
-				State = State.OkSuccess;
+				_state = State.OkSuccess;
 			}
 			else
 			{
-				State = State.WarnUnknownWarning;
-				ErrorOrWarningMessage = "No Resolutions found";
+				_state = State.WarnUnknownWarning;
+				_errorOrWarningMessage = "No Resolutions found";
 			}
+
+			CoreParserModuleStateResult = new CoreParserModuleStateResult(Name, _state, _errorOrWarningMessage, null);
 
 			return outputResult;
 		}
@@ -96,7 +76,7 @@ namespace SeriesIDParser.Worker.CoreParserModules
 		/// <inheritdoc />
 		public override string ToString()
 		{
-			return "Name: " + Name + " Priority: " + Priority + " State: " + State;
+			return "Name: " + Name + " Priority: " + Priority + " State: " + _state;
 		}
 	}
 }

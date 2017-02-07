@@ -21,42 +21,32 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
+
+
+using System;
+using System.Runtime.Serialization;
+
 namespace SeriesIDParser.Models
 {
-	internal interface ICoreParser
+	public class CoreParserModuleStateResult
 	{
-		/// <summary>
-		/// Defines the priority in which order the Parser have to execute. Higher values came first. -1 is last/no prio needed
-		/// </summary>
-		int Priority { get; }
+		public CoreParserModuleStateResult(string moduleName, State state)
+		{
+			ModuleName = moduleName;
+			State = state;
+		}
 
-		/// <summary>
-		/// The readable Name of the CoreParser. Used for error messages and things like that
-		/// </summary>
-		string Name { get; }
+		public CoreParserModuleStateResult(string moduleName, State state, string message, Exception exception = null)
+		{
+			ModuleName = moduleName;
+			State = state;
+			Message = message;
+			Exception = exception;
+		}
 
-		/// <summary>
-		/// The description what that CorePArser did
-		/// </summary>
-		string Description { get; }
-
-		/// <summary>
-		/// The State that parser have done
-		/// </summary>
-		CoreParserModuleStateResult CoreParserModuleStateResult { get; }
-
-		/// <summary>
-		/// If a error or a warning occoured the info should stand here
-		/// </summary>
-		//string ErrorOrWarningMessage { get; }
-
-		/// <summary>
-		/// The main parse methode
-		/// </summary>
-		/// <param name="inputResult">The result that get hopped from each parser to the next. The info get to the next parser</param>
-		/// <returns></returns>
-		CoreParserResult Parse(CoreParserResult inputResult);
-
-
+		public string ModuleName { get; }
+		public State State { get; }
+		public string Message { get; internal set; }
+		public Exception Exception { get; internal set; }
 	}
 }

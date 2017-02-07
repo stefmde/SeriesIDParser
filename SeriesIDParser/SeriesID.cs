@@ -24,6 +24,7 @@
 
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -46,26 +47,8 @@ namespace SeriesIDParser
 		#region Fields
 		private CoreParserResult _coreParserResult;
 		private readonly ParserSettings _parserSettings = new ParserSettings(true);
-		private DateTime _parseStartTime = new DateTime();
-		//private State _state;
-		//private List<ResolutionsMap> _resolutions;
-		//private string _originalString;
-		//private char _detectedOldSpacingChar;
-		//private string _fileExtension;
-		//private string _releaseGroup;
-		//private List<string> _removedTokens;
-		//private string _audioCodec;
-		//private string _videoCodec;
-		//private int _year;
-		//private string _title;
-		//private string _episodeTitle;
-		//private bool _isSeries;
-		//private List<int> _episodes;
-		//private int _season;
-		//private TimeSpan _processingDuration;
-		//private Exception _exception;
+		private readonly DateTime _parseStartTime = new DateTime();
 		private FileInfo _fileInfo;
-		private DimensionalType _dimensionalType = DimensionalType.Unknown;
 		private readonly bool _cacheEnabled;
 		#endregion Fields
 
@@ -206,18 +189,33 @@ namespace SeriesIDParser
 					return _coreParserResult.MediaData;
 				}
 
+				// ModuleName, State, Message
+
+				List<CoreParserModuleStateResult> coreParserModuleStateResults = new List<CoreParserModuleStateResult>();
 				IEnumerable<ICoreParser> coreParserModules = HelperWorker.GetAllCoreParsers();
-
-
-
 
 				foreach (ICoreParser coreParserModule in coreParserModules)
 				{
-					_coreParserResult = coreParserModule.Parse(_coreParserResult);
+					try
+					{
+						_coreParserResult = coreParserModule.Parse(_coreParserResult);
+						coreParserModuleStateResults.Add(coreParserModule.CoreParserModuleStateResult);
+					}
+					catch (Exception ex)
+					{
+						coreParserModuleStateResults.Add(new CoreParserModuleStateResult(coreParserModule.Name, State.ErrUnknownError, "Exception on executing module occoured. See exception for more details." + ex));
+
+						// Throw exception if the flag is set
+						if (_parserSettings.ThrowExceptionInsteadOfErrorFlag)
+						{
+							throw;
+						}
+					}
 				}
 
 				_coreParserResult.MediaData.RemovedTokens = _coreParserResult.MediaData.RemovedTokens.OrderBy(x => x).ToList();
 				_coreParserResult.MediaData.Resolutions = HelperWorker.MaintainUnknownResolution(_coreParserResult.MediaData.Resolutions.ToList());
+				_coreParserResult.MediaData.State = coreParserModuleStateResults.GroupBy(x => x.State).Select(x => x.First()).ToList();
 
 
 				if (!warningOrErrorOccurred)
@@ -245,7 +243,7 @@ namespace SeriesIDParser
 			}
 		}
 
-		
+
 
 		// ############################################################
 		// ### Local Helper Functions

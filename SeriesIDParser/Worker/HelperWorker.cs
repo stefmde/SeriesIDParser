@@ -546,16 +546,16 @@ namespace SeriesIDParser.Worker
 		/// <returns></returns>
 		internal static List<string> RemoveTokens(ParserSettings ps, char oldSpacer, ref string fullTitle)
 		{
-			List<string> tempFoundResolutions = new List<string>();
+			List<string> tempFoundTokens = new List<string>();
 			List<string> foundResolutions = new List<string>();
 
-			tempFoundResolutions.AddRange(FindTokens(ref fullTitle, oldSpacer.ToString(), ps.RemoveAndListTokens, true));
-			tempFoundResolutions.AddRange(FindTokens(ref fullTitle, oldSpacer.ToString(), ps.RemoveWithoutListTokens, false));
+			tempFoundTokens.AddRange(FindTokens(ref fullTitle, oldSpacer.ToString(), ps.RemoveAndListTokens, true));
+			tempFoundTokens.AddRange(FindTokens(ref fullTitle, oldSpacer.ToString(), ps.RemoveWithoutListTokens, false));
 
-			tempFoundResolutions.AddRange(ReplaceTokens(ref fullTitle, oldSpacer.ToString(), ps.ReplaceRegexAndListTokens, true));
-			tempFoundResolutions.AddRange(ReplaceTokens(ref fullTitle, oldSpacer.ToString(), ps.ReplaceRegexWithoutListTokens, false));
+			tempFoundTokens.AddRange(ReplaceTokens(ref fullTitle, oldSpacer.ToString(), ps.ReplaceRegexAndListTokens, true));
+			tempFoundTokens.AddRange(ReplaceTokens(ref fullTitle, oldSpacer.ToString(), ps.ReplaceRegexWithoutListTokens, false));
 
-			foreach (string item in tempFoundResolutions)
+			foreach (string item in tempFoundTokens)
 			{
 				if (!foundResolutions.Any(x => x.Equals(item, StringComparison.OrdinalIgnoreCase)))
 				{

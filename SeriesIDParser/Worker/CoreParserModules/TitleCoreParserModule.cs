@@ -39,10 +39,11 @@ namespace SeriesIDParser.Worker.CoreParserModules
 		public string Description { get; } = "Parses and removes the Title";
 
 		/// <inheritdoc />
-		public State State { get; internal set; } = State.Unknown;
+		public CoreParserModuleStateResult CoreParserModuleStateResult { get; internal set; }
 
-		/// <inheritdoc />
-		public string ErrorOrWarningMessage { get; internal set; }
+		private State _state = State.Unknown;
+
+		private string _errorOrWarningMessage;
 
 		/// <inheritdoc />
 		public CoreParserResult Parse(CoreParserResult inputResult)
@@ -53,7 +54,7 @@ namespace SeriesIDParser.Worker.CoreParserModules
 			State state = State.Unknown;
 
 			// Remove double spacer
-			while (outputResult.ModifiedString.Contains(inputResult.MediaData + oldSpacingChar.ToString()))
+			while (outputResult.ModifiedString.Contains(inputResult.MediaData + oldSpacingChar))
 			{
 				outputResult.ModifiedString = outputResult.ModifiedString.Replace(oldSpacingChar + oldSpacingChar, oldSpacingChar);
 			}
@@ -65,7 +66,9 @@ namespace SeriesIDParser.Worker.CoreParserModules
 			outputResult.ModifiedString = outputResult.ModifiedString.Trim().Trim(inputResult.MediaData.DetectedOldSpacingChar).Trim(inputResult.ParserSettings.NewSpacingChar);
 
 			outputResult.MediaData.Title = HelperWorker.GetTitle(inputResult.ParserSettings, inputResult.MediaData.DetectedOldSpacingChar, outputResult.ModifiedString, ref warningOrErrorOccurred, ref state);
-			State = state;
+			_state = state;
+
+			CoreParserModuleStateResult = new CoreParserModuleStateResult(Name, _state, _errorOrWarningMessage, null);
 
 			return outputResult;
 		}
@@ -73,7 +76,7 @@ namespace SeriesIDParser.Worker.CoreParserModules
 		/// <inheritdoc />
 		public override string ToString()
 		{
-			return "Name: " + Name + " Priority: " + Priority + " State: " + State;
+			return "Name: " + Name + " Priority: " + Priority + " State: " + _state;
 		}
 	}
 }
