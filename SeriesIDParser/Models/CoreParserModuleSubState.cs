@@ -29,7 +29,10 @@ namespace SeriesIDParser.Models
 {
 	public class CoreParserModuleSubState
 	{
-		public CoreParserModuleSubState( State state, string message )
+		/// <summary>
+		/// Contains the messages with the State of the State of the CoreParser
+		/// </summary>
+		public CoreParserModuleSubState(State state, string message)
 		{
 			State = state;
 

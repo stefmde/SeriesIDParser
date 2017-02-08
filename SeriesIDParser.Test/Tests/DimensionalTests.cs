@@ -111,6 +111,7 @@ namespace SeriesIDParser.Test.Tests
 		{
 			ParserSettings parserSettings = new ParserSettings( true );
 			parserSettings.DimensionalString2DAny = "2D";
+			parserSettings.CacheMode = CacheMode.None;
 			SeriesID seriesIDParser = new SeriesID( parserSettings );
 			ParserResult parserResult = seriesIDParser.Parse( "Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv" );
 

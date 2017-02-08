@@ -26,7 +26,7 @@
 using System;
 using System.Runtime.CompilerServices;
 
-[assembly: InternalsVisibleTo( "SeriesIDParser.Test" )]
+[assembly: InternalsVisibleTo("SeriesIDParser.Test")]
 
 namespace SeriesIDParser.Models
 {
@@ -55,17 +55,17 @@ namespace SeriesIDParser.Models
 		/// <summary>
 		///     Resolution is 1080p FullHD
 		/// </summary>
-		FullHD_1080p = 3,
+		FullHD_1080p = 4,
 
 		/// <summary>
 		///     Resolution is 2160p UltraHD4k
 		/// </summary>
-		UltraHD_2160p = 4,
+		UltraHD_2160p = 8,
 
 		/// <summary>
 		///     Resolution is 4320p UltraHD8k
 		/// </summary>
-		UltraHD8K_4320p = 5
+		UltraHD8K_4320p = 16
 	}
 
 	/// <summary>
@@ -86,17 +86,17 @@ namespace SeriesIDParser.Models
 		/// <summary>
 		///     Everything looks fine. Result should be consistant and valid
 		/// </summary>
-		Success = 1,
+		Success = 2,
 
 		/// <summary>
 		///     One or more warning occoured. Result could be constistant but don't have to be
 		/// </summary>
-		Warning = 2,
+		Warning = 4,
 
 		/// <summary>
 		///     One or more errors occoured. Result is probably invalid and shouldn't be used
 		/// </summary>
-		Error = 4
+		Error = 8
 	}
 
 	/// <summary>

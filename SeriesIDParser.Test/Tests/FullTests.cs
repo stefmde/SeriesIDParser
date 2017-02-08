@@ -53,7 +53,7 @@ namespace SeriesIDParser.Test.Tests
 			Assert.AreEqual( true, parserResult.IsSeries, "-IsSeries " );
 			Assert.AreEqual( "Dubai.Airport.S01E05.Teil5.GERMAN.DOKU.HDTV.720p.x264.mkv", parserResult.OriginalString, "-OriginalString manipulated " );
 			Assert.AreEqual( 1, parserResult.Season, "-Season " );
-			Assert.AreEqual( State.Success, parserResult.State, "-State " );
+			Assert.AreEqual( State.Notice, parserResult.State, "-State " );
 			Assert.AreEqual( "Dubai.Airport", parserResult.Title, "-Title " );
 			Assert.AreEqual( -1, parserResult.Year, "-Year " );
 			Assert.AreEqual( '.', parserResult.OldSpacingChar, "-DetectedOldSpacingChar " );
@@ -82,7 +82,7 @@ namespace SeriesIDParser.Test.Tests
 			Assert.AreEqual( true, parserResult.IsSeries, "-IsSeries " );
 			Assert.AreEqual( "Dubai.Airport.s01e05.Teil5.GERMAN.DOKU.HDTV.720p.x264.mkv", parserResult.OriginalString, "-OriginalString manipulated " );
 			Assert.AreEqual( 1, parserResult.Season, "-Season " );
-			Assert.AreEqual( State.Success, parserResult.State, "-State " );
+			Assert.AreEqual( State.Notice, parserResult.State, "-State " );
 			Assert.AreEqual( "Dubai.Airport", parserResult.Title, "-Title " );
 			Assert.AreEqual( -1, parserResult.Year, "-Year " );
 			Assert.AreEqual( '.', parserResult.OldSpacingChar, "-DetectedOldSpacingChar " );
@@ -111,7 +111,7 @@ namespace SeriesIDParser.Test.Tests
 			Assert.AreEqual( true, parserResult.IsSeries, "-IsSeries " );
 			Assert.AreEqual( "Dubai.Airport.S001E005.Teil5.GERMAN.DOKU.HDTV.720p.x264.mkv", parserResult.OriginalString, "-OriginalString manipulated " );
 			Assert.AreEqual( 1, parserResult.Season, "-Season " );
-			Assert.AreEqual( State.Success, parserResult.State, "-State " );
+			Assert.AreEqual( State.Notice, parserResult.State, "-State " );
 			Assert.AreEqual( "Dubai.Airport", parserResult.Title, "-Title " );
 			Assert.AreEqual( -1, parserResult.Year, "-Year " );
 			Assert.AreEqual( '.', parserResult.OldSpacingChar, "-DetectedOldSpacingChar " );
@@ -140,7 +140,7 @@ namespace SeriesIDParser.Test.Tests
 			Assert.AreEqual( true, parserResult.IsSeries, "-IsSeries " );
 			Assert.AreEqual( "Dubai.Airport.S1E5.Teil5.GERMAN.DOKU.HDTV.720p.x264.mkv", parserResult.OriginalString, "-OriginalString manipulated " );
 			Assert.AreEqual( 1, parserResult.Season, "-Season " );
-			Assert.AreEqual( State.Success, parserResult.State, "-State " );
+			Assert.AreEqual( State.Notice, parserResult.State, "-State " );
 			Assert.AreEqual( "Dubai.Airport", parserResult.Title, "-Title " );
 			Assert.AreEqual( -1, parserResult.Year, "-Year " );
 			Assert.AreEqual( '.', parserResult.OldSpacingChar, "-DetectedOldSpacingChar " );
@@ -169,7 +169,7 @@ namespace SeriesIDParser.Test.Tests
 			Assert.AreEqual( true, parserResult.IsSeries, "-IsSeries " );
 			Assert.AreEqual( "Dubai.Airport.S001E5.Teil5.GERMAN.DOKU.HDTV.720p.x264.mkv", parserResult.OriginalString, "-OriginalString manipulated " );
 			Assert.AreEqual( 1, parserResult.Season, "-Season " );
-			Assert.AreEqual( State.Success, parserResult.State, "-State " );
+			Assert.AreEqual( State.Notice, parserResult.State, "-State " );
 			Assert.AreEqual( "Dubai.Airport", parserResult.Title, "-Title " );
 			Assert.AreEqual( -1, parserResult.Year, "-Year " );
 			Assert.AreEqual( '.', parserResult.OldSpacingChar, "-DetectedOldSpacingChar " );
@@ -198,7 +198,7 @@ namespace SeriesIDParser.Test.Tests
 			Assert.AreEqual( true, parserResult.IsSeries, "-IsSeries " );
 			Assert.AreEqual( "Dubai.Airport.S01E05.Teil5.GERMAN.GERMAN.DOKU.HDTV.720p.x264.mkv", parserResult.OriginalString, "-OriginalString manipulated " );
 			Assert.AreEqual( 1, parserResult.Season, "-Season " );
-			Assert.AreEqual( State.Success, parserResult.State, "-State " );
+			Assert.AreEqual( State.Notice, parserResult.State, "-State " );
 			Assert.AreEqual( "Dubai.Airport", parserResult.Title, "-Title " );
 			Assert.AreEqual( -1, parserResult.Year, "-Year " );
 			Assert.AreEqual( '.', parserResult.OldSpacingChar, "-DetectedOldSpacingChar " );
@@ -227,7 +227,7 @@ namespace SeriesIDParser.Test.Tests
 			Assert.AreEqual( true, parserResult.IsSeries, "-IsSeries " );
 			Assert.AreEqual( "Dubai.Airport.S01E05.Teil5.GERMAN.DOKU.HDTV.720p.x264.mkv", parserResult.OriginalString, "-OriginalString manipulated " );
 			Assert.AreEqual( 1, parserResult.Season, "-Season " );
-			Assert.AreEqual( State.Success, parserResult.State, "-State " );
+			Assert.AreEqual( State.Notice, parserResult.State, "-State " );
 			Assert.AreEqual( "Dubai-Airport", parserResult.Title, "-Title " );
 			Assert.AreEqual( -1, parserResult.Year, "-Year " );
 			Assert.AreEqual( '.', parserResult.OldSpacingChar, "-DetectedOldSpacingChar " );
@@ -256,7 +256,7 @@ namespace SeriesIDParser.Test.Tests
 			Assert.AreEqual( true, parserResult.IsSeries, "-IsSeries " );
 			Assert.AreEqual( "Better.Call.Saul.S02E10.GERMAN.DL.DUBBED.1080p.WebHD.h264-iNFOTv", parserResult.OriginalString, "-OriginalString manipulated " );
 			Assert.AreEqual( 2, parserResult.Season, "-Season " );
-			Assert.AreEqual( State.Success, parserResult.State, "-State " );
+			Assert.AreEqual( State.Notice, parserResult.State, "-State " );
 			Assert.AreEqual( "Better.Call.Saul", parserResult.Title, "-Title " );
 			Assert.AreEqual( -1, parserResult.Year, "-Year " );
 			Assert.AreEqual( '.', parserResult.OldSpacingChar, "-DetectedOldSpacingChar " );
@@ -285,7 +285,7 @@ namespace SeriesIDParser.Test.Tests
 			Assert.AreEqual( true, parserResult.IsSeries, "-IsSeries " );
 			Assert.AreEqual( "Better.Call.Saul.S02E10.GERMAN.DL.DUBBED.1080p.WebHD.h264 - iNFOTv", parserResult.OriginalString, "-OriginalString manipulated " );
 			Assert.AreEqual( 2, parserResult.Season, "-Season " );
-			Assert.AreEqual( State.Success, parserResult.State, "-State " );
+			Assert.AreEqual( State.Notice, parserResult.State, "-State " );
 			Assert.AreEqual( "Better.Call.Saul", parserResult.Title, "-Title " );
 			Assert.AreEqual( -1, parserResult.Year, "-Year " );
 			Assert.AreEqual( '.', parserResult.OldSpacingChar, "-DetectedOldSpacingChar " );
@@ -314,7 +314,7 @@ namespace SeriesIDParser.Test.Tests
 			Assert.AreEqual( true, parserResult.IsSeries, "-IsSeries " );
 			Assert.AreEqual( "Better.Call.Saul.S02E10.GERMAN.DL.DUBBED.1080p.WebHD.h264 - iNFOTv.avi", parserResult.OriginalString, "-OriginalString manipulated " );
 			Assert.AreEqual( 2, parserResult.Season, "-Season " );
-			Assert.AreEqual( State.Success, parserResult.State, "-State " );
+			Assert.AreEqual( State.Notice, parserResult.State, "-State " );
 			Assert.AreEqual( "Better.Call.Saul", parserResult.Title, "-Title " );
 			Assert.AreEqual( -1, parserResult.Year, "-Year " );
 			Assert.AreEqual( '.', parserResult.OldSpacingChar, "-DetectedOldSpacingChar " );
@@ -343,7 +343,7 @@ namespace SeriesIDParser.Test.Tests
 			Assert.AreEqual( false, parserResult.IsSeries, "-IsSeries " );
 			Assert.AreEqual( "Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv", parserResult.OriginalString, "-OriginalString manipulated " );
 			Assert.AreEqual( -1, parserResult.Season, "-Season " );
-			Assert.AreEqual( State.Success, parserResult.State, "-State " );
+			Assert.AreEqual( State.Notice, parserResult.State, "-State " );
 			Assert.AreEqual( "Der.Hobbit.Smaugs.Einoede", parserResult.Title, "-Title " );
 			Assert.AreEqual( 2013, parserResult.Year, "-Year " );
 			Assert.AreEqual( '.', parserResult.OldSpacingChar, "-DetectedOldSpacingChar " );
@@ -372,7 +372,7 @@ namespace SeriesIDParser.Test.Tests
 			Assert.AreEqual( false, parserResult.IsSeries, "-IsSeries " );
 			Assert.AreEqual( "A.Chinese.Ghost.Story.3.1991.German.DTS.1080p.BD9.x264", parserResult.OriginalString, "-OriginalString manipulated " );
 			Assert.AreEqual( -1, parserResult.Season, "-Season " );
-			Assert.AreEqual( State.Success, parserResult.State, "-State " );
+			Assert.AreEqual( State.Notice, parserResult.State, "-State " );
 			Assert.AreEqual( "A.Chinese.Ghost.Story.3", parserResult.Title, "-Title " );
 			Assert.AreEqual( 1991, parserResult.Year, "-Year " );
 			Assert.AreEqual( '.', parserResult.OldSpacingChar, "-DetectedOldSpacingChar " );
@@ -401,7 +401,7 @@ namespace SeriesIDParser.Test.Tests
 			Assert.AreEqual( true, parserResult.IsSeries, "-IsSeries " );
 			Assert.AreEqual( "Narcos.S02E01.Endlich.frei.German.DD51.DL.1080p.720p.x264.mkv", parserResult.OriginalString, "-OriginalString manipulated " );
 			Assert.AreEqual( 2, parserResult.Season, "-Season " );
-			Assert.AreEqual( State.Success, parserResult.State, "-State " );
+			Assert.AreEqual( State.Notice, parserResult.State, "-State " );
 			Assert.AreEqual( "Narcos", parserResult.Title, "-Title " );
 			Assert.AreEqual( -1, parserResult.Year, "-Year " );
 			Assert.AreEqual( '.', parserResult.OldSpacingChar, "-DetectedOldSpacingChar " );
@@ -430,7 +430,7 @@ namespace SeriesIDParser.Test.Tests
 			Assert.AreEqual( true, parserResult.IsSeries, "-IsSeries " );
 			Assert.AreEqual( "Narcos.S02E01.Endlich.frei.German.DD51.DL.1080p.NetflixUHD.AAC.x264.mkv", parserResult.OriginalString, "-OriginalString manipulated " );
 			Assert.AreEqual( 2, parserResult.Season, "-Season " );
-			Assert.AreEqual( State.Success, parserResult.State, "-State " );
+			Assert.AreEqual( State.Notice, parserResult.State, "-State " );
 			Assert.AreEqual( "Narcos", parserResult.Title, "-Title " );
 			Assert.AreEqual( -1, parserResult.Year, "-Year " );
 			Assert.AreEqual( '.', parserResult.OldSpacingChar, "-DetectedOldSpacingChar " );
@@ -459,7 +459,7 @@ namespace SeriesIDParser.Test.Tests
 			Assert.AreEqual( true, parserResult.IsSeries, "-IsSeries " );
 			Assert.AreEqual( "Narcos.S02E01E02.Endlich.frei.German.DD51.DL.1080p.720p.x264.mkv", parserResult.OriginalString, "-OriginalString manipulated " );
 			Assert.AreEqual( 2, parserResult.Season, "-Season " );
-			Assert.AreEqual( State.Success, parserResult.State, "-State " );
+			Assert.AreEqual( State.Notice, parserResult.State, "-State " );
 			Assert.AreEqual( "Narcos", parserResult.Title, "-Title " );
 			Assert.AreEqual( -1, parserResult.Year, "-Year " );
 			Assert.AreEqual( '.', parserResult.OldSpacingChar, "-DetectedOldSpacingChar " );
@@ -488,7 +488,7 @@ namespace SeriesIDParser.Test.Tests
 			Assert.AreEqual( true, parserResult.IsSeries, "-IsSeries " );
 			Assert.AreEqual( "Narcos.S02E01E02E03.Endlich.frei.German.DD51.DL.1080p.720p.x264.mkv", parserResult.OriginalString, "-OriginalString manipulated " );
 			Assert.AreEqual( 2, parserResult.Season, "-Season " );
-			Assert.AreEqual( State.Success, parserResult.State, "-State " );
+			Assert.AreEqual( State.Notice, parserResult.State, "-State " );
 			Assert.AreEqual( "Narcos", parserResult.Title, "-Title " );
 			Assert.AreEqual( -1, parserResult.Year, "-Year " );
 			Assert.AreEqual( '.', parserResult.OldSpacingChar, "-DetectedOldSpacingChar " );
@@ -517,7 +517,7 @@ namespace SeriesIDParser.Test.Tests
 			Assert.AreEqual( true, parserResult.IsSeries, "-IsSeries " );
 			Assert.AreEqual( "Narcos.S02E01E02E04.Endlich.frei.German.DD51.DL.1080p.720p.x264.mkv", parserResult.OriginalString, "-OriginalString manipulated " );
 			Assert.AreEqual( 2, parserResult.Season, "-Season " );
-			Assert.AreEqual( State.Success, parserResult.State, "-State " );
+			Assert.AreEqual( State.Notice, parserResult.State, "-State " );
 			Assert.AreEqual( "Narcos", parserResult.Title, "-Title " );
 			Assert.AreEqual( -1, parserResult.Year, "-Year " );
 			Assert.AreEqual( '.', parserResult.OldSpacingChar, "-DetectedOldSpacingChar " );
@@ -546,7 +546,7 @@ namespace SeriesIDParser.Test.Tests
 			Assert.AreEqual( false, parserResult.IsSeries, "-IsSeries " );
 			Assert.AreEqual( "A.Chinese.Ghost.Story.3.3D.1991.German.DTS.1080p.BD9.x264", parserResult.OriginalString, "-OriginalString manipulated " );
 			Assert.AreEqual( -1, parserResult.Season, "-Season " );
-			Assert.AreEqual( State.Success, parserResult.State, "-State " );
+			Assert.AreEqual( State.Notice, parserResult.State, "-State " );
 			Assert.AreEqual( "A.Chinese.Ghost.Story.3", parserResult.Title, "-Title " );
 			Assert.AreEqual( 1991, parserResult.Year, "-Year " );
 			Assert.AreEqual( '.', parserResult.OldSpacingChar, "-DetectedOldSpacingChar " );
@@ -575,7 +575,7 @@ namespace SeriesIDParser.Test.Tests
 			Assert.AreEqual( false, parserResult.IsSeries, "-IsSeries " );
 			Assert.AreEqual( "A.Chinese.Ghost.Story.3.3D.HOU.1991.German.DTS.1080p.BD9.x264", parserResult.OriginalString, "-OriginalString manipulated " );
 			Assert.AreEqual( -1, parserResult.Season, "-Season " );
-			Assert.AreEqual( State.Success, parserResult.State, "-State " );
+			Assert.AreEqual( State.Notice, parserResult.State, "-State " );
 			Assert.AreEqual( "A.Chinese.Ghost.Story.3", parserResult.Title, "-Title " );
 			Assert.AreEqual( 1991, parserResult.Year, "-Year " );
 			Assert.AreEqual( '.', parserResult.OldSpacingChar, "-DetectedOldSpacingChar " );
@@ -604,7 +604,7 @@ namespace SeriesIDParser.Test.Tests
 			Assert.AreEqual( false, parserResult.IsSeries, "-IsSeries " );
 			Assert.AreEqual( "A.Chinese.Ghost.Story.3.3D.HSBS.1991.German.DTS.1080p.BD9.x264", parserResult.OriginalString, "-OriginalString manipulated " );
 			Assert.AreEqual( -1, parserResult.Season, "-Season " );
-			Assert.AreEqual( State.Success, parserResult.State, "-State " );
+			Assert.AreEqual( State.Notice, parserResult.State, "-State " );
 			Assert.AreEqual( "A.Chinese.Ghost.Story.3", parserResult.Title, "-Title " );
 			Assert.AreEqual( 1991, parserResult.Year, "-Year " );
 			Assert.AreEqual( '.', parserResult.OldSpacingChar, "-DetectedOldSpacingChar " );

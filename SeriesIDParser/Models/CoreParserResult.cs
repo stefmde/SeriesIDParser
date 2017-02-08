@@ -28,17 +28,36 @@ using System.Collections.Generic;
 
 namespace SeriesIDParser.Models
 {
+	/// <summary>
+	/// Contains the initial data and the result of every CorePArser
+	/// </summary>
 	internal class CoreParserResult
 	{
+		/// <summary>
+		/// The original string that is passed to the lib
+		/// </summary>
 		internal readonly string OriginalString;
-
-		internal readonly ParserSettings ParserSettings;
-
-		internal MediaData MediaData { get; set; }
-
+		
+		/// <summary>
+		/// The string who is the same on the beginning but is edited by each module
+		/// </summary>
 		internal String ModifiedString { get; set; }
 
+		/// <summary>
+		/// The ParserSettings that is passed to the lib
+		/// </summary>
+		internal readonly ParserSettings ParserSettings;
 
+		/// <summary>
+		/// The internal ParserResult object who is used for caching
+		/// </summary>
+		internal MediaData MediaData { get; set; }
+
+		/// <summary>
+		/// ctor with the object init and the important data
+		/// </summary>
+		/// <param name="originalString"></param>
+		/// <param name="parserSettings"></param>
 		internal CoreParserResult( string originalString, ParserSettings parserSettings )
 		{
 			OriginalString = originalString;

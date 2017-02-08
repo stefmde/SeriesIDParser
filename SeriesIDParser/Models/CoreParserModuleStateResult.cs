@@ -29,15 +29,18 @@ using System.Runtime.Serialization;
 
 namespace SeriesIDParser.Models
 {
+	/// <summary>
+	/// Contains the basic info of the State of the CoreParser
+	/// </summary>
 	public class CoreParserModuleStateResult
 	{
-		public CoreParserModuleStateResult( string moduleName, List<CoreParserModuleSubState> state )
-		{
-			ModuleName = moduleName;
-			CoreParserModuleSubState = state;
-		}
+		//public CoreParserModuleStateResult( string moduleName, List<CoreParserModuleSubState> state )
+		//{
+		//	ModuleName = moduleName;
+		//	CoreParserModuleSubState = state;
+		//}
 
-		public CoreParserModuleStateResult( string moduleName, List<CoreParserModuleSubState> state, Exception exception = null )
+		public CoreParserModuleStateResult(string moduleName, List<CoreParserModuleSubState> state, Exception exception = null)
 		{
 			ModuleName = moduleName;
 			Exception = exception;
