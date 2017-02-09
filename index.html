@@ -48,7 +48,7 @@
 				<li>You can create a ParserSettings object with empty lists with the empty ctor</li>
 				<li>You can create a ParserSettings object with default values in the lists with a true in the ctor</li>
 				<li>Before you use the ParserResult object you should check for a NULL in the Exception property and a OKSuccess in the State Property</li>
-				<li>If it is possible, properties are always String.Empty is they donít have a value. Otherweise they are NULL. Check the property comments to see it exactly.</li>
+				<li>If it is possible, properties are always String.Empty is they don‚Äôt have a value. Otherweise they are NULL. Check the property comments to see it exactly.</li>
 				<li>Some properties are only available with series and some only with movies</li>
 				<li>Computed properties are automatically cached if the are queried the first time</li>
 				<li>Properties are only filled if the are found in the input string</li>
@@ -122,14 +122,14 @@
 				  <td>Episodes</td>
 				  <td>int list</td>
 				  <td>6.1</td>
-				  <td>Contains the Episode IDís if available. Could be more than one, depends on <span class="keyword">IsMultiEpisode</span>
+				  <td>Contains the Episode ID‚Äôs if available. Could be more than one, depends on <span class="keyword">IsMultiEpisode</span>
 			</td>
 				</tr>
 				<tr>
 				  <td>IDString</td>
 				  <td>string</td>
 				  <td>1.0</td>
-				  <td>Contains the Season ID and the Episode IDís combined as string</td>
+				  <td>Contains the Season ID and the Episode ID‚Äôs combined as string</td>
 				</tr>
 				<tr>
 				  <td>Exception</td>
@@ -168,7 +168,7 @@
 				  <td>The object state. Should be checked before using the result</td>
 				</tr>
 				<tr>
-				  <td>DetectedOldSpacingChar</td>
+				  <td>OldSpacingChar</td>
 				  <td>char</td>
 				  <td>6.0</td>
 				  <td>-</td>
@@ -208,6 +208,12 @@
 				  <td>ParserSettings</td>
 				  <td>8.0</td>
 				  <td>Contains the given parser settings who are used to generate the result object</td>
+				</tr>
+				<tr>
+				  <td>ModuleStates</td>
+				  <td>ModuleStates</td>
+				  <td>Coming soon</td>
+				  <td>Since there is no mehre one 'large' parser, every small parser can give a state as return. This is the global info and every single state.</td>
 				</tr>
 			  </tbody>
 			</table>
@@ -318,6 +324,10 @@
 				  <td>ParserSettingsUsed</td>
 				  <td>ParserSettings</td>
 				</tr>
+				<tr>
+				  <td>ModuleStates</td>
+				  <td>-</td>
+				</tr>
 			  </tbody>
 			</table>
 
@@ -426,6 +436,10 @@
 				  <td>ParserSettingsUsed</td>
 				  <td>ParserSettings</td>
 				</tr>
+				<tr>
+				  <td>ModuleStates</td>
+				  <td>-</td>
+				</tr>
 			  </tbody>
 			</table>
 
@@ -436,7 +450,7 @@
 			<h3>The easy way</h3>
 			<p>Here you dont need some configuration or anything like that. If no settings is passed to it, it will use the default settings.</p>
 			<pre><code class="cs">// The string source who should be parsed
-string parseMe = ìKnight.Rider.S01E07.Die.grosse.Duerre.1982.German.DVDRip.XviD.mkvî;
+string parseMe = ‚ÄúKnight.Rider.S01E07.Die.grosse.Duerre.1982.German.DVDRip.XviD.mkv‚Äù;
 
 // Creating the parser object with default settings(empty ctor)
 SeriesID sid = new SeriesID();
@@ -451,13 +465,13 @@ ParserResult parserResult = sid.Parse(parseMe);</code></pre>
 			<h3>Custom ParserSettings</h3>
 			<p>If you want to change how the parser handles something, you can edit the parser settings and pass it to the ctor</p>
 			<pre><code class="cs">// The string source who should be parsed
-string parseMe = ìKnight.Rider.S01E07.Die.grosse.Duerre.1982.German.DVDRip.XviD.mkvî;
+string parseMe = ‚ÄúKnight.Rider.S01E07.Die.grosse.Duerre.1982.German.DVDRip.XviD.mkv‚Äù;
 
 // Generate the ParserSettings object
 ParserSettings ps = new ParserSettings();
 
 // Modify a settings property
-ps.NewSpacingChar = ë-ë;
+ps.NewSpacingChar = ‚Äò-‚Äò;
 
 // Creating the parser object with custom settings
 SeriesID sid = new SeriesID(ps);
