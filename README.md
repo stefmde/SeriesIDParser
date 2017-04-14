@@ -5,9 +5,10 @@ Links
 -----
 **Download it from [NuGet](https://www.nuget.org/packages/SeriesIDParser/)!**
 
-You can find a short overview on the [GitHub project page](https://stefmde.github.io/SeriesIDParser/)
+You can find a short overview and documentation on my new [Documetation page](https://confluence.stefmde.com/display/SID)
 
 If you want, you can tell me, your thoughts about this project, on my [GitHup Profile](https://github.com/stefmde)
+
 
 About
 -----
