@@ -2,9 +2,9 @@
 
 
 
-##9.1.0 (2017-??-??)##
+##9.2.0 (2017-04-14)##
 ###New###
-- Now you can easily write your own modules
+- Now you can easily write your own modules if you want to fork this project
 - Enum State changed
 - Renamed DetectedOldSpacingChar -> OldSpacingChar
 - Added Property ModuleStates to ParserResult to show the state(s) of each single CoreParser if you want so see them

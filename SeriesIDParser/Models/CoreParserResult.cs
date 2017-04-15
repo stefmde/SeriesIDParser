@@ -41,7 +41,7 @@ namespace SeriesIDParser.Models
 		/// <summary>
 		/// The string who is the same on the beginning but is edited by each module
 		/// </summary>
-		internal String ModifiedString { get; set; }
+		internal string ModifiedString { get; set; }
 
 		/// <summary>
 		/// The ParserSettings that is passed to the lib
@@ -63,8 +63,7 @@ namespace SeriesIDParser.Models
 			OriginalString = originalString;
 			ModifiedString = originalString;
 			ParserSettings = parserSettings;
-			MediaData = new MediaData();
-			MediaData.OriginalString = originalString;
+			MediaData = new MediaData {OriginalString = originalString};
 		}
 	}
 }

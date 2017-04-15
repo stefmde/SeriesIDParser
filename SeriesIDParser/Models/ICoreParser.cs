@@ -25,6 +25,9 @@
 
 namespace SeriesIDParser.Models
 {
+	/// <summary>
+	/// Inferface who must be implemented for all parser modules that have to be executed
+	/// </summary>
 	internal interface ICoreParser
 	{
 		/// <summary>
@@ -38,7 +41,7 @@ namespace SeriesIDParser.Models
 		string Name { get; }
 
 		/// <summary>
-		///     The description what that CorePArser did
+		///     The description what that CoreParser did
 		/// </summary>
 		string Description { get; }
 

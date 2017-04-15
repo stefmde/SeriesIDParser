@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Parses series or movie strings to detailed object</Description>
+    <Copyright>Copyright © 2016 - 2017 Stefan Müller</Copyright>
+    <AssemblyTitle>SeriesIDParserCore</AssemblyTitle>
+    <VersionPrefix>9.1.0</VersionPrefix>
+    <TargetFramework>netstandard1.6</TargetFramework>
+    <AssemblyName>SeriesIDParserCore</AssemblyName>
+    <PackageId>SeriesIDParserCore</PackageId>
+    <NetStandardImplicitPackageVersion>1.6.1</NetStandardImplicitPackageVersion>
+    <PackageTargetFallback>$(PackageTargetFallback);dnxcore50</PackageTargetFallback>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
+    <PackageReference Include="System.Xml.XmlSerializer" Version="4.0.11" />
+  </ItemGroup>
+
+</Project>

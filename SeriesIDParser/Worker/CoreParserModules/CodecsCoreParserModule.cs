@@ -32,20 +32,30 @@ namespace SeriesIDParser.Worker.CoreParserModules
 {
 	internal class CodecsCoreParserModule : ICoreParser
 	{
-		/// <inheritdoc />
+		/// <summary>
+		///     Defines the priority in which order the Parser have to execute. Higher values came first. -1 is last/no prio needed
+		/// </summary>
 		public int Priority { get; } = 9400;
 
-		/// <inheritdoc />
+		/// <summary>
+		///     The readable Name of the CoreParser. Used for error messages and things like that
+		/// </summary>
 		public string Name { get; } = "CodecsCoreParser";
 
-		/// <inheritdoc />
+		/// <summary>
+		///     The description what that CoreParser did
+		/// </summary>
 		public string Description { get; } = "Parses and removes the Codecs";
 
 		private State _state = State.Unknown;
 
 		private string _errorOrWarningMessage = String.Empty;
 
-		/// <inheritdoc />
+		/// <summary>
+		///     The main parse methode
+		/// </summary>
+		/// <param name="inputResult">The result that get hopped from each parser to the next. The info get to the next parser</param>
+		/// <returns></returns>
 		public CoreParserResult Parse( CoreParserResult inputResult )
 		{
 			CoreParserResult outputResult = inputResult;
@@ -71,7 +81,8 @@ namespace SeriesIDParser.Worker.CoreParserModules
 			return outputResult;
 		}
 
-		/// <inheritdoc />
+		/// <summary>Returns a string that represents the current object.</summary>
+		/// <returns>A string that represents the current object.</returns>
 		public override string ToString()
 		{
 			return "Name: " + Name + " Priority: " + Priority + " State: " + _state;

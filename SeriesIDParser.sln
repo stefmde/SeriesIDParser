@@ -1,8 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26403.3
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Net 4.5", ".Net 4.5", "{AE0C9F53-3F9B-48FA-862F-1080F8A5D172}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Net Core", ".Net Core", "{14D5AB57-4404-46A8-B523-724060BB7DA0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{909F3691-1D4F-4F86-BCAB-65BC62A1D5F6}"
+	ProjectSection(SolutionItems) = preProject
+		CHANGELOG = CHANGELOG
+	EndProjectSection
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeriesIDParser", "SeriesIDParser\SeriesIDParser.csproj", "{D584FD1D-63D3-4FE2-A229-7F01E7A93797}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeriesIDParser.Test", "SeriesIDParser.Test\SeriesIDParser.Test.csproj", "{6F30FEEF-A65B-4E54-8014-AD9FC2D440CC}"
@@ -15,18 +24,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeriesIDParser.WinForm.Demo
 		{D584FD1D-63D3-4FE2-A229-7F01E7A93797} = {D584FD1D-63D3-4FE2-A229-7F01E7A93797}
 	EndProjectSection
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SeriesIDParserCore", "SeriesIDParserCore\SeriesIDParserCore.xproj", "{958064FF-C77F-478C-9243-3E374D2BDAC0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SeriesIDParserCore", "SeriesIDParserCore\SeriesIDParserCore.csproj", "{958064FF-C77F-478C-9243-3E374D2BDAC0}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Net 4.5", ".Net 4.5", "{AE0C9F53-3F9B-48FA-862F-1080F8A5D172}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Net Core", ".Net Core", "{14D5AB57-4404-46A8-B523-724060BB7DA0}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SeriesIDParserCore.Console.Demo", "SeriesIDParserCore.Console.Demo\SeriesIDParserCore.Console.Demo.xproj", "{D7D1B627-B679-4C4A-9353-EF23A6FD37CA}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{909F3691-1D4F-4F86-BCAB-65BC62A1D5F6}"
-	ProjectSection(SolutionItems) = preProject
-		CHANGELOG = CHANGELOG
-	EndProjectSection
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SeriesIDParserCore.Console.Demo", "SeriesIDParserCore.Console.Demo\SeriesIDParserCore.Console.Demo.csproj", "{D7D1B627-B679-4C4A-9353-EF23A6FD37CA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
