@@ -29,7 +29,7 @@ using SeriesIDParser.Models;
 
 namespace SeriesIDParser.Worker.CoreParserModules
 {
-	internal class SeriesDetailsCoreParserModule : ICoreParser
+	public class SeriesDetailsCoreParserModule : ICoreParser
 	{
 		/// <inheritdoc />
 		public int Priority { get; } = 9100;
@@ -55,7 +55,8 @@ namespace SeriesIDParser.Worker.CoreParserModules
 			outputResult.MediaData.Episodes = HelperWorker.GetEpisodeIDs( inputResult.ParserSettings, inputResult.ModifiedString );
 
 			_state = State.Success;
-			outputResult.MediaData.ModuleStates.Add( new CoreParserModuleStateResult( Name, new List<CoreParserModuleSubState>() {new CoreParserModuleSubState( _state, _errorOrWarningMessage )} ) );
+			outputResult.MediaData.ModuleStates.Add( new CoreParserModuleStateResult( Name,
+																					new List<CoreParserModuleSubState>() {new CoreParserModuleSubState( _state, _errorOrWarningMessage )} ) );
 
 			return outputResult;
 		}

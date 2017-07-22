@@ -63,8 +63,10 @@ namespace SeriesIDParser.Test.Tests
 			Assert.AreEqual( DimensionalType.Dimension_2DAny, parserResult.DimensionalType, "-DimensionalType " );
 			CollectionAssert.AreEqual( new List<int>() {5}, parserResult.Episodes.ToList(), "-Episodes " );
 			Assert.AreEqual( String.Empty, parserResult.ReleaseGroup, "-ReleaseGroup " );
-			CollectionAssert.AreEqual( new List<string>() {"German", "DOKU", "x264"}.OrderBy( x => x ).ToList(), parserResult.RemovedTokens.OrderBy( x => x ).ToList(), "-RemovedTokens " );
-			CollectionAssert.AreEqual( new List<ResolutionsMap> {ResolutionsMap.HD_720p}.OrderBy( x => x ).ToList(), parserResult.Resolutions.OrderBy( x => x ).ToList(), "-Resolution " );
+			CollectionAssert.AreEqual( new List<string>() {"German", "DOKU", "x264"}.OrderBy( x => x ).ToList(),
+										parserResult.RemovedTokens.OrderBy( x => x ).ToList(), "-RemovedTokens " );
+			CollectionAssert.AreEqual( new List<ResolutionsMap> {ResolutionsMap.HD_720p}.OrderBy( x => x ).ToList(),
+										parserResult.Resolutions.OrderBy( x => x ).ToList(), "-Resolution " );
 		}
 
 		[TestMethod]
@@ -92,8 +94,10 @@ namespace SeriesIDParser.Test.Tests
 			Assert.AreEqual( DimensionalType.Dimension_2DAny, parserResult.DimensionalType, "-DimensionalType " );
 			CollectionAssert.AreEqual( new List<int>() {5}, parserResult.Episodes.ToList(), "-Episodes " );
 			Assert.AreEqual( String.Empty, parserResult.ReleaseGroup, "-ReleaseGroup " );
-			CollectionAssert.AreEqual( new List<string>() {"German", "DOKU", "x264"}.OrderBy( x => x ).ToList(), parserResult.RemovedTokens.OrderBy( x => x ).ToList(), "-RemovedTokens " );
-			CollectionAssert.AreEqual( new List<ResolutionsMap> {ResolutionsMap.HD_720p}.OrderBy( x => x ).ToList(), parserResult.Resolutions.OrderBy( x => x ).ToList(), "-Resolution " );
+			CollectionAssert.AreEqual( new List<string>() {"German", "DOKU", "x264"}.OrderBy( x => x ).ToList(),
+										parserResult.RemovedTokens.OrderBy( x => x ).ToList(), "-RemovedTokens " );
+			CollectionAssert.AreEqual( new List<ResolutionsMap> {ResolutionsMap.HD_720p}.OrderBy( x => x ).ToList(),
+										parserResult.Resolutions.OrderBy( x => x ).ToList(), "-Resolution " );
 		}
 
 		[TestMethod]
@@ -121,8 +125,10 @@ namespace SeriesIDParser.Test.Tests
 			Assert.AreEqual( DimensionalType.Dimension_2DAny, parserResult.DimensionalType, "-DimensionalType " );
 			CollectionAssert.AreEqual( new List<int>() {5}, parserResult.Episodes.ToList(), "-Episodes " );
 			Assert.AreEqual( String.Empty, parserResult.ReleaseGroup, "-ReleaseGroup " );
-			CollectionAssert.AreEqual( new List<string>() {"German", "DOKU", "x264"}.OrderBy( x => x ).ToList(), parserResult.RemovedTokens.OrderBy( x => x ).ToList(), "-RemovedTokens " );
-			CollectionAssert.AreEqual( new List<ResolutionsMap> {ResolutionsMap.HD_720p}.OrderBy( x => x ).ToList(), parserResult.Resolutions.OrderBy( x => x ).ToList(), "-Resolution " );
+			CollectionAssert.AreEqual( new List<string>() {"German", "DOKU", "x264"}.OrderBy( x => x ).ToList(),
+										parserResult.RemovedTokens.OrderBy( x => x ).ToList(), "-RemovedTokens " );
+			CollectionAssert.AreEqual( new List<ResolutionsMap> {ResolutionsMap.HD_720p}.OrderBy( x => x ).ToList(),
+										parserResult.Resolutions.OrderBy( x => x ).ToList(), "-Resolution " );
 		}
 
 		[TestMethod]
@@ -150,8 +156,10 @@ namespace SeriesIDParser.Test.Tests
 			Assert.AreEqual( DimensionalType.Dimension_2DAny, parserResult.DimensionalType, "-DimensionalType " );
 			CollectionAssert.AreEqual( new List<int>() {5}, parserResult.Episodes.ToList(), "-Episodes " );
 			Assert.AreEqual( String.Empty, parserResult.ReleaseGroup, "-ReleaseGroup " );
-			CollectionAssert.AreEqual( new List<string>() {"German", "DOKU", "x264"}.OrderBy( x => x ).ToList(), parserResult.RemovedTokens.OrderBy( x => x ).ToList(), "-RemovedTokens " );
-			CollectionAssert.AreEqual( new List<ResolutionsMap> {ResolutionsMap.HD_720p}.OrderBy( x => x ).ToList(), parserResult.Resolutions.OrderBy( x => x ).ToList(), "-Resolution " );
+			CollectionAssert.AreEqual( new List<string>() {"German", "DOKU", "x264"}.OrderBy( x => x ).ToList(),
+										parserResult.RemovedTokens.OrderBy( x => x ).ToList(), "-RemovedTokens " );
+			CollectionAssert.AreEqual( new List<ResolutionsMap> {ResolutionsMap.HD_720p}.OrderBy( x => x ).ToList(),
+										parserResult.Resolutions.OrderBy( x => x ).ToList(), "-Resolution " );
 		}
 
 		[TestMethod]
@@ -179,8 +187,10 @@ namespace SeriesIDParser.Test.Tests
 			Assert.AreEqual( DimensionalType.Dimension_2DAny, parserResult.DimensionalType, "-DimensionalType " );
 			CollectionAssert.AreEqual( new List<int>() {5}, parserResult.Episodes.ToList(), "-Episodes " );
 			Assert.AreEqual( String.Empty, parserResult.ReleaseGroup, "-ReleaseGroup " );
-			CollectionAssert.AreEqual( new List<string>() {"German", "DOKU", "x264"}.OrderBy( x => x ).ToList(), parserResult.RemovedTokens.OrderBy( x => x ).ToList(), "-RemovedTokens " );
-			CollectionAssert.AreEqual( new List<ResolutionsMap> {ResolutionsMap.HD_720p}.OrderBy( x => x ).ToList(), parserResult.Resolutions.OrderBy( x => x ).ToList(), "-Resolution " );
+			CollectionAssert.AreEqual( new List<string>() {"German", "DOKU", "x264"}.OrderBy( x => x ).ToList(),
+										parserResult.RemovedTokens.OrderBy( x => x ).ToList(), "-RemovedTokens " );
+			CollectionAssert.AreEqual( new List<ResolutionsMap> {ResolutionsMap.HD_720p}.OrderBy( x => x ).ToList(),
+										parserResult.Resolutions.OrderBy( x => x ).ToList(), "-Resolution " );
 		}
 
 		[TestMethod]
@@ -208,8 +218,10 @@ namespace SeriesIDParser.Test.Tests
 			Assert.AreEqual( DimensionalType.Dimension_2DAny, parserResult.DimensionalType, "-DimensionalType " );
 			CollectionAssert.AreEqual( new List<int>() {5}, parserResult.Episodes.ToList(), "-Episodes " );
 			Assert.AreEqual( String.Empty, parserResult.ReleaseGroup, "-ReleaseGroup " );
-			CollectionAssert.AreEqual( new List<string>() {"German", "DOKU", "x264"}.OrderBy( x => x ).ToList(), parserResult.RemovedTokens.OrderBy( x => x ).ToList(), "-RemovedTokens " );
-			CollectionAssert.AreEqual( new List<ResolutionsMap> {ResolutionsMap.HD_720p}.OrderBy( x => x ).ToList(), parserResult.Resolutions.OrderBy( x => x ).ToList(), "-Resolution " );
+			CollectionAssert.AreEqual( new List<string>() {"German", "DOKU", "x264"}.OrderBy( x => x ).ToList(),
+										parserResult.RemovedTokens.OrderBy( x => x ).ToList(), "-RemovedTokens " );
+			CollectionAssert.AreEqual( new List<ResolutionsMap> {ResolutionsMap.HD_720p}.OrderBy( x => x ).ToList(),
+										parserResult.Resolutions.OrderBy( x => x ).ToList(), "-Resolution " );
 		}
 
 		[TestMethod]
@@ -237,8 +249,10 @@ namespace SeriesIDParser.Test.Tests
 			Assert.AreEqual( DimensionalType.Dimension_2DAny, parserResult.DimensionalType, "-DimensionalType " );
 			CollectionAssert.AreEqual( new List<int>() {5}, parserResult.Episodes.ToList(), "-Episodes " );
 			Assert.AreEqual( String.Empty, parserResult.ReleaseGroup, "-ReleaseGroup " );
-			CollectionAssert.AreEqual( new List<string>() {"German", "DOKU", "x264"}.OrderBy( x => x ).ToList(), parserResult.RemovedTokens.OrderBy( x => x ).ToList(), "-RemovedTokens " );
-			CollectionAssert.AreEqual( new List<ResolutionsMap> {ResolutionsMap.HD_720p}.OrderBy( x => x ).ToList(), parserResult.Resolutions.OrderBy( x => x ).ToList(), "-Resolution " );
+			CollectionAssert.AreEqual( new List<string>() {"German", "DOKU", "x264"}.OrderBy( x => x ).ToList(),
+										parserResult.RemovedTokens.OrderBy( x => x ).ToList(), "-RemovedTokens " );
+			CollectionAssert.AreEqual( new List<ResolutionsMap> {ResolutionsMap.HD_720p}.OrderBy( x => x ).ToList(),
+										parserResult.Resolutions.OrderBy( x => x ).ToList(), "-Resolution " );
 		}
 
 		[TestMethod]
@@ -266,8 +280,10 @@ namespace SeriesIDParser.Test.Tests
 			Assert.AreEqual( DimensionalType.Dimension_2DAny, parserResult.DimensionalType, "-DimensionalType " );
 			Assert.AreEqual( "iNFOTv", parserResult.ReleaseGroup, "-ReleaseGroup " );
 			CollectionAssert.AreEqual( new List<int>() {10}, parserResult.Episodes.ToList(), "-Episodes " );
-			CollectionAssert.AreEqual( new List<string>() {"German", "DUBBED", "h264", "WebHD"}.OrderBy( x => x ).ToList(), parserResult.RemovedTokens.OrderBy( x => x ).ToList(), "-RemovedTokens " );
-			CollectionAssert.AreEqual( new List<ResolutionsMap> {ResolutionsMap.FullHD_1080p}.OrderBy( x => x ).ToList(), parserResult.Resolutions.OrderBy( x => x ).ToList(), "-Resolution " );
+			CollectionAssert.AreEqual( new List<string>() {"German", "DUBBED", "h264", "WebHD"}.OrderBy( x => x ).ToList(),
+										parserResult.RemovedTokens.OrderBy( x => x ).ToList(), "-RemovedTokens " );
+			CollectionAssert.AreEqual( new List<ResolutionsMap> {ResolutionsMap.FullHD_1080p}.OrderBy( x => x ).ToList(),
+										parserResult.Resolutions.OrderBy( x => x ).ToList(), "-Resolution " );
 		}
 
 		[TestMethod]
@@ -283,7 +299,8 @@ namespace SeriesIDParser.Test.Tests
 			Assert.AreEqual( String.Empty, parserResult.EpisodeTitle, "-EpisodeTitle " );
 			Assert.AreEqual( String.Empty, parserResult.FileExtension, "-FileExtension " );
 			Assert.AreEqual( true, parserResult.IsSeries, "-IsSeries " );
-			Assert.AreEqual( "Better.Call.Saul.S02E10.GERMAN.DL.DUBBED.1080p.WebHD.h264 - iNFOTv", parserResult.OriginalString, "-OriginalString manipulated " );
+			Assert.AreEqual( "Better.Call.Saul.S02E10.GERMAN.DL.DUBBED.1080p.WebHD.h264 - iNFOTv", parserResult.OriginalString,
+							"-OriginalString manipulated " );
 			Assert.AreEqual( 2, parserResult.Season, "-Season " );
 			Assert.AreEqual( State.Notice, parserResult.State, "-State " );
 			Assert.AreEqual( "Better.Call.Saul", parserResult.Title, "-Title " );
@@ -295,8 +312,10 @@ namespace SeriesIDParser.Test.Tests
 			Assert.AreEqual( DimensionalType.Dimension_2DAny, parserResult.DimensionalType, "-DimensionalType " );
 			Assert.AreEqual( "iNFOTv", parserResult.ReleaseGroup, "-ReleaseGroup " );
 			CollectionAssert.AreEqual( new List<int>() {10}, parserResult.Episodes.ToList(), "-Episodes " );
-			CollectionAssert.AreEqual( new List<string>() {"German", "DUBBED", "h264", "WebHD"}.OrderBy( x => x ).ToList(), parserResult.RemovedTokens.OrderBy( x => x ).ToList(), "-RemovedTokens " );
-			CollectionAssert.AreEqual( new List<ResolutionsMap> {ResolutionsMap.FullHD_1080p}.OrderBy( x => x ).ToList(), parserResult.Resolutions.OrderBy( x => x ).ToList(), "-Resolution " );
+			CollectionAssert.AreEqual( new List<string>() {"German", "DUBBED", "h264", "WebHD"}.OrderBy( x => x ).ToList(),
+										parserResult.RemovedTokens.OrderBy( x => x ).ToList(), "-RemovedTokens " );
+			CollectionAssert.AreEqual( new List<ResolutionsMap> {ResolutionsMap.FullHD_1080p}.OrderBy( x => x ).ToList(),
+										parserResult.Resolutions.OrderBy( x => x ).ToList(), "-Resolution " );
 		}
 
 		[TestMethod]
@@ -312,7 +331,8 @@ namespace SeriesIDParser.Test.Tests
 			Assert.AreEqual( String.Empty, parserResult.EpisodeTitle, "-EpisodeTitle " );
 			Assert.AreEqual( ".avi", parserResult.FileExtension, "-FileExtension " );
 			Assert.AreEqual( true, parserResult.IsSeries, "-IsSeries " );
-			Assert.AreEqual( "Better.Call.Saul.S02E10.GERMAN.DL.DUBBED.1080p.WebHD.h264 - iNFOTv.avi", parserResult.OriginalString, "-OriginalString manipulated " );
+			Assert.AreEqual( "Better.Call.Saul.S02E10.GERMAN.DL.DUBBED.1080p.WebHD.h264 - iNFOTv.avi", parserResult.OriginalString,
+							"-OriginalString manipulated " );
 			Assert.AreEqual( 2, parserResult.Season, "-Season " );
 			Assert.AreEqual( State.Notice, parserResult.State, "-State " );
 			Assert.AreEqual( "Better.Call.Saul", parserResult.Title, "-Title " );
@@ -324,8 +344,10 @@ namespace SeriesIDParser.Test.Tests
 			Assert.AreEqual( DimensionalType.Dimension_2DAny, parserResult.DimensionalType, "-DimensionalType " );
 			Assert.AreEqual( "iNFOTv", parserResult.ReleaseGroup, "-ReleaseGroup " );
 			CollectionAssert.AreEqual( new List<int>() {10}, parserResult.Episodes.ToList(), "-Episodes " );
-			CollectionAssert.AreEqual( new List<string>() {"German", "DUBBED", "h264", "WebHD"}.OrderBy( x => x ).ToList(), parserResult.RemovedTokens.OrderBy( x => x ).ToList(), "-RemovedTokens " );
-			CollectionAssert.AreEqual( new List<ResolutionsMap> {ResolutionsMap.FullHD_1080p}.OrderBy( x => x ).ToList(), parserResult.Resolutions.OrderBy( x => x ).ToList(), "-Resolution " );
+			CollectionAssert.AreEqual( new List<string>() {"German", "DUBBED", "h264", "WebHD"}.OrderBy( x => x ).ToList(),
+										parserResult.RemovedTokens.OrderBy( x => x ).ToList(), "-RemovedTokens " );
+			CollectionAssert.AreEqual( new List<ResolutionsMap> {ResolutionsMap.FullHD_1080p}.OrderBy( x => x ).ToList(),
+										parserResult.Resolutions.OrderBy( x => x ).ToList(), "-Resolution " );
 		}
 
 		[TestMethod]
@@ -341,7 +363,8 @@ namespace SeriesIDParser.Test.Tests
 			Assert.AreEqual( String.Empty, parserResult.EpisodeTitle, "-EpisodeTitle " );
 			Assert.AreEqual( ".mkv", parserResult.FileExtension, "-FileExtension " );
 			Assert.AreEqual( false, parserResult.IsSeries, "-IsSeries " );
-			Assert.AreEqual( "Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv", parserResult.OriginalString, "-OriginalString manipulated " );
+			Assert.AreEqual( "Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv", parserResult.OriginalString,
+							"-OriginalString manipulated " );
 			Assert.AreEqual( -1, parserResult.Season, "-Season " );
 			Assert.AreEqual( State.Notice, parserResult.State, "-State " );
 			Assert.AreEqual( "Der.Hobbit.Smaugs.Einoede", parserResult.Title, "-Title " );
@@ -353,8 +376,10 @@ namespace SeriesIDParser.Test.Tests
 			Assert.AreEqual( DimensionalType.Dimension_2DAny, parserResult.DimensionalType, "-DimensionalType " );
 			Assert.AreEqual( String.Empty, parserResult.ReleaseGroup, "-ReleaseGroup " );
 			CollectionAssert.AreEqual( new List<int>(), parserResult.Episodes.ToList(), "-Episodes " );
-			CollectionAssert.AreEqual( new List<string>() {"German", "x264", "EXTENDED", "BluRay"}.OrderBy( x => x ).ToList(), parserResult.RemovedTokens.OrderBy( x => x ).ToList(), "-RemovedTokens " );
-			CollectionAssert.AreEqual( new List<ResolutionsMap> {ResolutionsMap.FullHD_1080p}.OrderBy( x => x ).ToList(), parserResult.Resolutions.OrderBy( x => x ).ToList(), "-Resolution " );
+			CollectionAssert.AreEqual( new List<string>() {"German", "x264", "EXTENDED", "BluRay"}.OrderBy( x => x ).ToList(),
+										parserResult.RemovedTokens.OrderBy( x => x ).ToList(), "-RemovedTokens " );
+			CollectionAssert.AreEqual( new List<ResolutionsMap> {ResolutionsMap.FullHD_1080p}.OrderBy( x => x ).ToList(),
+										parserResult.Resolutions.OrderBy( x => x ).ToList(), "-Resolution " );
 		}
 
 		[TestMethod]
@@ -382,8 +407,10 @@ namespace SeriesIDParser.Test.Tests
 			Assert.AreEqual( DimensionalType.Dimension_2DAny, parserResult.DimensionalType, "-DimensionalType " );
 			Assert.AreEqual( String.Empty, parserResult.ReleaseGroup, "-ReleaseGroup " );
 			CollectionAssert.AreEqual( new List<int>(), parserResult.Episodes.ToList(), "-Episodes " );
-			CollectionAssert.AreEqual( new List<string>() {"German", "DTS", "x264"}.OrderBy( x => x ).ToList(), parserResult.RemovedTokens.OrderBy( x => x ).ToList(), "-RemovedTokens " );
-			CollectionAssert.AreEqual( new List<ResolutionsMap> {ResolutionsMap.FullHD_1080p}.OrderBy( x => x ).ToList(), parserResult.Resolutions.OrderBy( x => x ).ToList(), "-Resolution " );
+			CollectionAssert.AreEqual( new List<string>() {"German", "DTS", "x264"}.OrderBy( x => x ).ToList(),
+										parserResult.RemovedTokens.OrderBy( x => x ).ToList(), "-RemovedTokens " );
+			CollectionAssert.AreEqual( new List<ResolutionsMap> {ResolutionsMap.FullHD_1080p}.OrderBy( x => x ).ToList(),
+										parserResult.Resolutions.OrderBy( x => x ).ToList(), "-Resolution " );
 		}
 
 		[TestMethod]
@@ -411,8 +438,10 @@ namespace SeriesIDParser.Test.Tests
 			Assert.AreEqual( DimensionalType.Dimension_2DAny, parserResult.DimensionalType, "-DimensionalType " );
 			Assert.AreEqual( String.Empty, parserResult.ReleaseGroup, "-ReleaseGroup " );
 			CollectionAssert.AreEqual( new List<int>() {1}, parserResult.Episodes.ToList(), "-Episodes " );
-			CollectionAssert.AreEqual( new List<string>() {"German", "x264"}.OrderBy( x => x ).ToList(), parserResult.RemovedTokens.OrderBy( x => x ).ToList(), "-RemovedTokens " );
-			CollectionAssert.AreEqual( new List<ResolutionsMap> {ResolutionsMap.HD_720p, ResolutionsMap.FullHD_1080p}.OrderBy( x => x ).ToList(), parserResult.Resolutions.OrderBy( x => x ).ToList(), "-Resolution " );
+			CollectionAssert.AreEqual( new List<string>() {"German", "x264"}.OrderBy( x => x ).ToList(), parserResult.RemovedTokens.OrderBy( x => x ).ToList(),
+										"-RemovedTokens " );
+			CollectionAssert.AreEqual( new List<ResolutionsMap> {ResolutionsMap.HD_720p, ResolutionsMap.FullHD_1080p}.OrderBy( x => x ).ToList(),
+										parserResult.Resolutions.OrderBy( x => x ).ToList(), "-Resolution " );
 		}
 
 		[TestMethod]
@@ -428,7 +457,8 @@ namespace SeriesIDParser.Test.Tests
 			Assert.AreEqual( "Endlich.frei", parserResult.EpisodeTitle, "-EpisodeTitle " );
 			Assert.AreEqual( ".mkv", parserResult.FileExtension, "-FileExtension " );
 			Assert.AreEqual( true, parserResult.IsSeries, "-IsSeries " );
-			Assert.AreEqual( "Narcos.S02E01.Endlich.frei.German.DD51.DL.1080p.NetflixUHD.AAC.x264.mkv", parserResult.OriginalString, "-OriginalString manipulated " );
+			Assert.AreEqual( "Narcos.S02E01.Endlich.frei.German.DD51.DL.1080p.NetflixUHD.AAC.x264.mkv", parserResult.OriginalString,
+							"-OriginalString manipulated " );
 			Assert.AreEqual( 2, parserResult.Season, "-Season " );
 			Assert.AreEqual( State.Notice, parserResult.State, "-State " );
 			Assert.AreEqual( "Narcos", parserResult.Title, "-Title " );
@@ -440,8 +470,10 @@ namespace SeriesIDParser.Test.Tests
 			Assert.AreEqual( DimensionalType.Dimension_2DAny, parserResult.DimensionalType, "-DimensionalType " );
 			Assert.AreEqual( String.Empty, parserResult.ReleaseGroup, "-ReleaseGroup " );
 			CollectionAssert.AreEqual( new List<int>() {1}, parserResult.Episodes.ToList(), "-Episodes " );
-			CollectionAssert.AreEqual( new List<string>() {"German", "x264", "AAC"}.OrderBy( x => x ).ToList(), parserResult.RemovedTokens.OrderBy( x => x ).ToList(), "-RemovedTokens " );
-			CollectionAssert.AreEqual( new List<ResolutionsMap> {ResolutionsMap.FullHD_1080p, ResolutionsMap.UltraHD_2160p}.OrderBy( x => x ).ToList(), parserResult.Resolutions.OrderBy( x => x ).ToList(), "-Resolution " );
+			CollectionAssert.AreEqual( new List<string>() {"German", "x264", "AAC"}.OrderBy( x => x ).ToList(),
+										parserResult.RemovedTokens.OrderBy( x => x ).ToList(), "-RemovedTokens " );
+			CollectionAssert.AreEqual( new List<ResolutionsMap> {ResolutionsMap.FullHD_1080p, ResolutionsMap.UltraHD_2160p}.OrderBy( x => x ).ToList(),
+										parserResult.Resolutions.OrderBy( x => x ).ToList(), "-Resolution " );
 		}
 
 		[TestMethod]
@@ -469,8 +501,10 @@ namespace SeriesIDParser.Test.Tests
 			Assert.AreEqual( DimensionalType.Dimension_2DAny, parserResult.DimensionalType, "-DimensionalType " );
 			Assert.AreEqual( String.Empty, parserResult.ReleaseGroup, "-ReleaseGroup " );
 			CollectionAssert.AreEqual( new List<int>() {1, 2}, parserResult.Episodes.ToList(), "-Episodes " );
-			CollectionAssert.AreEqual( new List<string>() {"German", "x264"}.OrderBy( x => x ).ToList(), parserResult.RemovedTokens.OrderBy( x => x ).ToList(), "-RemovedTokens " );
-			CollectionAssert.AreEqual( new List<ResolutionsMap> {ResolutionsMap.HD_720p, ResolutionsMap.FullHD_1080p}.OrderBy( x => x ).ToList(), parserResult.Resolutions.OrderBy( x => x ).ToList(), "-Resolution " );
+			CollectionAssert.AreEqual( new List<string>() {"German", "x264"}.OrderBy( x => x ).ToList(), parserResult.RemovedTokens.OrderBy( x => x ).ToList(),
+										"-RemovedTokens " );
+			CollectionAssert.AreEqual( new List<ResolutionsMap> {ResolutionsMap.HD_720p, ResolutionsMap.FullHD_1080p}.OrderBy( x => x ).ToList(),
+										parserResult.Resolutions.OrderBy( x => x ).ToList(), "-Resolution " );
 		}
 
 		[TestMethod]
@@ -486,7 +520,8 @@ namespace SeriesIDParser.Test.Tests
 			Assert.AreEqual( "Endlich.frei", parserResult.EpisodeTitle, "-EpisodeTitle " );
 			Assert.AreEqual( ".mkv", parserResult.FileExtension, "-FileExtension " );
 			Assert.AreEqual( true, parserResult.IsSeries, "-IsSeries " );
-			Assert.AreEqual( "Narcos.S02E01E02E03.Endlich.frei.German.DD51.DL.1080p.720p.x264.mkv", parserResult.OriginalString, "-OriginalString manipulated " );
+			Assert.AreEqual( "Narcos.S02E01E02E03.Endlich.frei.German.DD51.DL.1080p.720p.x264.mkv", parserResult.OriginalString,
+							"-OriginalString manipulated " );
 			Assert.AreEqual( 2, parserResult.Season, "-Season " );
 			Assert.AreEqual( State.Notice, parserResult.State, "-State " );
 			Assert.AreEqual( "Narcos", parserResult.Title, "-Title " );
@@ -498,8 +533,10 @@ namespace SeriesIDParser.Test.Tests
 			Assert.AreEqual( DimensionalType.Dimension_2DAny, parserResult.DimensionalType, "-DimensionalType " );
 			Assert.AreEqual( String.Empty, parserResult.ReleaseGroup, "-ReleaseGroup " );
 			CollectionAssert.AreEqual( new List<int>() {1, 2, 3}, parserResult.Episodes.ToList(), "-Episodes " );
-			CollectionAssert.AreEqual( new List<string>() {"German", "x264"}.OrderBy( x => x ).ToList(), parserResult.RemovedTokens.OrderBy( x => x ).ToList(), "-RemovedTokens " );
-			CollectionAssert.AreEqual( new List<ResolutionsMap> {ResolutionsMap.HD_720p, ResolutionsMap.FullHD_1080p}.OrderBy( x => x ).ToList(), parserResult.Resolutions.OrderBy( x => x ).ToList(), "-Resolution " );
+			CollectionAssert.AreEqual( new List<string>() {"German", "x264"}.OrderBy( x => x ).ToList(), parserResult.RemovedTokens.OrderBy( x => x ).ToList(),
+										"-RemovedTokens " );
+			CollectionAssert.AreEqual( new List<ResolutionsMap> {ResolutionsMap.HD_720p, ResolutionsMap.FullHD_1080p}.OrderBy( x => x ).ToList(),
+										parserResult.Resolutions.OrderBy( x => x ).ToList(), "-Resolution " );
 		}
 
 		[TestMethod]
@@ -515,7 +552,8 @@ namespace SeriesIDParser.Test.Tests
 			Assert.AreEqual( "Endlich.frei", parserResult.EpisodeTitle, "-EpisodeTitle " );
 			Assert.AreEqual( ".mkv", parserResult.FileExtension, "-FileExtension " );
 			Assert.AreEqual( true, parserResult.IsSeries, "-IsSeries " );
-			Assert.AreEqual( "Narcos.S02E01E02E04.Endlich.frei.German.DD51.DL.1080p.720p.x264.mkv", parserResult.OriginalString, "-OriginalString manipulated " );
+			Assert.AreEqual( "Narcos.S02E01E02E04.Endlich.frei.German.DD51.DL.1080p.720p.x264.mkv", parserResult.OriginalString,
+							"-OriginalString manipulated " );
 			Assert.AreEqual( 2, parserResult.Season, "-Season " );
 			Assert.AreEqual( State.Notice, parserResult.State, "-State " );
 			Assert.AreEqual( "Narcos", parserResult.Title, "-Title " );
@@ -527,8 +565,10 @@ namespace SeriesIDParser.Test.Tests
 			Assert.AreEqual( DimensionalType.Dimension_2DAny, parserResult.DimensionalType, "-DimensionalType " );
 			Assert.AreEqual( String.Empty, parserResult.ReleaseGroup, "-ReleaseGroup " );
 			CollectionAssert.AreEqual( new List<int>() {1, 2, 4}, parserResult.Episodes.ToList(), "-Episodes " );
-			CollectionAssert.AreEqual( new List<string>() {"German", "x264"}.OrderBy( x => x ).ToList(), parserResult.RemovedTokens.OrderBy( x => x ).ToList(), "-RemovedTokens " );
-			CollectionAssert.AreEqual( new List<ResolutionsMap> {ResolutionsMap.HD_720p, ResolutionsMap.FullHD_1080p}.OrderBy( x => x ).ToList(), parserResult.Resolutions.OrderBy( x => x ).ToList(), "-Resolution " );
+			CollectionAssert.AreEqual( new List<string>() {"German", "x264"}.OrderBy( x => x ).ToList(), parserResult.RemovedTokens.OrderBy( x => x ).ToList(),
+										"-RemovedTokens " );
+			CollectionAssert.AreEqual( new List<ResolutionsMap> {ResolutionsMap.HD_720p, ResolutionsMap.FullHD_1080p}.OrderBy( x => x ).ToList(),
+										parserResult.Resolutions.OrderBy( x => x ).ToList(), "-Resolution " );
 		}
 
 		[TestMethod]
@@ -556,8 +596,10 @@ namespace SeriesIDParser.Test.Tests
 			Assert.AreEqual( DimensionalType.Dimension_3DAny, parserResult.DimensionalType, "-DimensionalType " );
 			Assert.AreEqual( String.Empty, parserResult.ReleaseGroup, "-ReleaseGroup " );
 			CollectionAssert.AreEqual( new List<int>(), parserResult.Episodes.ToList(), "-Episodes " );
-			CollectionAssert.AreEqual( new List<string>() {"German", "DTS", "x264"}.OrderBy( x => x ).ToList(), parserResult.RemovedTokens.OrderBy( x => x ).ToList(), "-RemovedTokens " );
-			CollectionAssert.AreEqual( new List<ResolutionsMap> {ResolutionsMap.FullHD_1080p}.OrderBy( x => x ).ToList(), parserResult.Resolutions.OrderBy( x => x ).ToList(), "-Resolution " );
+			CollectionAssert.AreEqual( new List<string>() {"German", "DTS", "x264"}.OrderBy( x => x ).ToList(),
+										parserResult.RemovedTokens.OrderBy( x => x ).ToList(), "-RemovedTokens " );
+			CollectionAssert.AreEqual( new List<ResolutionsMap> {ResolutionsMap.FullHD_1080p}.OrderBy( x => x ).ToList(),
+										parserResult.Resolutions.OrderBy( x => x ).ToList(), "-Resolution " );
 		}
 
 		[TestMethod]
@@ -585,8 +627,10 @@ namespace SeriesIDParser.Test.Tests
 			Assert.AreEqual( DimensionalType.Dimension_3DHOU, parserResult.DimensionalType, "-DimensionalType " );
 			Assert.AreEqual( String.Empty, parserResult.ReleaseGroup, "-ReleaseGroup " );
 			CollectionAssert.AreEqual( new List<int>(), parserResult.Episodes.ToList(), "-Episodes " );
-			CollectionAssert.AreEqual( new List<string>() {"German", "DTS", "x264"}.OrderBy( x => x ).ToList(), parserResult.RemovedTokens.OrderBy( x => x ).ToList(), "-RemovedTokens " );
-			CollectionAssert.AreEqual( new List<ResolutionsMap> {ResolutionsMap.FullHD_1080p}.OrderBy( x => x ).ToList(), parserResult.Resolutions.OrderBy( x => x ).ToList(), "-Resolution " );
+			CollectionAssert.AreEqual( new List<string>() {"German", "DTS", "x264"}.OrderBy( x => x ).ToList(),
+										parserResult.RemovedTokens.OrderBy( x => x ).ToList(), "-RemovedTokens " );
+			CollectionAssert.AreEqual( new List<ResolutionsMap> {ResolutionsMap.FullHD_1080p}.OrderBy( x => x ).ToList(),
+										parserResult.Resolutions.OrderBy( x => x ).ToList(), "-Resolution " );
 		}
 
 		[TestMethod]
@@ -614,8 +658,10 @@ namespace SeriesIDParser.Test.Tests
 			Assert.AreEqual( DimensionalType.Dimension_3DHSBS, parserResult.DimensionalType, "-DimensionalType " );
 			Assert.AreEqual( String.Empty, parserResult.ReleaseGroup, "-ReleaseGroup " );
 			CollectionAssert.AreEqual( new List<int>(), parserResult.Episodes.ToList(), "-Episodes " );
-			CollectionAssert.AreEqual( new List<string>() {"German", "DTS", "x264"}.OrderBy( x => x ).ToList(), parserResult.RemovedTokens.OrderBy( x => x ).ToList(), "-RemovedTokens " );
-			CollectionAssert.AreEqual( new List<ResolutionsMap> {ResolutionsMap.FullHD_1080p}.OrderBy( x => x ).ToList(), parserResult.Resolutions.OrderBy( x => x ).ToList(), "-Resolution " );
+			CollectionAssert.AreEqual( new List<string>() {"German", "DTS", "x264"}.OrderBy( x => x ).ToList(),
+										parserResult.RemovedTokens.OrderBy( x => x ).ToList(), "-RemovedTokens " );
+			CollectionAssert.AreEqual( new List<ResolutionsMap> {ResolutionsMap.FullHD_1080p}.OrderBy( x => x ).ToList(),
+										parserResult.Resolutions.OrderBy( x => x ).ToList(), "-Resolution " );
 		}
 	}
 }

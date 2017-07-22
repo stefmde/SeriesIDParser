@@ -30,7 +30,7 @@ using SeriesIDParser.Models;
 
 namespace SeriesIDParser.Worker.CoreParserModules
 {
-	internal class ResolutionsCoreParserModule : ICoreParser
+	public class ResolutionsCoreParserModule : ICoreParser
 	{
 		/// <inheritdoc />
 		public int Priority { get; } = 9800;
@@ -51,7 +51,8 @@ namespace SeriesIDParser.Worker.CoreParserModules
 			CoreParserResult outputResult = inputResult;
 			string modifiedString = inputResult.ModifiedString;
 
-			List<ResolutionsMap> foundResolutions = HelperWorker.GetResolutions( inputResult.ParserSettings, inputResult.MediaData.DetectedOldSpacingChar, ref modifiedString );
+			List<ResolutionsMap> foundResolutions =
+				HelperWorker.GetResolutions( inputResult.ParserSettings, inputResult.MediaData.DetectedOldSpacingChar, ref modifiedString );
 
 			if (foundResolutions.Any())
 			{
@@ -65,7 +66,8 @@ namespace SeriesIDParser.Worker.CoreParserModules
 				_errorOrWarningMessage = "No Resolutions found";
 			}
 
-			outputResult.MediaData.ModuleStates.Add( new CoreParserModuleStateResult( Name, new List<CoreParserModuleSubState>() {new CoreParserModuleSubState( _state, _errorOrWarningMessage )} ) );
+			outputResult.MediaData.ModuleStates.Add( new CoreParserModuleStateResult( Name,
+																					new List<CoreParserModuleSubState>() {new CoreParserModuleSubState( _state, _errorOrWarningMessage )} ) );
 
 			return outputResult;
 		}

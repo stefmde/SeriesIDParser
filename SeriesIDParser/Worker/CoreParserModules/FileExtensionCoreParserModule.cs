@@ -32,7 +32,7 @@ using SeriesIDParser.Models;
 
 namespace SeriesIDParser.Worker.CoreParserModules
 {
-	internal class FileExtensionCoreParserModule : ICoreParser
+	public class FileExtensionCoreParserModule : ICoreParser
 	{
 		/// <inheritdoc />
 		public int Priority { get; } = 9900;
@@ -67,7 +67,8 @@ namespace SeriesIDParser.Worker.CoreParserModules
 				_state = State.Success;
 			}
 
-			outputResult.MediaData.ModuleStates.Add( new CoreParserModuleStateResult( Name, new List<CoreParserModuleSubState>() {new CoreParserModuleSubState( _state, _errorOrWarningMessage )} ) );
+			outputResult.MediaData.ModuleStates.Add( new CoreParserModuleStateResult( Name,
+																					new List<CoreParserModuleSubState>() {new CoreParserModuleSubState( _state, _errorOrWarningMessage )} ) );
 
 			return outputResult;
 		}

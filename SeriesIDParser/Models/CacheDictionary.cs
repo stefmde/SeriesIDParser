@@ -31,12 +31,12 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-[assembly: InternalsVisibleTo("SeriesIDParser.Test")]
+[assembly: InternalsVisibleTo( "SeriesIDParser.Test" )]
 
 namespace SeriesIDParser.Models
 {
 	/// <summary>
-	/// Dictionary with a limit used to cache the MediaData
+	///     Dictionary with a limit used to cache the MediaData
 	/// </summary>
 	internal class CacheDictionary //: IDictionary<string, MediaData>
 	{
@@ -52,68 +52,68 @@ namespace SeriesIDParser.Models
 		///     dropped. Default: 10.000
 		/// </summary>
 		/// <param name="limit">Drop limit</param>
-		public CacheDictionary(int limit = 10000)
+		public CacheDictionary( int limit = 10000 )
 		{
 			Limit = limit;
-			_keys = new List<string>(limit);
-			_dictionary = new Dictionary<string, MediaData>(limit);
+			_keys = new List<string>( limit );
+			_dictionary = new Dictionary<string, MediaData>( limit );
 		}
 
-		public void Add(KeyValuePair<string, MediaData> item)
+		public void Add( KeyValuePair<string, MediaData> item )
 		{
-			Add(item.Key, item.Value);
+			Add( item.Key, item.Value );
 		}
 
-		public void Add(string key, MediaData value)
+		public void Add( string key, MediaData value )
 		{
 			if (_dictionary.Count >= Limit)
 			{
 				string oldestKey = _keys.First();
-				_dictionary.Remove(oldestKey);
-				_keys.Remove(oldestKey);
+				_dictionary.Remove( oldestKey );
+				_keys.Remove( oldestKey );
 				LimitDropCount++;
 			}
 
-			_dictionary.Add(key, value);
-			_keys.Add(key);
+			_dictionary.Add( key, value );
+			_keys.Add( key );
 		}
 
-		public MediaData this[string key]
+		public MediaData this[ string key ]
 		{
 			get { return _dictionary[key]; }
 			set { _dictionary[key] = value; }
 		}
 
-		public bool Contains(string key)
+		public bool Contains( string key )
 		{
-			return _keys.Contains(key);
+			return _keys.Contains( key );
 		}
 
-		public bool Contains(KeyValuePair<string, MediaData> item)
+		public bool Contains( KeyValuePair<string, MediaData> item )
 		{
-			return Contains(item.Key);
+			return Contains( item.Key );
 		}
 
-		public bool Remove(string key)
+		public bool Remove( string key )
 		{
-			if (Contains(key))
+			if (Contains( key ))
 			{
-				_keys.Remove(key);
-				_dictionary.Remove(key);
+				_keys.Remove( key );
+				_dictionary.Remove( key );
 				return true;
 			}
 
 			return false;
 		}
 
-		public bool Remove(KeyValuePair<string, MediaData> item)
+		public bool Remove( KeyValuePair<string, MediaData> item )
 		{
-			return Remove(item.Key);
+			return Remove( item.Key );
 		}
 
-		public bool TryGetValue(string key, out MediaData value)
+		public bool TryGetValue( string key, out MediaData value )
 		{
-			if (Contains(key))
+			if (Contains( key ))
 			{
 				value = _dictionary[key];
 				return true;
@@ -127,8 +127,8 @@ namespace SeriesIDParser.Models
 
 		public void Clear()
 		{
-			_keys = new List<string>(Limit);
-			_dictionary = new Dictionary<string, MediaData>(Limit);
+			_keys = new List<string>( Limit );
+			_dictionary = new Dictionary<string, MediaData>( Limit );
 		}
 
 		// ### Unused

@@ -23,53 +23,60 @@
 // SOFTWARE.
 
 
+using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SeriesIDParser.Models;
+using SeriesIDParser.Test.Helper;
 using SeriesIDParser.Worker;
-
-// ReSharper disable MissingXmlDoc
+using SeriesIDParser.Worker.CoreParserModules;
 
 namespace SeriesIDParser.Test.Tests
 {
 	[ExcludeFromCodeCoverage]
 	[TestClass]
-	public class GetSpacingCharTests
+	public class CoreParserCustom
 	{
 		[TestMethod]
-		public void GetSpacingCharTestDefault()
+		public void CoreParserCustomRemoveParser()
 		{
+			int initialParserCount = HelperWorker.GetAllCoreParsers().Count();
 			ParserSettings ps = new ParserSettings( true );
-			Assert.AreEqual( '.', HelperWorker.GetSpacingChar( "Dubai.Airport.S01E05.Teil5.GERMAN.DOKU.HDTV.720p.x264.mkv", ps ), "Should return a '.'" );
+			ps.DisabledCoreParserModules.Add( new UnitTestCoreParserModule() );
+			int actualParserCount = HelperWorker.GetAllCoreParsers( ps.DisabledCoreParserModules ).Count();
+
+			Assert.AreEqual( initialParserCount - 1, actualParserCount );
 		}
 
 		[TestMethod]
-		public void GetSpacingCharTestWithNoise()
+		public void CoreParserCustomRemoveParserTwice()
 		{
+			int initialParserCount = HelperWorker.GetAllCoreParsers().Count();
 			ParserSettings ps = new ParserSettings( true );
-			Assert.AreEqual( '.', HelperWorker.GetSpacingChar( "Dubai.Airport,S01E05.Teil5.GERMAN.DOKU-HDTV.720p.x264.mkv", ps ), "Should return a '.'" );
+			ps.DisabledCoreParserModules.Add( new UnitTestCoreParserModule() );
+			ps.DisabledCoreParserModules.Add( new UnitTestCoreParserModule() );
+			int actualParserCount = HelperWorker.GetAllCoreParsers( ps.DisabledCoreParserModules ).Count();
+
+			Assert.AreEqual( initialParserCount - 1, actualParserCount );
 		}
 
 		[TestMethod]
-		public void GetSpacingCharTestDashChar()
+		public void CoreParserCustomNullActivator()
 		{
-			ParserSettings ps = new ParserSettings( true );
-			Assert.AreEqual( '-', HelperWorker.GetSpacingChar( "Dubai-Airport-S01E05-Teil5-GERMAN-DOKU-HDTV-720p-x264.mkv", ps ), "Should return a '-'" );
+			int initialParserCount = HelperWorker.GetAllCoreParsers().Count();
+			int actualParserCount = HelperWorker.GetAllCoreParsers( null ).Count();
+
+			Assert.AreEqual( initialParserCount, actualParserCount );
 		}
 
 		[TestMethod]
-		public void GetSpacingCharTestCpaceChar()
+		public void CoreParserCustomAddParser()
 		{
-			ParserSettings ps = new ParserSettings( true );
-			Assert.AreEqual( ' ', HelperWorker.GetSpacingChar( "Dubai Airport S01E05 Teil5 GERMAN DOKU HDTV 720p x264.mkv", ps ), "Should return a space" );
-		}
-
-		[TestMethod]
-		public void GetSpacingCharTestUnknown()
-		{
-			ParserSettings ps = new ParserSettings( true );
-			Assert.AreEqual( new char(), HelperWorker.GetSpacingChar( "Dubai Airport S01E05 Teil5 GERMAN-DOKU-HDTV-720p-x264", ps ),
-							"Should return a empy char" );
+			Assert.IsTrue( HelperWorker.GetAllCoreParsers().Any( x => x.Name == "UnitTestCoreParserModuleEmpty") );
 		}
 	}
 }

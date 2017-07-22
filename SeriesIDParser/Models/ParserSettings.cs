@@ -24,6 +24,7 @@
 
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using Newtonsoft.Json;
 using SeriesIDParser.Worker;
@@ -37,6 +38,7 @@ namespace SeriesIDParser.Models
 	///     and list entries
 	/// </summary>
 	//[Serializable]
+	[SuppressMessage( "ReSharper", "MemberCanBePrivate.Global" )]
 	public class ParserSettings
 	{
 		/// <summary>
@@ -63,17 +65,113 @@ namespace SeriesIDParser.Models
 			DetectHsbs3DTokens = new List<string>() {"HSBS", "H-SBS", "3DHSBS", "3D-HSBS"};
 
 			// ### Fileextensions
-			FileExtensions = new List<string>() {".3G2", ".3GP", ".AMV", ".ASF", ".AVI", ".DRC", ".F4A", ".F4B", ".F4P", ".F4V", ".FLV", ".GIF", ".GIFV", ".M2V", ".M4P", ".M4V", ".MKV", ".MNG", ".MOV", ".MP2", ".MP4", ".MPE", ".MPEG", ".MPG", ".MPV", ".MXF", ".NSV", ".OGG", ".OGV", ".QT", ".RM", ".RMVB", ".ROQ", ".SVI", ".VOB", ".WEBM", ".WMV", ".YUV"};
+			FileExtensions = new List<string>()
+							{
+								".3G2",
+								".3GP",
+								".AMV",
+								".ASF",
+								".AVI",
+								".DRC",
+								".F4A",
+								".F4B",
+								".F4P",
+								".F4V",
+								".FLV",
+								".GIF",
+								".GIFV",
+								".M2V",
+								".M4P",
+								".M4V",
+								".MKV",
+								".MNG",
+								".MOV",
+								".MP2",
+								".MP4",
+								".MPE",
+								".MPEG",
+								".MPG",
+								".MPV",
+								".MXF",
+								".NSV",
+								".OGG",
+								".OGV",
+								".QT",
+								".RM",
+								".RMVB",
+								".ROQ",
+								".SVI",
+								".VOB",
+								".WEBM",
+								".WMV",
+								".YUV"
+							};
 
 			// ### Remove 
-			RemoveAndListTokens = new List<string>() {"DUBBED", "SYNCED", "iTunes", "BluRay", "WebHD", "Netflix", "WebRIP", "DOKU", "EXTENDED", "UNRATED", "UNCUT", "AmazonHD", "German", "Remastered", "HDRip", "Remux", "10bit", "PAL", "7.1", "5.1", "BT2020", "BT.2020", "HDR"};
+			RemoveAndListTokens = new List<string>()
+								{
+									"DUBBED",
+									"SYNCED",
+									"iTunes",
+									"BluRay",
+									"WebHD",
+									"Netflix",
+									"WebRIP",
+									"DOKU",
+									"EXTENDED",
+									"UNRATED",
+									"UNCUT",
+									"AmazonHD",
+									"German",
+									"Remastered",
+									"HDRip",
+									"Remux",
+									"10bit",
+									"PAL",
+									"7.1",
+									"5.1",
+									"BT2020",
+									"BT.2020",
+									"HDR"
+								};
 
 			//_removeAndListTokensOnLanguageParserIsDisabled = new List<string>() { "GERMAN" };
 
-			RemoveWithoutListTokens = new List<string>() {" ", "MIRROR", "WEB", "BD9", "DD20", "DD51", "DD5.1", "Web-DL", "DL", "HDDVDRip", "THEATRICAL", "RETAIL", "3D"};
+			RemoveWithoutListTokens = new List<string>()
+									{
+										" ",
+										"MIRROR",
+										"WEB",
+										"BD9",
+										"DD20",
+										"DD51",
+										"DD5.1",
+										"Web-DL",
+										"DL",
+										"HDDVDRip",
+										"THEATRICAL",
+										"RETAIL",
+										"3D"
+									};
 
 			// ### Parsing
-			VideoCodecs = new List<string>() {"x264", "h264", "x265", "AVC", "XviD", "FFmpeg", "VP7", "VP8", "VP9", "MPEG-4", "MPEG-2", "MPEG4", "MPEG2", "HEVC"};
+			VideoCodecs = new List<string>()
+						{
+							"x264",
+							"h264",
+							"x265",
+							"AVC",
+							"XviD",
+							"FFmpeg",
+							"VP7",
+							"VP8",
+							"VP9",
+							"MPEG-4",
+							"MPEG-2",
+							"MPEG4",
+							"MPEG2",
+							"HEVC"
+						};
 
 			AudioCodecs = new List<string>() {"DTSHD", "DTS", "AAC", "MP3", "MPEG3", "MPEG-3", "TrueHD.Atmos", "TrueHD", "AC3D", "AC3"};
 
@@ -83,12 +181,14 @@ namespace SeriesIDParser.Models
 
 			// ### Other Stuff
 			PossibleSpacingChars = new List<char>() {'.', ',', '-', ' ', '+', '*'};
+			DisabledCoreParserModules = new ListOfICoreParser();
 		}
 
-		internal ParserSettings() {}
+		internal ParserSettings()
+		{
+		}
 
 		#region Properties
-
 		// ### Parsing
 		// ############################################################
 
@@ -128,6 +228,12 @@ namespace SeriesIDParser.Models
 		///     Defines the prefilled list with the posible spacing chars for the given string to detect the char
 		/// </summary>
 		public char ReleaseGroupSeperator { get; set; } = '-';
+
+		/// <summary>
+		///     Defines the List of IcoreParser's who are disabled by you. You should only need this if you implement your own
+		///     CoreParserModules
+		/// </summary>
+		public ListOfICoreParser DisabledCoreParserModules { get; set; }
 
 		// ### Language ############################################################
 		/// <summary>
@@ -388,7 +494,6 @@ namespace SeriesIDParser.Models
 		/// </summary>
 		public bool ThrowExceptionInsteadOfErrorFlag { get; set; } = false;
 		#endregion OtherStuff
-
 		#endregion Properties
 	}
 }

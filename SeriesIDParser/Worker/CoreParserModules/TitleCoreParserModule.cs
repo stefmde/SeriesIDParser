@@ -29,7 +29,7 @@ using SeriesIDParser.Models;
 
 namespace SeriesIDParser.Worker.CoreParserModules
 {
-	internal class TitleCoreParserModule : ICoreParser
+	public class TitleCoreParserModule : ICoreParser
 	{
 		/// <inheritdoc />
 		public int Priority { get; } = 9200;
@@ -62,12 +62,15 @@ namespace SeriesIDParser.Worker.CoreParserModules
 			outputResult.ModifiedString = outputResult.ModifiedString.Replace( oldSpacingChar, inputResult.ParserSettings.NewSpacingChar.ToString() );
 
 			// Remove trailing spacer
-			outputResult.ModifiedString = outputResult.ModifiedString.Trim().Trim( inputResult.MediaData.DetectedOldSpacingChar ).Trim( inputResult.ParserSettings.NewSpacingChar );
+			outputResult.ModifiedString = outputResult.ModifiedString.Trim().Trim( inputResult.MediaData.DetectedOldSpacingChar )
+													.Trim( inputResult.ParserSettings.NewSpacingChar );
 
-			outputResult.MediaData.Title = HelperWorker.GetTitle( inputResult.ParserSettings, inputResult.MediaData.DetectedOldSpacingChar, outputResult.ModifiedString );
+			outputResult.MediaData.Title = HelperWorker.GetTitle( inputResult.ParserSettings, inputResult.MediaData.DetectedOldSpacingChar,
+																outputResult.ModifiedString );
 			_state = state;
 
-			outputResult.MediaData.ModuleStates.Add( new CoreParserModuleStateResult( Name, new List<CoreParserModuleSubState>() {new CoreParserModuleSubState( _state, _errorOrWarningMessage )} ) );
+			outputResult.MediaData.ModuleStates.Add( new CoreParserModuleStateResult( Name,
+																					new List<CoreParserModuleSubState>() {new CoreParserModuleSubState( _state, _errorOrWarningMessage )} ) );
 
 			return outputResult;
 		}

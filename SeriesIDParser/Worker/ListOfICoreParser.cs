@@ -25,54 +25,58 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Schema;
+using System.Xml.Serialization;
 using SeriesIDParser.Models;
 
-namespace SeriesIDParser.Worker.CoreParserModules
+namespace SeriesIDParser.Worker
 {
-	public class YearCoreParserModule : ICoreParser
+	public class ListOfICoreParser : List<ICoreParser>, IXmlSerializable
 	{
-		/// <inheritdoc />
-		public int Priority { get; } = 9300;
+		private Type _type = typeof(ICoreParser);
 
-		/// <inheritdoc />
-		public string Name { get; } = "YearCoreParser";
-
-		/// <inheritdoc />
-		public string Description { get; } = "Parses the Year";
-
-		private State _state = State.Unknown;
-
-		private string _errorOrWarningMessage = String.Empty;
-
-		/// <inheritdoc />
-		public CoreParserResult Parse( CoreParserResult inputResult )
+		public ListOfICoreParser() : base()
 		{
-			CoreParserResult outputResult = inputResult;
-			int year = HelperWorker.GetYear( inputResult.ModifiedString, inputResult.ParserSettings.YearParseRegex );
-
-			if (year == -1)
-			{
-				_state = State.Notice;
-				_errorOrWarningMessage = "No Year found";
-			}
-			else
-			{
-				outputResult.MediaData.Year = year;
-				_state = State.Success;
-				outputResult.ModifiedString = outputResult.ModifiedString.Replace( year.ToString(), "" );
-			}
-
-			outputResult.MediaData.ModuleStates.Add( new CoreParserModuleStateResult( Name,
-																					new List<CoreParserModuleSubState>() {new CoreParserModuleSubState( _state, _errorOrWarningMessage )} ) );
-
-			return outputResult;
 		}
 
 		/// <inheritdoc />
-		public override string ToString()
+		public XmlSchema GetSchema()
 		{
-			return "Name: " + Name + " Priority: " + Priority + " State: " + _state;
+			return null;
+		}
+
+		/// <inheritdoc />
+		public void ReadXml( XmlReader reader )
+		{
+			reader.ReadStartElement( "ListOfICoreParser" );
+			while (reader.IsStartElement( _type.Name ))
+			{
+				Type type = Type.GetType( reader.GetAttribute( "AssemblyQualifiedName" ) );
+				XmlSerializer serial = new XmlSerializer( _type );
+
+				reader.ReadStartElement( _type.Name );
+				this.Add( (ICoreParser) serial.Deserialize( reader ) );
+				reader.ReadEndElement(); //ICoreParser
+			}
+
+			reader.ReadEndElement(); //ListOfICoreParser
+		}
+
+		/// <inheritdoc />
+		public void WriteXml( XmlWriter writer )
+		{
+			foreach (ICoreParser coreParser in this)
+			{
+				writer.WriteStartElement( _type.Name );
+				writer.WriteAttributeString( "AssemblyQualifiedName", coreParser.GetType().AssemblyQualifiedName );
+				XmlSerializer xmlSerializer = new XmlSerializer( coreParser.GetType() );
+				xmlSerializer.Serialize( writer, coreParser );
+				writer.WriteEndElement();
+			}
 		}
 	}
 }

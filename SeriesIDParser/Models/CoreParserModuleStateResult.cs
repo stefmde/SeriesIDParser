@@ -30,7 +30,7 @@ using System.Runtime.Serialization;
 namespace SeriesIDParser.Models
 {
 	/// <summary>
-	/// Contains the basic info of the State of the CoreParser
+	///     Contains the basic info of the State of the CoreParser
 	/// </summary>
 	public class CoreParserModuleStateResult
 	{
@@ -40,7 +40,7 @@ namespace SeriesIDParser.Models
 		//	CoreParserModuleSubState = state;
 		//}
 
-		public CoreParserModuleStateResult(string moduleName, List<CoreParserModuleSubState> state, Exception exception = null)
+		public CoreParserModuleStateResult( string moduleName, List<CoreParserModuleSubState> state, Exception exception = null )
 		{
 			ModuleName = moduleName;
 			Exception = exception;

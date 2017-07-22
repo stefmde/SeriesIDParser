@@ -30,7 +30,7 @@ using SeriesIDParser.Models;
 
 namespace SeriesIDParser.Worker.CoreParserModules
 {
-	internal class RemoveTokensCoreParserModule : ICoreParser
+	public class RemoveTokensCoreParserModule : ICoreParser
 	{
 		/// <inheritdoc />
 		public int Priority { get; } = 9500;
@@ -51,7 +51,8 @@ namespace SeriesIDParser.Worker.CoreParserModules
 			CoreParserResult outputResult = inputResult;
 			string modifiedString = inputResult.ModifiedString;
 
-			List<string> foundTokens = HelperWorker.RemoveTokens( inputResult.ParserSettings, inputResult.MediaData.DetectedOldSpacingChar, ref modifiedString );
+			List<string> foundTokens =
+				HelperWorker.RemoveTokens( inputResult.ParserSettings, inputResult.MediaData.DetectedOldSpacingChar, ref modifiedString );
 
 			if (foundTokens.Any())
 			{
@@ -65,7 +66,8 @@ namespace SeriesIDParser.Worker.CoreParserModules
 				_errorOrWarningMessage = "No Tokens found";
 			}
 
-			outputResult.MediaData.ModuleStates.Add( new CoreParserModuleStateResult( Name, new List<CoreParserModuleSubState>() {new CoreParserModuleSubState( _state, _errorOrWarningMessage )} ) );
+			outputResult.MediaData.ModuleStates.Add( new CoreParserModuleStateResult( Name,
+																					new List<CoreParserModuleSubState>() {new CoreParserModuleSubState( _state, _errorOrWarningMessage )} ) );
 
 			return outputResult;
 		}

@@ -2,6 +2,23 @@
 
 
 
+##10.0.0 (2017-07-??)##
+###New###
+- Now you can easily write your own modules directly inside your own application without the need to check out my entire project
+- ParserSetting List<ICoreParser> DisabledCoreParserModules added to disable the default modules if you want to disable them or replace them with your own
+- DefaultCoreParserModules and the ICoreParser-interface are now public that you can work with them
+- XML (De)Serializer changed charset from unicode to utf8. You mey want/need to convert your settings file
+- XML (De)Serializer extension to support de/serialization of interface lists
+- Added four new Unit Tests to cover new features and changes. Now 92 tests included
+
+###Fix###
+ - 
+
+
+ ---
+
+
+
 ##9.2.0 (2017-04-14)##
 ###New###
 - Now you can easily write your own modules if you want to fork this project

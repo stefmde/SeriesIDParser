@@ -26,9 +26,9 @@
 namespace SeriesIDParser.Models
 {
 	/// <summary>
-	/// Inferface who must be implemented for all parser modules that have to be executed
+	///     Inferface who must be implemented for all parser modules that have to be executed
 	/// </summary>
-	internal interface ICoreParser
+	public interface ICoreParser
 	{
 		/// <summary>
 		///     Defines the priority in which order the Parser have to execute. Higher values came first. -1 is last/no prio needed

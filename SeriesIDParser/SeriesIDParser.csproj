@@ -76,6 +76,7 @@
     <Compile Include="Worker\CoreParserModules\YearCoreParserModule.cs" />
     <Compile Include="Worker\HelperWorker.cs" />
     <Compile Include="Worker\ParserSettingsWorker.cs" />
+    <Compile Include="Worker\ListOfICoreParser.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

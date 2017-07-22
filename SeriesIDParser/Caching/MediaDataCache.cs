@@ -35,7 +35,7 @@ using SeriesIDParser.Models;
 namespace SeriesIDParser.Caching
 {
 	/// <summary>
-	/// Caching maintenance for the MediaData
+	///     Caching maintenance for the MediaData
 	/// </summary>
 	internal class MediaDataCache
 	{
@@ -51,7 +51,7 @@ namespace SeriesIDParser.Caching
 			{
 				if (_instance == null)
 				{
-					throw new InvalidOperationException("Instance doesn't exist.");
+					throw new InvalidOperationException( "Instance doesn't exist." );
 				}
 
 				return _instance;
@@ -68,95 +68,94 @@ namespace SeriesIDParser.Caching
 		}
 
 		// ReSharper disable once MemberCanBePrivate.Global
-		public static void Create(ParserSettings parserSettings)
+		public static void Create( ParserSettings parserSettings )
 		{
 			if (_instance != null)
 			{
-				throw new InvalidOperationException("Instance is already created. Overriding is NOT allowed!");
+				throw new InvalidOperationException( "Instance is already created. Overriding is NOT allowed!" );
 			}
 
 			ParserSettings = parserSettings;
 			_instance = new MediaDataCache();
-			_cacheDictionary = new CacheDictionary(parserSettings.CacheItemCountLimit);
+			_cacheDictionary = new CacheDictionary( parserSettings.CacheItemCountLimit );
 		}
 		#endregion InstanceMaintenance
 
 		#region CachingFunctions
-
 		// ReSharper disable once MemberCanBePrivate.Global
-		public void Add(string key, MediaData data)
+		public void Add( string key, MediaData data )
 		{
 			if (ParserSettings.CacheMode == CacheMode.Advanced)
 			{
-				_cacheDictionary.Add(key, data);
+				_cacheDictionary.Add( key, data );
 			}
 			else if (ParserSettings.CacheMode == CacheMode.Advanced)
 			{
-				_cacheDictionary.Add(key.ToLowerInvariant(), data);
+				_cacheDictionary.Add( key.ToLowerInvariant(), data );
 			}
 			else
 			{
-				throw new ArgumentException("Cache is used but is disabled");
+				throw new ArgumentException( "Cache is used but is disabled" );
 			}
 		}
 
 		// ReSharper disable once MemberCanBePrivate.Global
-		public bool Contains(string fileName)
+		public bool Contains( string fileName )
 		{
 			if (ParserSettings.CacheMode == CacheMode.Advanced)
 			{
-				return _cacheDictionary.Contains(fileName);
+				return _cacheDictionary.Contains( fileName );
 			}
 			else if (ParserSettings.CacheMode == CacheMode.Advanced)
 			{
-				return _cacheDictionary.Contains(fileName.ToLowerInvariant());
+				return _cacheDictionary.Contains( fileName.ToLowerInvariant() );
 			}
 			else
 			{
-				throw new ArgumentException("Cache is used but is disabled");
+				throw new ArgumentException( "Cache is used but is disabled" );
 			}
 		}
 
 		// ReSharper disable once MemberCanBePrivate.Global
-		public MediaData Get(string fileName)
+		public MediaData Get( string fileName )
 		{
 			if (ParserSettings.CacheMode == CacheMode.Advanced)
 			{
-				return Contains(fileName) ? _cacheDictionary[fileName] : null;
+				return Contains( fileName ) ? _cacheDictionary[fileName] : null;
 			}
 			else if (ParserSettings.CacheMode == CacheMode.Advanced)
 			{
-				return Contains(fileName) ? _cacheDictionary[fileName.ToLowerInvariant()] : null;
+				return Contains( fileName ) ? _cacheDictionary[fileName.ToLowerInvariant()] : null;
 			}
 			else
 			{
-				throw new ArgumentException("Cache is used but is disabled");
+				throw new ArgumentException( "Cache is used but is disabled" );
 			}
 		}
 
 		// ReSharper disable once MemberCanBePrivate.Global
-		public ParserResult GetAsParserResult(string fileName)
+		public ParserResult GetAsParserResult( string fileName )
 		{
 			if (ParserSettings.CacheMode == CacheMode.Advanced)
 			{
-				return Contains(fileName) ? _cacheDictionary[fileName].ToParserResult(ParserSettings) : null;
+				return Contains( fileName ) ? _cacheDictionary[fileName].ToParserResult( ParserSettings ) : null;
 			}
 			else if (ParserSettings.CacheMode == CacheMode.Advanced)
 			{
-				return Contains(fileName) ? _cacheDictionary[fileName.ToLowerInvariant()].ToParserResult(ParserSettings) : null;
+				return Contains( fileName ) ? _cacheDictionary[fileName.ToLowerInvariant()].ToParserResult( ParserSettings ) : null;
 			}
 			else
 			{
-				throw new ArgumentException("Cache is used but is disabled");
+				throw new ArgumentException( "Cache is used but is disabled" );
 			}
 		}
 
 		// ReSharper disable once MemberCanBePrivate.Global
-		public bool TryGet(string fileName, out MediaData mediaData)
+		public bool TryGet( string fileName, out MediaData mediaData )
 		{
-			if (Contains(fileName))
+			if (Contains( fileName ))
 			{
-				mediaData = Get(fileName);
+				mediaData = Get( fileName );
 				return true;
 			}
 			else
@@ -167,13 +166,13 @@ namespace SeriesIDParser.Caching
 		}
 
 		// ReSharper disable once MemberCanBePrivate.Global
-		public bool TryGetAsParserResult(string fileName, out ParserResult parserResult)
+		public bool TryGetAsParserResult( string fileName, out ParserResult parserResult )
 		{
 			MediaData innerMediaData;
 
-			if (TryGet(fileName, out innerMediaData))
+			if (TryGet( fileName, out innerMediaData ))
 			{
-				parserResult = innerMediaData.ToParserResult(ParserSettings);
+				parserResult = innerMediaData.ToParserResult( ParserSettings );
 				return true;
 			}
 			else
@@ -184,7 +183,7 @@ namespace SeriesIDParser.Caching
 		}
 
 		// ReSharper disable once MemberCanBePrivate.Global
-		public void Replace(string fileName, MediaData data)
+		public void Replace( string fileName, MediaData data )
 		{
 			if (ParserSettings.CacheMode == CacheMode.Advanced)
 			{
@@ -196,7 +195,7 @@ namespace SeriesIDParser.Caching
 			}
 			else
 			{
-				throw new ArgumentException("Cache is used but is disabled");
+				throw new ArgumentException( "Cache is used but is disabled" );
 			}
 		}
 		#endregion

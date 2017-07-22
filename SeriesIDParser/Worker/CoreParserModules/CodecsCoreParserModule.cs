@@ -30,7 +30,7 @@ using SeriesIDParser.Models;
 
 namespace SeriesIDParser.Worker.CoreParserModules
 {
-	internal class CodecsCoreParserModule : ICoreParser
+	public class CodecsCoreParserModule : ICoreParser
 	{
 		/// <summary>
 		///     Defines the priority in which order the Parser have to execute. Higher values came first. -1 is last/no prio needed
@@ -61,13 +61,15 @@ namespace SeriesIDParser.Worker.CoreParserModules
 			CoreParserResult outputResult = inputResult;
 			string modifiedString = inputResult.ModifiedString;
 
-			outputResult.MediaData.AudioCodec = HelperWorker.FindTokens( ref modifiedString, inputResult.MediaData.DetectedOldSpacingChar.ToString(), inputResult.ParserSettings.AudioCodecs, true ).LastOrDefault();
+			outputResult.MediaData.AudioCodec = HelperWorker.FindTokens( ref modifiedString, inputResult.MediaData.DetectedOldSpacingChar.ToString(),
+																		inputResult.ParserSettings.AudioCodecs, true ).LastOrDefault();
 			if (outputResult.MediaData.AudioCodec != null)
 			{
 				outputResult.MediaData.RemovedTokens.Add( outputResult.MediaData.AudioCodec );
 			}
 
-			outputResult.MediaData.VideoCodec = HelperWorker.FindTokens( ref modifiedString, inputResult.MediaData.DetectedOldSpacingChar.ToString(), inputResult.ParserSettings.VideoCodecs, true ).LastOrDefault();
+			outputResult.MediaData.VideoCodec = HelperWorker.FindTokens( ref modifiedString, inputResult.MediaData.DetectedOldSpacingChar.ToString(),
+																		inputResult.ParserSettings.VideoCodecs, true ).LastOrDefault();
 			if (outputResult.MediaData.VideoCodec != null)
 			{
 				outputResult.MediaData.RemovedTokens.Add( outputResult.MediaData.VideoCodec );
@@ -76,7 +78,8 @@ namespace SeriesIDParser.Worker.CoreParserModules
 			outputResult.ModifiedString = modifiedString;
 			_state = State.Success;
 
-			outputResult.MediaData.ModuleStates.Add( new CoreParserModuleStateResult( Name, new List<CoreParserModuleSubState>() {new CoreParserModuleSubState( _state, _errorOrWarningMessage )} ) );
+			outputResult.MediaData.ModuleStates.Add( new CoreParserModuleStateResult( Name,
+																					new List<CoreParserModuleSubState>() {new CoreParserModuleSubState( _state, _errorOrWarningMessage )} ) );
 
 			return outputResult;
 		}

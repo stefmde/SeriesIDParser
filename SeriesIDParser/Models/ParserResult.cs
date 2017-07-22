@@ -51,7 +51,10 @@ namespace SeriesIDParser.Models
 		#endregion PropertiesCache
 
 		#region ctor
-		internal ParserResult( string originalString, ParserSettings parserSettings, string audioCodec, string videoCodec, TimeSpan processingDuration, IEnumerable<ResolutionsMap> resolutions, int season, IEnumerable<int> episodes, int year, char detectedOldSpacingChar, Exception exception, bool isSeries, IEnumerable<string> removedTokens, State state, List<CoreParserModuleStateResult> moduleStates, string fileExtension, string title, string episodeTitle, string releaseGroup, DimensionalType dimensionalType )
+		internal ParserResult( string originalString, ParserSettings parserSettings, string audioCodec, string videoCodec, TimeSpan processingDuration,
+								IEnumerable<ResolutionsMap> resolutions, int season, IEnumerable<int> episodes, int year, char detectedOldSpacingChar, Exception exception,
+								bool isSeries, IEnumerable<string> removedTokens, State state, List<CoreParserModuleStateResult> moduleStates, string fileExtension,
+								string title, string episodeTitle, string releaseGroup, DimensionalType dimensionalType )
 		{
 			_parserSettings = parserSettings;
 			AudioCodec = audioCodec;
@@ -232,7 +235,7 @@ namespace SeriesIDParser.Models
 		public ParserSettings ParserSettingsUsed => _parserSettings;
 
 		/// <summary>
-		/// Contains the state informations provided by each module
+		///     Contains the state informations provided by each module
 		/// </summary>
 		public List<CoreParserModuleStateResult> ModuleStates { get; internal set; }
 

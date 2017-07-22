@@ -36,6 +36,7 @@ using SeriesIDParser.Caching;
 using SeriesIDParser.Extensions;
 using SeriesIDParser.Models;
 using SeriesIDParser.Worker;
+using SeriesIDParser.Worker.CoreParserModules;
 
 namespace SeriesIDParser
 {
@@ -187,7 +188,8 @@ namespace SeriesIDParser
 					return _coreParserResult.MediaData;
 				}
 
-				IEnumerable<ICoreParser> coreParserModules = HelperWorker.GetAllCoreParsers();
+				// Get all corparsers activated with filter of disabled ones
+				IEnumerable<ICoreParser> coreParserModules = HelperWorker.GetAllCoreParsers( _parserSettings.DisabledCoreParserModules );
 
 				foreach (ICoreParser coreParserModule in coreParserModules)
 				{
@@ -197,7 +199,12 @@ namespace SeriesIDParser
 					}
 					catch (Exception ex)
 					{
-						_coreParserResult.MediaData.ModuleStates.Add(new CoreParserModuleStateResult(coreParserModule.Name, new List<CoreParserModuleSubState>() { new CoreParserModuleSubState(State.Error, "Exception on executing module occoured. See exception for more details.") }, ex));
+						_coreParserResult.MediaData.ModuleStates.Add( new CoreParserModuleStateResult( coreParserModule.Name,
+																										new List<CoreParserModuleSubState>()
+																										{
+																											new CoreParserModuleSubState( State.Error,
+																																		"Exception on executing module occoured. See exception for more details." )
+																										}, ex ) );
 
 						// Throw exception if the flag is set
 						if (_parserSettings.ThrowExceptionInsteadOfErrorFlag)
@@ -216,9 +223,9 @@ namespace SeriesIDParser
 
 				foreach (CoreParserModuleStateResult coreParserModuleStateResult in _coreParserResult.MediaData.ModuleStates)
 				{
-					errors += coreParserModuleStateResult.CoreParserModuleSubState.Count(x => x.State == State.Error);
-					warnings += coreParserModuleStateResult.CoreParserModuleSubState.Count(x => x.State == State.Warning || x.State == State.Unknown);
-					notice += coreParserModuleStateResult.CoreParserModuleSubState.Count(x => x.State == State.Notice);
+					errors += coreParserModuleStateResult.CoreParserModuleSubState.Count( x => x.State == State.Error );
+					warnings += coreParserModuleStateResult.CoreParserModuleSubState.Count( x => x.State == State.Warning || x.State == State.Unknown );
+					notice += coreParserModuleStateResult.CoreParserModuleSubState.Count( x => x.State == State.Notice );
 				}
 
 				if (errors > 0)

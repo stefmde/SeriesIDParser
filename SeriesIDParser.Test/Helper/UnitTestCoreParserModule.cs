@@ -1,8 +1,8 @@
-﻿// 
+// 
 // MIT License
 // 
 // Copyright(c) 2016 - 2017
-// Stefan Müller, Stefm, https://Stefm.de, https://github.com/stefmde/SeriesIDParser
+// Stefan M�ller, Stefm, https://Stefm.de, https://github.com/stefmde/SeriesIDParser
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,31 +23,25 @@
 // SOFTWARE.
 
 
-using System;
+using SeriesIDParser.Models;
 
-namespace SeriesIDParser.Models
+namespace SeriesIDParser.Test.Helper
 {
-	public class CoreParserModuleSubState
+	public class UnitTestCoreParserModule : ICoreParser
 	{
-		/// <summary>
-		///     Contains the messages with the State of the State of the CoreParser
-		/// </summary>
-		public CoreParserModuleSubState( State state, string message )
+		/// <inheritdoc />
+		public int Priority { get; } = 1;
+
+		/// <inheritdoc />
+		public string Name { get; } = "UnitTestCoreParserModuleEmpty";
+
+		/// <inheritdoc />
+		public string Description { get; } = "Parser designed to test with unit tests";
+
+		/// <inheritdoc />
+		public CoreParserResult Parse( CoreParserResult inputResult )
 		{
-			State = state;
-
-			if (message == null)
-			{
-				Message = String.Empty;
-			}
-			else
-			{
-				Message = message;
-			}
+			return inputResult;
 		}
-
-		public State State { get; }
-
-		public string Message { get; }
 	}
 }

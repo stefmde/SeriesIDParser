@@ -42,7 +42,9 @@ namespace SeriesIDParser.Test.Tests
 		{
 			ParserSettings ps = new ParserSettings( true );
 			ps.ResolutionStringOutput = ResolutionOutputBehavior.LowestResolution;
-			Assert.AreEqual( ps.ResolutionStringFullHD, HelperWorker.GetResolutionString( ps, new List<ResolutionsMap> {ResolutionsMap.FullHD_1080p, ResolutionsMap.UltraHD_2160p} ), "(1) Should give one full HD" );
+			Assert.AreEqual( ps.ResolutionStringFullHD,
+							HelperWorker.GetResolutionString( ps, new List<ResolutionsMap> {ResolutionsMap.FullHD_1080p, ResolutionsMap.UltraHD_2160p} ),
+							"(1) Should give one full HD" );
 		}
 
 		[TestMethod]
@@ -50,7 +52,8 @@ namespace SeriesIDParser.Test.Tests
 		{
 			ParserSettings ps = new ParserSettings( true );
 			ps.ResolutionStringOutput = ResolutionOutputBehavior.LowestResolution;
-			Assert.AreEqual( ps.ResolutionStringFullHD, HelperWorker.GetResolutionString( ps, new List<ResolutionsMap> {ResolutionsMap.FullHD_1080p} ), "(2) Should give one full HD" );
+			Assert.AreEqual( ps.ResolutionStringFullHD, HelperWorker.GetResolutionString( ps, new List<ResolutionsMap> {ResolutionsMap.FullHD_1080p} ),
+							"(2) Should give one full HD" );
 		}
 
 		[TestMethod]
@@ -58,7 +61,10 @@ namespace SeriesIDParser.Test.Tests
 		{
 			ParserSettings ps = new ParserSettings( true );
 			ps.ResolutionStringOutput = ResolutionOutputBehavior.LowestResolution;
-			Assert.AreEqual( ps.ResolutionStringFullHD, HelperWorker.GetResolutionString( ps, new List<ResolutionsMap> {ResolutionsMap.Unknown, ResolutionsMap.UltraHD8K_4320p, ResolutionsMap.FullHD_1080p} ), "(3) Should give one full HD" );
+			Assert.AreEqual( ps.ResolutionStringFullHD,
+							HelperWorker.GetResolutionString( ps,
+															new List<ResolutionsMap> {ResolutionsMap.Unknown, ResolutionsMap.UltraHD8K_4320p, ResolutionsMap.FullHD_1080p} ),
+							"(3) Should give one full HD" );
 		}
 
 		[TestMethod]
@@ -74,7 +80,9 @@ namespace SeriesIDParser.Test.Tests
 		{
 			ParserSettings ps = new ParserSettings( true );
 			ps.ResolutionStringOutput = ResolutionOutputBehavior.HighestResolution;
-			Assert.AreEqual( ps.ResolutionStringUltraHD, HelperWorker.GetResolutionString( ps, new List<ResolutionsMap> {ResolutionsMap.FullHD_1080p, ResolutionsMap.UltraHD_2160p} ), "(10) Should give one UHD" );
+			Assert.AreEqual( ps.ResolutionStringUltraHD,
+							HelperWorker.GetResolutionString( ps, new List<ResolutionsMap> {ResolutionsMap.FullHD_1080p, ResolutionsMap.UltraHD_2160p} ),
+							"(10) Should give one UHD" );
 		}
 
 		[TestMethod]
@@ -82,7 +90,8 @@ namespace SeriesIDParser.Test.Tests
 		{
 			ParserSettings ps = new ParserSettings( true );
 			ps.ResolutionStringOutput = ResolutionOutputBehavior.HighestResolution;
-			Assert.AreEqual( ps.ResolutionStringFullHD, HelperWorker.GetResolutionString( ps, new List<ResolutionsMap> {ResolutionsMap.FullHD_1080p} ), "(11) Should give one full HD" );
+			Assert.AreEqual( ps.ResolutionStringFullHD, HelperWorker.GetResolutionString( ps, new List<ResolutionsMap> {ResolutionsMap.FullHD_1080p} ),
+							"(11) Should give one full HD" );
 		}
 
 		[TestMethod]
@@ -90,7 +99,10 @@ namespace SeriesIDParser.Test.Tests
 		{
 			ParserSettings ps = new ParserSettings( true );
 			ps.ResolutionStringOutput = ResolutionOutputBehavior.HighestResolution;
-			Assert.AreEqual( ps.ResolutionStringUltraHD8k, HelperWorker.GetResolutionString( ps, new List<ResolutionsMap> {ResolutionsMap.Unknown, ResolutionsMap.UltraHD8K_4320p, ResolutionsMap.FullHD_1080p} ), "(12) Should give one UHD" );
+			Assert.AreEqual( ps.ResolutionStringUltraHD8k,
+							HelperWorker.GetResolutionString( ps,
+															new List<ResolutionsMap> {ResolutionsMap.Unknown, ResolutionsMap.UltraHD8K_4320p, ResolutionsMap.FullHD_1080p} ),
+							"(12) Should give one UHD" );
 		}
 
 		[TestMethod]
@@ -106,7 +118,9 @@ namespace SeriesIDParser.Test.Tests
 		{
 			ParserSettings ps = new ParserSettings( true );
 			ps.ResolutionStringOutput = ResolutionOutputBehavior.AllFoundResolutions;
-			Assert.AreEqual( ps.ResolutionStringFullHD + ps.NewSpacingChar + ps.ResolutionStringUltraHD, HelperWorker.GetResolutionString( ps, new List<ResolutionsMap> {ResolutionsMap.FullHD_1080p, ResolutionsMap.UltraHD_2160p} ), "(20) Should give HD + UHD" );
+			Assert.AreEqual( ps.ResolutionStringFullHD + ps.NewSpacingChar + ps.ResolutionStringUltraHD,
+							HelperWorker.GetResolutionString( ps, new List<ResolutionsMap> {ResolutionsMap.FullHD_1080p, ResolutionsMap.UltraHD_2160p} ),
+							"(20) Should give HD + UHD" );
 		}
 
 		[TestMethod]
@@ -114,7 +128,8 @@ namespace SeriesIDParser.Test.Tests
 		{
 			ParserSettings ps = new ParserSettings( true );
 			ps.ResolutionStringOutput = ResolutionOutputBehavior.AllFoundResolutions;
-			Assert.AreEqual( ps.ResolutionStringFullHD, HelperWorker.GetResolutionString( ps, new List<ResolutionsMap> {ResolutionsMap.FullHD_1080p} ), "(21) Should give one full HD" );
+			Assert.AreEqual( ps.ResolutionStringFullHD, HelperWorker.GetResolutionString( ps, new List<ResolutionsMap> {ResolutionsMap.FullHD_1080p} ),
+							"(21) Should give one full HD" );
 		}
 
 		[TestMethod]
@@ -122,7 +137,10 @@ namespace SeriesIDParser.Test.Tests
 		{
 			ParserSettings ps = new ParserSettings( true );
 			ps.ResolutionStringOutput = ResolutionOutputBehavior.AllFoundResolutions;
-			Assert.AreEqual( ps.ResolutionStringFullHD + ps.NewSpacingChar + ps.ResolutionStringUltraHD8k, HelperWorker.GetResolutionString( ps, new List<ResolutionsMap> {ResolutionsMap.Unknown, ResolutionsMap.UltraHD8K_4320p, ResolutionsMap.FullHD_1080p} ), "(22) Should give UHD HD" );
+			Assert.AreEqual( ps.ResolutionStringFullHD + ps.NewSpacingChar + ps.ResolutionStringUltraHD8k,
+							HelperWorker.GetResolutionString( ps,
+															new List<ResolutionsMap> {ResolutionsMap.Unknown, ResolutionsMap.UltraHD8K_4320p, ResolutionsMap.FullHD_1080p} ),
+							"(22) Should give UHD HD" );
 		}
 
 		[TestMethod]

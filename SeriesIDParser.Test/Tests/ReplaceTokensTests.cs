@@ -46,7 +46,7 @@ namespace SeriesIDParser.Test.Tests
 			ps.ReplaceRegexWithoutListTokens.Add( new KeyValuePair<string, string>( "EXTENDED", "." ) );
 			string input = "Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv";
 			string expected = "Der.Hobbit.Smaugs.Einoede.2013.German.DL.1080p.BluRay.x264.mkv";
-			List<string> expectedOutputList = new List<string>() {};
+			List<string> expectedOutputList = new List<string>() { };
 
 			List<string> actualRemovedTokens = HelperWorker.ReplaceTokens( ref input, ".", ps.ReplaceRegexWithoutListTokens, false );
 			Assert.AreEqual( expected, input, " String compare " );
@@ -62,7 +62,7 @@ namespace SeriesIDParser.Test.Tests
 			ps.ReplaceRegexWithoutListTokens.Add( new KeyValuePair<string, string>( ".EXTENDED.", "." ) );
 			string input = "Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv";
 			string expected = "Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv";
-			List<string> expectedOutputList = new List<string>() {};
+			List<string> expectedOutputList = new List<string>() { };
 
 			List<string> actualRemovedTokens = HelperWorker.ReplaceTokens( ref input, ".", ps.ReplaceRegexWithoutListTokens, false );
 			Assert.AreEqual( expected, input, " String compare " );
@@ -78,7 +78,7 @@ namespace SeriesIDParser.Test.Tests
 			ps.ReplaceRegexWithoutListTokens.Add( new KeyValuePair<string, string>( "extended", "." ) );
 			string input = "Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv";
 			string expected = "Der.Hobbit.Smaugs.Einoede.2013.German.DL.1080p.BluRay.x264.mkv";
-			List<string> expectedOutputList = new List<string>() {};
+			List<string> expectedOutputList = new List<string>() { };
 
 			List<string> actualRemovedTokens = HelperWorker.ReplaceTokens( ref input, ".", ps.ReplaceRegexWithoutListTokens, false );
 			Assert.AreEqual( expected, input, " String compare " );
@@ -92,7 +92,7 @@ namespace SeriesIDParser.Test.Tests
 
 			string input = "Der,Hobbit,Smaugs,Einoede,2013,EXTENDED,German,DL,1080p,BluRay,x264.mkv";
 			string expected = "Der,Hobbit,Smaugs,Einoede,2013,EXTENDED,German,DL,1080p,BluRay,x264.mkv";
-			List<string> expectedOutputList = new List<string>() {};
+			List<string> expectedOutputList = new List<string>() { };
 
 			List<string> actualRemovedTokens = HelperWorker.ReplaceTokens( ref input, ".", ps.ReplaceRegexWithoutListTokens, false );
 			Assert.AreEqual( expected, input, " String compare " );
@@ -107,7 +107,7 @@ namespace SeriesIDParser.Test.Tests
 			ps.ReplaceRegexWithoutListTokens = new List<KeyValuePair<string, string>>();
 			string input = "Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv";
 			string expected = "Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv";
-			List<string> expectedOutputList = new List<string>() {};
+			List<string> expectedOutputList = new List<string>() { };
 
 			List<string> actualRemovedTokens = HelperWorker.ReplaceTokens( ref input, ".", ps.ReplaceRegexWithoutListTokens, false );
 			Assert.AreEqual( expected, input, " String compare " );
@@ -122,7 +122,7 @@ namespace SeriesIDParser.Test.Tests
 			ps.ReplaceRegexWithoutListTokens = null;
 			string input = "Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv";
 			string expected = "Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv";
-			List<string> expectedOutputList = new List<string>() {};
+			List<string> expectedOutputList = new List<string>() { };
 
 			List<string> actualRemovedTokens = HelperWorker.ReplaceTokens( ref input, ".", ps.ReplaceRegexWithoutListTokens, false );
 			Assert.AreEqual( expected, input, " String compare " );
@@ -140,7 +140,7 @@ namespace SeriesIDParser.Test.Tests
 
 			string input = "Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv";
 			string expected = "Der.Hobbit.Smaugs.Einoede.2013.German.DL.1080p.BluRay.x264.mkv";
-			List<string> expectedOutputList = new List<string>() {};
+			List<string> expectedOutputList = new List<string>() { };
 
 			List<string> actualRemovedTokens = HelperWorker.ReplaceTokens( ref input, ".", ps.ReplaceRegexWithoutListTokens, false );
 			Assert.AreEqual( expected, input, " String compare " );

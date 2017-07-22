@@ -37,6 +37,7 @@ namespace SeriesIDParser.Test
 		//public const string Path = @"D:\Test";
 		//public static string RootPath = Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
 		public static readonly string TestDataRoot = @"..\..\..\Stuff\TestData";
+
 		public static readonly string TestDataDirectoryRoot = @"..\..\..\Stuff\TestData\Directory";
 		public static readonly string TestDataDirectoryCleanRoot = @"..\..\..\Stuff\TestData\Directory\Clean";
 		public static readonly string TestDataDirectoryDirtyRoot = @"..\..\..\Stuff\TestData\Directory\Dirty";
@@ -45,7 +46,8 @@ namespace SeriesIDParser.Test
 
 		public static readonly string MovieFilePath = TestDataDirectoryCleanRoot + "\\Der.Regenmacher.1997.German.1080p.BluRay.x264.mkv";
 
-		public static readonly string SeriesFilePath = TestDataDirectoryCleanRoot + "\\Gotham.S02E01.Glueck.oder.Wahrheit.1080p.BluRay.DUBBED.German.x264.mkv";
+		public static readonly string SeriesFilePath =
+			TestDataDirectoryCleanRoot + "\\Gotham.S02E01.Glueck.oder.Wahrheit.1080p.BluRay.DUBBED.German.x264.mkv";
 
 		public static readonly string MovieFile = "Der.Regenmacher.1997.German.1080p.BluRay.x264.mkv";
 		public static readonly string SeriesFile = "Gotham.S02E01.Glueck.oder.Wahrheit.1080p.BluRay.DUBBED.German.x264.mkv";

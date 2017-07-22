@@ -30,7 +30,7 @@ using SeriesIDParser.Models;
 
 namespace SeriesIDParser.Worker.CoreParserModules
 {
-	internal class ReleaseGroupCoreParserModule : ICoreParser
+	public class ReleaseGroupCoreParserModule : ICoreParser
 	{
 		/// <inheritdoc />
 		public int Priority { get; } = 9700;
@@ -57,7 +57,9 @@ namespace SeriesIDParser.Worker.CoreParserModules
 				if (tmpTitle.Any( x => x == inputResult.ParserSettings.ReleaseGroupSeperator ))
 				{
 					int seperatorIndex = inputResult.ModifiedString.LastIndexOf( inputResult.ParserSettings.ReleaseGroupSeperator );
-					outputResult.MediaData.ReleaseGroup = string.IsNullOrEmpty( inputResult.MediaData.FileExtension ) ? inputResult.ModifiedString.Substring( seperatorIndex + 1 ).Trim() : inputResult.ModifiedString.Substring( seperatorIndex + 1 ).Replace( inputResult.MediaData.FileExtension, "" ).Trim();
+					outputResult.MediaData.ReleaseGroup = string.IsNullOrEmpty( inputResult.MediaData.FileExtension )
+															? inputResult.ModifiedString.Substring( seperatorIndex + 1 ).Trim()
+															: inputResult.ModifiedString.Substring( seperatorIndex + 1 ).Replace( inputResult.MediaData.FileExtension, "" ).Trim();
 					outputResult.ModifiedString = outputResult.ModifiedString.Remove( seperatorIndex ).Trim();
 					_state = State.Success;
 				}
@@ -73,7 +75,8 @@ namespace SeriesIDParser.Worker.CoreParserModules
 				_errorOrWarningMessage = "String to short to parse for ReleaseGroup";
 			}
 
-			outputResult.MediaData.ModuleStates.Add( new CoreParserModuleStateResult( Name, new List<CoreParserModuleSubState>() {new CoreParserModuleSubState( _state, _errorOrWarningMessage )} ) );
+			outputResult.MediaData.ModuleStates.Add( new CoreParserModuleStateResult( Name,
+																					new List<CoreParserModuleSubState>() {new CoreParserModuleSubState( _state, _errorOrWarningMessage )} ) );
 
 			return outputResult;
 		}

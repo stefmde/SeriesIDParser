@@ -60,8 +60,10 @@ namespace SeriesIDParser.Test.Tests
 
 			TimeSpan totalDuration = DateTime.Now - start;
 			TimeSpan singleDuration = new TimeSpan( totalDuration.Ticks / _benchmarkLoopCount );
-			Console.WriteLine( "BenchmarkSeriesNoCache total duration: " + totalDuration.Seconds + "s " + totalDuration.Milliseconds + "ms " + totalDuration.Ticks + "ticks" );
-			Console.WriteLine( "BenchmarkSeriesNoCache single duration: " + singleDuration.Seconds + "s " + singleDuration.Milliseconds + "ms " + singleDuration.Ticks + "ticks" );
+			Console.WriteLine( "BenchmarkSeriesNoCache total duration: " + totalDuration.Seconds + "s " + totalDuration.Milliseconds + "ms " +
+								totalDuration.Ticks + "ticks" );
+			Console.WriteLine( "BenchmarkSeriesNoCache single duration: " + singleDuration.Seconds + "s " + singleDuration.Milliseconds + "ms " +
+								singleDuration.Ticks + "ticks" );
 		}
 
 		/// <summary>
@@ -80,8 +82,10 @@ namespace SeriesIDParser.Test.Tests
 
 			TimeSpan totalDuration = DateTime.Now - start;
 			TimeSpan singleDuration = new TimeSpan( totalDuration.Ticks / _benchmarkLoopCount );
-			Console.WriteLine( "BenchmarkSeriesCache total duration: " + totalDuration.Seconds + "s " + totalDuration.Milliseconds + "ms " + totalDuration.Ticks + "ticks" );
-			Console.WriteLine( "BenchmarkSeriesCache single duration: " + singleDuration.Seconds + "s " + singleDuration.Milliseconds + "ms " + singleDuration.Ticks + "ticks" );
+			Console.WriteLine( "BenchmarkSeriesCache total duration: " + totalDuration.Seconds + "s " + totalDuration.Milliseconds + "ms " +
+								totalDuration.Ticks + "ticks" );
+			Console.WriteLine( "BenchmarkSeriesCache single duration: " + singleDuration.Seconds + "s " + singleDuration.Milliseconds + "ms " +
+								singleDuration.Ticks + "ticks" );
 		}
 
 		// ### Movie
@@ -105,8 +109,10 @@ namespace SeriesIDParser.Test.Tests
 
 			TimeSpan totalDuration = DateTime.Now - start;
 			TimeSpan singleDuration = new TimeSpan( totalDuration.Ticks / _benchmarkLoopCount );
-			Console.WriteLine( "BenchmarkMovieNoCache total duration: " + totalDuration.Seconds + "s " + totalDuration.Milliseconds + "ms " + totalDuration.Ticks + "ticks" );
-			Console.WriteLine( "BenchmarkMovieNoCache single duration: " + singleDuration.Seconds + "s " + singleDuration.Milliseconds + "ms " + singleDuration.Ticks + "ticks" );
+			Console.WriteLine( "BenchmarkMovieNoCache total duration: " + totalDuration.Seconds + "s " + totalDuration.Milliseconds + "ms " +
+								totalDuration.Ticks + "ticks" );
+			Console.WriteLine( "BenchmarkMovieNoCache single duration: " + singleDuration.Seconds + "s " + singleDuration.Milliseconds + "ms " +
+								singleDuration.Ticks + "ticks" );
 		}
 
 		/// <summary>
@@ -125,8 +131,10 @@ namespace SeriesIDParser.Test.Tests
 
 			TimeSpan totalDuration = DateTime.Now - start;
 			TimeSpan singleDuration = new TimeSpan( totalDuration.Ticks / _benchmarkLoopCount );
-			Console.WriteLine( "BenchmarkMovieCache total duration: " + totalDuration.Seconds + "s " + totalDuration.Milliseconds + "ms " + totalDuration.Ticks + "ticks" );
-			Console.WriteLine( "BenchmarkMovieCache single duration: " + singleDuration.Seconds + "s " + singleDuration.Milliseconds + "ms " + singleDuration.Ticks + "ticks" );
+			Console.WriteLine( "BenchmarkMovieCache total duration: " + totalDuration.Seconds + "s " + totalDuration.Milliseconds + "ms " +
+								totalDuration.Ticks + "ticks" );
+			Console.WriteLine( "BenchmarkMovieCache single duration: " + singleDuration.Seconds + "s " + singleDuration.Milliseconds + "ms " +
+								singleDuration.Ticks + "ticks" );
 		}
 	}
 }
