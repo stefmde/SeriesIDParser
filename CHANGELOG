@@ -2,7 +2,7 @@
 
 
 
-##10.0.0 (2017-07-??)##
+##10.0.0 (2017-07-22)##
 ###New###
 - Now you can easily write your own modules directly inside your own application without the need to check out my entire project
 - ParserSetting List<ICoreParser> DisabledCoreParserModules added to disable the default modules if you want to disable them or replace them with your own
