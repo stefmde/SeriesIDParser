@@ -92,6 +92,7 @@ namespace SeriesIDParser
 		/// <returns>The SeriesIDResult object that represents the series or movie string</returns>
 		public ParserResult Parse( string input )
 		{
+			_fileInfo = null;
 			if (_cacheEnabled)
 			{
 				ParserResult parserResult;
@@ -128,6 +129,17 @@ namespace SeriesIDParser
 		/// <param name="path"></param>
 		/// <param name="searchOption"></param>
 		/// <returns></returns>
+		public IEnumerable<ParserResult> ParsePath(DirectoryInfo path, SearchOption searchOption = SearchOption.AllDirectories)
+		{
+			return ParsePath(path?.FullName ?? String.Empty, searchOption);
+		}
+
+		/// <summary>
+		///     Get all files in a path parsed
+		/// </summary>
+		/// <param name="path"></param>
+		/// <param name="searchOption"></param>
+		/// <returns></returns>
 		public IEnumerable<ParserResult> ParsePath( string path, SearchOption searchOption = SearchOption.AllDirectories )
 		{
 			List<ParserResult> results = new List<ParserResult>();
@@ -137,37 +149,26 @@ namespace SeriesIDParser
 				return results;
 			}
 
-			List<string> files = new List<string>( HelperWorker.GetSeriesAndMovieFiles( path, _parserSettings, searchOption ) );
+			List<FileInfo> files = HelperWorker.GetSeriesAndMovieFileInfos( path, _parserSettings, searchOption ).ToList();
 
-			foreach (string file in files)
+			foreach (FileInfo file in files)
 			{
-				string fileName = Path.GetFileName( file );
+				_fileInfo = file;
 
 				if (_cacheEnabled)
 				{
 					MediaData mediaData;
-					if (MediaDataCache.Instance.TryGet( fileName, out mediaData ))
+					if (MediaDataCache.Instance.TryGet(file.Name, out mediaData ))
 					{
 						results.Add( mediaData.ToParserResult( _parserSettings ) );
 						continue;
 					}
 				}
 
-				results.Add( CoreParser( fileName ).ToParserResult( _parserSettings ) );
+				results.Add( CoreParser(file.Name).ToParserResult( _parserSettings ) );
 			}
 
 			return results;
-		}
-
-		/// <summary>
-		///     Get all files in a path parsed
-		/// </summary>
-		/// <param name="path"></param>
-		/// <param name="searchOption"></param>
-		/// <returns></returns>
-		public IEnumerable<ParserResult> ParsePath( DirectoryInfo path, SearchOption searchOption = SearchOption.AllDirectories )
-		{
-			return ParsePath( path?.FullName ?? String.Empty, searchOption );
 		}
 		#endregion WrapperFunctions
 
@@ -179,7 +180,8 @@ namespace SeriesIDParser
 			try
 			{
 				_coreParserResult = new CoreParserResult( input, _parserSettings );
-
+				_coreParserResult.MediaData.FileInfo = _fileInfo;
+				
 				if (input.Length < 5)
 				{
 					// ERROR
@@ -262,8 +264,6 @@ namespace SeriesIDParser
 				// ERROR
 				_coreParserResult.MediaData.State = State.Error;
 				return _coreParserResult.MediaData;
-
-				;
 			}
 		}
 
@@ -272,97 +272,7 @@ namespace SeriesIDParser
 		// ############################################################
 
 		#region HelperFunctions
-		///// <summary>
-		/////     Get audio and video codec
-		///// </summary>
-		///// <param name="fullTitle"></param>
-		///// <returns></returns>
-		//private string GetCodecs(string fullTitle)
-		//{
-		//	_audioCodec = HelperWorker.FindTokens(ref fullTitle, _detectedOldSpacingChar.ToString(), _parserSettings.AudioCodecs, true).LastOrDefault();
-		//	if (_audioCodec != null)
-		//	{
-		//		_removedTokens.Add(_audioCodec);
-		//	}
 
-		//	_videoCodec = HelperWorker.FindTokens(ref fullTitle, _detectedOldSpacingChar.ToString(), _parserSettings.VideoCodecs, true).LastOrDefault();
-		//	if (_videoCodec != null)
-		//	{
-		//		_removedTokens.Add(_videoCodec);
-		//	}
-
-		//	return fullTitle;
-		//}
-
-		///// <summary>
-		/////     Get Series Details
-		///// </summary>
-		///// <param name="fullTitle"></param>
-		///// <param name="warningOrErrorOccurred"></param>
-		///// <returns></returns>
-		//private bool GetSeriesDetails(string fullTitle, bool warningOrErrorOccurred)
-		//{
-		//	//  -> CoreParser
-		//	_title = HelperWorker.GetTitle(_parserSettings, _detectedOldSpacingChar, fullTitle, ref warningOrErrorOccurred, ref _state);
-		//	_episodeTitle = HelperWorker.GetEpisodeTitle(_parserSettings, fullTitle);
-		//	_isSeries = HelperWorker.IsSeries(_parserSettings, fullTitle);
-		//	_season = HelperWorker.GetSeasonID(_parserSettings, fullTitle);
-		//	_episodes = HelperWorker.GetEpisodeIDs(_parserSettings, fullTitle);
-		//	return warningOrErrorOccurred;
-		//}
-
-		///// <summary>
-		/////     ctor wrapper for ParserResult
-		///// </summary>
-		///// <returns></returns>
-		//private MediaData GenerateMediaData()
-		//{
-		//	return new MediaData()
-		//	{
-		//		OriginalString = _originalString,
-		//		AudioCodec = _audioCodec,
-		//		VideoCodec = _videoCodec,
-		//		ProcessingDuration = _processingDuration,
-		//		Resolutions = _resolutions,
-		//		Season = _season,
-		//		Episodes = _episodes,
-		//		Year = _year,
-		//		DetectedOldSpacingChar = _detectedOldSpacingChar,
-		//		Exception = _exception,
-		//		IsSeries = _isSeries,
-		//		RemovedTokens = _removedTokens,
-		//		State = _state,
-		//		FileExtension = _fileExtension,
-		//		Title = _title,
-		//		EpisodeTitle = _episodeTitle,
-		//		ReleaseGroup = _releaseGroup,
-		//		FileInfo = _fileInfo,
-		//		DimensionalType = _dimensionalType
-		//	};
-		//}
-
-		///// <summary>
-		/////     Clears and resets the object for the new execution
-		///// </summary>
-		//private void ResetObject()
-		//{
-		//	_episodeTitle = string.Empty;
-		//	_exception = null;
-		//	_fileExtension = string.Empty;
-		//	_isSeries = false;
-		//	_originalString = string.Empty;
-		//	_removedTokens = new List<string>();
-		//	_resolutions = new List<ResolutionsMap>();
-		//	_season = -1;
-		//	_state = State.Unknown;
-		//	_title = string.Empty;
-		//	_year = -1;
-		//	_detectedOldSpacingChar = new char();
-		//	_processingDuration = new TimeSpan();
-		//	_parseStartTime = DateTime.Now;
-		//	_releaseGroup = string.Empty;
-		//	_dimensionalType = DimensionalType.Unknown;
-		//}
 		#endregion HelperFunctions
 	}
 }

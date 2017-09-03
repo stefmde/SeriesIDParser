@@ -755,14 +755,14 @@ namespace SeriesIDParser.Worker
 		/// <param name="parserSettings"></param>
 		/// <param name="searchOption"></param>
 		/// <returns></returns>
-		internal static IEnumerable<string> GetSeriesAndMovieFiles( string path, ParserSettings parserSettings = null,
-																	SearchOption searchOption = SearchOption.AllDirectories )
+		internal static IEnumerable<string> GetSeriesAndMovieFiles(string path, ParserSettings parserSettings = null,
+																	SearchOption searchOption = SearchOption.AllDirectories)
 		{
 			List<string> files = new List<string>();
 
 			if (parserSettings == null)
 			{
-				parserSettings = new ParserSettings( true );
+				parserSettings = new ParserSettings(true);
 			}
 
 			if (path == null)
@@ -770,8 +770,39 @@ namespace SeriesIDParser.Worker
 				return files;
 			}
 
-			files = Directory.GetFiles( path, "*.*", searchOption ).Select( d => d )
-							.Where( f => parserSettings.FileExtensions.Select( d => d.ToLower() ).Contains( Path.GetExtension( f ).ToLower() ) ).ToList();
+			files = Directory.GetFiles(path, "*.*", searchOption).Select(d => d)
+							.Where(f => parserSettings.FileExtensions.Select(d => d.ToLower()).Contains(Path.GetExtension(f).ToLower())).ToList();
+
+			return files;
+		}
+
+
+		/// <summary>
+		///     Gets all series and movie file infos in a directory
+		/// </summary>
+		/// <param name="path"></param>
+		/// <param name="parserSettings"></param>
+		/// <param name="searchOption"></param>
+		/// <returns></returns>
+		internal static IEnumerable<FileInfo> GetSeriesAndMovieFileInfos(string path, ParserSettings parserSettings = null,
+																	SearchOption searchOption = SearchOption.AllDirectories)
+		{
+			List<FileInfo> files = new List<FileInfo>();
+
+			if (parserSettings == null)
+			{
+				parserSettings = new ParserSettings(true);
+			}
+
+			if (path == null)
+			{
+				return files;
+			}
+
+			DirectoryInfo di = new DirectoryInfo(path);
+
+			files = di.GetFiles("*.*", searchOption).Select(d => d)
+							.Where(f => parserSettings.FileExtensions.Select(d => d.ToLower()).Contains(f.Extension.ToLower())).ToList();
 
 			return files;
 		}

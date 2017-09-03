@@ -2,6 +2,18 @@
 
 
 
+##10.1.0 (2017-09-03)##
+###New###
+- The function "ParsePath" now uses FileInfo internal and set it to the result
+
+###Fix###
+ - Fixed an error where the FileInfo-object get's lost if the FileInfo functions are used
+
+
+ ---
+
+
+
 ##10.0.0 (2017-07-22)##
 ###New###
 - Now you can easily write your own modules directly inside your own application without the need to check out my entire project
