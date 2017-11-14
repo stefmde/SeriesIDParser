@@ -43,7 +43,7 @@ namespace SeriesIDParser.Extensions
 			ParserResult result = new ParserResult( mediaData.OriginalString, parserSettings, mediaData.AudioCodec, mediaData.VideoCodec,
 													mediaData.ProcessingDuration, mediaData.Resolutions, mediaData.Season, mediaData.Episodes, mediaData.Year,
 													mediaData.DetectedOldSpacingChar, mediaData.Exception, mediaData.IsSeries, mediaData.RemovedTokens, mediaData.State,
-													mediaData.ModuleStates, mediaData.FileExtension, mediaData.Title, mediaData.EpisodeTitle, mediaData.ReleaseGroup,
+													mediaData.ModuleStates, mediaData.FileExtension, mediaData.FileInfo, mediaData.Title, mediaData.EpisodeTitle, mediaData.ReleaseGroup,
 													mediaData.DimensionalType );
 
 			return result;

@@ -53,7 +53,7 @@ namespace SeriesIDParser.Models
 		#region ctor
 		internal ParserResult( string originalString, ParserSettings parserSettings, string audioCodec, string videoCodec, TimeSpan processingDuration,
 								IEnumerable<ResolutionsMap> resolutions, int season, IEnumerable<int> episodes, int year, char detectedOldSpacingChar, Exception exception,
-								bool isSeries, IEnumerable<string> removedTokens, State state, List<CoreParserModuleStateResult> moduleStates, string fileExtension,
+								bool isSeries, IEnumerable<string> removedTokens, State state, List<CoreParserModuleStateResult> moduleStates, string fileExtension, FileInfo fileInfo,
 								string title, string episodeTitle, string releaseGroup, DimensionalType dimensionalType )
 		{
 			_parserSettings = parserSettings;
@@ -77,6 +77,7 @@ namespace SeriesIDParser.Models
 			Title = title;
 			DimensionalType = dimensionalType;
 			Is3D = ((int) DimensionalType) > 1;
+			FileInfo = fileInfo;
 		}
 
 		/// <summary>
