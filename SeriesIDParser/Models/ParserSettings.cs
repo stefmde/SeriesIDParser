@@ -55,7 +55,7 @@ namespace SeriesIDParser.Models
 			// ### Resolution Detection
 			DetectUltraHD8kTokens = new List<string>() {"8k", "4320k"};
 			DetectUltraHDTokens = new List<string>() {"NetflixUHD", "UHD", "2160p", "Ultra.HD", "UltraHD"};
-			DetectFullHDTokens = new List<string>() {"FullHD", "1080p", "1080i"};
+			DetectFullHDTokens = new List<string>() { "NetflixHD", "FullHD", "1080p", "1080i"};
 			DetectHDTokens = new List<string>() {"HDTV", "720p", "HD"};
 			DetectSDTokens = new List<string>() {"DVDR", "DVDRIP", "DVD", "SD"};
 
@@ -132,7 +132,13 @@ namespace SeriesIDParser.Models
 									"5.1",
 									"BT2020",
 									"BT.2020",
-									"HDR"
+									"HDR",
+									"TrueHD",
+									"FS",
+									"DD20",
+									"DD51",
+									"DD5.1",
+									"DD+51"
 								};
 
 			//_removeAndListTokensOnLanguageParserIsDisabled = new List<string>() { "GERMAN" };
@@ -143,15 +149,13 @@ namespace SeriesIDParser.Models
 										"MIRROR",
 										"WEB",
 										"BD9",
-										"DD20",
-										"DD51",
-										"DD5.1",
 										"Web-DL",
 										"DL",
 										"HDDVDRip",
 										"THEATRICAL",
 										"RETAIL",
-										"3D"
+										"3D",
+										"READ.NFO"
 									};
 
 			// ### Parsing
@@ -170,7 +174,7 @@ namespace SeriesIDParser.Models
 							"MPEG-2",
 							"MPEG4",
 							"MPEG2",
-							"HEVC"
+							"HEVC",
 						};
 
 			AudioCodecs = new List<string>() {"DTSHD", "DTS", "AAC", "MP3", "MPEG3", "MPEG-3", "TrueHD.Atmos", "TrueHD", "AC3D", "AC3"};

@@ -421,7 +421,7 @@ namespace SeriesIDParser.Test.Tests
 			ParserResult parserResult = seriesIDParser.Parse( "Narcos.S02E01.Endlich.frei.German.DD51.DL.1080p.720p.x264.mkv" );
 
 			Assert.AreEqual( "Narcos.S02E01.Endlich.frei", parserResult.FullTitle, "-FullTitle " );
-			Assert.AreEqual( "Narcos.S02E01.Endlich.frei.720p.German.x264.mkv", parserResult.ParsedString, "-ParsedString " );
+			Assert.AreEqual( "Narcos.S02E01.Endlich.frei.720p.DD51.German.x264.mkv", parserResult.ParsedString, "-ParsedString " );
 			Assert.AreEqual( false, parserResult.IsMultiEpisode, "-IsMultiEpisode " );
 			Assert.AreEqual( "Endlich.frei", parserResult.EpisodeTitle, "-EpisodeTitle " );
 			Assert.AreEqual( ".mkv", parserResult.FileExtension, "-FileExtension " );
@@ -438,7 +438,7 @@ namespace SeriesIDParser.Test.Tests
 			Assert.AreEqual( DimensionalType.Dimension_2DAny, parserResult.DimensionalType, "-DimensionalType " );
 			Assert.AreEqual( String.Empty, parserResult.ReleaseGroup, "-ReleaseGroup " );
 			CollectionAssert.AreEqual( new List<int>() {1}, parserResult.Episodes.ToList(), "-Episodes " );
-			CollectionAssert.AreEqual( new List<string>() {"German", "x264"}.OrderBy( x => x ).ToList(), parserResult.RemovedTokens.OrderBy( x => x ).ToList(),
+			CollectionAssert.AreEqual( new List<string>() {"German", "x264", "DD51" }.OrderBy( x => x ).ToList(), parserResult.RemovedTokens.OrderBy( x => x ).ToList(),
 										"-RemovedTokens " );
 			CollectionAssert.AreEqual( new List<ResolutionsMap> {ResolutionsMap.HD_720p, ResolutionsMap.FullHD_1080p}.OrderBy( x => x ).ToList(),
 										parserResult.Resolutions.OrderBy( x => x ).ToList(), "-Resolution " );
@@ -452,7 +452,7 @@ namespace SeriesIDParser.Test.Tests
 			ParserResult parserResult = seriesIDParser.Parse( "Narcos.S02E01.Endlich.frei.German.DD51.DL.1080p.NetflixUHD.AAC.x264.mkv" );
 
 			Assert.AreEqual( "Narcos.S02E01.Endlich.frei", parserResult.FullTitle, "-FullTitle " );
-			Assert.AreEqual( "Narcos.S02E01.Endlich.frei.1080p.AAC.German.x264.mkv", parserResult.ParsedString, "-ParsedString " );
+			Assert.AreEqual("Narcos.S02E01.Endlich.frei.1080p.AAC.DD51.German.x264.mkv", parserResult.ParsedString, "-ParsedString " );
 			Assert.AreEqual( false, parserResult.IsMultiEpisode, "-IsMultiEpisode " );
 			Assert.AreEqual( "Endlich.frei", parserResult.EpisodeTitle, "-EpisodeTitle " );
 			Assert.AreEqual( ".mkv", parserResult.FileExtension, "-FileExtension " );
@@ -470,7 +470,7 @@ namespace SeriesIDParser.Test.Tests
 			Assert.AreEqual( DimensionalType.Dimension_2DAny, parserResult.DimensionalType, "-DimensionalType " );
 			Assert.AreEqual( String.Empty, parserResult.ReleaseGroup, "-ReleaseGroup " );
 			CollectionAssert.AreEqual( new List<int>() {1}, parserResult.Episodes.ToList(), "-Episodes " );
-			CollectionAssert.AreEqual( new List<string>() {"German", "x264", "AAC"}.OrderBy( x => x ).ToList(),
+			CollectionAssert.AreEqual( new List<string>() {"German", "x264", "AAC", "DD51" }.OrderBy( x => x ).ToList(),
 										parserResult.RemovedTokens.OrderBy( x => x ).ToList(), "-RemovedTokens " );
 			CollectionAssert.AreEqual( new List<ResolutionsMap> {ResolutionsMap.FullHD_1080p, ResolutionsMap.UltraHD_2160p}.OrderBy( x => x ).ToList(),
 										parserResult.Resolutions.OrderBy( x => x ).ToList(), "-Resolution " );
@@ -484,7 +484,7 @@ namespace SeriesIDParser.Test.Tests
 			ParserResult parserResult = seriesIDParser.Parse( "Narcos.S02E01E02.Endlich.frei.German.DD51.DL.1080p.720p.x264.mkv" );
 
 			Assert.AreEqual( "Narcos.S02E01E02.Endlich.frei", parserResult.FullTitle, "-FullTitle " );
-			Assert.AreEqual( "Narcos.S02E01E02.Endlich.frei.720p.German.x264.mkv", parserResult.ParsedString, "-ParsedString " );
+			Assert.AreEqual("Narcos.S02E01E02.Endlich.frei.720p.DD51.German.x264.mkv", parserResult.ParsedString, "-ParsedString " );
 			Assert.AreEqual( true, parserResult.IsMultiEpisode, "-IsMultiEpisode " );
 			Assert.AreEqual( "Endlich.frei", parserResult.EpisodeTitle, "-EpisodeTitle " );
 			Assert.AreEqual( ".mkv", parserResult.FileExtension, "-FileExtension " );
@@ -501,7 +501,7 @@ namespace SeriesIDParser.Test.Tests
 			Assert.AreEqual( DimensionalType.Dimension_2DAny, parserResult.DimensionalType, "-DimensionalType " );
 			Assert.AreEqual( String.Empty, parserResult.ReleaseGroup, "-ReleaseGroup " );
 			CollectionAssert.AreEqual( new List<int>() {1, 2}, parserResult.Episodes.ToList(), "-Episodes " );
-			CollectionAssert.AreEqual( new List<string>() {"German", "x264"}.OrderBy( x => x ).ToList(), parserResult.RemovedTokens.OrderBy( x => x ).ToList(),
+			CollectionAssert.AreEqual( new List<string>() {"German", "x264", "DD51"}.OrderBy( x => x ).ToList(), parserResult.RemovedTokens.OrderBy( x => x ).ToList(),
 										"-RemovedTokens " );
 			CollectionAssert.AreEqual( new List<ResolutionsMap> {ResolutionsMap.HD_720p, ResolutionsMap.FullHD_1080p}.OrderBy( x => x ).ToList(),
 										parserResult.Resolutions.OrderBy( x => x ).ToList(), "-Resolution " );
@@ -515,7 +515,7 @@ namespace SeriesIDParser.Test.Tests
 			ParserResult parserResult = seriesIDParser.Parse( "Narcos.S02E01E02E03.Endlich.frei.German.DD51.DL.1080p.720p.x264.mkv" );
 
 			Assert.AreEqual( "Narcos.S02E01E02E03.Endlich.frei", parserResult.FullTitle, "-FullTitle " );
-			Assert.AreEqual( "Narcos.S02E01E02E03.Endlich.frei.720p.German.x264.mkv", parserResult.ParsedString, "-ParsedString " );
+			Assert.AreEqual( "Narcos.S02E01E02E03.Endlich.frei.720p.DD51.German.x264.mkv", parserResult.ParsedString, "-ParsedString " );
 			Assert.AreEqual( true, parserResult.IsMultiEpisode, "-IsMultiEpisode " );
 			Assert.AreEqual( "Endlich.frei", parserResult.EpisodeTitle, "-EpisodeTitle " );
 			Assert.AreEqual( ".mkv", parserResult.FileExtension, "-FileExtension " );
@@ -533,7 +533,7 @@ namespace SeriesIDParser.Test.Tests
 			Assert.AreEqual( DimensionalType.Dimension_2DAny, parserResult.DimensionalType, "-DimensionalType " );
 			Assert.AreEqual( String.Empty, parserResult.ReleaseGroup, "-ReleaseGroup " );
 			CollectionAssert.AreEqual( new List<int>() {1, 2, 3}, parserResult.Episodes.ToList(), "-Episodes " );
-			CollectionAssert.AreEqual( new List<string>() {"German", "x264"}.OrderBy( x => x ).ToList(), parserResult.RemovedTokens.OrderBy( x => x ).ToList(),
+			CollectionAssert.AreEqual( new List<string>() {"German", "x264", "DD51" }.OrderBy( x => x ).ToList(), parserResult.RemovedTokens.OrderBy( x => x ).ToList(),
 										"-RemovedTokens " );
 			CollectionAssert.AreEqual( new List<ResolutionsMap> {ResolutionsMap.HD_720p, ResolutionsMap.FullHD_1080p}.OrderBy( x => x ).ToList(),
 										parserResult.Resolutions.OrderBy( x => x ).ToList(), "-Resolution " );
@@ -547,7 +547,7 @@ namespace SeriesIDParser.Test.Tests
 			ParserResult parserResult = seriesIDParser.Parse( "Narcos.S02E01E02E04.Endlich.frei.German.DD51.DL.1080p.720p.x264.mkv" );
 
 			Assert.AreEqual( "Narcos.S02E01E02E04.Endlich.frei", parserResult.FullTitle, "-FullTitle " );
-			Assert.AreEqual( "Narcos.S02E01E02E04.Endlich.frei.720p.German.x264.mkv", parserResult.ParsedString, "-ParsedString " );
+			Assert.AreEqual( "Narcos.S02E01E02E04.Endlich.frei.720p.DD51.German.x264.mkv", parserResult.ParsedString, "-ParsedString " );
 			Assert.AreEqual( true, parserResult.IsMultiEpisode, "-IsMultiEpisode " );
 			Assert.AreEqual( "Endlich.frei", parserResult.EpisodeTitle, "-EpisodeTitle " );
 			Assert.AreEqual( ".mkv", parserResult.FileExtension, "-FileExtension " );
@@ -565,7 +565,7 @@ namespace SeriesIDParser.Test.Tests
 			Assert.AreEqual( DimensionalType.Dimension_2DAny, parserResult.DimensionalType, "-DimensionalType " );
 			Assert.AreEqual( String.Empty, parserResult.ReleaseGroup, "-ReleaseGroup " );
 			CollectionAssert.AreEqual( new List<int>() {1, 2, 4}, parserResult.Episodes.ToList(), "-Episodes " );
-			CollectionAssert.AreEqual( new List<string>() {"German", "x264"}.OrderBy( x => x ).ToList(), parserResult.RemovedTokens.OrderBy( x => x ).ToList(),
+			CollectionAssert.AreEqual( new List<string>() {"German", "x264", "DD51" }.OrderBy( x => x ).ToList(), parserResult.RemovedTokens.OrderBy( x => x ).ToList(),
 										"-RemovedTokens " );
 			CollectionAssert.AreEqual( new List<ResolutionsMap> {ResolutionsMap.HD_720p, ResolutionsMap.FullHD_1080p}.OrderBy( x => x ).ToList(),
 										parserResult.Resolutions.OrderBy( x => x ).ToList(), "-Resolution " );
