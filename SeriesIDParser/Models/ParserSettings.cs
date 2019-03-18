@@ -53,7 +53,7 @@ namespace SeriesIDParser.Models
 			}
 
 			// ### Resolution Detection
-			DetectUltraHD8kTokens = new List<string>() {"8k", "4320k"};
+			DetectUltraHD8kTokens = new List<string>() {"8k", "4320p"};
 			DetectUltraHDTokens = new List<string>() {"NetflixUHD", "UHD", "2160p", "Ultra.HD", "UltraHD"};
 			DetectFullHDTokens = new List<string>() { "NetflixHD", "FullHD", "1080p", "1080i"};
 			DetectHDTokens = new List<string>() {"HDTV", "720p", "HD"};
@@ -80,6 +80,7 @@ namespace SeriesIDParser.Models
 								".FLV",
 								".GIF",
 								".GIFV",
+								".M2TS",
 								".M2V",
 								".M4P",
 								".M4V",
@@ -92,6 +93,7 @@ namespace SeriesIDParser.Models
 								".MPEG",
 								".MPG",
 								".MPV",
+								".MTS",
 								".MXF",
 								".NSV",
 								".OGG",
@@ -133,12 +135,14 @@ namespace SeriesIDParser.Models
 									"BT2020",
 									"BT.2020",
 									"HDR",
+									"SDR",
 									"TrueHD",
 									"FS",
 									"DD20",
 									"DD51",
 									"DD5.1",
-									"DD+51"
+									"DD+51",
+									"35mm"
 								};
 
 			//_removeAndListTokensOnLanguageParserIsDisabled = new List<string>() { "GERMAN" };
