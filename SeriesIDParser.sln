@@ -3,35 +3,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Net Framework 4.5", ".Net Framework 4.5", "{AE0C9F53-3F9B-48FA-862F-1080F8A5D172}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{909F3691-1D4F-4F86-BCAB-65BC62A1D5F6}"
 	ProjectSection(SolutionItems) = preProject
 		CHANGELOG = CHANGELOG
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeriesIDParser4", ".Net Framework 4.5\SeriesIDParser4\SeriesIDParser4.csproj", "{D584FD1D-63D3-4FE2-A229-7F01E7A93797}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SeriesIDParser", "SeriesIDParser\SeriesIDParser.csproj", "{53ACBC37-24D5-4AC3-B5F9-56E9651247E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeriesIDParser4.Test", ".Net Framework 4.5\SeriesIDParser4.Test\SeriesIDParser4.Test.csproj", "{6F30FEEF-A65B-4E54-8014-AD9FC2D440CC}"
-	ProjectSection(ProjectDependencies) = postProject
-		{D584FD1D-63D3-4FE2-A229-7F01E7A93797} = {D584FD1D-63D3-4FE2-A229-7F01E7A93797}
-	EndProjectSection
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SeriesIDParser.Console.Demo", "SeriesIDParser.Console.Demo\SeriesIDParser.Console.Demo.csproj", "{2386F1C7-2AB6-42C1-B2F3-86618959C891}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeriesIDParser4.WinForm.Demo", ".Net Framework 4.5\SeriesIDParser4.WinForm.Demo\SeriesIDParser4.WinForm.Demo.csproj", "{3A90193D-8664-42CD-B49D-DCD2B9E6CB4D}"
-	ProjectSection(ProjectDependencies) = postProject
-		{D584FD1D-63D3-4FE2-A229-7F01E7A93797} = {D584FD1D-63D3-4FE2-A229-7F01E7A93797}
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Net 5", ".Net 5", "{9EBC9FC3-B589-4A8E-89CA-097CB4DE1C4B}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SeriesIDParser", ".Net 5\SeriesIDParser\SeriesIDParser.csproj", "{15D22E7A-4240-4487-9D25-715DFFAC4560}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SeriesIDParser.Test", ".Net 5\SeriesIDParser.Test\SeriesIDParser.Test.csproj", "{F8478FB6-BAAE-43A9-8C54-5151C7B9D8CA}"
-	ProjectSection(ProjectDependencies) = postProject
-		{15D22E7A-4240-4487-9D25-715DFFAC4560} = {15D22E7A-4240-4487-9D25-715DFFAC4560}
-	EndProjectSection
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SeriesIDParser.Console.Demo", ".Net 5\SeriesIDParser.Console.Demo\SeriesIDParser.Console.Demo.csproj", "{A92A3E9E-2D57-476B-8A18-28D5B2CD9E76}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SeriesIDParser.Test", "SeriesIDParser.Test\SeriesIDParser.Test.csproj", "{4A70A0DA-325F-40EE-B3F2-BB490F5689CE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,41 +20,21 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D584FD1D-63D3-4FE2-A229-7F01E7A93797}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D584FD1D-63D3-4FE2-A229-7F01E7A93797}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D584FD1D-63D3-4FE2-A229-7F01E7A93797}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D584FD1D-63D3-4FE2-A229-7F01E7A93797}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6F30FEEF-A65B-4E54-8014-AD9FC2D440CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6F30FEEF-A65B-4E54-8014-AD9FC2D440CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6F30FEEF-A65B-4E54-8014-AD9FC2D440CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6F30FEEF-A65B-4E54-8014-AD9FC2D440CC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3A90193D-8664-42CD-B49D-DCD2B9E6CB4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3A90193D-8664-42CD-B49D-DCD2B9E6CB4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3A90193D-8664-42CD-B49D-DCD2B9E6CB4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3A90193D-8664-42CD-B49D-DCD2B9E6CB4D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{15D22E7A-4240-4487-9D25-715DFFAC4560}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{15D22E7A-4240-4487-9D25-715DFFAC4560}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{15D22E7A-4240-4487-9D25-715DFFAC4560}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{15D22E7A-4240-4487-9D25-715DFFAC4560}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F8478FB6-BAAE-43A9-8C54-5151C7B9D8CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F8478FB6-BAAE-43A9-8C54-5151C7B9D8CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F8478FB6-BAAE-43A9-8C54-5151C7B9D8CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F8478FB6-BAAE-43A9-8C54-5151C7B9D8CA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A92A3E9E-2D57-476B-8A18-28D5B2CD9E76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A92A3E9E-2D57-476B-8A18-28D5B2CD9E76}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A92A3E9E-2D57-476B-8A18-28D5B2CD9E76}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A92A3E9E-2D57-476B-8A18-28D5B2CD9E76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53ACBC37-24D5-4AC3-B5F9-56E9651247E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53ACBC37-24D5-4AC3-B5F9-56E9651247E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53ACBC37-24D5-4AC3-B5F9-56E9651247E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53ACBC37-24D5-4AC3-B5F9-56E9651247E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2386F1C7-2AB6-42C1-B2F3-86618959C891}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2386F1C7-2AB6-42C1-B2F3-86618959C891}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2386F1C7-2AB6-42C1-B2F3-86618959C891}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2386F1C7-2AB6-42C1-B2F3-86618959C891}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A70A0DA-325F-40EE-B3F2-BB490F5689CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A70A0DA-325F-40EE-B3F2-BB490F5689CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A70A0DA-325F-40EE-B3F2-BB490F5689CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A70A0DA-325F-40EE-B3F2-BB490F5689CE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{D584FD1D-63D3-4FE2-A229-7F01E7A93797} = {AE0C9F53-3F9B-48FA-862F-1080F8A5D172}
-		{6F30FEEF-A65B-4E54-8014-AD9FC2D440CC} = {AE0C9F53-3F9B-48FA-862F-1080F8A5D172}
-		{3A90193D-8664-42CD-B49D-DCD2B9E6CB4D} = {AE0C9F53-3F9B-48FA-862F-1080F8A5D172}
-		{15D22E7A-4240-4487-9D25-715DFFAC4560} = {9EBC9FC3-B589-4A8E-89CA-097CB4DE1C4B}
-		{F8478FB6-BAAE-43A9-8C54-5151C7B9D8CA} = {9EBC9FC3-B589-4A8E-89CA-097CB4DE1C4B}
-		{A92A3E9E-2D57-476B-8A18-28D5B2CD9E76} = {9EBC9FC3-B589-4A8E-89CA-097CB4DE1C4B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {66976A97-8CAE-4D1A-BDB3-6ED1EE592A00}

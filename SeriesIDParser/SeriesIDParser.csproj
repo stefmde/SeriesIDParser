@@ -1,99 +1,19 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\Microsoft.Net.Compilers.1.3.2\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.3.2\build\Microsoft.Net.Compilers.props')" />
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D584FD1D-63D3-4FE2-A229-7F01E7A93797}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SeriesIDParser</RootNamespace>
-    <AssemblyName>SeriesIDParser</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
-    <NuGetPackageImportStamp>6dd907d3</NuGetPackageImportStamp>
+    <TargetFramework>net5.0</TargetFramework>
+    <AssemblyVersion>11.0.0.0</AssemblyVersion>
+    <FileVersion>11.0.0.0</FileVersion>
+    <Version>11.0.0</Version>
+    <Company>StefmDE</Company>
+    <Authors>StefmDE</Authors>
+    <PackageProjectUrl>https://github.com/stefmde/SeriesIDParser</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/stefmde/SeriesIDParser</RepositoryUrl>
+    <RepositoryType>Git</RepositoryType>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.configuration" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Reflection.Context" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Caching\MediaDataCache.cs" />
-    <Compile Include="Extensions\InternalExtensions.cs" />
-    <Compile Include="Extensions\ParserExtensions.cs" />
-    <Compile Include="Extensions\ParserResultExtensions.cs" />
-    <Compile Include="Models\CacheDictionary.cs" />
-    <Compile Include="Models\CoreParserModuleStateResult.cs" />
-    <Compile Include="Models\CoreParserModuleSubState.cs" />
-    <Compile Include="Models\CoreParserResult.cs" />
-    <Compile Include="Models\Enums.cs" />
-    <Compile Include="Models\ICoreParser.cs" />
-    <Compile Include="Models\MediaData.cs" />
-    <Compile Include="Models\ParserResult.cs" />
-    <Compile Include="Models\ParserSettings.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SeriesID.cs" />
-    <Compile Include="Worker\CoreParserModules\CodecsCoreParserModule.cs" />
-    <Compile Include="Worker\CoreParserModules\DimensionalTypeCoreParserModule.cs" />
-    <Compile Include="Worker\CoreParserModules\FileExtensionCoreParserModule.cs" />
-    <Compile Include="Worker\CoreParserModules\OldSpacingCharCoreParserModule.cs" />
-    <Compile Include="Worker\CoreParserModules\ReleaseGroupCoreParserModule.cs" />
-    <Compile Include="Worker\CoreParserModules\RemoveTokensCoreParserModule.cs" />
-    <Compile Include="Worker\CoreParserModules\ResolutionsCoreParserModule.cs" />
-    <Compile Include="Worker\CoreParserModules\SeriesDetailsCoreParserModule.cs" />
-    <Compile Include="Worker\CoreParserModules\TitleCoreParserModule.cs" />
-    <Compile Include="Worker\CoreParserModules\YearCoreParserModule.cs" />
-    <Compile Include="Worker\HelperWorker.cs" />
-    <Compile Include="Worker\ParserSettingsWorker.cs" />
-    <Compile Include="Worker\ListOfICoreParser.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.3.2\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.3.2\build\Microsoft.Net.Compilers.props'))" />
-  </Target>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+
 </Project>
