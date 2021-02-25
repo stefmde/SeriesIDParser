@@ -2,6 +2,16 @@
 
 
 
+##11.0.0 (2021-02-24)##
+###New###
+- Project now supports .Net 5
+- Support for .Net Core is closed now
+
+
+---
+
+
+
 ##10.3.0 (2019-03-18)##
 ###New###
 - Added file extensions ".mts" and ".m2ts"
