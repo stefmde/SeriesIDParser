@@ -28,26 +28,26 @@ using System.Collections.Generic;
 using System.Linq;
 using SeriesIDParser.Models;
 
-namespace SeriesIDParser.Worker.CoreParserModules
+namespace SeriesIDParser.Worker.CoreParserModules;
+
+public class ResolutionsCoreParserModule : ICoreParser
 {
-	public class ResolutionsCoreParserModule : ICoreParser
+	/// <inheritdoc />
+	public int Priority { get; } = 9800;
+
+	/// <inheritdoc />
+	public string Name { get; } = "ResolutionsCoreParser";
+
+	/// <inheritdoc />
+	public string Description { get; } = "Parses and removes the Resolutions";
+
+	private State _state = State.Unknown;
+
+	private string _errorOrWarningMessage = String.Empty;
+
+	/// <inheritdoc />
+	public CoreParserResult Parse( CoreParserResult inputResult )
 	{
-		/// <inheritdoc />
-		public int Priority { get; } = 9800;
-
-		/// <inheritdoc />
-		public string Name { get; } = "ResolutionsCoreParser";
-
-		/// <inheritdoc />
-		public string Description { get; } = "Parses and removes the Resolutions";
-
-		private State _state = State.Unknown;
-
-		private string _errorOrWarningMessage = String.Empty;
-
-		/// <inheritdoc />
-		public CoreParserResult Parse( CoreParserResult inputResult )
-		{
 			CoreParserResult outputResult = inputResult;
 			string modifiedString = inputResult.ModifiedString;
 
@@ -72,10 +72,9 @@ namespace SeriesIDParser.Worker.CoreParserModules
 			return outputResult;
 		}
 
-		/// <inheritdoc />
-		public override string ToString()
-		{
+	/// <inheritdoc />
+	public override string ToString()
+	{
 			return "Name: " + Name + " Priority: " + Priority + " State: " + _state;
 		}
-	}
 }

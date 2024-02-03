@@ -25,31 +25,30 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using SeriesIDParser.Models;
 
-namespace SeriesIDParser.Worker.CoreParserModules
+namespace SeriesIDParser.Worker.CoreParserModules;
+
+public class FileExtensionCoreParserModule : ICoreParser
 {
-	public class FileExtensionCoreParserModule : ICoreParser
+	/// <inheritdoc />
+	public int Priority { get; } = 9900;
+
+	/// <inheritdoc />
+	public string Name { get; } = "FileExtensionCoreParser";
+
+	/// <inheritdoc />
+	public string Description { get; } = "Parses and removes the FileExtension";
+
+	private State _state = State.Unknown;
+
+	private string _errorOrWarningMessage = String.Empty;
+
+	/// <inheritdoc />
+	public CoreParserResult Parse( CoreParserResult inputResult )
 	{
-		/// <inheritdoc />
-		public int Priority { get; } = 9900;
-
-		/// <inheritdoc />
-		public string Name { get; } = "FileExtensionCoreParser";
-
-		/// <inheritdoc />
-		public string Description { get; } = "Parses and removes the FileExtension";
-
-		private State _state = State.Unknown;
-
-		private string _errorOrWarningMessage = String.Empty;
-
-		/// <inheritdoc />
-		public CoreParserResult Parse( CoreParserResult inputResult )
-		{
 			CoreParserResult outputResult = inputResult;
 			string extension = HelperWorker.GetFileExtension( inputResult.ModifiedString, inputResult.ParserSettings.FileExtensions );
 
@@ -73,10 +72,9 @@ namespace SeriesIDParser.Worker.CoreParserModules
 			return outputResult;
 		}
 
-		/// <inheritdoc />
-		public override string ToString()
-		{
+	/// <inheritdoc />
+	public override string ToString()
+	{
 			return "Name: " + Name + " Priority: " + Priority + " State: " + _state;
 		}
-	}
 }

@@ -28,58 +28,56 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SeriesIDParser.Models;
 
 // ReSharper disable MissingXmlDoc
 
-namespace SeriesIDParser.Test.Tests
+namespace SeriesIDParser.Test.Tests;
+
+[ExcludeFromCodeCoverage]
+[TestClass]
+public class CacheTests
 {
-	[ExcludeFromCodeCoverage]
-	[TestClass]
-	public class CacheTests
+	[TestMethod]
+	public void CacheDictionaryInit()
 	{
-		[TestMethod]
-		public void CacheDictionaryInit()
+		CacheDictionary cacheDictionary = new CacheDictionary( 10 );
+		Assert.AreEqual( 10, cacheDictionary.Limit, " -LimitCount" );
+		Assert.AreEqual( 0, cacheDictionary.Count, " -ItemCount" );
+		Assert.AreEqual( false, cacheDictionary.IsFull, " -IsFull" );
+		Assert.AreEqual( 0, cacheDictionary.LimitDropCount, " -LimitDropCount" );
+		Assert.AreNotEqual( null, cacheDictionary._dictionary, " -RootDictionary" );
+		Assert.AreNotEqual( null, cacheDictionary._keys, " -RootKeys" );
+	}
+
+	[TestMethod]
+	public void CacheDictionaryDrop()
+	{
+		CacheDictionary cacheDictionary = new CacheDictionary( 10 );
+
+		for (int i = 1; i <= 11; i++)
 		{
-			CacheDictionary cacheDictionary = new CacheDictionary( 10 );
-			Assert.AreEqual( 10, cacheDictionary.Limit, " -LimitCount" );
-			Assert.AreEqual( 0, cacheDictionary.Count, " -ItemCount" );
-			Assert.AreEqual( false, cacheDictionary.IsFull, " -IsFull" );
-			Assert.AreEqual( 0, cacheDictionary.LimitDropCount, " -LimitDropCount" );
-			Assert.AreNotEqual( null, cacheDictionary._dictionary, " -RootDictionary" );
-			Assert.AreNotEqual( null, cacheDictionary._keys, " -RootKeys" );
+			cacheDictionary.Add( "Key_" + i, new MediaData() {Title = "Title_" + i} );
 		}
 
-		[TestMethod]
-		public void CacheDictionaryDrop()
+		int a = cacheDictionary._dictionary.Count;
+		int b = cacheDictionary._keys.Count;
+
+		Assert.IsFalse( cacheDictionary.Contains( "Key_1" ), " -DroppedKey" );
+
+		for (int i = 2; i < 11; i++)
 		{
-			CacheDictionary cacheDictionary = new CacheDictionary( 10 );
+			KeyValuePair<string, MediaData> keyValuePair = new KeyValuePair<string, MediaData>( "Key_" + i, new MediaData() {Title = "Title_" + i} );
 
-			for (int i = 1; i <= 11; i++)
-			{
-				cacheDictionary.Add( "Key_" + i, new MediaData() {Title = "Title_" + i} );
-			}
-
-			int a = cacheDictionary._dictionary.Count;
-			int b = cacheDictionary._keys.Count;
-
-			Assert.IsFalse( cacheDictionary.Contains( "Key_1" ), " -DroppedKey" );
-
-			for (int i = 2; i < 11; i++)
-			{
-				KeyValuePair<string, MediaData> keyValuePair = new KeyValuePair<string, MediaData>( "Key_" + i, new MediaData() {Title = "Title_" + i} );
-
-				Assert.IsTrue( cacheDictionary.Contains( keyValuePair.Key ), " -Key" );
-				Assert.IsTrue( cacheDictionary.Contains( keyValuePair ), " -KeyValuePair" );
-			}
-
-			Assert.AreEqual( 10, cacheDictionary.Count, " -ItemCount" );
-			Assert.AreEqual( true, cacheDictionary.IsFull, " -IsFull" );
-			Assert.AreEqual( 1, cacheDictionary.LimitDropCount, " -LimitDropCount" );
-			Assert.AreEqual( 10, cacheDictionary._dictionary.Count, " -RootDictionaryCount" );
-			Assert.AreEqual( 10, cacheDictionary._keys.Count, " -RootKeysCount" );
+			Assert.IsTrue( cacheDictionary.Contains( keyValuePair.Key ), " -Key" );
+			Assert.IsTrue( cacheDictionary.Contains( keyValuePair ), " -KeyValuePair" );
 		}
+
+		Assert.AreEqual( 10, cacheDictionary.Count, " -ItemCount" );
+		Assert.AreEqual( true, cacheDictionary.IsFull, " -IsFull" );
+		Assert.AreEqual( 1, cacheDictionary.LimitDropCount, " -LimitDropCount" );
+		Assert.AreEqual( 10, cacheDictionary._dictionary.Count, " -RootDictionaryCount" );
+		Assert.AreEqual( 10, cacheDictionary._keys.Count, " -RootKeysCount" );
 	}
 }

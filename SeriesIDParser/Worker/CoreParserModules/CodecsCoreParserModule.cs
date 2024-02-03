@@ -28,36 +28,36 @@ using System.Collections.Generic;
 using System.Linq;
 using SeriesIDParser.Models;
 
-namespace SeriesIDParser.Worker.CoreParserModules
+namespace SeriesIDParser.Worker.CoreParserModules;
+
+public class CodecsCoreParserModule : ICoreParser
 {
-	public class CodecsCoreParserModule : ICoreParser
+	/// <summary>
+	///     Defines the priority in which order the Parser have to execute. Higher values came first. -1 is last/no prio needed
+	/// </summary>
+	public int Priority { get; } = 9400;
+
+	/// <summary>
+	///     The readable Name of the CoreParser. Used for error messages and things like that
+	/// </summary>
+	public string Name { get; } = "CodecsCoreParser";
+
+	/// <summary>
+	///     The description what that CoreParser did
+	/// </summary>
+	public string Description { get; } = "Parses and removes the Codecs";
+
+	private State _state = State.Unknown;
+
+	private string _errorOrWarningMessage = String.Empty;
+
+	/// <summary>
+	///     The main parse methode
+	/// </summary>
+	/// <param name="inputResult">The result that get hopped from each parser to the next. The info get to the next parser</param>
+	/// <returns></returns>
+	public CoreParserResult Parse( CoreParserResult inputResult )
 	{
-		/// <summary>
-		///     Defines the priority in which order the Parser have to execute. Higher values came first. -1 is last/no prio needed
-		/// </summary>
-		public int Priority { get; } = 9400;
-
-		/// <summary>
-		///     The readable Name of the CoreParser. Used for error messages and things like that
-		/// </summary>
-		public string Name { get; } = "CodecsCoreParser";
-
-		/// <summary>
-		///     The description what that CoreParser did
-		/// </summary>
-		public string Description { get; } = "Parses and removes the Codecs";
-
-		private State _state = State.Unknown;
-
-		private string _errorOrWarningMessage = String.Empty;
-
-		/// <summary>
-		///     The main parse methode
-		/// </summary>
-		/// <param name="inputResult">The result that get hopped from each parser to the next. The info get to the next parser</param>
-		/// <returns></returns>
-		public CoreParserResult Parse( CoreParserResult inputResult )
-		{
 			CoreParserResult outputResult = inputResult;
 			string modifiedString = inputResult.ModifiedString;
 
@@ -84,11 +84,10 @@ namespace SeriesIDParser.Worker.CoreParserModules
 			return outputResult;
 		}
 
-		/// <summary>Returns a string that represents the current object.</summary>
-		/// <returns>A string that represents the current object.</returns>
-		public override string ToString()
-		{
+	/// <summary>Returns a string that represents the current object.</summary>
+	/// <returns>A string that represents the current object.</returns>
+	public override string ToString()
+	{
 			return "Name: " + Name + " Priority: " + Priority + " State: " + _state;
 		}
-	}
 }

@@ -25,29 +25,28 @@
 
 using System;
 
-namespace SeriesIDParser.Models
+namespace SeriesIDParser.Models;
+
+public class CoreParserModuleSubState
 {
-	public class CoreParserModuleSubState
+	/// <summary>
+	///     Contains the messages with the State of the State of the CoreParser
+	/// </summary>
+	public CoreParserModuleSubState( State state, string message )
 	{
-		/// <summary>
-		///     Contains the messages with the State of the State of the CoreParser
-		/// </summary>
-		public CoreParserModuleSubState( State state, string message )
+		State = state;
+
+		if (message == null)
 		{
-			State = state;
-
-			if (message == null)
-			{
-				Message = String.Empty;
-			}
-			else
-			{
-				Message = message;
-			}
+			Message = String.Empty;
 		}
-
-		public State State { get; }
-
-		public string Message { get; }
+		else
+		{
+			Message = message;
+		}
 	}
+
+	public State State { get; }
+
+	public string Message { get; }
 }

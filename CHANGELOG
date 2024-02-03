@@ -2,6 +2,16 @@
 
 
 
+##12.0.0 (2024-02-03)##
+###New###
+- Project now supports .Net 8
+- CleanUp
+
+
+---
+
+
+
 ##11.0.0 (2021-02-24)##
 ###New###
 - Project now supports .Net 5

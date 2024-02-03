@@ -24,59 +24,55 @@
 
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SeriesIDParser.Models;
 using SeriesIDParser.Test.Helper;
 using SeriesIDParser.Worker;
-using SeriesIDParser.Worker.CoreParserModules;
 
-namespace SeriesIDParser.Test.Tests
+namespace SeriesIDParser.Test.Tests;
+
+[ExcludeFromCodeCoverage]
+[TestClass]
+public class CoreParserCustom
 {
-	[ExcludeFromCodeCoverage]
-	[TestClass]
-	public class CoreParserCustom
+	[TestMethod]
+	public void CoreParserCustomRemoveParser()
 	{
-		[TestMethod]
-		public void CoreParserCustomRemoveParser()
-		{
-			int initialParserCount = HelperWorker.GetAllCoreParsers().Count();
-			ParserSettings ps = new ParserSettings( true );
-			ps.DisabledCoreParserModules.Add( new UnitTestCoreParserModule() );
-			int actualParserCount = HelperWorker.GetAllCoreParsers( ps.DisabledCoreParserModules ).Count();
+		int initialParserCount = HelperWorker.GetAllCoreParsers().Count();
+		ParserSettings ps = new ParserSettings( true );
+		ps.DisabledCoreParserModules.Add( new UnitTestCoreParserModule() );
+		int actualParserCount = HelperWorker.GetAllCoreParsers( ps.DisabledCoreParserModules ).Count();
 
-			Assert.AreEqual( initialParserCount - 1, actualParserCount );
-		}
+		Assert.AreEqual( initialParserCount - 1, actualParserCount );
+	}
 
-		[TestMethod]
-		public void CoreParserCustomRemoveParserTwice()
-		{
-			int initialParserCount = HelperWorker.GetAllCoreParsers().Count();
-			ParserSettings ps = new ParserSettings( true );
-			ps.DisabledCoreParserModules.Add( new UnitTestCoreParserModule() );
-			ps.DisabledCoreParserModules.Add( new UnitTestCoreParserModule() );
-			int actualParserCount = HelperWorker.GetAllCoreParsers( ps.DisabledCoreParserModules ).Count();
+	[TestMethod]
+	public void CoreParserCustomRemoveParserTwice()
+	{
+		int initialParserCount = HelperWorker.GetAllCoreParsers().Count();
+		ParserSettings ps = new ParserSettings( true );
+		ps.DisabledCoreParserModules.Add( new UnitTestCoreParserModule() );
+		ps.DisabledCoreParserModules.Add( new UnitTestCoreParserModule() );
+		int actualParserCount = HelperWorker.GetAllCoreParsers( ps.DisabledCoreParserModules ).Count();
 
-			Assert.AreEqual( initialParserCount - 1, actualParserCount );
-		}
+		Assert.AreEqual( initialParserCount - 1, actualParserCount );
+	}
 
-		[TestMethod]
-		public void CoreParserCustomNullActivator()
-		{
-			int initialParserCount = HelperWorker.GetAllCoreParsers().Count();
-			int actualParserCount = HelperWorker.GetAllCoreParsers( null ).Count();
+	[TestMethod]
+	public void CoreParserCustomNullActivator()
+	{
+		int initialParserCount = HelperWorker.GetAllCoreParsers().Count();
+		int actualParserCount = HelperWorker.GetAllCoreParsers( null ).Count();
 
-			Assert.AreEqual( initialParserCount, actualParserCount );
-		}
+		Assert.AreEqual( initialParserCount, actualParserCount );
+	}
 
-		[TestMethod]
-		public void CoreParserCustomAddParser()
-		{
-			Assert.IsTrue( HelperWorker.GetAllCoreParsers().Any( x => x.Name == "UnitTestCoreParserModuleEmpty") );
-		}
+	[TestMethod]
+	public void CoreParserCustomAddParser()
+	{
+		Assert.IsTrue( HelperWorker.GetAllCoreParsers().Any( x => x.Name == "UnitTestCoreParserModuleEmpty") );
 	}
 }

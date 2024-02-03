@@ -25,29 +25,28 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 using SeriesIDParser.Models;
 
-namespace SeriesIDParser.Worker.CoreParserModules
+namespace SeriesIDParser.Worker.CoreParserModules;
+
+public class YearCoreParserModule : ICoreParser
 {
-	public class YearCoreParserModule : ICoreParser
+	/// <inheritdoc />
+	public int Priority { get; } = 9300;
+
+	/// <inheritdoc />
+	public string Name { get; } = "YearCoreParser";
+
+	/// <inheritdoc />
+	public string Description { get; } = "Parses the Year";
+
+	private State _state = State.Unknown;
+
+	private string _errorOrWarningMessage = String.Empty;
+
+	/// <inheritdoc />
+	public CoreParserResult Parse( CoreParserResult inputResult )
 	{
-		/// <inheritdoc />
-		public int Priority { get; } = 9300;
-
-		/// <inheritdoc />
-		public string Name { get; } = "YearCoreParser";
-
-		/// <inheritdoc />
-		public string Description { get; } = "Parses the Year";
-
-		private State _state = State.Unknown;
-
-		private string _errorOrWarningMessage = String.Empty;
-
-		/// <inheritdoc />
-		public CoreParserResult Parse( CoreParserResult inputResult )
-		{
 			CoreParserResult outputResult = inputResult;
 			int year = HelperWorker.GetYear( inputResult.ModifiedString, inputResult.ParserSettings.YearParseRegex );
 
@@ -69,10 +68,9 @@ namespace SeriesIDParser.Worker.CoreParserModules
 			return outputResult;
 		}
 
-		/// <inheritdoc />
-		public override string ToString()
-		{
+	/// <inheritdoc />
+	public override string ToString()
+	{
 			return "Name: " + Name + " Priority: " + Priority + " State: " + _state;
 		}
-	}
 }

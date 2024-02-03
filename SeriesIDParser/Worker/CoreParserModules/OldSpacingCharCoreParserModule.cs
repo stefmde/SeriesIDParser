@@ -31,26 +31,26 @@ using SeriesIDParser.Models;
 
 [assembly: InternalsVisibleTo( "SeriesIDParser.Test" )]
 
-namespace SeriesIDParser.Worker.CoreParserModules
+namespace SeriesIDParser.Worker.CoreParserModules;
+
+public class OldSpacingCharCoreParserModule : ICoreParser
 {
-	public class OldSpacingCharCoreParserModule : ICoreParser
+	/// <inheritdoc />
+	public int Priority { get; } = 10000;
+
+	/// <inheritdoc />
+	public string Name { get; } = "OldSpacingCharCoreParser";
+
+	/// <inheritdoc />
+	public string Description { get; } = "Parses the OldSpacingChar";
+
+	private State _state = State.Unknown;
+
+	private string _errorOrWarningMessage = String.Empty;
+
+	/// <inheritdoc />
+	public CoreParserResult Parse( CoreParserResult inputResult )
 	{
-		/// <inheritdoc />
-		public int Priority { get; } = 10000;
-
-		/// <inheritdoc />
-		public string Name { get; } = "OldSpacingCharCoreParser";
-
-		/// <inheritdoc />
-		public string Description { get; } = "Parses the OldSpacingChar";
-
-		private State _state = State.Unknown;
-
-		private string _errorOrWarningMessage = String.Empty;
-
-		/// <inheritdoc />
-		public CoreParserResult Parse( CoreParserResult inputResult )
-		{
 			CoreParserResult outputResult = inputResult;
 
 			char spacer = HelperWorker.GetSpacingChar( inputResult.ModifiedString, inputResult.ParserSettings );
@@ -72,10 +72,9 @@ namespace SeriesIDParser.Worker.CoreParserModules
 			return outputResult;
 		}
 
-		/// <inheritdoc />
-		public override string ToString()
-		{
+	/// <inheritdoc />
+	public override string ToString()
+	{
 			return "Name: " + Name + " Priority: " + Priority + " State: " + _state;
 		}
-	}
 }

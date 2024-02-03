@@ -27,26 +27,26 @@ using System;
 using System.Collections.Generic;
 using SeriesIDParser.Models;
 
-namespace SeriesIDParser.Worker.CoreParserModules
+namespace SeriesIDParser.Worker.CoreParserModules;
+
+public class SeriesDetailsCoreParserModule : ICoreParser
 {
-	public class SeriesDetailsCoreParserModule : ICoreParser
+	/// <inheritdoc />
+	public int Priority { get; } = 9100;
+
+	/// <inheritdoc />
+	public string Name { get; } = "SeriesDetailsCoreParser";
+
+	/// <inheritdoc />
+	public string Description { get; } = "Parses and removes the SeriesDetails like Season- and EpisodeID, EpisodeTitle and so on..";
+
+	private State _state = State.Unknown;
+
+	private string _errorOrWarningMessage = String.Empty;
+
+	/// <inheritdoc />
+	public CoreParserResult Parse( CoreParserResult inputResult )
 	{
-		/// <inheritdoc />
-		public int Priority { get; } = 9100;
-
-		/// <inheritdoc />
-		public string Name { get; } = "SeriesDetailsCoreParser";
-
-		/// <inheritdoc />
-		public string Description { get; } = "Parses and removes the SeriesDetails like Season- and EpisodeID, EpisodeTitle and so on..";
-
-		private State _state = State.Unknown;
-
-		private string _errorOrWarningMessage = String.Empty;
-
-		/// <inheritdoc />
-		public CoreParserResult Parse( CoreParserResult inputResult )
-		{
 			CoreParserResult outputResult = inputResult;
 
 			outputResult.MediaData.EpisodeTitle = HelperWorker.GetEpisodeTitle( inputResult.ParserSettings, inputResult.ModifiedString );
@@ -61,10 +61,9 @@ namespace SeriesIDParser.Worker.CoreParserModules
 			return outputResult;
 		}
 
-		/// <inheritdoc />
-		public override string ToString()
-		{
+	/// <inheritdoc />
+	public override string ToString()
+	{
 			return "Name: " + Name + " Priority: " + Priority + " State: " + _state;
 		}
-	}
 }

@@ -24,66 +24,63 @@
 
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
 using SeriesIDParser.Models;
 using SeriesIDParser.Worker;
 
 [assembly: InternalsVisibleTo( "SeriesIDParser.Test" )]
 
-namespace SeriesIDParser.Extensions
+namespace SeriesIDParser.Extensions;
+
+/// <summary>
+///     Provides some extensions for the ParserSettings from the SeriesIDParser
+/// </summary>
+public static class ParserResultExtensions
 {
+	#region DeSerialisazion
 	/// <summary>
-	///     Provides some extensions for the ParserSettings from the SeriesIDParser
+	///     Serializes this object to a xml string that could be stored in a file or somewhere else
 	/// </summary>
-	public static class ParserResultExtensions
+	/// <param name="parserSettings">The object that should be converted to an xml string</param>
+	/// <returns>The xml string representing this object</returns>
+	public static string SerializeToXML( this ParserSettings parserSettings )
 	{
-		#region DeSerialisazion
-		/// <summary>
-		///     Serializes this object to a xml string that could be stored in a file or somewhere else
-		/// </summary>
-		/// <param name="parserSettings">The object that should be converted to an xml string</param>
-		/// <returns>The xml string representing this object</returns>
-		public static string SerializeToXML( this ParserSettings parserSettings )
-		{
-			return ParserSettingsWorker.SerializeToXML( parserSettings );
-		}
-
-		/// <summary>
-		///     Serializes this object to a json string that could be stored in a file or somewhere else
-		/// </summary>
-		/// <param name="parserSettings">The object that should be converted to an xml string</param>
-		/// <param name="jsonSerializerSettings">JsonSerializerSettings for the Newtonsoft JsonConvert</param>
-		/// <returns>The json string representing this object</returns>
-		public static string SerializeToJson( this ParserSettings parserSettings, JsonSerializerSettings jsonSerializerSettings = null )
-		{
-			return ParserSettingsWorker.SerializeToJson( parserSettings, jsonSerializerSettings );
-		}
-
-		/// <summary>
-		///     Deserializes this object from a xml string
-		/// </summary>
-		/// <param name="xml">The xml string representing this object</param>
-		/// <returns>The object generated out of the xml content</returns>
-		public static ParserSettings DeSerializeParserSettingsFromXML( this string xml )
-		{
-			return ParserSettingsWorker.DeSerializeFromXML( xml );
-		}
-
-		/// <summary>
-		///     Serializes this object to a json string that could be stored in a file or somewhere else
-		/// </summary>
-		/// <param name="json">The json string representing this object</param>
-		/// <param name="jsonSerializerSettings">JsonSerializerSettings for the Newtonsoft JsonConvert</param>
-		/// <returns>The json string representing this object</returns>
-		public static ParserSettings DeSerializeParserSettingsFromJson( this string json, JsonSerializerSettings jsonSerializerSettings = null )
-		{
-			return ParserSettingsWorker.DeSerializeFromJson( json, jsonSerializerSettings );
-		}
-		#endregion DeSerialisazion
+		return ParserSettingsWorker.SerializeToXML( parserSettings );
 	}
+
+	/// <summary>
+	///     Serializes this object to a json string that could be stored in a file or somewhere else
+	/// </summary>
+	/// <param name="parserSettings">The object that should be converted to an xml string</param>
+	/// <param name="jsonSerializerSettings">JsonSerializerSettings for the Newtonsoft JsonConvert</param>
+	/// <returns>The json string representing this object</returns>
+	public static string SerializeToJson( this ParserSettings parserSettings, JsonSerializerSettings jsonSerializerSettings = null )
+	{
+		return ParserSettingsWorker.SerializeToJson( parserSettings, jsonSerializerSettings );
+	}
+
+	/// <summary>
+	///     Deserializes this object from a xml string
+	/// </summary>
+	/// <param name="xml">The xml string representing this object</param>
+	/// <returns>The object generated out of the xml content</returns>
+	public static ParserSettings DeSerializeParserSettingsFromXML( this string xml )
+	{
+		return ParserSettingsWorker.DeSerializeFromXML( xml );
+	}
+
+	/// <summary>
+	///     Serializes this object to a json string that could be stored in a file or somewhere else
+	/// </summary>
+	/// <param name="json">The json string representing this object</param>
+	/// <param name="jsonSerializerSettings">JsonSerializerSettings for the Newtonsoft JsonConvert</param>
+	/// <returns>The json string representing this object</returns>
+	public static ParserSettings DeSerializeParserSettingsFromJson( this string json, JsonSerializerSettings jsonSerializerSettings = null )
+	{
+		return ParserSettingsWorker.DeSerializeFromJson( json, jsonSerializerSettings );
+	}
+	#endregion DeSerialisazion
 }

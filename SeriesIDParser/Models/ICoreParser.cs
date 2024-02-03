@@ -23,33 +23,32 @@
 // SOFTWARE.
 
 
-namespace SeriesIDParser.Models
+namespace SeriesIDParser.Models;
+
+/// <summary>
+///     Inferface who must be implemented for all parser modules that have to be executed
+/// </summary>
+public interface ICoreParser
 {
 	/// <summary>
-	///     Inferface who must be implemented for all parser modules that have to be executed
+	///     Defines the priority in which order the Parser have to execute. Higher values came first. -1 is last/no prio needed
 	/// </summary>
-	public interface ICoreParser
-	{
-		/// <summary>
-		///     Defines the priority in which order the Parser have to execute. Higher values came first. -1 is last/no prio needed
-		/// </summary>
-		int Priority { get; }
+	int Priority { get; }
 
-		/// <summary>
-		///     The readable Name of the CoreParser. Used for error messages and things like that
-		/// </summary>
-		string Name { get; }
+	/// <summary>
+	///     The readable Name of the CoreParser. Used for error messages and things like that
+	/// </summary>
+	string Name { get; }
 
-		/// <summary>
-		///     The description what that CoreParser did
-		/// </summary>
-		string Description { get; }
+	/// <summary>
+	///     The description what that CoreParser did
+	/// </summary>
+	string Description { get; }
 
-		/// <summary>
-		///     The main parse methode
-		/// </summary>
-		/// <param name="inputResult">The result that get hopped from each parser to the next. The info get to the next parser</param>
-		/// <returns></returns>
-		CoreParserResult Parse( CoreParserResult inputResult );
-	}
+	/// <summary>
+	///     The main parse methode
+	/// </summary>
+	/// <param name="inputResult">The result that get hopped from each parser to the next. The info get to the next parser</param>
+	/// <returns></returns>
+	CoreParserResult Parse( CoreParserResult inputResult );
 }

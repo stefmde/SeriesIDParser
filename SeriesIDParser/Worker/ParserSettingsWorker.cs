@@ -32,82 +32,81 @@ using SeriesIDParser.Models;
 
 [assembly: InternalsVisibleTo( "SeriesIDParser.Test" )]
 
-namespace SeriesIDParser.Worker
+namespace SeriesIDParser.Worker;
+
+internal static class ParserSettingsWorker
 {
-	internal static class ParserSettingsWorker
+	// ### De/Serialization
+	// ############################################################
+
+	#region DeSerialisazion
+	/// <summary>
+	///     Serializes this object to a xml string that could be stored in a file or somewhere else
+	/// </summary>
+	/// <param name="parserSettings">The object that should be converted to an xml string</param>
+	/// <returns>The xml string representing this object</returns>
+	internal static string SerializeToXML( ParserSettings parserSettings )
 	{
-		// ### De/Serialization
-		// ############################################################
-
-		#region DeSerialisazion
-		/// <summary>
-		///     Serializes this object to a xml string that could be stored in a file or somewhere else
-		/// </summary>
-		/// <param name="parserSettings">The object that should be converted to an xml string</param>
-		/// <returns>The xml string representing this object</returns>
-		internal static string SerializeToXML( ParserSettings parserSettings )
+		string data = string.Empty;
+		XmlSerializer x = new XmlSerializer( parserSettings.GetType() );
+		using (MemoryStream ms = new MemoryStream())
 		{
-			string data = string.Empty;
-			XmlSerializer x = new XmlSerializer( parserSettings.GetType() );
-			using (MemoryStream ms = new MemoryStream())
+			x.Serialize( ms, parserSettings );
+			ms.Position = 0;
+			using (StreamReader sr = new StreamReader( ms, Encoding.UTF8 ))
 			{
-				x.Serialize( ms, parserSettings );
-				ms.Position = 0;
-				using (StreamReader sr = new StreamReader( ms, Encoding.UTF8 ))
-				{
-					data = sr.ReadToEnd();
-				}
-			}
-
-			return data;
-		}
-
-		/// <summary>
-		///     Serializes this object to a json string that could be stored in a file or somewhere else
-		/// </summary>
-		/// <param name="parserSettings">The object that should be converted to an xml string</param>
-		/// <param name="jsonSerializerSettings">JsonSerializerSettings for the Newtonsoft JsonConvert</param>
-		/// <returns>The json string representing this object</returns>
-		internal static string SerializeToJson( ParserSettings parserSettings, JsonSerializerSettings jsonSerializerSettings = null )
-		{
-			if (jsonSerializerSettings == null)
-			{
-				jsonSerializerSettings = new JsonSerializerSettings();
-			}
-
-			return Newtonsoft.Json.JsonConvert.SerializeObject( parserSettings, jsonSerializerSettings );
-		}
-
-		/// <summary>
-		///     Deserializes this object from a xml string
-		/// </summary>
-		/// <param name="xml">The xml string representing this object</param>
-		/// <returns>The object generated out of the xml content</returns>
-		internal static ParserSettings DeSerializeFromXML( string xml )
-		{
-			XmlSerializer x = new XmlSerializer( typeof(ParserSettings) );
-			byte[] xmlBytes = Encoding.UTF8.GetBytes( xml );
-			using (MemoryStream ms = new MemoryStream( xmlBytes ))
-			{
-				return (ParserSettings) x.Deserialize( ms );
+				data = sr.ReadToEnd();
 			}
 		}
 
-		/// <summary>
-		///     Serializes this object to a json string that could be stored in a file or somewhere else
-		/// </summary>
-		/// <param name="json">The json string representing this object</param>
-		/// <param name="jsonSerializerSettings">JsonSerializerSettings for the Newtonsoft JsonConvert</param>
-		/// <returns>The json string representing this object</returns>
-		internal static ParserSettings DeSerializeFromJson( string json, JsonSerializerSettings jsonSerializerSettings = null )
-		{
-			if (jsonSerializerSettings == null)
-			{
-				jsonSerializerSettings = new JsonSerializerSettings();
-			}
-
-			return Newtonsoft.Json.JsonConvert.DeserializeObject<ParserSettings>( json, jsonSerializerSettings );
-		}
-		#endregion DeSerialisazion
+		return data;
 	}
+
+	/// <summary>
+	///     Serializes this object to a json string that could be stored in a file or somewhere else
+	/// </summary>
+	/// <param name="parserSettings">The object that should be converted to an xml string</param>
+	/// <param name="jsonSerializerSettings">JsonSerializerSettings for the Newtonsoft JsonConvert</param>
+	/// <returns>The json string representing this object</returns>
+	internal static string SerializeToJson( ParserSettings parserSettings, JsonSerializerSettings jsonSerializerSettings = null )
+	{
+		if (jsonSerializerSettings == null)
+		{
+			jsonSerializerSettings = new JsonSerializerSettings();
+		}
+
+		return Newtonsoft.Json.JsonConvert.SerializeObject( parserSettings, jsonSerializerSettings );
+	}
+
+	/// <summary>
+	///     Deserializes this object from a xml string
+	/// </summary>
+	/// <param name="xml">The xml string representing this object</param>
+	/// <returns>The object generated out of the xml content</returns>
+	internal static ParserSettings DeSerializeFromXML( string xml )
+	{
+		XmlSerializer x = new XmlSerializer( typeof(ParserSettings) );
+		byte[] xmlBytes = Encoding.UTF8.GetBytes( xml );
+		using (MemoryStream ms = new MemoryStream( xmlBytes ))
+		{
+			return (ParserSettings) x.Deserialize( ms );
+		}
+	}
+
+	/// <summary>
+	///     Serializes this object to a json string that could be stored in a file or somewhere else
+	/// </summary>
+	/// <param name="json">The json string representing this object</param>
+	/// <param name="jsonSerializerSettings">JsonSerializerSettings for the Newtonsoft JsonConvert</param>
+	/// <returns>The json string representing this object</returns>
+	internal static ParserSettings DeSerializeFromJson( string json, JsonSerializerSettings jsonSerializerSettings = null )
+	{
+		if (jsonSerializerSettings == null)
+		{
+			jsonSerializerSettings = new JsonSerializerSettings();
+		}
+
+		return Newtonsoft.Json.JsonConvert.DeserializeObject<ParserSettings>( json, jsonSerializerSettings );
+	}
+	#endregion DeSerialisazion
 }

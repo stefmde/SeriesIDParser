@@ -25,32 +25,17 @@
 
 using System;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
 
-namespace SeriesIDParser.Models
+namespace SeriesIDParser.Models;
+
+/// <summary>
+///     Contains the basic info of the State of the CoreParser
+/// </summary>
+public class CoreParserModuleStateResult( string moduleName, List<CoreParserModuleSubState> state, Exception exception = null )
 {
-	/// <summary>
-	///     Contains the basic info of the State of the CoreParser
-	/// </summary>
-	public class CoreParserModuleStateResult
-	{
-		//public CoreParserModuleStateResult( string moduleName, List<CoreParserModuleSubState> state )
-		//{
-		//	ModuleName = moduleName;
-		//	CoreParserModuleSubState = state;
-		//}
+	public string ModuleName { get; } = moduleName;
 
-		public CoreParserModuleStateResult( string moduleName, List<CoreParserModuleSubState> state, Exception exception = null )
-		{
-			ModuleName = moduleName;
-			Exception = exception;
-			CoreParserModuleSubState = state;
-		}
+	public List<CoreParserModuleSubState> CoreParserModuleSubState { get; } = state;
 
-		public string ModuleName { get; }
-
-		public List<CoreParserModuleSubState> CoreParserModuleSubState { get; }
-
-		public Exception Exception { get; internal set; }
-	}
+	public Exception Exception { get; internal set; } = exception;
 }

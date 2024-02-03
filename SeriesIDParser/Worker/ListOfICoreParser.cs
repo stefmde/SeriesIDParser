@@ -27,56 +27,54 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
 using SeriesIDParser.Models;
 
-namespace SeriesIDParser.Worker
+namespace SeriesIDParser.Worker;
+
+public class ListOfICoreParser : List<ICoreParser>, IXmlSerializable
 {
-	public class ListOfICoreParser : List<ICoreParser>, IXmlSerializable
+	private Type _type = typeof(ICoreParser);
+
+	public ListOfICoreParser() : base()
 	{
-		private Type _type = typeof(ICoreParser);
+	}
 
-		public ListOfICoreParser() : base()
+	/// <inheritdoc />
+	public XmlSchema GetSchema()
+	{
+		return null;
+	}
+
+	/// <inheritdoc />
+	public void ReadXml( XmlReader reader )
+	{
+		reader.ReadStartElement( "ListOfICoreParser" );
+		while (reader.IsStartElement( _type.Name ))
 		{
+			Type type = Type.GetType( reader.GetAttribute( "AssemblyQualifiedName" ) );
+			XmlSerializer serial = new XmlSerializer( _type );
+
+			reader.ReadStartElement( _type.Name );
+			this.Add( (ICoreParser) serial.Deserialize( reader ) );
+			reader.ReadEndElement(); //ICoreParser
 		}
 
-		/// <inheritdoc />
-		public XmlSchema GetSchema()
+		reader.ReadEndElement(); //ListOfICoreParser
+	}
+
+	/// <inheritdoc />
+	public void WriteXml( XmlWriter writer )
+	{
+		foreach (ICoreParser coreParser in this)
 		{
-			return null;
-		}
-
-		/// <inheritdoc />
-		public void ReadXml( XmlReader reader )
-		{
-			reader.ReadStartElement( "ListOfICoreParser" );
-			while (reader.IsStartElement( _type.Name ))
-			{
-				Type type = Type.GetType( reader.GetAttribute( "AssemblyQualifiedName" ) );
-				XmlSerializer serial = new XmlSerializer( _type );
-
-				reader.ReadStartElement( _type.Name );
-				this.Add( (ICoreParser) serial.Deserialize( reader ) );
-				reader.ReadEndElement(); //ICoreParser
-			}
-
-			reader.ReadEndElement(); //ListOfICoreParser
-		}
-
-		/// <inheritdoc />
-		public void WriteXml( XmlWriter writer )
-		{
-			foreach (ICoreParser coreParser in this)
-			{
-				writer.WriteStartElement( _type.Name );
-				writer.WriteAttributeString( "AssemblyQualifiedName", coreParser.GetType().AssemblyQualifiedName );
-				XmlSerializer xmlSerializer = new XmlSerializer( coreParser.GetType() );
-				xmlSerializer.Serialize( writer, coreParser );
-				writer.WriteEndElement();
-			}
+			writer.WriteStartElement( _type.Name );
+			writer.WriteAttributeString( "AssemblyQualifiedName", coreParser.GetType().AssemblyQualifiedName );
+			XmlSerializer xmlSerializer = new XmlSerializer( coreParser.GetType() );
+			xmlSerializer.Serialize( writer, coreParser );
+			writer.WriteEndElement();
 		}
 	}
 }

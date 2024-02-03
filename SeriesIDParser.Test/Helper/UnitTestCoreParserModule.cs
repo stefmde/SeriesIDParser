@@ -2,7 +2,7 @@
 // MIT License
 // 
 // Copyright(c) 2016 - 2017
-// Stefan Müller, Stefm, https://Stefm.de, https://github.com/stefmde/SeriesIDParser
+// Stefan Mï¿½ller, Stefm, https://Stefm.de, https://github.com/stefmde/SeriesIDParser
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -25,23 +25,22 @@
 
 using SeriesIDParser.Models;
 
-namespace SeriesIDParser.Test.Helper
+namespace SeriesIDParser.Test.Helper;
+
+public class UnitTestCoreParserModule : ICoreParser
 {
-	public class UnitTestCoreParserModule : ICoreParser
+	/// <inheritdoc />
+	public int Priority { get; } = 1;
+
+	/// <inheritdoc />
+	public string Name { get; } = "UnitTestCoreParserModuleEmpty";
+
+	/// <inheritdoc />
+	public string Description { get; } = "Parser designed to test with unit tests";
+
+	/// <inheritdoc />
+	public CoreParserResult Parse( CoreParserResult inputResult )
 	{
-		/// <inheritdoc />
-		public int Priority { get; } = 1;
-
-		/// <inheritdoc />
-		public string Name { get; } = "UnitTestCoreParserModuleEmpty";
-
-		/// <inheritdoc />
-		public string Description { get; } = "Parser designed to test with unit tests";
-
-		/// <inheritdoc />
-		public CoreParserResult Parse( CoreParserResult inputResult )
-		{
 			return inputResult;
 		}
-	}
 }

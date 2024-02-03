@@ -28,26 +28,26 @@ using System.Collections.Generic;
 using System.Linq;
 using SeriesIDParser.Models;
 
-namespace SeriesIDParser.Worker.CoreParserModules
+namespace SeriesIDParser.Worker.CoreParserModules;
+
+public class ReleaseGroupCoreParserModule : ICoreParser
 {
-	public class ReleaseGroupCoreParserModule : ICoreParser
+	/// <inheritdoc />
+	public int Priority { get; } = 9700;
+
+	/// <inheritdoc />
+	public string Name { get; } = "ReleaseGroupCoreParser";
+
+	/// <inheritdoc />
+	public string Description { get; } = "Parses and removes the FileExtensionReleaseGroup";
+
+	private State _state = State.Unknown;
+
+	private string _errorOrWarningMessage = String.Empty;
+
+	/// <inheritdoc />
+	public CoreParserResult Parse( CoreParserResult inputResult )
 	{
-		/// <inheritdoc />
-		public int Priority { get; } = 9700;
-
-		/// <inheritdoc />
-		public string Name { get; } = "ReleaseGroupCoreParser";
-
-		/// <inheritdoc />
-		public string Description { get; } = "Parses and removes the FileExtensionReleaseGroup";
-
-		private State _state = State.Unknown;
-
-		private string _errorOrWarningMessage = String.Empty;
-
-		/// <inheritdoc />
-		public CoreParserResult Parse( CoreParserResult inputResult )
-		{
 			CoreParserResult outputResult = inputResult;
 
 			if (inputResult.ModifiedString.Length >= 30)
@@ -81,10 +81,9 @@ namespace SeriesIDParser.Worker.CoreParserModules
 			return outputResult;
 		}
 
-		/// <inheritdoc />
-		public override string ToString()
-		{
+	/// <inheritdoc />
+	public override string ToString()
+	{
 			return "Name: " + Name + " Priority: " + Priority + " State: " + _state;
 		}
-	}
 }

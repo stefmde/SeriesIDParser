@@ -27,26 +27,26 @@ using System;
 using System.Collections.Generic;
 using SeriesIDParser.Models;
 
-namespace SeriesIDParser.Worker.CoreParserModules
+namespace SeriesIDParser.Worker.CoreParserModules;
+
+public class TitleCoreParserModule : ICoreParser
 {
-	public class TitleCoreParserModule : ICoreParser
+	/// <inheritdoc />
+	public int Priority { get; } = 9200;
+
+	/// <inheritdoc />
+	public string Name { get; } = "TitleCoreParser";
+
+	/// <inheritdoc />
+	public string Description { get; } = "Parses and removes the Title";
+
+	private State _state = State.Unknown;
+
+	private string _errorOrWarningMessage = String.Empty;
+
+	/// <inheritdoc />
+	public CoreParserResult Parse( CoreParserResult inputResult )
 	{
-		/// <inheritdoc />
-		public int Priority { get; } = 9200;
-
-		/// <inheritdoc />
-		public string Name { get; } = "TitleCoreParser";
-
-		/// <inheritdoc />
-		public string Description { get; } = "Parses and removes the Title";
-
-		private State _state = State.Unknown;
-
-		private string _errorOrWarningMessage = String.Empty;
-
-		/// <inheritdoc />
-		public CoreParserResult Parse( CoreParserResult inputResult )
-		{
 			CoreParserResult outputResult = inputResult;
 			string oldSpacingChar = inputResult.MediaData.DetectedOldSpacingChar.ToString();
 			State state = State.Notice;
@@ -75,10 +75,9 @@ namespace SeriesIDParser.Worker.CoreParserModules
 			return outputResult;
 		}
 
-		/// <inheritdoc />
-		public override string ToString()
-		{
+	/// <inheritdoc />
+	public override string ToString()
+	{
 			return "Name: " + Name + " Priority: " + Priority + " State: " + _state;
 		}
-	}
 }
