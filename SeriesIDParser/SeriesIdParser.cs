@@ -1,7 +1,6 @@
-﻿// 
-// MIT License
+﻿// MIT License
 // 
-// Copyright(c) 2016 - 2017
+// Copyright(c) 2016 - 2024
 // Stefan Müller, Stefm, https://Stefm.de, https://github.com/stefmde/SeriesIDParser
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -123,9 +122,9 @@ public class SeriesIdParser : ISeriesIdParser
 	/// <param name="path"></param>
 	/// <param name="searchOption"></param>
 	/// <returns></returns>
-	public List<IParserResult> ParsePath(DirectoryInfo path, SearchOption searchOption = SearchOption.AllDirectories)
+	public List<IParserResult> ParsePath( DirectoryInfo path, SearchOption searchOption = SearchOption.AllDirectories )
 	{
-		return ParsePath(path?.FullName ?? String.Empty, searchOption);
+		return ParsePath( path?.FullName ?? String.Empty, searchOption );
 	}
 
 	/// <summary>
@@ -151,14 +150,14 @@ public class SeriesIdParser : ISeriesIdParser
 
 			if (_cacheEnabled)
 			{
-				if (MediaDataCache.Instance.TryGet(file.Name, out var mediaData ))
+				if (MediaDataCache.Instance.TryGet( file.Name, out var mediaData ))
 				{
 					results.Add( mediaData.ToParserResult( _parserSettings ) );
 					continue;
 				}
 			}
 
-			results.Add( CoreParser(file.Name).ToParserResult( _parserSettings ) );
+			results.Add( CoreParser( file.Name ).ToParserResult( _parserSettings ) );
 		}
 
 		return results;
@@ -174,7 +173,7 @@ public class SeriesIdParser : ISeriesIdParser
 		{
 			_coreParserResult = new CoreParserResult( input, _parserSettings );
 			_coreParserResult.MediaData.FileInfo = _fileInfo;
-				
+
 			if (input.Length < 5)
 			{
 				// ERROR
@@ -197,8 +196,7 @@ public class SeriesIdParser : ISeriesIdParser
 					_coreParserResult.MediaData.ModuleStates.Add( new CoreParserModuleStateResult( coreParserModule.Name,
 																									new List<CoreParserModuleSubState>()
 																									{
-																										new( State.Error,
-																											"Exception on executing module occurred. See exception for more details." )
+																										new(State.Error, "Exception on executing module occurred. See exception for more details.")
 																									}, ex ) );
 
 					// Throw exception if the flag is set

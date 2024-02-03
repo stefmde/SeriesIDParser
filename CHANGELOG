@@ -1,0 +1,357 @@
+# Changelog #
+
+
+
+##12.0.0 (2024-02-03)##
+###New###
+- Project now supports .Net 8
+- CleanUp
+- Readme sample
+- Removed a ton of typos
+- Removed IEnumerable
+
+
+---
+
+
+
+##11.0.0 (2021-02-24)##
+###New###
+- Project now supports .Net 5
+- Support for .Net Core is closed now
+
+
+---
+
+
+
+##10.3.0 (2019-03-18)##
+###New###
+- Added file extensions ".mts" and ".m2ts"
+- Added "35mm" and "SDR" token
+
+###Fix###
+- Fixed an error where the setting for 8k detection is invalid
+- Fixed spaces in CHANGELOG-file
+
+
+---
+
+
+
+##10.2.0 (2019-02-23)##
+###New###
+- Added some tokens to the settings
+
+###Fix###
+- Fixed some UnitTests due to new tokens
+
+
+---
+
+
+
+##10.1.0 (2017-09-03)##
+###New###
+- The function "ParsePath" now uses FileInfo internal and set it to the result
+
+###Fix###
+- Fixed an error where the FileInfo-object get's lost if the FileInfo functions are used
+
+
+---
+
+
+
+##10.0.0 (2017-07-22)##
+###New###
+- Now you can easily write your own modules directly inside your own application without the need to check out my entire project
+- ParserSetting List<ICoreParser> DisabledCoreParserModules added to disable the default modules if you want to disable them or replace them with your own
+- DefaultCoreParserModules and the ICoreParser-interface are now public that you can work with them
+- XML (De)Serializer changed charset from unicode to utf8. You mey want/need to convert your settings file
+- XML (De)Serializer extension to support de/serialization of interface lists
+- Added four new Unit Tests to cover new features and changes. Now 92 tests included
+
+###Fix###
+- 
+
+
+---
+
+
+
+##9.2.0 (2017-04-14)##
+###New###
+- Now you can easily write your own modules if you want to fork this project
+- Enum State changed
+- Renamed DetectedOldSpacingChar-> OldSpacingChar
+- Added Property ModuleStates to ParserResult to show the state(s) of each single CoreParser if you want so see them
+
+###Fix###
+- 
+
+
+---
+
+
+##9.1.0 (2017-01-24)##
+###New###
+- Changed XML Serializer from default to unicode to match core version
+- Added up to 20 tokens to the ParserSettings to better match the upcomming 4k content
+- Added 3D Detection
+- Added some ParserSettings for 3D Detection: DetectAny3DTokens, DetectHou3DTokens, DetectHsbs3DTokens, DimensionalString3DAny, DimensionalString3DHSBS, DimensionalString3DHOU, DimensionalString2DAny
+- Added some properties to the ParserResult object for 3D Detection: Is3D, DimensionalType
+- Merged v9.0 features in SeriesIDParserCore
+- New properties added to demo apps
+- More unit tests to cover new features
+
+###Fix###
+- 
+
+
+---
+
+
+##9.0.0 (2017-01-03)##
+###New###
+- Added full object caching. Prevents parsing the same object multiple times
+- Added ParserSetting CacheMode; Default: Advanced
+- Added ParserSetting CacheItemCountLimit; Default: 10.000
+- Added way more code comments
+- Added some 'Unknown' values in enums
+- Added some benchmark unit tests
+- Added unit tests for caching
+- Added new ParserSettings to Serilization unit tests
+- Added exception on wrong caching mode
+- Removed old legacy UnitTest1.cs file
+- Removed some useless comments
+
+###Fix###
+- Wrong default unknown string in ParserSettings
+- Exception on not existing path in extensions
+
+
+---
+
+
+##8.2.0 (2016-12-24)##
+###New###
+- Added unit tests for Helper.GetResolutionString()
+- Core-Uproject updated to match native .Net functionality
+- Restructorized Projects
+- Changelog is now part of the solution
+- Moved some unit test files to the repo
+
+###Fix###
+- Wrong default unknown string in ParserSettings
+- Exception on not existing path in extensions
+
+
+---
+
+
+##8.1.0 (2016-11-27)##
+###New###
+- Added Methods to parse full directories
+- Added Extension Methodes to parse full directories
+- Unit tests for extension methodes now at 100% soft coverage
+
+###Fix###
+- Exception in extension methodes
+- Property exception in ParserResult
+- Possible exception fixes in some new parsing functions
+
+
+---
+
+
+##8.0.0 (2016-11-26)##
+###New###
+- Fileextension handling changed: Default is now the global dot net default (with dot E.g.: m4v-> .m4v)
+- Switches from single class to worker class (SeriesIDParser) and  result class (SeriesIDResult)
+- Property IsMultiEpisode is now danymicaly computed
+- Property ParserSettingsUsed are now available in the SeriesIDResult object
+- Properties FullTitle, ParsedString and IDString are now cached to improve performance on multiple access
+- UnitTests are now excluded from code coverage check
+- UnitTests are now in multiple files and functions
+- Parser properties refactored
+- Extension methodes added
+- Added a property for the year regex string
+
+###Fix###
+- Possible Nullpointer on GetFileExtension()
+- Some code optimization
+
+
+---
+
+
+##7.0.0 (2016-10-16)##
+###New###
+- !! Now supporting .Net Core !!
+- SeriesIDParserCore for .Net Core implementation
+- Removed unused '[Serializable]' attribute from ParserSettings
+- Removed unused app.config entries
+- Removed 'Episode' (single)
+- Added Console Demo for Core version
+- Unit tests updated
+
+###Fix###
+- 
+
+
+---
+
+
+##6.1.0 (2016-10-05)##
+###New###
+- Added ParserSettings Property ReleaseGroupSeperator
+- Added SeriesID Property ReleaseGroup
+- Added SeriesID Property Episodes
+- Added SeriesID Property AudioCodec
+- Added SeriesID Property VideoCodec
+- Added partial class SeriesID-Properties
+- Added class Helpers
+- Added missing license notes in class files
+- Change in *.md format
+- Support for multi episode strings added (see below)
+- Property Episode is now obsolete and will be replaced with Episodes (int list)
+- Code refactoring
+- Useless ctor removed
+- Most properties now return an empty value instead of null on error
+- Removed some ref keywords
+
+###Fix###
+- Code organization
+
+
+---
+
+
+##6.0.0 (2016-09-17)##
+###New###
+- Added ParserSettings Property ReplaceRegexAndListTokens
+- Added ParserSettings Property ReplaceRegexWithoutListTokens
+- Added ParserSettings Property ResolutionStringOutput
+- Added ParserSettings Property ResolutionStringUnknown
+- Added ParserSettings Enum  ResolutionOutputBehavior
+- Added SeriesID Property Resolutions
+- Added SeriesID Enum ResolutionsMap
+- Added SeriesID Property DetectedOldSpacingChar
+- Added SeriesID Property ProcessingDuration
+- Removed Property Resolution
+- Removed Enum Resolutions
+- Removed Old SeriesID ctor
+- Removed useless comments
+- Support for multi resolution tokens in string
+- Added Unit Tests
+- Unit Tests improved for better code coverage
+- Project/Demo/Assembly/Package Icon
+- Added some more code comments
+
+###Fix###
+- Issue#005- RemovewithoutListtokens are removed without checking for dots before and after
+- Issue#006- Error with double resolution tokens
+- Issue#007- Add Raw and/or Regex replace
+- Some smaller fixes
+
+
+---
+
+
+##5.2.0 (2016-08-12)##
+###New###
+- DeSerializer in ParserSettings
+
+###Fix###
+- Fixed an error that could cause wrong resolutions in wrong strings
+
+
+---
+
+
+##5.1.0 (2016-08-12)##
+###New###
+- Code optimizations
+- Warning: SeriesID multi parameter ctor will be removed in the next release
+
+###Fix###
+--
+
+
+---
+
+
+##5.0.1 (2016-08-11)##
+###New###
+- Moved more stuff to the settings object
+- Code optimizations
+
+###Fix###
+--
+
+
+---
+
+
+##5.0.0 (2016-08-11)##
+###New###
+- Added some more code comments
+- Code refactored
+- Properties no longer throw exceptions on error state
+- Class SeriesIDParser removed-> SeriesID
+- ParserSettings Added
+- Parser are now configurable with the ParserSettings object
+- Unit Tests
+- Demo Project
+
+###Fix###
+- No more need for a static object
+
+
+---
+
+
+##4.0.0 (2016-07-30)##
+###New###
+- Class isn't static any more
+- Possibility to throw an exception instead of an error flag
+- Object initializer
+
+###Fix###
+--
+
+
+---
+
+
+##3.1.0 (2016-07-30)##
+###New###
+- Test description added
+- Added code comments
+- Added some tests
+
+###Fix###
+- Tokens can't be duplicated any more
+
+
+---
+
+
+##3.0.0 (2016-07-29)##
+###New###
+- State is now flagable
+- State has new Flags "WARN_ERR_OR_WARN_OCCURRED" and "WARN_NO_TITLE_FOUND"
+- Now supports 38 file-extensions (https://en.wikipedia.org/wiki/Video_file_format)
+- New property: RemovedTokens
+- New property: FileExtension
+- New property: OriginalString
+- New property: ParsedString
+- Automatic token reorder
+- Replaces Spaces
+- Replaces .-.
+
+###Fix###
+- Strings without a title are now supported but triggers a warning
+- Performance improvements
+- Code optimization
