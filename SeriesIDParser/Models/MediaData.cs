@@ -39,7 +39,7 @@ internal class MediaData
 	//public ParserSettings ParserSettingsUsed { get; set; } = new ParserSettings(false);
 
 	/// <summary>
-	///     Contains tokens whoi are removed by the parser as string list
+	///     Contains tokens which are removed by the parser as string list
 	/// </summary>
 	internal IList<string> RemovedTokens { get; set; } = new List<string>();
 
@@ -61,7 +61,7 @@ internal class MediaData
 	/// <summary>
 	///     Contains the char who are detected as the old spacing char
 	/// </summary>
-	internal char DetectedOldSpacingChar { get; set; } = new char();
+	internal char DetectedOldSpacingChar { get; set; }
 
 	/// <summary>
 	///     Contains the series title or the movie name, depends on IsSeries
@@ -74,14 +74,14 @@ internal class MediaData
 	internal State State { get; set; } = State.Unknown;
 
 	/// <summary>
-	///     Contains the state informations provided by each module
+	///     Contains the state information provided by each module
 	/// </summary>
-	public List<CoreParserModuleStateResult> ModuleStates { get; internal set; } = new List<CoreParserModuleStateResult>();
+	public List<CoreParserModuleStateResult> ModuleStates { get; internal set; } = new();
 
 	/// <summary>
-	///     Contains the Exception if any occours. Default: null
+	///     Contains the Exception if any occurs. Default: null
 	/// </summary>
-	internal Exception Exception { get; set; } = null;
+	internal Exception Exception { get; set; }
 
 	/// <summary>
 	///     Specifies if the object contains a series or a movie. Default: false
@@ -89,17 +89,17 @@ internal class MediaData
 	internal bool IsSeries { get; set; }
 
 	/// <summary>
-	///     Contains the audiocodec if one is found. string.Empty on error
+	///     Contains the AudioCodec if one is found. string.Empty on error
 	/// </summary>
 	internal string AudioCodec { get; set; } = string.Empty;
 
 	/// <summary>
-	///     Contains the videocodec if one is found. string.Empty on error
+	///     Contains the VideoCodec if one is found. string.Empty on error
 	/// </summary>
 	internal string VideoCodec { get; set; } = string.Empty;
 
 	/// <summary>
-	///     Contains the eposide title if object state is series. string.Empty on error
+	///     Contains the episode title if object state is series. string.Empty on error
 	/// </summary>
 	internal string EpisodeTitle { get; set; } = string.Empty;
 
@@ -109,7 +109,7 @@ internal class MediaData
 	internal int Season { get; set; } = -1;
 
 	/// <summary>
-	///     Contains the eposide id if object state is series.
+	///     Contains the episode id if object state is series.
 	/// </summary>
 	internal IEnumerable<int> Episodes { get; set; } = new List<int>();
 
@@ -121,7 +121,7 @@ internal class MediaData
 	/// <summary>
 	///     Returns the year of the episode or movie if contained, otherwise -1
 	/// </summary>
-	internal TimeSpan ProcessingDuration { get; set; } = new TimeSpan();
+	internal TimeSpan ProcessingDuration { get; set; }
 
 	/// <summary>
 	///     Returns the resolution as enum. UNKNOWN on error
@@ -129,7 +129,7 @@ internal class MediaData
 	internal IEnumerable<ResolutionsMap> Resolutions { get; set; } = new List<ResolutionsMap>();
 
 	/// <summary>
-	///     Contains the release group string if countained in the source. string.Empty on error
+	///     Contains the release group string if contained in the source. string.Empty on error
 	/// </summary>
 	internal string ReleaseGroup { get; set; } = string.Empty;
 

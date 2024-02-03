@@ -46,9 +46,9 @@ public static class ParserResultExtensions
 	/// </summary>
 	/// <param name="parserSettings">The object that should be converted to an xml string</param>
 	/// <returns>The xml string representing this object</returns>
-	public static string SerializeToXML( this ParserSettings parserSettings )
+	public static string SerializeToXml( this ParserSettings parserSettings )
 	{
-		return ParserSettingsWorker.SerializeToXML( parserSettings );
+		return ParserSettingsWorker.SerializeToXml( parserSettings );
 	}
 
 	/// <summary>
@@ -67,9 +67,9 @@ public static class ParserResultExtensions
 	/// </summary>
 	/// <param name="xml">The xml string representing this object</param>
 	/// <returns>The object generated out of the xml content</returns>
-	public static ParserSettings DeSerializeParserSettingsFromXML( this string xml )
+	public static ParserSettings DeserializeParserSettingsFromXml( this string xml )
 	{
-		return ParserSettingsWorker.DeSerializeFromXML( xml );
+		return ParserSettingsWorker.DeserializeFromXml( xml );
 	}
 
 	/// <summary>
@@ -78,9 +78,9 @@ public static class ParserResultExtensions
 	/// <param name="json">The json string representing this object</param>
 	/// <param name="jsonSerializerSettings">JsonSerializerSettings for the Newtonsoft JsonConvert</param>
 	/// <returns>The json string representing this object</returns>
-	public static ParserSettings DeSerializeParserSettingsFromJson( this string json, JsonSerializerSettings jsonSerializerSettings = null )
+	public static ParserSettings DeserializeParserSettingsFromJson( this string json, JsonSerializerSettings jsonSerializerSettings = null )
 	{
-		return ParserSettingsWorker.DeSerializeFromJson( json, jsonSerializerSettings );
+		return ParserSettingsWorker.DeserializeFromJson( json, jsonSerializerSettings );
 	}
 	#endregion DeSerialisazion
 }

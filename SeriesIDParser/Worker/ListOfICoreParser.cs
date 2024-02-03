@@ -55,10 +55,10 @@ public class ListOfICoreParser : List<ICoreParser>, IXmlSerializable
 		while (reader.IsStartElement( _type.Name ))
 		{
 			Type type = Type.GetType( reader.GetAttribute( "AssemblyQualifiedName" ) );
-			XmlSerializer serial = new XmlSerializer( _type );
+			XmlSerializer serial = new( _type );
 
 			reader.ReadStartElement( _type.Name );
-			this.Add( (ICoreParser) serial.Deserialize( reader ) );
+			Add( (ICoreParser) serial.Deserialize( reader ) );
 			reader.ReadEndElement(); //ICoreParser
 		}
 
@@ -72,7 +72,7 @@ public class ListOfICoreParser : List<ICoreParser>, IXmlSerializable
 		{
 			writer.WriteStartElement( _type.Name );
 			writer.WriteAttributeString( "AssemblyQualifiedName", coreParser.GetType().AssemblyQualifiedName );
-			XmlSerializer xmlSerializer = new XmlSerializer( coreParser.GetType() );
+			XmlSerializer xmlSerializer = new( coreParser.GetType() );
 			xmlSerializer.Serialize( writer, coreParser );
 			writer.WriteEndElement();
 		}

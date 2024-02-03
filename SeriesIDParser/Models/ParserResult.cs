@@ -100,7 +100,7 @@ public class ParserResult
 				return _cacheFullTitle;
 			}
 
-			StringBuilder sb = new StringBuilder();
+			StringBuilder sb = new();
 
 			if (IsSeries)
 			{
@@ -125,10 +125,8 @@ public class ParserResult
 
 				return _cacheFullTitle;
 			}
-			else
-			{
-				return Title;
-			}
+
+			return Title;
 		}
 	}
 
@@ -147,7 +145,7 @@ public class ParserResult
 					return _cacheParsedString;
 				}
 
-				StringBuilder sb = new StringBuilder();
+				StringBuilder sb = new();
 				sb.Append( FullTitle );
 
 				if (_year > -1)
@@ -183,10 +181,8 @@ public class ParserResult
 
 				return _cacheParsedString;
 			}
-			else
-			{
-				return string.Empty;
-			}
+
+			return string.Empty;
 		}
 	}
 
@@ -204,22 +200,20 @@ public class ParserResult
 					return _cacheIDString;
 				}
 
-				StringBuilder sb = new StringBuilder();
-				sb.Append( string.Format( _parserSettings.IDStringFormaterSeason, _season ) );
+				StringBuilder sb = new();
+				sb.Append( string.Format( _parserSettings.IDStringFormatterSeason, _season ) );
 
 				foreach (int episode in _episodes)
 				{
-					sb.Append( string.Format( _parserSettings.IDStringFormaterEpisode, episode ) );
+					sb.Append( string.Format( _parserSettings.IDStringFormatterEpisode, episode ) );
 				}
 
 				_cacheIDString = sb.ToString();
 
 				return _cacheIDString;
 			}
-			else
-			{
-				return string.Empty;
-			}
+
+			return string.Empty;
 		}
 	}
 
@@ -236,12 +230,12 @@ public class ParserResult
 	public ParserSettings ParserSettingsUsed => _parserSettings;
 
 	/// <summary>
-	///     Contains the state informations provided by each module
+	///     Contains the state information provided by each module
 	/// </summary>
 	public List<CoreParserModuleStateResult> ModuleStates { get; internal set; }
 
 	/// <summary>
-	///     Contains tokens whoi are removed by the parser as string list
+	///     Contains tokens which are removed by the parser as string list
 	/// </summary>
 	public IEnumerable<string> RemovedTokens { get; private set; }
 
@@ -253,12 +247,12 @@ public class ParserResult
 	/// <summary>
 	///     Contains the file-extension or string.Empty
 	/// </summary>
-	public string FileExtension { get; private set; } = string.Empty;
+	public string FileExtension { get; private set; }
 
 	/// <summary>
 	///     Contains the string that is given to the parser
 	/// </summary>
-	public string OriginalString { get; private set; } = string.Empty;
+	public string OriginalString { get; private set; }
 
 	/// <summary>
 	///     Contains the char who are detected as the old spacing char
@@ -268,22 +262,22 @@ public class ParserResult
 	/// <summary>
 	///     Contains the series title or the movie name, depends on IsSeries
 	/// </summary>
-	public string Title { get; private set; } = string.Empty;
+	public string Title { get; private set; }
 
 	/// <summary>
 	///     Contains the state of the object e.g. OK_SUCCESS
 	/// </summary>
-	public State State { get; private set; } = State.Unknown;
+	public State State { get; private set; }
 
 	/// <summary>
 	///     Contains the dimensionalType of the object e.g. Dimension_3DHOU
 	/// </summary>
-	public DimensionalType DimensionalType { get; private set; } = DimensionalType.Unknown;
+	public DimensionalType DimensionalType { get; private set; }
 
 	/// <summary>
-	///     Contains the Exception if any occours. Default: null
+	///     Contains the Exception if any occurs. Default: null
 	/// </summary>
-	public Exception Exception { get; private set; } = null;
+	public Exception Exception { get; private set; }
 
 	/// <summary>
 	///     Specifies if the object contains a series or a movie. Default: false
@@ -298,41 +292,35 @@ public class ParserResult
 	private string _audioCodec;
 
 	/// <summary>
-	///     Contains the audiocodec if one is found. string.Empty on error
+	///     Contains the AudioCodec if one is found. string.Empty on error
 	/// </summary>
 	public string AudioCodec
 	{
-		get { return (State == State.Success || State == State.Notice) ? _audioCodec : string.Empty; }
+		get => (State == State.Success || State == State.Notice) ? _audioCodec : string.Empty;
 
-		private set { _audioCodec = value ?? String.Empty; }
+		private set => _audioCodec = value ?? String.Empty;
 	}
 
 	private string _videoCodec;
 
 	/// <summary>
-	///     Contains the videocodec if one is found. string.Empty on error
+	///     Contains the VideoCodec if one is found. string.Empty on error
 	/// </summary>
 	public string VideoCodec
 	{
-		get { return (State == State.Success || State == State.Notice) ? _videoCodec : null; }
-
-		private set { _videoCodec = value ?? String.Empty; }
+		get => (State == State.Success || State == State.Notice) ? _videoCodec : null;
+		private set => _videoCodec = value ?? String.Empty;
 	}
 
 	private string _episodeTitle;
 
 	/// <summary>
-	///     Contains the eposide title if object state is series. string.Empty on error
+	///     Contains the episode title if object state is series. string.Empty on error
 	/// </summary>
 	public string EpisodeTitle
 	{
-		get
-		{
-			//return FailSafeProperties<string>(_episodeTitle);
-			return (State == State.Success || State == State.Notice) && IsSeries ? _episodeTitle : string.Empty;
-		}
-
-		private set { _episodeTitle = value; }
+		get => (State == State.Success || State == State.Notice) && IsSeries ? _episodeTitle : string.Empty;
+		private set => _episodeTitle = value;
 	}
 
 	private int _season;
@@ -342,21 +330,19 @@ public class ParserResult
 	/// </summary>
 	public int Season
 	{
-		get { return (State == State.Success || State == State.Notice) && IsSeries ? _season : -1; }
-
-		private set { _season = value; }
+		get => (State == State.Success || State == State.Notice) && IsSeries ? _season : -1;
+		private set => _season = value;
 	}
 
 	private List<int> _episodes;
 
 	/// <summary>
-	///     Contains the eposide id if object state is series.
+	///     Contains the episode id if object state is series.
 	/// </summary>
 	public IEnumerable<int> Episodes
 	{
-		get { return (State == State.Success || State == State.Notice) && IsSeries ? _episodes : new List<int>(); }
-
-		private set { _episodes = value != null ? new List<int>( value ) : new List<int>(); }
+		get => (State == State.Success || State == State.Notice) && IsSeries ? _episodes : new List<int>();
+		private set => _episodes = value != null ? new List<int>( value ) : new List<int>();
 	}
 
 	private int _year;
@@ -366,9 +352,8 @@ public class ParserResult
 	/// </summary>
 	public int Year
 	{
-		get { return (State == State.Success || State == State.Notice) ? _year : -1; }
-
-		private set { _year = value; }
+		get => (State == State.Success || State == State.Notice) ? _year : -1;
+		private set => _year = value;
 	}
 
 	private TimeSpan _processingDuration;
@@ -378,9 +363,8 @@ public class ParserResult
 	/// </summary>
 	public TimeSpan ProcessingDuration
 	{
-		get { return (State == State.Success || State == State.Notice) ? _processingDuration : new TimeSpan(); }
-
-		private set { _processingDuration = value; }
+		get => (State == State.Success || State == State.Notice) ? _processingDuration : new TimeSpan();
+		private set => _processingDuration = value;
 	}
 
 	private List<ResolutionsMap> _resolutions;
@@ -390,21 +374,19 @@ public class ParserResult
 	/// </summary>
 	public IEnumerable<ResolutionsMap> Resolutions
 	{
-		get { return (State == State.Success || State == State.Notice) ? _resolutions : new List<ResolutionsMap>() {ResolutionsMap.Unknown}; }
-
-		private set { _resolutions = new List<ResolutionsMap>( value ); }
+		get => (State == State.Success || State == State.Notice) ? _resolutions : new List<ResolutionsMap>() {ResolutionsMap.Unknown};
+		private set => _resolutions = new List<ResolutionsMap>( value );
 	}
 
 	private string _releaseGroup;
 
 	/// <summary>
-	///     Contains the release group string if countained in the source. string.Empty on error
+	///     Contains the release group string if contained in the source. string.Empty on error
 	/// </summary>
 	public string ReleaseGroup
 	{
-		get { return (State == State.Success || State == State.Notice) ? _releaseGroup : string.Empty; }
-
-		private set { _releaseGroup = value; }
+		get => (State == State.Success || State == State.Notice) ? _releaseGroup : string.Empty;
+		private set => _releaseGroup = value;
 	}
 	#endregion PropertiesDefault
 
@@ -418,10 +400,8 @@ public class ParserResult
 		{
 			return FullTitle + " -- " + HelperWorker.GetResolutionString( _parserSettings, _resolutions );
 		}
-		else
-		{
-			return string.Empty;
-		}
+
+		return string.Empty;
 	}
 	#endregion ClassFunctions
 }

@@ -28,7 +28,7 @@ using System;
 namespace SeriesIDParser.Models;
 
 /// <summary>
-///     Contains the initial data and the result of every CorePArser
+///     Contains the initial data and the result of every CoreParser
 /// </summary>
 public class CoreParserResult
 {

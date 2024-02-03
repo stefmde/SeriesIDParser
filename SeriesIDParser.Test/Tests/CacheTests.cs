@@ -42,7 +42,7 @@ public class CacheTests
 	[TestMethod]
 	public void CacheDictionaryInit()
 	{
-		CacheDictionary cacheDictionary = new CacheDictionary( 10 );
+		CacheDictionary cacheDictionary = new( 10 );
 		Assert.AreEqual( 10, cacheDictionary.Limit, " -LimitCount" );
 		Assert.AreEqual( 0, cacheDictionary.Count, " -ItemCount" );
 		Assert.AreEqual( false, cacheDictionary.IsFull, " -IsFull" );
@@ -54,7 +54,7 @@ public class CacheTests
 	[TestMethod]
 	public void CacheDictionaryDrop()
 	{
-		CacheDictionary cacheDictionary = new CacheDictionary( 10 );
+		CacheDictionary cacheDictionary = new( 10 );
 
 		for (int i = 1; i <= 11; i++)
 		{
@@ -68,7 +68,7 @@ public class CacheTests
 
 		for (int i = 2; i < 11; i++)
 		{
-			KeyValuePair<string, MediaData> keyValuePair = new KeyValuePair<string, MediaData>( "Key_" + i, new MediaData() {Title = "Title_" + i} );
+			KeyValuePair<string, MediaData> keyValuePair = new( "Key_" + i, new MediaData() {Title = "Title_" + i} );
 
 			Assert.IsTrue( cacheDictionary.Contains( keyValuePair.Key ), " -Key" );
 			Assert.IsTrue( cacheDictionary.Contains( keyValuePair ), " -KeyValuePair" );

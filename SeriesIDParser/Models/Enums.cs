@@ -78,28 +78,28 @@ public enum State
 	Unknown = 0,
 
 	/// <summary>
-	///     Everything looks fine. Result should be consistant and valid but there are some notices
+	///     Everything looks fine. Result should be consistent and valid but there are some notices
 	/// </summary>
 	Notice = 1,
 
 	/// <summary>
-	///     Everything looks fine. Result should be consistant and valid
+	///     Everything looks fine. Result should be consistent and valid
 	/// </summary>
 	Success = 2,
 
 	/// <summary>
-	///     One or more warning occoured. Result could be constistant but don't have to be
+	///     One or more warning occurred. Result could be consistent but don't have to be
 	/// </summary>
 	Warning = 4,
 
 	/// <summary>
-	///     One or more errors occoured. Result is probably invalid and shouldn't be used
+	///     One or more errors occurred. Result is probably invalid and shouldn't be used
 	/// </summary>
 	Error = 8
 }
 
 /// <summary>
-///     Defindes if the given movie or series is 2D, 3D and which type of it
+///     Defines if the given movie or series is 2D, 3D and which type of it
 /// </summary>
 public enum DimensionalType
 {
@@ -142,17 +142,17 @@ public enum ResolutionOutputBehavior
 	Unknown,
 
 	/// <summary>
-	///     The preformated output strings contains all found resolution tokens
+	///     The preformatted output strings contains all found resolution tokens
 	/// </summary>
 	AllFoundResolutions,
 
 	/// <summary>
-	///     The preformated output strings contains only the highest resolution token
+	///     The preformatted output strings contains only the highest resolution token
 	/// </summary>
 	HighestResolution,
 
 	/// <summary>
-	///     The preformated output strings contains only the lowest resolution token
+	///     The preformatted output strings contains only the lowest resolution token
 	/// </summary>
 	LowestResolution
 }

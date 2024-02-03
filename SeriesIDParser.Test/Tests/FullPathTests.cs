@@ -95,8 +95,8 @@ public class FullPathTests
 	[TestMethod]
 	public void FullPathTestEmptyAsString()
 	{
-		ParserSettings parserSettings = new ParserSettings( true );
-		SeriesID seriesIDParser = new SeriesID( parserSettings );
+		ParserSettings parserSettings = new( true );
+		SeriesID seriesIDParser = new( parserSettings );
 		IEnumerable<ParserResult> parserResults = seriesIDParser.ParsePath( Constants.TestDataDirectoryEmptyRoot );
 		Assert.IsTrue( !parserResults.Any() );
 	}
@@ -104,9 +104,9 @@ public class FullPathTests
 	[TestMethod]
 	public void FullPathTestEmptyAsDirectoryInfo()
 	{
-		ParserSettings parserSettings = new ParserSettings( true );
-		SeriesID seriesIDParser = new SeriesID( parserSettings );
-		DirectoryInfo directoryInfo = new DirectoryInfo( Constants.TestDataDirectoryEmptyRoot );
+		ParserSettings parserSettings = new( true );
+		SeriesID seriesIDParser = new( parserSettings );
+		DirectoryInfo directoryInfo = new( Constants.TestDataDirectoryEmptyRoot );
 		IEnumerable<ParserResult> parserResults = seriesIDParser.ParsePath( directoryInfo );
 		Assert.IsTrue( !parserResults.Any() );
 	}

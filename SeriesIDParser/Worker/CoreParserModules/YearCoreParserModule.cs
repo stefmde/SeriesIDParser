@@ -63,7 +63,7 @@ public class YearCoreParserModule : ICoreParser
 			}
 
 			outputResult.MediaData.ModuleStates.Add( new CoreParserModuleStateResult( Name,
-																					new List<CoreParserModuleSubState>() {new CoreParserModuleSubState( _state, _errorOrWarningMessage )} ) );
+																					new List<CoreParserModuleSubState>() {new( _state, _errorOrWarningMessage )} ) );
 
 			return outputResult;
 		}

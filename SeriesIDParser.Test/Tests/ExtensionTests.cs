@@ -55,7 +55,7 @@ public class ExtensionTests
 	[TestMethod]
 	public void ParseSeriesIDStringNullSettings()
 	{
-		ParserSettings parserSettings = new ParserSettings( true );
+		ParserSettings parserSettings = new( true );
 		parserSettings = null;
 		ParserResult parserResult = Constants.SeriesFile.ParseSeriesID( parserSettings );
 		Assert.IsTrue( parserResult.IsSeries );
@@ -87,8 +87,8 @@ public class ExtensionTests
 	[TestMethod]
 	public void ParseSeriesIDFileInfoNullInput()
 	{
-		ParserSettings parserSettings = new ParserSettings( true );
-		FileInfo file = new FileInfo( Constants.SeriesFilePath );
+		ParserSettings parserSettings = new( true );
+		FileInfo file = new( Constants.SeriesFilePath );
 		file = null;
 		ParserResult parserResult = file.ParseSeriesID( parserSettings );
 		Assert.IsTrue( parserResult.State == State.Error );
@@ -153,8 +153,8 @@ public class ExtensionTests
 	[TestMethod]
 	public void ParseSeriesIDPathDirectoryInfoNull()
 	{
-		ParserSettings parserSettings = new ParserSettings( true );
-		SeriesID seriesIDParser = new SeriesID( parserSettings );
+		ParserSettings parserSettings = new( true );
+		SeriesID seriesIDParser = new( parserSettings );
 		DirectoryInfo directoryInfo = null;
 		IEnumerable<ParserResult> parserResults = directoryInfo.ParseSeriesIDPath();
 		Assert.IsTrue( !parserResults.Any() );

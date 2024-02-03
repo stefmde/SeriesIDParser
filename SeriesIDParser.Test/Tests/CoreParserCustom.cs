@@ -42,7 +42,7 @@ public class CoreParserCustom
 	public void CoreParserCustomRemoveParser()
 	{
 		int initialParserCount = HelperWorker.GetAllCoreParsers().Count();
-		ParserSettings ps = new ParserSettings( true );
+		ParserSettings ps = new( true );
 		ps.DisabledCoreParserModules.Add( new UnitTestCoreParserModule() );
 		int actualParserCount = HelperWorker.GetAllCoreParsers( ps.DisabledCoreParserModules ).Count();
 
@@ -53,7 +53,7 @@ public class CoreParserCustom
 	public void CoreParserCustomRemoveParserTwice()
 	{
 		int initialParserCount = HelperWorker.GetAllCoreParsers().Count();
-		ParserSettings ps = new ParserSettings( true );
+		ParserSettings ps = new( true );
 		ps.DisabledCoreParserModules.Add( new UnitTestCoreParserModule() );
 		ps.DisabledCoreParserModules.Add( new UnitTestCoreParserModule() );
 		int actualParserCount = HelperWorker.GetAllCoreParsers( ps.DisabledCoreParserModules ).Count();

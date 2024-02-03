@@ -39,14 +39,14 @@ public class SerializationTests
 	public void DeSerializationTestDefault()
 	{
 		// Create and modify object
-		ParserSettings expectedParserSettings = new ParserSettings();
+		ParserSettings expectedParserSettings = new();
 		expectedParserSettings.DetectFullHDTokens.Add( "Test" );
 		expectedParserSettings.DetectHDTokens.Clear();
 		expectedParserSettings.DetectSDTokens.Add( "Test2" );
 		expectedParserSettings.DetectUltraHD8kTokens.Clear();
 		expectedParserSettings.DetectUltraHDTokens.Add( "Test3" );
 		expectedParserSettings.FileExtensions.Add( "AAA" );
-		expectedParserSettings.IDStringFormaterSeason = "ABC+#*7543";
+		expectedParserSettings.IDStringFormatterSeason = "ABC+#*7543";
 		expectedParserSettings.NewSpacingChar = 'x';
 		expectedParserSettings.PossibleSpacingChars.Remove( '.' );
 		expectedParserSettings.ThrowExceptionInsteadOfErrorFlag = true;
@@ -54,8 +54,8 @@ public class SerializationTests
 		expectedParserSettings.CacheMode = CacheMode.Simple;
 
 		// Serialization
-		string ps1String = ParserSettings.SerializeToXML( expectedParserSettings );
-		ParserSettings actualParserSettings = ParserSettings.DeSerializeFromXML( ps1String );
+		string ps1String = ParserSettings.SerializeToXml( expectedParserSettings );
+		ParserSettings actualParserSettings = ParserSettings.DeserializeFromXml( ps1String );
 
 		// Compare
 		CollectionAssert.AreEqual( expectedParserSettings.DetectFullHDTokens, actualParserSettings.DetectFullHDTokens, "DetectFullHDTokens " );
@@ -64,8 +64,8 @@ public class SerializationTests
 		CollectionAssert.AreEqual( expectedParserSettings.DetectUltraHD8kTokens, actualParserSettings.DetectUltraHD8kTokens, "DetectUltraHD8kTokens " );
 		CollectionAssert.AreEqual( expectedParserSettings.DetectUltraHDTokens, actualParserSettings.DetectUltraHDTokens, "DetectUltraHDTokens " );
 		CollectionAssert.AreEqual( expectedParserSettings.FileExtensions, actualParserSettings.FileExtensions, "FileExtensions " );
-		Assert.AreEqual( expectedParserSettings.IDStringFormaterSeason, actualParserSettings.IDStringFormaterSeason, "IDStringFormaterSeason " );
-		Assert.AreEqual( expectedParserSettings.IDStringFormaterEpisode, actualParserSettings.IDStringFormaterEpisode, "IDStringFormaterEpisode " );
+		Assert.AreEqual( expectedParserSettings.IDStringFormatterSeason, actualParserSettings.IDStringFormatterSeason, "IDStringFormaterSeason " );
+		Assert.AreEqual( expectedParserSettings.IDStringFormatterEpisode, actualParserSettings.IDStringFormatterEpisode, "IDStringFormaterEpisode " );
 		Assert.AreEqual( expectedParserSettings.NewSpacingChar, actualParserSettings.NewSpacingChar, "NewSpacingChar " );
 		CollectionAssert.AreEqual( expectedParserSettings.PossibleSpacingChars, actualParserSettings.PossibleSpacingChars, "PossibleSpacingChars " );
 		CollectionAssert.AreEqual( expectedParserSettings.RemoveAndListTokens, actualParserSettings.RemoveAndListTokens, "RemoveAndListTokens " );

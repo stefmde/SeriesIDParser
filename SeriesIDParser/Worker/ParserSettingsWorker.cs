@@ -45,15 +45,15 @@ internal static class ParserSettingsWorker
 	/// </summary>
 	/// <param name="parserSettings">The object that should be converted to an xml string</param>
 	/// <returns>The xml string representing this object</returns>
-	internal static string SerializeToXML( ParserSettings parserSettings )
+	internal static string SerializeToXml( ParserSettings parserSettings )
 	{
 		string data = string.Empty;
-		XmlSerializer x = new XmlSerializer( parserSettings.GetType() );
-		using (MemoryStream ms = new MemoryStream())
+		XmlSerializer x = new( parserSettings.GetType() );
+		using (MemoryStream ms = new())
 		{
 			x.Serialize( ms, parserSettings );
 			ms.Position = 0;
-			using (StreamReader sr = new StreamReader( ms, Encoding.UTF8 ))
+			using (StreamReader sr = new( ms, Encoding.UTF8 ))
 			{
 				data = sr.ReadToEnd();
 			}
@@ -75,7 +75,7 @@ internal static class ParserSettingsWorker
 			jsonSerializerSettings = new JsonSerializerSettings();
 		}
 
-		return Newtonsoft.Json.JsonConvert.SerializeObject( parserSettings, jsonSerializerSettings );
+		return JsonConvert.SerializeObject( parserSettings, jsonSerializerSettings );
 	}
 
 	/// <summary>
@@ -83,14 +83,12 @@ internal static class ParserSettingsWorker
 	/// </summary>
 	/// <param name="xml">The xml string representing this object</param>
 	/// <returns>The object generated out of the xml content</returns>
-	internal static ParserSettings DeSerializeFromXML( string xml )
+	internal static ParserSettings DeserializeFromXml( string xml )
 	{
-		XmlSerializer x = new XmlSerializer( typeof(ParserSettings) );
+		XmlSerializer x = new( typeof(ParserSettings) );
 		byte[] xmlBytes = Encoding.UTF8.GetBytes( xml );
-		using (MemoryStream ms = new MemoryStream( xmlBytes ))
-		{
-			return (ParserSettings) x.Deserialize( ms );
-		}
+		using MemoryStream ms = new( xmlBytes );
+		return (ParserSettings) x.Deserialize( ms );
 	}
 
 	/// <summary>
@@ -99,14 +97,14 @@ internal static class ParserSettingsWorker
 	/// <param name="json">The json string representing this object</param>
 	/// <param name="jsonSerializerSettings">JsonSerializerSettings for the Newtonsoft JsonConvert</param>
 	/// <returns>The json string representing this object</returns>
-	internal static ParserSettings DeSerializeFromJson( string json, JsonSerializerSettings jsonSerializerSettings = null )
+	internal static ParserSettings DeserializeFromJson( string json, JsonSerializerSettings jsonSerializerSettings = null )
 	{
 		if (jsonSerializerSettings == null)
 		{
 			jsonSerializerSettings = new JsonSerializerSettings();
 		}
 
-		return Newtonsoft.Json.JsonConvert.DeserializeObject<ParserSettings>( json, jsonSerializerSettings );
+		return JsonConvert.DeserializeObject<ParserSettings>( json, jsonSerializerSettings );
 	}
 	#endregion DeSerialisazion
 }

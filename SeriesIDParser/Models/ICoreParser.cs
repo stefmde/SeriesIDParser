@@ -26,7 +26,7 @@
 namespace SeriesIDParser.Models;
 
 /// <summary>
-///     Inferface who must be implemented for all parser modules that have to be executed
+///     Interface who must be implemented for all parser modules that have to be executed
 /// </summary>
 public interface ICoreParser
 {

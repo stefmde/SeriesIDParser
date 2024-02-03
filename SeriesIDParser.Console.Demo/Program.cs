@@ -21,7 +21,7 @@ class Program
 		System.Console.WriteLine(Environment.NewLine);
 
 		// Creating the parser object with default settings(empty ctor)
-		SeriesID serieparserResult = new SeriesID();
+		SeriesID serieparserResult = new();
 		ParserResult parserResult = serieparserResult.Parse(inputLine);
 
 		// Use the following three lines as a example for editing the parser settings

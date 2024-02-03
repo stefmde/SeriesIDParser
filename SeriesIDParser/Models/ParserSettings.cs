@@ -54,19 +54,19 @@ public class ParserSettings
 		}
 
 		// ### Resolution Detection
-		DetectUltraHD8kTokens = new List<string>() {"8k", "4320p"};
-		DetectUltraHDTokens = new List<string>() {"NetflixUHD", "UHD", "2160p", "Ultra.HD", "UltraHD"};
-		DetectFullHDTokens = new List<string>() { "NetflixHD", "FullHD", "1080p", "1080i"};
-		DetectHDTokens = new List<string>() {"HDTV", "720p", "HD"};
-		DetectSDTokens = new List<string>() {"DVDR", "DVDRIP", "DVD", "SD"};
+		DetectUltraHD8kTokens = new List<string> {"8k", "4320p"};
+		DetectUltraHDTokens = new List<string> {"NetflixUHD", "UHD", "2160p", "Ultra.HD", "UltraHD"};
+		DetectFullHDTokens = new List<string> { "NetflixHD", "FullHD", "1080p", "1080i"};
+		DetectHDTokens = new List<string> {"HDTV", "720p", "HD"};
+		DetectSDTokens = new List<string> {"DVDR", "DVDRIP", "DVD", "SD"};
 
 		// ### Dimensional Detection
-		DetectAny3DTokens = new List<string>() {"3D"};
-		DetectHou3DTokens = new List<string>() {"HOU", "H-OU", "3DHOU", "3D-HOU"};
-		DetectHsbs3DTokens = new List<string>() {"HSBS", "H-SBS", "3DHSBS", "3D-HSBS"};
+		DetectAny3DTokens = new List<string> {"3D"};
+		DetectHou3DTokens = new List<string> {"HOU", "H-OU", "3DHOU", "3D-HOU"};
+		DetectHsbs3DTokens = new List<string> {"HSBS", "H-SBS", "3DHSBS", "3D-HSBS"};
 
 		// ### Fileextensions
-		FileExtensions = new List<string>()
+		FileExtensions = new List<string>
 						{
 							".3G2",
 							".3GP",
@@ -111,7 +111,7 @@ public class ParserSettings
 						};
 
 		// ### Remove 
-		RemoveAndListTokens = new List<string>()
+		RemoveAndListTokens = new List<string>
 							{
 								"DUBBED",
 								"SYNCED",
@@ -146,9 +146,7 @@ public class ParserSettings
 								"35mm"
 							};
 
-		//_removeAndListTokensOnLanguageParserIsDisabled = new List<string>() { "GERMAN" };
-
-		RemoveWithoutListTokens = new List<string>()
+		RemoveWithoutListTokens = new List<string>
 								{
 									" ",
 									"MIRROR",
@@ -164,7 +162,7 @@ public class ParserSettings
 								};
 
 		// ### Parsing
-		VideoCodecs = new List<string>()
+		VideoCodecs = new List<string>
 					{
 						"x264",
 						"h264",
@@ -182,14 +180,10 @@ public class ParserSettings
 						"HEVC",
 					};
 
-		AudioCodecs = new List<string>() {"DTSHD", "DTS", "AAC", "MP3", "MPEG3", "MPEG-3", "TrueHD.Atmos", "TrueHD", "AC3D", "AC3"};
-
-		//_languages = new List<string>() { "English", "Chinese", "Hindi", "Spanish",
-		//"French", "Arabic", "Russian", "Portuguese",
-		//"Bengalese", "German", "Japanese", "Korean" };
+		AudioCodecs = new List<string> {"DTSHD", "DTS", "AAC", "MP3", "MPEG3", "MPEG-3", "TrueHD.Atmos", "TrueHD", "AC3D", "AC3"};
 
 		// ### Other Stuff
-		PossibleSpacingChars = new List<char>() {'.', ',', '-', ' ', '+', '*'};
+		PossibleSpacingChars = new List<char> {'.', ',', '-', ' ', '+', '*'};
 		DisabledCoreParserModules = new ListOfICoreParser();
 	}
 
@@ -214,57 +208,57 @@ public class ParserSettings
 	public string YearParseRegex { get; set; } = @"(\d{4})";
 
 	/// <summary>
-	///     Defines the prefilled list with the posible extension to garantee a better detection
+	///     Defines the prefilled list with the possible extension to guarantee a better detection
 	/// </summary>
-	public List<string> FileExtensions { get; set; } = new List<string>();
+	public List<string> FileExtensions { get; set; } = new();
 
 	/// <summary>
-	///     Defines the prefilled list with the posible Videocodecs
+	///     Defines the prefilled list with the possible VideoCodecs
 	/// </summary>
-	public List<string> VideoCodecs { get; set; } = new List<string>();
+	public List<string> VideoCodecs { get; set; } = new();
 
 	/// <summary>
-	///     Defines the prefilled list with the posible Audiocodecs
+	///     Defines the prefilled list with the possible AudioCodecs
 	/// </summary>
-	public List<string> AudioCodecs { get; set; } = new List<string>();
+	public List<string> AudioCodecs { get; set; } = new();
 
 	/// <summary>
-	///     Defines the prefilled list with the posible spacing chars for the given string to detect the char
+	///     Defines the prefilled list with the possible spacing chars for the given string to detect the char
 	/// </summary>
-	public List<char> PossibleSpacingChars { get; set; } = new List<char>();
+	public List<char> PossibleSpacingChars { get; set; } = new();
 
 	/// <summary>
-	///     Defines the prefilled list with the posible spacing chars for the given string to detect the char
+	///     Defines the prefilled list with the possible spacing chars for the given string to detect the char
 	/// </summary>
 	public char ReleaseGroupSeperator { get; set; } = '-';
 
 	/// <summary>
-	///     Defines the List of IcoreParser's who are disabled by you. You should only need this if you implement your own
+	///     Defines the List of ICoreParser's who are disabled by you. You should only need this if you implement your own
 	///     CoreParserModules
 	/// </summary>
 	public ListOfICoreParser DisabledCoreParserModules { get; set; }
 
 	// ### Language ############################################################
 	/// <summary>
-	///     Defines the prefilled list with the languages for the output. Language parsing is Instable!
+	///     Defines the prefilled list with the languages for the output. Language parsing is unstable!
 	/// </summary>
-	public List<string> Languages { get; set; } = new List<string>();
+	public List<string> Languages { get; set; } = new();
 
 	/// <summary>
-	///     Activates the parsing of the language. Default: false. Language parsing is Instable!
+	///     Activates the parsing of the language. Default: false. Language parsing is unstable!
 	/// </summary>
 	public bool ActivateLanguageParser { get; set; } = false;
 
 	/// <summary>
-	///     Removes the language token if it is found. Default: false. Language parsing is Instable!
+	///     Removes the language token if it is found. Default: false. Language parsing is unstable!
 	/// </summary>
 	public bool RemoveLanguageTokenOnFound { get; set; } = false;
 
 	/// <summary>
 	///     Prefilled tokens list who should be removed from input string if the language parser is disabled. Language parsing
-	///     is Instable!
+	///     is unstable!
 	/// </summary>
-	public List<string> RemoveAndListTokensOnLanguageParserIsDisabled { get; set; } = new List<string>();
+	public List<string> RemoveAndListTokensOnLanguageParserIsDisabled { get; set; } = new();
 	#endregion Parsing
 
 	// ### Output
@@ -280,75 +274,75 @@ public class ParserSettings
 	///     Defines the String.Format-string that formats the season for the id-string. Do NOT use larger than four digits per
 	///     octet. Default: 'S{0:00}'
 	/// </summary>
-	public string IDStringFormaterSeason { get; set; } = "S{0:00}";
+	public string IDStringFormatterSeason { get; set; } = "S{0:00}";
 
 	/// <summary>
 	///     Defines the String.Format-string that formats the episode for the id-string. Do NOT use larger than four digits per
 	///     octet. Default: 'E{1:00}'
 	/// </summary>
-	public string IDStringFormaterEpisode { get; set; } = "E{0:00}";
+	public string IDStringFormatterEpisode { get; set; } = "E{0:00}";
 
 	/// <summary>
-	///     Defines the string who is convertet from the enum Resolutions to something readable for e.g. the ParsedString.
+	///     Defines the string who is converted from the enum Resolutions to something readable for e.g. the ParsedString.
 	///     Default: 'Unknown'
 	/// </summary>
 	public string ResolutionStringUnknown { get; set; } = "Unknown";
 
 	/// <summary>
-	///     Defines the string who is convertet from the enum Resolutions to something readable for e.g. the ParsedString.
+	///     Defines the string who is converted from the enum Resolutions to something readable for e.g. the ParsedString.
 	///     Default: 'SD'
 	/// </summary>
 	public string ResolutionStringSD { get; set; } = "SD";
 
 	/// <summary>
-	///     Defines the string who is convertet from the enum Resolutions to something readable for e.g. the ParsedString.
+	///     Defines the string who is converted from the enum Resolutions to something readable for e.g. the ParsedString.
 	///     Default: '720p'
 	/// </summary>
 	public string ResolutionStringHD { get; set; } = "720p";
 
 	/// <summary>
-	///     Defines the string who is convertet from the enum Resolutions to something readable for e.g. the ParsedString.
+	///     Defines the string who is converted from the enum Resolutions to something readable for e.g. the ParsedString.
 	///     Default: '1080p'
 	/// </summary>
 	public string ResolutionStringFullHD { get; set; } = "1080p";
 
 	/// <summary>
-	///     Defines the string who is convertet from the enum Resolutions to something readable for e.g. the ParsedString.
+	///     Defines the string who is converted from the enum Resolutions to something readable for e.g. the ParsedString.
 	///     Default: '2160p'
 	/// </summary>
 	public string ResolutionStringUltraHD { get; set; } = "2160p";
 
 	/// <summary>
-	///     Defines the string who is convertet from the enum Resolutions to something readable for e.g. the ParsedString.
+	///     Defines the string who is converted from the enum Resolutions to something readable for e.g. the ParsedString.
 	///     Default: '4320p'
 	/// </summary>
 	public string ResolutionStringUltraHD8k { get; set; } = "4320p";
 
 	/// <summary>
-	///     Defines how the resolution is formated in the output strings e.g. ParsedString. Default: LowesrResolution
+	///     Defines how the resolution is formatted in the output strings e.g. ParsedString. Default: LowestResolution
 	/// </summary>
 	public ResolutionOutputBehavior ResolutionStringOutput { get; set; } = ResolutionOutputBehavior.LowestResolution;
 
 	/// <summary>
-	///     Defines the string who is convertet from the enum DimensionalType to something readable for e.g. the ParsedString.
+	///     Defines the string who is converted from the enum DimensionalType to something readable for e.g. the ParsedString.
 	///     Default: '3D'
 	/// </summary>
 	public string DimensionalString3DAny { get; set; } = "3D";
 
 	/// <summary>
-	///     Defines the string who is convertet from the enum DimensionalType to something readable for e.g. the ParsedString.
+	///     Defines the string who is converted from the enum DimensionalType to something readable for e.g. the ParsedString.
 	///     Default: '3D.HSBS'
 	/// </summary>
 	public string DimensionalString3DHSBS { get; set; } = "3D.HSBS";
 
 	/// <summary>
-	///     Defines the string who is convertet from the enum DimensionalType to something readable for e.g. the ParsedString.
+	///     Defines the string who is converted from the enum DimensionalType to something readable for e.g. the ParsedString.
 	///     Default: '3D.HOU'
 	/// </summary>
 	public string DimensionalString3DHOU { get; set; } = "3D.HOU";
 
 	/// <summary>
-	///     Defines the string who is convertet from the enum DimensionalType to something readable for e.g. the ParsedString.
+	///     Defines the string who is converted from the enum DimensionalType to something readable for e.g. the ParsedString.
 	///     Default: empty
 	/// </summary>
 	public string DimensionalString2DAny { get; set; } = "";
@@ -361,17 +355,17 @@ public class ParserSettings
 	/// <summary>
 	///     Defines the prefilled list to detect the HSBS 3D strings
 	/// </summary>
-	public List<string> DetectHsbs3DTokens { get; set; } = new List<string>();
+	public List<string> DetectHsbs3DTokens { get; set; } = new();
 
 	/// <summary>
 	///     Defines the prefilled list to detect the HOU 3D strings
 	/// </summary>
-	public List<string> DetectHou3DTokens { get; set; } = new List<string>();
+	public List<string> DetectHou3DTokens { get; set; } = new();
 
 	/// <summary>
 	///     Defines the prefilled list to detect the Any 3D strings
 	/// </summary>
-	public List<string> DetectAny3DTokens { get; set; } = new List<string>();
+	public List<string> DetectAny3DTokens { get; set; } = new();
 	#endregion DimensionalDetection
 
 	// ### Resolution Detection
@@ -381,27 +375,27 @@ public class ParserSettings
 	/// <summary>
 	///     Defines the prefilled list to detect the UHD8k strings
 	/// </summary>
-	public List<string> DetectUltraHD8kTokens { get; set; } = new List<string>();
+	public List<string> DetectUltraHD8kTokens { get; set; } = new();
 
 	/// <summary>
 	///     Defines the prefilled list to detect the UHD4k strings
 	/// </summary>
-	public List<string> DetectUltraHDTokens { get; set; } = new List<string>();
+	public List<string> DetectUltraHDTokens { get; set; } = new();
 
 	/// <summary>
 	///     Defines the prefilled list to detect the FullHD strings
 	/// </summary>
-	public List<string> DetectFullHDTokens { get; set; } = new List<string>();
+	public List<string> DetectFullHDTokens { get; set; } = new();
 
 	/// <summary>
 	///     Defines the prefilled list to detect the HD strings
 	/// </summary>
-	public List<string> DetectHDTokens { get; set; } = new List<string>();
+	public List<string> DetectHDTokens { get; set; } = new();
 
 	/// <summary>
 	///     Defines the prefilled list to detect the SD strings
 	/// </summary>
-	public List<string> DetectSDTokens { get; set; } = new List<string>();
+	public List<string> DetectSDTokens { get; set; } = new();
 	#endregion ResolutionDetection
 
 	// ### Remove and Replace
@@ -410,24 +404,24 @@ public class ParserSettings
 	#region RemoveAndReplace
 	/// <summary>
 	///     Defines the prefilled list with the tokens who should removed from the title string but re-added to the parsed
-	///     string and the deletedtokens list
+	///     string and the DetectedTokens list
 	/// </summary>
-	public List<string> RemoveAndListTokens { get; set; } = new List<string>();
+	public List<string> RemoveAndListTokens { get; set; } = new();
 
 	/// <summary>
 	///     Defines the prefilled list with the tokens who should removed from the title string
 	/// </summary>
-	public List<string> RemoveWithoutListTokens { get; set; } = new List<string>();
+	public List<string> RemoveWithoutListTokens { get; set; } = new();
 
 	/// <summary>
 	///     Defines the empty list with the KeyValuePair to replace (regex, replace)
 	/// </summary>
-	public List<KeyValuePair<string, string>> ReplaceRegexAndListTokens { get; set; } = new List<KeyValuePair<string, string>>();
+	public List<KeyValuePair<string, string>> ReplaceRegexAndListTokens { get; set; } = new();
 
 	/// <summary>
 	///     Defines the empty list with the KeyValuePair to replace (regex, replace)
 	/// </summary>
-	public List<KeyValuePair<string, string>> ReplaceRegexWithoutListTokens { get; set; } = new List<KeyValuePair<string, string>>();
+	public List<KeyValuePair<string, string>> ReplaceRegexWithoutListTokens { get; set; } = new();
 	#endregion RemoveAndReplace
 
 	// ### Cache
@@ -456,9 +450,9 @@ public class ParserSettings
 	/// </summary>
 	/// <param name="parserSettings">The object that should be converted to an xml string</param>
 	/// <returns>The xml string representing this object</returns>
-	public static string SerializeToXML( ParserSettings parserSettings )
+	public static string SerializeToXml( ParserSettings parserSettings )
 	{
-		return ParserSettingsWorker.SerializeToXML( parserSettings );
+		return ParserSettingsWorker.SerializeToXml( parserSettings );
 	}
 
 	/// <summary>
@@ -477,9 +471,9 @@ public class ParserSettings
 	/// </summary>
 	/// <param name="xml">The xml string representing this object</param>
 	/// <returns>The object generated out of the xml content</returns>
-	public static ParserSettings DeSerializeFromXML( string xml )
+	public static ParserSettings DeserializeFromXml( string xml )
 	{
-		return ParserSettingsWorker.DeSerializeFromXML( xml );
+		return ParserSettingsWorker.DeserializeFromXml( xml );
 	}
 
 	/// <summary>
@@ -490,7 +484,7 @@ public class ParserSettings
 	/// <returns>The json string representing this object</returns>
 	public static ParserSettings DeSerializeFromJson( string json, JsonSerializerSettings jsonSerializerSettings = null )
 	{
-		return ParserSettingsWorker.DeSerializeFromJson( json, jsonSerializerSettings );
+		return ParserSettingsWorker.DeserializeFromJson( json, jsonSerializerSettings );
 	}
 	#endregion DeSerialisazion
 

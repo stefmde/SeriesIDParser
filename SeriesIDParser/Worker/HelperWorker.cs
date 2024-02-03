@@ -50,7 +50,7 @@ internal static class HelperWorker
 
 													//&& x.Namespace != null && x.Namespace.Equals("SeriesIDParser.Worker.CoreParserModules")
 												);
-		List<ICoreParser> coreParserModules = new List<ICoreParser>();
+		List<ICoreParser> coreParserModules = new();
 
 		foreach (Type type in types)
 		{
@@ -183,7 +183,7 @@ internal static class HelperWorker
 	{
 		int year = -1;
 
-		Regex yearRegex = new Regex( regex );
+		Regex yearRegex = new( regex );
 		MatchCollection matches = yearRegex.Matches( title );
 
 		foreach (Match match in matches)
@@ -231,7 +231,7 @@ internal static class HelperWorker
 	/// <returns>returns an empty string or the spacing char</returns>
 	internal static char GetSpacingChar( string input, ParserSettings settings )
 	{
-		char foundChar = new char();
+		char foundChar = new();
 
 		List<CharRating> charRating = settings.PossibleSpacingChars.Select( item => new CharRating {Char = item, Count = 0} ).ToList();
 
@@ -293,7 +293,7 @@ internal static class HelperWorker
 	{
 		// TODO: Only 95% Covered
 		string ret = fullTitle;
-		List<string> foundTokens = new List<string>();
+		List<string> foundTokens = new();
 
 		if (fullTitle == null || oldSpacingChar == null || removeTokens == null || removeTokens.Count == 0)
 		{
@@ -353,7 +353,7 @@ internal static class HelperWorker
 	{
 		// TODO: Only 72% Covered
 		string ret = input;
-		List<string> foundTokens = new List<string>();
+		List<string> foundTokens = new();
 		if (replaceList == null || (replaceList != null && !replaceList.Any()))
 		{
 			ret = input;
@@ -426,8 +426,8 @@ internal static class HelperWorker
 	/// <returns></returns>
 	internal static List<ResolutionsMap> GetResolutions( ParserSettings ps, char oldSpacer, ref string fullTitle )
 	{
-		List<ResolutionsMap> tempFoundResolutions = new List<ResolutionsMap>();
-		List<ResolutionsMap> foundResolutions = new List<ResolutionsMap>();
+		List<ResolutionsMap> tempFoundResolutions = new();
+		List<ResolutionsMap> foundResolutions = new();
 
 		// Try get 8K
 		tempFoundResolutions.AddRange( GetResolutionByResMap( ps.DetectUltraHD8kTokens, ResolutionsMap.UltraHD8K_4320p, oldSpacer, ref fullTitle ) );
@@ -466,11 +466,11 @@ internal static class HelperWorker
 																ref string fullTitle )
 	{
 		string spacer = Regex.Escape( oldSpacingChar.ToString() );
-		List<ResolutionsMap> foundResolutions = new List<ResolutionsMap>();
+		List<ResolutionsMap> foundResolutions = new();
 
 		foreach (string item in resolutionMap)
 		{
-			Regex removeRegex = new Regex( spacer + item + spacer, RegexOptions.IgnoreCase );
+			Regex removeRegex = new( spacer + item + spacer, RegexOptions.IgnoreCase );
 
 			if (removeRegex.IsMatch( fullTitle ))
 			{
@@ -494,7 +494,7 @@ internal static class HelperWorker
 	/// <returns></returns>
 	internal static DimensionalType GetDimensionalType( ParserSettings ps, char oldSpacer, ref string fullTitle )
 	{
-		List<DimensionalType> tempDimensionalTypes = new List<DimensionalType>();
+		List<DimensionalType> tempDimensionalTypes = new();
 		DimensionalType foundDimensionalType;
 
 		// Try get 3D HSBS
@@ -537,11 +537,11 @@ internal static class HelperWorker
 																	ref string fullTitle )
 	{
 		string spacer = Regex.Escape( oldSpacingChar.ToString() );
-		List<DimensionalType> foundDimensionalType = new List<DimensionalType>();
+		List<DimensionalType> foundDimensionalType = new();
 
 		foreach (string item in dimensionalTypeMap)
 		{
-			Regex removeRegex = new Regex( spacer + item + spacer, RegexOptions.IgnoreCase );
+			Regex removeRegex = new( spacer + item + spacer, RegexOptions.IgnoreCase );
 
 			if (removeRegex.IsMatch( fullTitle ))
 			{
@@ -564,8 +564,8 @@ internal static class HelperWorker
 	/// <returns></returns>
 	internal static List<string> RemoveTokens( ParserSettings ps, char oldSpacer, ref string fullTitle )
 	{
-		List<string> tempFoundTokens = new List<string>();
-		List<string> foundResolutions = new List<string>();
+		List<string> tempFoundTokens = new();
+		List<string> foundResolutions = new();
 
 		tempFoundTokens.AddRange( FindTokens( ref fullTitle, oldSpacer.ToString(), ps.RemoveAndListTokens, true ) );
 		tempFoundTokens.AddRange( FindTokens( ref fullTitle, oldSpacer.ToString(), ps.RemoveWithoutListTokens, false ) );
@@ -641,7 +641,7 @@ internal static class HelperWorker
 	/// <returns>The spisode title if one is fround or string.Empty</returns>
 	internal static string GetEpisodeTitle( ParserSettings ps, string fullTitle )
 	{
-		Regex seRegex = new Regex( ps.SeasonAndEpisodeParseRegex );
+		Regex seRegex = new( ps.SeasonAndEpisodeParseRegex );
 		Match match = seRegex.Match( fullTitle.ToUpper() );
 		string episodeTitle = string.Empty;
 
@@ -662,7 +662,7 @@ internal static class HelperWorker
 
 	internal static string GetTitle( ParserSettings ps, char oldSpacingChar, string fullTitle )
 	{
-		Regex seRegex = new Regex( ps.SeasonAndEpisodeParseRegex );
+		Regex seRegex = new( ps.SeasonAndEpisodeParseRegex );
 		Match match = seRegex.Match( fullTitle.ToUpper() );
 		string title = string.Empty;
 
@@ -691,7 +691,7 @@ internal static class HelperWorker
 	{
 		int season = -1;
 
-		Regex seRegex = new Regex( ps.SeasonAndEpisodeParseRegex );
+		Regex seRegex = new( ps.SeasonAndEpisodeParseRegex );
 		Match match = seRegex.Match( fullTitle.ToUpper() );
 
 		if (IsSeries( ps, fullTitle ))
@@ -710,9 +710,9 @@ internal static class HelperWorker
 	/// <returns>Episode's as int list</returns>
 	internal static List<int> GetEpisodeIDs( ParserSettings ps, string fullTitle )
 	{
-		List<int> episodes = new List<int>();
+		List<int> episodes = new();
 
-		Regex seRegex = new Regex( ps.SeasonAndEpisodeParseRegex );
+		Regex seRegex = new( ps.SeasonAndEpisodeParseRegex );
 		Match match = seRegex.Match( fullTitle.ToUpper() );
 
 		if (IsSeries( ps, fullTitle ))
@@ -737,7 +737,7 @@ internal static class HelperWorker
 	internal static bool IsSeries( ParserSettings ps, string fullTitle )
 	{
 		bool isSeries = false;
-		Regex seRegex = new Regex( ps.SeasonAndEpisodeParseRegex );
+		Regex seRegex = new( ps.SeasonAndEpisodeParseRegex );
 		Match match = seRegex.Match( fullTitle.ToUpper() );
 
 		if (match.Success)
@@ -758,7 +758,7 @@ internal static class HelperWorker
 	internal static IEnumerable<string> GetSeriesAndMovieFiles(string path, ParserSettings parserSettings = null,
 																SearchOption searchOption = SearchOption.AllDirectories)
 	{
-		List<string> files = new List<string>();
+		List<string> files = new();
 
 		if (parserSettings == null)
 		{
@@ -787,7 +787,7 @@ internal static class HelperWorker
 	internal static IEnumerable<FileInfo> GetSeriesAndMovieFileInfos(string path, ParserSettings parserSettings = null,
 																	SearchOption searchOption = SearchOption.AllDirectories)
 	{
-		List<FileInfo> files = new List<FileInfo>();
+		List<FileInfo> files = new();
 
 		if (parserSettings == null)
 		{
@@ -799,7 +799,7 @@ internal static class HelperWorker
 			return files;
 		}
 
-		DirectoryInfo di = new DirectoryInfo(path);
+		DirectoryInfo di = new(path);
 
 		files = di.GetFiles("*.*", searchOption).Select(d => d)
 				.Where(f => parserSettings.FileExtensions.Select(d => d.ToLower()).Contains(f.Extension.ToLower())).ToList();

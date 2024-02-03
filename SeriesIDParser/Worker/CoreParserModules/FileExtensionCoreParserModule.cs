@@ -61,13 +61,13 @@ public class FileExtensionCoreParserModule : ICoreParser
 			{
 				outputResult.MediaData.FileExtension = extension.ToLower();
 
-				Regex removeRegex = new Regex( outputResult.MediaData.FileExtension, RegexOptions.IgnoreCase );
+				Regex removeRegex = new( outputResult.MediaData.FileExtension, RegexOptions.IgnoreCase );
 				outputResult.ModifiedString = removeRegex.Replace( outputResult.ModifiedString, "" );
 				_state = State.Success;
 			}
 
 			outputResult.MediaData.ModuleStates.Add( new CoreParserModuleStateResult( Name,
-																					new List<CoreParserModuleSubState>() {new CoreParserModuleSubState( _state, _errorOrWarningMessage )} ) );
+																					new List<CoreParserModuleSubState>() {new( _state, _errorOrWarningMessage )} ) );
 
 			return outputResult;
 		}

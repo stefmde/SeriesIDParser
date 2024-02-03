@@ -79,7 +79,7 @@ public class CodecsCoreParserModule : ICoreParser
 			_state = State.Success;
 
 			outputResult.MediaData.ModuleStates.Add( new CoreParserModuleStateResult( Name,
-																					new List<CoreParserModuleSubState>() {new CoreParserModuleSubState( _state, _errorOrWarningMessage )} ) );
+																					new List<CoreParserModuleSubState>() {new( _state, _errorOrWarningMessage )} ) );
 
 			return outputResult;
 		}

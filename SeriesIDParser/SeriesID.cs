@@ -42,8 +42,8 @@ public class SeriesID
 {
 	#region Fields
 	private CoreParserResult _coreParserResult;
-	private readonly ParserSettings _parserSettings = new ParserSettings( true );
-	private readonly DateTime _parseStartTime = new DateTime();
+	private readonly ParserSettings _parserSettings = new( true );
+	private readonly DateTime _parseStartTime = new();
 	private FileInfo _fileInfo;
 	private readonly bool _cacheEnabled;
 	#endregion Fields
@@ -137,7 +137,7 @@ public class SeriesID
 	/// <returns></returns>
 	public IEnumerable<ParserResult> ParsePath( string path, SearchOption searchOption = SearchOption.AllDirectories )
 	{
-		List<ParserResult> results = new List<ParserResult>();
+		List<ParserResult> results = new();
 
 		if (string.IsNullOrEmpty( path ) || !Directory.Exists( path ))
 		{
@@ -199,7 +199,7 @@ public class SeriesID
 					_coreParserResult.MediaData.ModuleStates.Add( new CoreParserModuleStateResult( coreParserModule.Name,
 																									new List<CoreParserModuleSubState>()
 																									{
-																										new CoreParserModuleSubState( State.Error,
+																										new( State.Error,
 																											"Exception on executing module occoured. See exception for more details." )
 																									}, ex ) );
 

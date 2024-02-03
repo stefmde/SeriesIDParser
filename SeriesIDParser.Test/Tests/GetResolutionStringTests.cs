@@ -40,7 +40,7 @@ public class GetResolutionStringTests
 	[TestMethod]
 	public void GetResolutionStringTestLowestDefault()
 	{
-		ParserSettings ps = new ParserSettings( true );
+		ParserSettings ps = new( true );
 		ps.ResolutionStringOutput = ResolutionOutputBehavior.LowestResolution;
 		Assert.AreEqual( ps.ResolutionStringFullHD,
 						HelperWorker.GetResolutionString( ps, new List<ResolutionsMap> {ResolutionsMap.FullHD_1080p, ResolutionsMap.UltraHD_2160p} ),
@@ -50,7 +50,7 @@ public class GetResolutionStringTests
 	[TestMethod]
 	public void GetResolutionStringTestLowestSingle()
 	{
-		ParserSettings ps = new ParserSettings( true );
+		ParserSettings ps = new( true );
 		ps.ResolutionStringOutput = ResolutionOutputBehavior.LowestResolution;
 		Assert.AreEqual( ps.ResolutionStringFullHD, HelperWorker.GetResolutionString( ps, new List<ResolutionsMap> {ResolutionsMap.FullHD_1080p} ),
 						"(2) Should give one full HD" );
@@ -59,7 +59,7 @@ public class GetResolutionStringTests
 	[TestMethod]
 	public void GetResolutionStringTestLowestWithUnknown()
 	{
-		ParserSettings ps = new ParserSettings( true );
+		ParserSettings ps = new( true );
 		ps.ResolutionStringOutput = ResolutionOutputBehavior.LowestResolution;
 		Assert.AreEqual( ps.ResolutionStringFullHD,
 						HelperWorker.GetResolutionString( ps,
@@ -70,7 +70,7 @@ public class GetResolutionStringTests
 	[TestMethod]
 	public void GetResolutionStringTestLowestEmpty()
 	{
-		ParserSettings ps = new ParserSettings( true );
+		ParserSettings ps = new( true );
 		ps.ResolutionStringOutput = ResolutionOutputBehavior.LowestResolution;
 		Assert.AreEqual( ps.ResolutionStringUnknown, HelperWorker.GetResolutionString( ps, new List<ResolutionsMap>() ), "(4) Should give unknown" );
 	}
@@ -78,7 +78,7 @@ public class GetResolutionStringTests
 	[TestMethod]
 	public void GetResolutionStringTestHighestDefault()
 	{
-		ParserSettings ps = new ParserSettings( true );
+		ParserSettings ps = new( true );
 		ps.ResolutionStringOutput = ResolutionOutputBehavior.HighestResolution;
 		Assert.AreEqual( ps.ResolutionStringUltraHD,
 						HelperWorker.GetResolutionString( ps, new List<ResolutionsMap> {ResolutionsMap.FullHD_1080p, ResolutionsMap.UltraHD_2160p} ),
@@ -88,7 +88,7 @@ public class GetResolutionStringTests
 	[TestMethod]
 	public void GetResolutionStringTestHighestSingle()
 	{
-		ParserSettings ps = new ParserSettings( true );
+		ParserSettings ps = new( true );
 		ps.ResolutionStringOutput = ResolutionOutputBehavior.HighestResolution;
 		Assert.AreEqual( ps.ResolutionStringFullHD, HelperWorker.GetResolutionString( ps, new List<ResolutionsMap> {ResolutionsMap.FullHD_1080p} ),
 						"(11) Should give one full HD" );
@@ -97,7 +97,7 @@ public class GetResolutionStringTests
 	[TestMethod]
 	public void GetResolutionStringTestHighestUnknown()
 	{
-		ParserSettings ps = new ParserSettings( true );
+		ParserSettings ps = new( true );
 		ps.ResolutionStringOutput = ResolutionOutputBehavior.HighestResolution;
 		Assert.AreEqual( ps.ResolutionStringUltraHD8k,
 						HelperWorker.GetResolutionString( ps,
@@ -108,7 +108,7 @@ public class GetResolutionStringTests
 	[TestMethod]
 	public void GetResolutionStringTestHighestEmpty()
 	{
-		ParserSettings ps = new ParserSettings( true );
+		ParserSettings ps = new( true );
 		ps.ResolutionStringOutput = ResolutionOutputBehavior.HighestResolution;
 		Assert.AreEqual( ps.ResolutionStringUnknown, HelperWorker.GetResolutionString( ps, new List<ResolutionsMap>() ), "(13) Should give unknown" );
 	}
@@ -116,7 +116,7 @@ public class GetResolutionStringTests
 	[TestMethod]
 	public void GetResolutionStringTestAllDefault()
 	{
-		ParserSettings ps = new ParserSettings( true );
+		ParserSettings ps = new( true );
 		ps.ResolutionStringOutput = ResolutionOutputBehavior.AllFoundResolutions;
 		Assert.AreEqual( ps.ResolutionStringFullHD + ps.NewSpacingChar + ps.ResolutionStringUltraHD,
 						HelperWorker.GetResolutionString( ps, new List<ResolutionsMap> {ResolutionsMap.FullHD_1080p, ResolutionsMap.UltraHD_2160p} ),
@@ -126,7 +126,7 @@ public class GetResolutionStringTests
 	[TestMethod]
 	public void GetResolutionStringTestAllSingle()
 	{
-		ParserSettings ps = new ParserSettings( true );
+		ParserSettings ps = new( true );
 		ps.ResolutionStringOutput = ResolutionOutputBehavior.AllFoundResolutions;
 		Assert.AreEqual( ps.ResolutionStringFullHD, HelperWorker.GetResolutionString( ps, new List<ResolutionsMap> {ResolutionsMap.FullHD_1080p} ),
 						"(21) Should give one full HD" );
@@ -135,7 +135,7 @@ public class GetResolutionStringTests
 	[TestMethod]
 	public void GetResolutionStringTestAllUnknown()
 	{
-		ParserSettings ps = new ParserSettings( true );
+		ParserSettings ps = new( true );
 		ps.ResolutionStringOutput = ResolutionOutputBehavior.AllFoundResolutions;
 		Assert.AreEqual( ps.ResolutionStringFullHD + ps.NewSpacingChar + ps.ResolutionStringUltraHD8k,
 						HelperWorker.GetResolutionString( ps,
@@ -146,7 +146,7 @@ public class GetResolutionStringTests
 	[TestMethod]
 	public void GetResolutionStringTestAllEmpty()
 	{
-		ParserSettings ps = new ParserSettings( true );
+		ParserSettings ps = new( true );
 		ps.ResolutionStringOutput = ResolutionOutputBehavior.AllFoundResolutions;
 		Assert.AreEqual( ps.ResolutionStringUnknown, HelperWorker.GetResolutionString( ps, new List<ResolutionsMap>() ), "(23) Should give unknown" );
 	}

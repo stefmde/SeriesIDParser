@@ -36,7 +36,7 @@ namespace SeriesIDParser.Models;
 /// <summary>
 ///     Dictionary with a limit used to cache the MediaData
 /// </summary>
-internal class CacheDictionary //: IDictionary<string, MediaData>
+internal class CacheDictionary
 {
 	public int Count => _keys.Count;
 	public int Limit { get; }
@@ -46,7 +46,7 @@ internal class CacheDictionary //: IDictionary<string, MediaData>
 	internal Dictionary<string, MediaData> _dictionary;
 
 	/// <summary>
-	///     Initalizes the dictionary with the limit size. If the elements count exceeds the limit, the oldest entrie would be
+	///     Initializes the dictionary with the limit size. If the elements count exceeds the limit, the oldest entry would be
 	///     dropped. Default: 10.000
 	/// </summary>
 	/// <param name="limit">Drop limit</param>
@@ -78,8 +78,8 @@ internal class CacheDictionary //: IDictionary<string, MediaData>
 
 	public MediaData this[ string key ]
 	{
-		get { return _dictionary[key]; }
-		set { _dictionary[key] = value; }
+		get => _dictionary[key];
+		set => _dictionary[key] = value;
 	}
 
 	public bool Contains( string key )
@@ -128,22 +128,4 @@ internal class CacheDictionary //: IDictionary<string, MediaData>
 		_keys = new List<string>( Limit );
 		_dictionary = new Dictionary<string, MediaData>( Limit );
 	}
-
-	// ### Unused
-	// ##################################################
-
-	//public void CopyTo(KeyValuePair<string, MediaData>[] array, int arrayIndex)
-	//{
-	//    throw new NotImplementedException();
-	//}
-
-	//public IEnumerator<KeyValuePair<string, MediaData>> GetEnumerator()
-	//{
-	//    throw new NotImplementedException();
-	//}
-
-	//IEnumerator IEnumerable.GetEnumerator()
-	//{
-	//    return GetEnumerator();
-	//}
 }
