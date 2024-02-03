@@ -1,7 +1,6 @@
-﻿// 
-// MIT License
+﻿// MIT License
 // 
-// Copyright(c) 2016 - 2017
+// Copyright(c) 2016 - 2024
 // Stefan Müller, Stefm, https://Stefm.de, https://github.com/stefmde/SeriesIDParser
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -42,7 +41,7 @@ public class CacheTests
 	[TestMethod]
 	public void CacheDictionaryInit()
 	{
-		CacheDictionary cacheDictionary = new( 10 );
+		CacheDictionary cacheDictionary = new(10);
 		Assert.AreEqual( 10, cacheDictionary.Limit, " -LimitCount" );
 		Assert.AreEqual( 0, cacheDictionary.Count, " -ItemCount" );
 		Assert.AreEqual( false, cacheDictionary.IsFull, " -IsFull" );
@@ -54,11 +53,11 @@ public class CacheTests
 	[TestMethod]
 	public void CacheDictionaryDrop()
 	{
-		CacheDictionary cacheDictionary = new( 10 );
+		CacheDictionary cacheDictionary = new(10);
 
 		for (var i = 1; i <= 11; i++)
 		{
-			cacheDictionary.Add( "Key_" + i, new MediaData() {Title = "Title_" + i} );
+			cacheDictionary.Add( "Key_" + i, new MediaData() { Title = "Title_" + i } );
 		}
 
 		var a = cacheDictionary._dictionary.Count;
@@ -68,7 +67,7 @@ public class CacheTests
 
 		for (var i = 2; i < 11; i++)
 		{
-			KeyValuePair<string, MediaData> keyValuePair = new( "Key_" + i, new MediaData() {Title = "Title_" + i} );
+			KeyValuePair<string, MediaData> keyValuePair = new("Key_" + i, new MediaData() { Title = "Title_" + i });
 
 			Assert.IsTrue( cacheDictionary.Contains( keyValuePair.Key ), " -Key" );
 			Assert.IsTrue( cacheDictionary.Contains( keyValuePair ), " -KeyValuePair" );

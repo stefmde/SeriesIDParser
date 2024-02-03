@@ -205,7 +205,7 @@
 
 ##6.1.0 (2016-10-05)##
 ###New###
-- Added ParserSettings Property ReleaseGroupSeperator
+- Added ParserSettings Property ReleaseGroupSeparator
 - Added SeriesID Property ReleaseGroup
 - Added SeriesID Property Episodes
 - Added SeriesID Property AudioCodec

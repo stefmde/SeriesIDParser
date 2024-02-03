@@ -1,7 +1,6 @@
-﻿// 
-// MIT License
+﻿// MIT License
 // 
-// Copyright(c) 2016 - 2017
+// Copyright(c) 2016 - 2024
 // Stefan Müller, Stefm, https://Stefm.de, https://github.com/stefmde/SeriesIDParser
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -95,8 +94,8 @@ public class FullPathTests
 	[TestMethod]
 	public void FullPathTestEmptyAsString()
 	{
-		ParserSettings parserSettings = new( true );
-		SeriesIdParser seriesIDParser = new( parserSettings );
+		ParserSettings parserSettings = new(true);
+		SeriesIdParser seriesIDParser = new(parserSettings);
 		var parserResults = seriesIDParser.ParsePath( Constants.TestDataDirectoryEmptyRoot );
 		Assert.IsTrue( !parserResults.Any() );
 	}
@@ -104,9 +103,9 @@ public class FullPathTests
 	[TestMethod]
 	public void FullPathTestEmptyAsDirectoryInfo()
 	{
-		ParserSettings parserSettings = new( true );
-		SeriesIdParser seriesIDParser = new( parserSettings );
-		DirectoryInfo directoryInfo = new( Constants.TestDataDirectoryEmptyRoot );
+		ParserSettings parserSettings = new(true);
+		SeriesIdParser seriesIDParser = new(parserSettings);
+		DirectoryInfo directoryInfo = new(Constants.TestDataDirectoryEmptyRoot);
 		var parserResults = seriesIDParser.ParsePath( directoryInfo );
 		Assert.IsTrue( !parserResults.Any() );
 	}

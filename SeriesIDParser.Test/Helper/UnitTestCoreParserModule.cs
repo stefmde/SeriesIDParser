@@ -1,8 +1,7 @@
-// 
 // MIT License
 // 
-// Copyright(c) 2016 - 2017
-// Stefan M�ller, Stefm, https://Stefm.de, https://github.com/stefmde/SeriesIDParser
+// Copyright(c) 2016 - 2024
+// Stefan Müller, Stefm, https://Stefm.de, https://github.com/stefmde/SeriesIDParser
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -41,6 +40,6 @@ public class UnitTestCoreParserModule : ICoreParser
 	/// <inheritdoc />
 	public CoreParserResult Parse( CoreParserResult inputResult )
 	{
-			return inputResult;
-		}
+		return inputResult;
+	}
 }

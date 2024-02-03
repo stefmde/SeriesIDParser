@@ -1,7 +1,6 @@
-﻿// 
-// MIT License
+﻿// MIT License
 // 
-// Copyright(c) 2016 - 2017
+// Copyright(c) 2016 - 2024
 // Stefan Müller, Stefm, https://Stefm.de, https://github.com/stefmde/SeriesIDParser
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -55,7 +54,7 @@ public class ExtensionTests
 	[TestMethod]
 	public void ParseSeriesIDStringNullSettings()
 	{
-		ParserSettings parserSettings = new( true );
+		ParserSettings parserSettings = new(true);
 		parserSettings = null;
 		var parserResult = Constants.SeriesFile.ParseSeriesID( parserSettings );
 		Assert.IsTrue( parserResult.IsSeries );
@@ -87,8 +86,8 @@ public class ExtensionTests
 	[TestMethod]
 	public void ParseSeriesIDFileInfoNullInput()
 	{
-		ParserSettings parserSettings = new( true );
-		FileInfo file = new( Constants.SeriesFilePath );
+		ParserSettings parserSettings = new(true);
+		FileInfo file = new(Constants.SeriesFilePath);
 		file = null;
 		var parserResult = file.ParseSeriesID( parserSettings );
 		Assert.IsTrue( parserResult.State == State.Error );
@@ -153,8 +152,8 @@ public class ExtensionTests
 	[TestMethod]
 	public void ParseSeriesIDPathDirectoryInfoNull()
 	{
-		ParserSettings parserSettings = new( true );
-		SeriesIdParser seriesIDParser = new( parserSettings );
+		ParserSettings parserSettings = new(true);
+		SeriesIdParser seriesIDParser = new(parserSettings);
 		DirectoryInfo directoryInfo = null;
 		var parserResults = directoryInfo.ParseSeriesIDPath();
 		Assert.IsTrue( !parserResults.Any() );

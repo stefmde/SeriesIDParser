@@ -1,7 +1,6 @@
-﻿// 
-// MIT License
+﻿// MIT License
 // 
-// Copyright(c) 2016 - 2017
+// Copyright(c) 2016 - 2024
 // Stefan Müller, Stefm, https://Stefm.de, https://github.com/stefmde/SeriesIDParser
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -69,21 +68,16 @@ public class SerializationTests
 		Assert.AreEqual( expectedParserSettings.NewSpacingChar, actualParserSettings.NewSpacingChar, "NewSpacingChar " );
 		CollectionAssert.AreEqual( expectedParserSettings.PossibleSpacingChars, actualParserSettings.PossibleSpacingChars, "PossibleSpacingChars " );
 		CollectionAssert.AreEqual( expectedParserSettings.RemoveAndListTokens, actualParserSettings.RemoveAndListTokens, "RemoveAndListTokens " );
-		CollectionAssert.AreEqual( expectedParserSettings.RemoveWithoutListTokens, actualParserSettings.RemoveWithoutListTokens,
-									"RemoveWithoutListTokens " );
+		CollectionAssert.AreEqual( expectedParserSettings.RemoveWithoutListTokens, actualParserSettings.RemoveWithoutListTokens, "RemoveWithoutListTokens " );
 		Assert.AreEqual( expectedParserSettings.ResolutionStringFullHD, actualParserSettings.ResolutionStringFullHD, "ResolutionStringFullHD " );
 		Assert.AreEqual( expectedParserSettings.ResolutionStringHD, actualParserSettings.ResolutionStringHD, "ResolutionStringHD " );
 		Assert.AreEqual( expectedParserSettings.ResolutionStringSD, actualParserSettings.ResolutionStringSD, "ResolutionStringSD " );
 		Assert.AreEqual( expectedParserSettings.ResolutionStringUltraHD, actualParserSettings.ResolutionStringUltraHD, "ResolutionStringUltraHD " );
 		Assert.AreEqual( expectedParserSettings.ResolutionStringUltraHD8k, actualParserSettings.ResolutionStringUltraHD8k, "ResolutionStringUltraHD8k " );
-		Assert.AreEqual( expectedParserSettings.SeasonAndEpisodeParseRegex, actualParserSettings.SeasonAndEpisodeParseRegex,
-						"SeasonAndEpisodeParseRegex " );
-		Assert.AreEqual( expectedParserSettings.ThrowExceptionInsteadOfErrorFlag, actualParserSettings.ThrowExceptionInsteadOfErrorFlag,
-						"ThrowExceptionInsteadOfErrorFlag " );
-		CollectionAssert.AreEqual( expectedParserSettings.ReplaceRegexAndListTokens, actualParserSettings.ReplaceRegexAndListTokens,
-									"ReplaceRegexAndListTokens " );
-		CollectionAssert.AreEqual( expectedParserSettings.ReplaceRegexWithoutListTokens, actualParserSettings.ReplaceRegexWithoutListTokens,
-									"ReplaceRegexWithoutListTokens " );
+		Assert.AreEqual( expectedParserSettings.SeasonAndEpisodeParseRegex, actualParserSettings.SeasonAndEpisodeParseRegex, "SeasonAndEpisodeParseRegex " );
+		Assert.AreEqual( expectedParserSettings.ThrowExceptionInsteadOfErrorFlag, actualParserSettings.ThrowExceptionInsteadOfErrorFlag, "ThrowExceptionInsteadOfErrorFlag " );
+		CollectionAssert.AreEqual( expectedParserSettings.ReplaceRegexAndListTokens, actualParserSettings.ReplaceRegexAndListTokens, "ReplaceRegexAndListTokens " );
+		CollectionAssert.AreEqual( expectedParserSettings.ReplaceRegexWithoutListTokens, actualParserSettings.ReplaceRegexWithoutListTokens, "ReplaceRegexWithoutListTokens " );
 		Assert.AreEqual( expectedParserSettings.ResolutionStringOutput, actualParserSettings.ResolutionStringOutput, "ResolutionStringOutput " );
 		Assert.AreEqual( expectedParserSettings.ResolutionStringUnknown, actualParserSettings.ResolutionStringUnknown, "ResolutionStringUnknown " );
 		Assert.AreEqual( expectedParserSettings.CacheItemCountLimit, actualParserSettings.CacheItemCountLimit, "CacheItemCountLimit " );

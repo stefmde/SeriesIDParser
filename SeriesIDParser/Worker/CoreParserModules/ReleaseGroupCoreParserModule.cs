@@ -55,11 +55,11 @@ public class ReleaseGroupCoreParserModule : ICoreParser
 
 			if (tmpTitle.Any( x => x == inputResult.ParserSettings.ReleaseGroupSeparator ))
 			{
-				var seperatorIndex = inputResult.ModifiedString.LastIndexOf( inputResult.ParserSettings.ReleaseGroupSeparator );
+				var separatorIndex = inputResult.ModifiedString.LastIndexOf( inputResult.ParserSettings.ReleaseGroupSeparator );
 				outputResult.MediaData.ReleaseGroup = string.IsNullOrEmpty( inputResult.MediaData.FileExtension )
-														? inputResult.ModifiedString.Substring( seperatorIndex + 1 ).Trim()
-														: inputResult.ModifiedString.Substring( seperatorIndex + 1 ).Replace( inputResult.MediaData.FileExtension, "" ).Trim();
-				outputResult.ModifiedString = outputResult.ModifiedString.Remove( seperatorIndex ).Trim();
+														? inputResult.ModifiedString.Substring( separatorIndex + 1 ).Trim()
+														: inputResult.ModifiedString.Substring( separatorIndex + 1 ).Replace( inputResult.MediaData.FileExtension, "" ).Trim();
+				outputResult.ModifiedString = outputResult.ModifiedString.Remove( separatorIndex ).Trim();
 				_state = State.Success;
 			}
 			else

@@ -1,7 +1,6 @@
-﻿// 
-// MIT License
+﻿// MIT License
 // 
-// Copyright(c) 2016 - 2017
+// Copyright(c) 2016 - 2024
 // Stefan Müller, Stefm, https://Stefm.de, https://github.com/stefmde/SeriesIDParser
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -40,7 +39,7 @@ public class ReplaceTokensTests
 	[TestMethod]
 	public void ReplaceTokensTestDefault()
 	{
-		ParserSettings ps = new( true );
+		ParserSettings ps = new(true);
 
 		// Regular Test
 		ps.ReplaceRegexWithoutListTokens.Add( new KeyValuePair<string, string>( "EXTENDED", "." ) );
@@ -56,7 +55,7 @@ public class ReplaceTokensTests
 	[TestMethod]
 	public void ReplaceTokensTestDots()
 	{
-		ParserSettings ps = new( true );
+		ParserSettings ps = new(true);
 
 		ps.ReplaceRegexWithoutListTokens.Clear();
 		ps.ReplaceRegexWithoutListTokens.Add( new KeyValuePair<string, string>( ".EXTENDED.", "." ) );
@@ -72,7 +71,7 @@ public class ReplaceTokensTests
 	[TestMethod]
 	public void ReplaceTokensTestCase()
 	{
-		ParserSettings ps = new( true );
+		ParserSettings ps = new(true);
 
 		ps.ReplaceRegexWithoutListTokens.Clear();
 		ps.ReplaceRegexWithoutListTokens.Add( new KeyValuePair<string, string>( "extended", "." ) );
@@ -88,7 +87,7 @@ public class ReplaceTokensTests
 	[TestMethod]
 	public void ReplaceTokensTestNothing()
 	{
-		ParserSettings ps = new( true );
+		ParserSettings ps = new(true);
 
 		var input = "Der,Hobbit,Smaugs,Einoede,2013,EXTENDED,German,DL,1080p,BluRay,x264.mkv";
 		var expected = "Der,Hobbit,Smaugs,Einoede,2013,EXTENDED,German,DL,1080p,BluRay,x264.mkv";
@@ -102,7 +101,7 @@ public class ReplaceTokensTests
 	[TestMethod]
 	public void ReplaceTokensTestEmptyList()
 	{
-		ParserSettings ps = new( true );
+		ParserSettings ps = new(true);
 
 		ps.ReplaceRegexWithoutListTokens = new List<KeyValuePair<string, string>>();
 		var input = "Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv";
@@ -117,7 +116,7 @@ public class ReplaceTokensTests
 	[TestMethod]
 	public void ReplaceTokensTestNullList()
 	{
-		ParserSettings ps = new( true );
+		ParserSettings ps = new(true);
 
 		ps.ReplaceRegexWithoutListTokens = null;
 		var input = "Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv";
@@ -132,7 +131,7 @@ public class ReplaceTokensTests
 	[TestMethod]
 	public void ReplaceTokensTestRegexTest()
 	{
-		ParserSettings ps = new( true );
+		ParserSettings ps = new(true);
 
 		ps.ReplaceRegexWithoutListTokens = new List<KeyValuePair<string, string>>();
 		ps.ReplaceRegexWithoutListTokens.Clear();

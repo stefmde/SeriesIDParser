@@ -1,7 +1,6 @@
-﻿// 
-// MIT License
+﻿// MIT License
 // 
-// Copyright(c) 2016 - 2017
+// Copyright(c) 2016 - 2024
 // Stefan Müller, Stefm, https://Stefm.de, https://github.com/stefmde/SeriesIDParser
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -39,36 +38,35 @@ public class GetSpacingCharTests
 	[TestMethod]
 	public void GetSpacingCharTestDefault()
 	{
-		ParserSettings ps = new( true );
+		ParserSettings ps = new(true);
 		Assert.AreEqual( '.', HelperWorker.GetSpacingChar( "Dubai.Airport.S01E05.Teil5.GERMAN.DOKU.HDTV.720p.x264.mkv", ps ), "Should return a '.'" );
 	}
 
 	[TestMethod]
 	public void GetSpacingCharTestWithNoise()
 	{
-		ParserSettings ps = new( true );
+		ParserSettings ps = new(true);
 		Assert.AreEqual( '.', HelperWorker.GetSpacingChar( "Dubai.Airport,S01E05.Teil5.GERMAN.DOKU-HDTV.720p.x264.mkv", ps ), "Should return a '.'" );
 	}
 
 	[TestMethod]
 	public void GetSpacingCharTestDashChar()
 	{
-		ParserSettings ps = new( true );
+		ParserSettings ps = new(true);
 		Assert.AreEqual( '-', HelperWorker.GetSpacingChar( "Dubai-Airport-S01E05-Teil5-GERMAN-DOKU-HDTV-720p-x264.mkv", ps ), "Should return a '-'" );
 	}
 
 	[TestMethod]
 	public void GetSpacingCharTestCpaceChar()
 	{
-		ParserSettings ps = new( true );
+		ParserSettings ps = new(true);
 		Assert.AreEqual( ' ', HelperWorker.GetSpacingChar( "Dubai Airport S01E05 Teil5 GERMAN DOKU HDTV 720p x264.mkv", ps ), "Should return a space" );
 	}
 
 	[TestMethod]
 	public void GetSpacingCharTestUnknown()
 	{
-		ParserSettings ps = new( true );
-		Assert.AreEqual( new char(), HelperWorker.GetSpacingChar( "Dubai Airport S01E05 Teil5 GERMAN-DOKU-HDTV-720p-x264", ps ),
-						"Should return a empy char" );
+		ParserSettings ps = new(true);
+		Assert.AreEqual( new char(), HelperWorker.GetSpacingChar( "Dubai Airport S01E05 Teil5 GERMAN-DOKU-HDTV-720p-x264", ps ), "Should return a empy char" );
 	}
 }

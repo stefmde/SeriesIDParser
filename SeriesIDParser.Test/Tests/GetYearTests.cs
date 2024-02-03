@@ -1,7 +1,6 @@
-﻿// 
-// MIT License
+﻿// MIT License
 // 
-// Copyright(c) 2016 - 2017
+// Copyright(c) 2016 - 2024
 // Stefan Müller, Stefm, https://Stefm.de, https://github.com/stefmde/SeriesIDParser
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -40,41 +39,36 @@ public class GetYearTests
 	[TestMethod]
 	public void GetYearTestDefault()
 	{
-		ParserSettings ps = new( true );
-		Assert.AreEqual( 2013, HelperWorker.GetYear( "Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv", ps.YearParseRegex ),
-						"Should give a year" );
+		ParserSettings ps = new(true);
+		Assert.AreEqual( 2013, HelperWorker.GetYear( "Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv", ps.YearParseRegex ), "Should give a year" );
 	}
 
 	[TestMethod]
 	public void GetYearTestToOld()
 	{
-		ParserSettings ps = new( true );
-		Assert.AreEqual( -1, HelperWorker.GetYear( "Der.Hobbit.Smaugs.Einoede.1899.EXTENDED.German.DL.1080p.BluRay.x264.mkv", ps.YearParseRegex ),
-						"Should give no year" );
+		ParserSettings ps = new(true);
+		Assert.AreEqual( -1, HelperWorker.GetYear( "Der.Hobbit.Smaugs.Einoede.1899.EXTENDED.German.DL.1080p.BluRay.x264.mkv", ps.YearParseRegex ), "Should give no year" );
 	}
 
 	[TestMethod]
 	public void GetYearTestOldest()
 	{
-		ParserSettings ps = new( true );
-		Assert.AreEqual( 1900, HelperWorker.GetYear( "Der.Hobbit.Smaugs.Einoede.1900.EXTENDED.German.DL.1080p.BluRay.x264.mkv", ps.YearParseRegex ),
-						"Should give a year" );
+		ParserSettings ps = new(true);
+		Assert.AreEqual( 1900, HelperWorker.GetYear( "Der.Hobbit.Smaugs.Einoede.1900.EXTENDED.German.DL.1080p.BluRay.x264.mkv", ps.YearParseRegex ), "Should give a year" );
 	}
 
 	[TestMethod]
 	public void GetYearTestFuture()
 	{
-		ParserSettings ps = new( true );
-		Assert.AreEqual( -1,
-						HelperWorker.GetYear( "Der.Hobbit.Smaugs.Einoede." + DateTime.Now.AddYears( 1 ) + ".EXTENDED.German.DL.1080p.BluRay.x264.mkv",
-											ps.YearParseRegex ), "Should give no year" );
+		ParserSettings ps = new(true);
+		Assert.AreEqual( -1, HelperWorker.GetYear( "Der.Hobbit.Smaugs.Einoede." + DateTime.Now.AddYears( 1 ) + ".EXTENDED.German.DL.1080p.BluRay.x264.mkv", ps.YearParseRegex ),
+						"Should give no year" );
 	}
 
 	[TestMethod]
 	public void GetYearTestSpecialCharNoise()
 	{
-		ParserSettings ps = new( true );
-		Assert.AreEqual( 2013, HelperWorker.GetYear( "Der,Hobbit-Smaugs;Einoedex2013?EXTENDED(German)DL/1080p*BluRay+x264#mkv", ps.YearParseRegex ),
-						"Should give a year" );
+		ParserSettings ps = new(true);
+		Assert.AreEqual( 2013, HelperWorker.GetYear( "Der,Hobbit-Smaugs;Einoedex2013?EXTENDED(German)DL/1080p*BluRay+x264#mkv", ps.YearParseRegex ), "Should give a year" );
 	}
 }

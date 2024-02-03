@@ -1,7 +1,6 @@
-﻿// 
-// MIT License
+﻿// MIT License
 // 
-// Copyright(c) 2016 - 2017
+// Copyright(c) 2016 - 2024
 // Stefan Müller, Stefm, https://Stefm.de, https://github.com/stefmde/SeriesIDParser
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -42,7 +41,7 @@ public class CoreParserCustom
 	public void CoreParserCustomRemoveParser()
 	{
 		var initialParserCount = HelperWorker.GetAllCoreParsers().Count();
-		ParserSettings ps = new( true );
+		ParserSettings ps = new(true);
 		ps.DisabledCoreParserModules.Add( new UnitTestCoreParserModule() );
 		var actualParserCount = HelperWorker.GetAllCoreParsers( ps.DisabledCoreParserModules ).Count();
 
@@ -53,7 +52,7 @@ public class CoreParserCustom
 	public void CoreParserCustomRemoveParserTwice()
 	{
 		var initialParserCount = HelperWorker.GetAllCoreParsers().Count();
-		ParserSettings ps = new( true );
+		ParserSettings ps = new(true);
 		ps.DisabledCoreParserModules.Add( new UnitTestCoreParserModule() );
 		ps.DisabledCoreParserModules.Add( new UnitTestCoreParserModule() );
 		var actualParserCount = HelperWorker.GetAllCoreParsers( ps.DisabledCoreParserModules ).Count();
@@ -73,6 +72,6 @@ public class CoreParserCustom
 	[TestMethod]
 	public void CoreParserCustomAddParser()
 	{
-		Assert.IsTrue( HelperWorker.GetAllCoreParsers().Any( x => x.Name == "UnitTestCoreParserModuleEmpty") );
+		Assert.IsTrue( HelperWorker.GetAllCoreParsers().Any( x => x.Name == "UnitTestCoreParserModuleEmpty" ) );
 	}
 }
