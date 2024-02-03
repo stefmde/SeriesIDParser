@@ -38,11 +38,11 @@ namespace SeriesIDParser;
 /// <summary>
 ///     The result object representing the series or movie string
 /// </summary>
-public class SeriesID
+public class SeriesIdParser : ISeriesIdParser
 {
 	#region Fields
 	private CoreParserResult _coreParserResult;
-	private readonly ParserSettings _parserSettings = new( true );
+	private readonly IParserSettings _parserSettings = new ParserSettings( true );
 	private readonly DateTime _parseStartTime = new();
 	private FileInfo _fileInfo;
 	private readonly bool _cacheEnabled;
@@ -52,7 +52,7 @@ public class SeriesID
 	///     ctor with optional settings. Null settings are overriden with default settings
 	/// </summary>
 	/// <param name="settings"></param>
-	public SeriesID( ParserSettings settings = null )
+	public SeriesIdParser( IParserSettings settings = null )
 	{
 		if (settings != null)
 		{
@@ -83,21 +83,20 @@ public class SeriesID
 	/// <summary>
 	///     The primary parsing function
 	/// </summary>
-	/// <param name="input">The series or movie string who get parsed. Must be atleast five chars</param>
+	/// <param name="input">The series or movie string who get parsed. Must be at least five chars</param>
 	/// <returns>The SeriesIDResult object that represents the series or movie string</returns>
-	public ParserResult Parse( string input )
+	public IParserResult Parse( string input )
 	{
 		_fileInfo = null;
 		if (_cacheEnabled)
 		{
-			ParserResult parserResult;
-			if (MediaDataCache.Instance.TryGetAsParserResult( input, out parserResult ))
+			if (MediaDataCache.Instance.TryGetAsParserResult( input, out var parserResult ))
 			{
 				return parserResult;
 			}
 		}
 
-		MediaData mediaData = CoreParser( input );
+		var mediaData = CoreParser( input );
 
 		if (_cacheEnabled)
 		{
@@ -124,7 +123,7 @@ public class SeriesID
 	/// <param name="path"></param>
 	/// <param name="searchOption"></param>
 	/// <returns></returns>
-	public IEnumerable<ParserResult> ParsePath(DirectoryInfo path, SearchOption searchOption = SearchOption.AllDirectories)
+	public List<IParserResult> ParsePath(DirectoryInfo path, SearchOption searchOption = SearchOption.AllDirectories)
 	{
 		return ParsePath(path?.FullName ?? String.Empty, searchOption);
 	}
@@ -135,25 +134,24 @@ public class SeriesID
 	/// <param name="path"></param>
 	/// <param name="searchOption"></param>
 	/// <returns></returns>
-	public IEnumerable<ParserResult> ParsePath( string path, SearchOption searchOption = SearchOption.AllDirectories )
+	public List<IParserResult> ParsePath( string path, SearchOption searchOption = SearchOption.AllDirectories )
 	{
-		List<ParserResult> results = new();
+		List<IParserResult> results = new();
 
 		if (string.IsNullOrEmpty( path ) || !Directory.Exists( path ))
 		{
 			return results;
 		}
 
-		List<FileInfo> files = HelperWorker.GetSeriesAndMovieFileInfos( path, _parserSettings, searchOption ).ToList();
+		var files = HelperWorker.GetSeriesAndMovieFileInfos( path, _parserSettings, searchOption ).ToList();
 
-		foreach (FileInfo file in files)
+		foreach (var file in files)
 		{
 			_fileInfo = file;
 
 			if (_cacheEnabled)
 			{
-				MediaData mediaData;
-				if (MediaDataCache.Instance.TryGet(file.Name, out mediaData ))
+				if (MediaDataCache.Instance.TryGet(file.Name, out var mediaData ))
 				{
 					results.Add( mediaData.ToParserResult( _parserSettings ) );
 					continue;
@@ -185,10 +183,10 @@ public class SeriesID
 				return _coreParserResult.MediaData;
 			}
 
-			// Get all corparsers activated with filter of disabled ones
-			IEnumerable<ICoreParser> coreParserModules = HelperWorker.GetAllCoreParsers( _parserSettings.DisabledCoreParserModules );
+			// Get all CoreParsers activated with filter of disabled ones
+			var coreParserModules = HelperWorker.GetAllCoreParsers( _parserSettings.DisabledCoreParserModules );
 
-			foreach (ICoreParser coreParserModule in coreParserModules)
+			foreach (var coreParserModule in coreParserModules)
 			{
 				try
 				{
@@ -200,7 +198,7 @@ public class SeriesID
 																									new List<CoreParserModuleSubState>()
 																									{
 																										new( State.Error,
-																											"Exception on executing module occoured. See exception for more details." )
+																											"Exception on executing module occurred. See exception for more details." )
 																									}, ex ) );
 
 					// Throw exception if the flag is set
@@ -214,11 +212,11 @@ public class SeriesID
 			_coreParserResult.MediaData.RemovedTokens = _coreParserResult.MediaData.RemovedTokens.OrderBy( x => x ).ToList();
 			_coreParserResult.MediaData.Resolutions = HelperWorker.MaintainUnknownResolution( _coreParserResult.MediaData.Resolutions.ToList() );
 
-			int errors = 0;
-			int warnings = 0;
-			int notice = 0;
+			var errors = 0;
+			var warnings = 0;
+			var notice = 0;
 
-			foreach (CoreParserModuleStateResult coreParserModuleStateResult in _coreParserResult.MediaData.ModuleStates)
+			foreach (var coreParserModuleStateResult in _coreParserResult.MediaData.ModuleStates)
 			{
 				errors += coreParserModuleStateResult.CoreParserModuleSubState.Count( x => x.State == State.Error );
 				warnings += coreParserModuleStateResult.CoreParserModuleSubState.Count( x => x.State == State.Warning || x.State == State.Unknown );
@@ -261,12 +259,4 @@ public class SeriesID
 			return _coreParserResult.MediaData;
 		}
 	}
-
-	// ############################################################
-	// ### Local Helper Functions
-	// ############################################################
-
-	#region HelperFunctions
-
-	#endregion HelperFunctions
 }

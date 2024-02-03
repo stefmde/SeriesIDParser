@@ -1,7 +1,6 @@
-﻿// 
 // MIT License
 // 
-// Copyright(c) 2016 - 2017
+// Copyright(c) 2016 - 2024
 // Stefan Müller, Stefm, https://Stefm.de, https://github.com/stefmde/SeriesIDParser
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -26,115 +25,146 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 
 namespace SeriesIDParser.Models;
 
-internal class MediaData
+public interface IParserResult
 {
-	///// <summary>
-	///// Contains the ParserSettings object used to generate this result object
-	///// </summary>
-	//public ParserSettings ParserSettingsUsed { get; set; } = new ParserSettings(false);
+	/// <summary>
+	///     Use only for unit tests. Do NOT set to public
+	/// </summary>
+	/// <summary>
+	///     Returns the full series string for Series, title for movies. Property is cached. string.Empty on error
+	/// </summary>
+	string FullTitle { get; }
 
 	/// <summary>
-	///     Contains tokens which are removed by the parser as string list
+	///     Contains the string that was computed by the parser. Property is cached. string.Empty on error
 	/// </summary>
-	internal IList<string> RemovedTokens { get; set; } = new List<string>();
+	string ParsedString { get; }
 
 	/// <summary>
-	///     Contains the FileInfo that is given to the parser
+	///     Contains the ID-String of a series e.g. S01E05. Property is cached. string.Empty on error
 	/// </summary>
-	internal FileInfo FileInfo { get; set; }
+	string IDString { get; }
 
 	/// <summary>
-	///     Contains the file-extension or string.Empty
+	///     Shows if a Episode is a MultiEpisode with more than one Episode in one file. Default: false
 	/// </summary>
-	internal string FileExtension { get; set; } = string.Empty;
+	bool IsMultiEpisode { get; }
 
 	/// <summary>
-	///     Contains the string that is given to the parser
+	///     Contains the ParserSettings object used to generate this result object
 	/// </summary>
-	internal string OriginalString { get; set; } = string.Empty;
-
-	/// <summary>
-	///     Contains the char who are detected as the old spacing char
-	/// </summary>
-	internal char DetectedOldSpacingChar { get; set; }
-
-	/// <summary>
-	///     Contains the series title or the movie name, depends on IsSeries
-	/// </summary>
-	internal string Title { get; set; } = string.Empty;
-
-	/// <summary>
-	///     Contains the state of the object e.g. OK_SUCCESS
-	/// </summary>
-	internal State State { get; set; } = State.Unknown;
+	IParserSettings ParserSettingsUsed { get; }
 
 	/// <summary>
 	///     Contains the state information provided by each module
 	/// </summary>
-	public List<CoreParserModuleStateResult> ModuleStates { get; internal set; } = new();
+	List<CoreParserModuleStateResult> ModuleStates { get; }
 
 	/// <summary>
-	///     Contains the Exception if any occurs. Default: null
+	///     Contains tokens which are removed by the parser as string list
 	/// </summary>
-	internal Exception Exception { get; set; }
+	List<string> RemovedTokens { get; }
 
 	/// <summary>
-	///     Specifies if the object contains a series or a movie. Default: false
+	///     Contains the FileInfo that is given to the parser
 	/// </summary>
-	internal bool IsSeries { get; set; }
+	FileInfo FileInfo { get; }
 
 	/// <summary>
-	///     Contains the AudioCodec if one is found. string.Empty on error
+	///     Contains the file-extension or string.Empty
 	/// </summary>
-	internal string AudioCodec { get; set; } = string.Empty;
+	string FileExtension { get; }
 
 	/// <summary>
-	///     Contains the VideoCodec if one is found. string.Empty on error
+	///     Contains the string that is given to the parser
 	/// </summary>
-	internal string VideoCodec { get; set; } = string.Empty;
+	string OriginalString { get; }
 
 	/// <summary>
-	///     Contains the episode title if object state is series. string.Empty on error
+	///     Contains the char who are detected as the old spacing char
 	/// </summary>
-	internal string EpisodeTitle { get; set; } = string.Empty;
+	char OldSpacingChar { get; }
 
 	/// <summary>
-	///     Contains the season id if object state is series. -1 on error
+	///     Contains the series title or the movie name, depends on IsSeries
 	/// </summary>
-	internal int Season { get; set; } = -1;
+	string Title { get; }
 
 	/// <summary>
-	///     Contains the episode id if object state is series.
+	///     Contains the state of the object e.g. OK_SUCCESS
 	/// </summary>
-	internal IEnumerable<int> Episodes { get; set; } = new List<int>();
-
-	/// <summary>
-	///     Returns the year of the episode or movie if contained, otherwise -1
-	/// </summary>
-	internal int Year { get; set; } = -1;
-
-	/// <summary>
-	///     Returns the year of the episode or movie if contained, otherwise -1
-	/// </summary>
-	internal TimeSpan ProcessingDuration { get; set; }
-
-	/// <summary>
-	///     Returns the resolution as enum. UNKNOWN on error
-	/// </summary>
-	internal IEnumerable<ResolutionsMap> Resolutions { get; set; } = new List<ResolutionsMap>();
-
-	/// <summary>
-	///     Contains the release group string if contained in the source. string.Empty on error
-	/// </summary>
-	internal string ReleaseGroup { get; set; } = string.Empty;
+	State State { get; }
 
 	/// <summary>
 	///     Contains the dimensionalType of the object e.g. Dimension_3DHOU
 	/// </summary>
-	public DimensionalType DimensionalType { get; set; } = DimensionalType.Unknown;
+	DimensionalType DimensionalType { get; }
+
+	/// <summary>
+	///     Contains the Exception if any occurs. Default: null
+	/// </summary>
+	Exception Exception { get; }
+
+	/// <summary>
+	///     Specifies if the object contains a series or a movie. Default: false
+	/// </summary>
+	bool IsSeries { get; }
+
+	/// <summary>
+	///     Specifies if the movie is a 3D series or a movie. Default: false
+	/// </summary>
+	bool Is3D { get; }
+
+	/// <summary>
+	///     Contains the AudioCodec if one is found. string.Empty on error
+	/// </summary>
+	string AudioCodec { get; }
+
+	/// <summary>
+	///     Contains the VideoCodec if one is found. string.Empty on error
+	/// </summary>
+	string VideoCodec { get; }
+
+	/// <summary>
+	///     Contains the episode title if object state is series. string.Empty on error
+	/// </summary>
+	string EpisodeTitle { get; }
+
+	/// <summary>
+	///     Contains the season id if object state is series. -1 on error
+	/// </summary>
+	int Season { get; }
+
+	/// <summary>
+	///     Contains the episode id if object state is series.
+	/// </summary>
+	List<int> Episodes { get; }
+
+	/// <summary>
+	///     Returns the year of the episode or movie if contained, otherwise -1
+	/// </summary>
+	int Year { get; }
+
+	/// <summary>
+	///     Returns the year of the episode or movie if contained, otherwise -1
+	/// </summary>
+	TimeSpan ProcessingDuration { get; }
+
+	/// <summary>
+	///     Returns the resolution as enum. UNKNOWN on error
+	/// </summary>
+	List<ResolutionsMap> Resolutions { get; }
+
+	/// <summary>
+	///     Contains the release group string if contained in the source. string.Empty on error
+	/// </summary>
+	string ReleaseGroup { get; }
+
+	/// <summary>
+	/// </summary>
+	/// <returns>FullTitle and resolution. string.Empty on error</returns>
+	string ToString();
 }

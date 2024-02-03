@@ -1,7 +1,6 @@
-﻿// 
 // MIT License
 // 
-// Copyright(c) 2016 - 2017
+// Copyright(c) 2016 - 2024
 // Stefan Müller, Stefm, https://Stefm.de, https://github.com/stefmde/SeriesIDParser
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,45 +22,41 @@
 // SOFTWARE.
 
 
-using System;
+using System.Collections.Generic;
+using System.IO;
+using SeriesIDParser.Models;
 
-namespace SeriesIDParser.Models;
+namespace SeriesIDParser;
 
-/// <summary>
-///     Contains the initial data and the result of every CoreParser
-/// </summary>
-public class CoreParserResult
+public interface ISeriesIdParser
 {
 	/// <summary>
-	///     The original string that is passed to the lib
+	///     The primary parsing function
 	/// </summary>
-	internal readonly string OriginalString;
+	/// <param name="input">The series or movie string who get parsed. Must be at least five chars</param>
+	/// <returns>The SeriesIDResult object that represents the series or movie string</returns>
+	IParserResult Parse( string input );
 
 	/// <summary>
-	///     The string who is the same on the beginning but is edited by each module
+	///     The primary parsing function
 	/// </summary>
-	internal string ModifiedString { get; set; }
+	/// <param name="input">The series or movie FileInfo who get parsed.</param>
+	/// <returns>The SeriesIDResult object that represents the series or movie string</returns>
+	ParserResult Parse( FileInfo input );
 
 	/// <summary>
-	///     The ParserSettings that is passed to the lib
+	///     Get all files in a path parsed
 	/// </summary>
-	internal readonly ParserSettings ParserSettings;
+	/// <param name="path"></param>
+	/// <param name="searchOption"></param>
+	/// <returns></returns>
+	List<IParserResult> ParsePath( DirectoryInfo path, SearchOption searchOption = SearchOption.AllDirectories );
 
 	/// <summary>
-	///     The internal ParserResult object who is used for caching
+	///     Get all files in a path parsed
 	/// </summary>
-	internal MediaData MediaData { get; set; }
-
-	/// <summary>
-	///     ctor with the object init and the important data
-	/// </summary>
-	/// <param name="originalString"></param>
-	/// <param name="parserSettings"></param>
-	internal CoreParserResult( string originalString, ParserSettings parserSettings )
-	{
-		OriginalString = originalString;
-		ModifiedString = originalString;
-		ParserSettings = parserSettings;
-		MediaData = new MediaData {OriginalString = originalString};
-	}
+	/// <param name="path"></param>
+	/// <param name="searchOption"></param>
+	/// <returns></returns>
+	List<IParserResult> ParsePath( string path, SearchOption searchOption = SearchOption.AllDirectories );
 }
