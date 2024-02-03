@@ -4,7 +4,7 @@
         <TargetFramework>net8.0</TargetFramework>
         <AssemblyVersion>12.0.0.0</AssemblyVersion>
         <FileVersion>12.0.0.0</FileVersion>
-        <Version>11.0.0</Version>
+        <Version>12.0.0</Version>
         <Company>StefmDE</Company>
         <Authors>StefmDE</Authors>
         <PackageProjectUrl>https://github.com/stefmde/SeriesIDParser</PackageProjectUrl>
@@ -12,10 +12,89 @@
         <RepositoryType>Git</RepositoryType>
         <LangVersion>12</LangVersion>
         <Nullable>disable</Nullable>
+        <Title>SeriesIDParser</Title>
+        <Description>Parses series or movie strings to detailed object.
+
+Input: "Knight.Rider.S01E01E02.Die.grosse.Duerre.German.DVDRip.AAC.XviD-c0nFuSed.mkv"
+The output would be a object like that:
+
+SeriesID (object)
+|-&gt; FullTitle -&gt; Knight.Rider.S01E07.Die.grosse.Duerre (string)
+|-&gt; SeriesTitle -&gt; Knight.Rider (string)
+|-&gt; EpisodeTitle-&gt; Die.grosse.Duerre (string)
+|-&gt; State -&gt; OK_SUCCESS (Flagable Enum)
+|-&gt; IsSeries -&gt; true (bool)
+|-&gt; IsMultiEpisode -&gt; true (bool)
+|-&gt; OriginalString-&gt; Knight.Rider.S01E07.Die.grosse.Duerre.German.DVDRip.XviD-c0nFuSed.mkv (string)
+|-&gt; ParsedString -&gt; Knight.Rider.S01E07.Die.grosse.Duerre.DVDRip.German.mkv (string)
+|-&gt; RemovedTokens -&gt; {German, DVDRip, XviD} (string-list)
+|-&gt; Season -&gt; 1 (int)
+|-&gt; DetectedOldSpacingChar -&gt; '.' (char)
+|-&gt; ProcessingDuration -&gt; (TimeSpan)
+|-&gt; Episodes -&gt; 1, 2 (int list)
+|-&gt; IDString -&gt; S01E07 (string)
+|-&gt; Resolutions -&gt; {SD_Any} (enum list)
+|-&gt; Year -&gt; 1982 (int)
+|-&gt; VideoCodec -&gt; XviD (string)
+|-&gt; AudioCodec -&gt; AAC (string)
+|-&gt; ReleaseGroup -&gt; c0nFuSed (string)
+|-&gt; FileInfo -&gt; OBJECT (FileInfo)
+|-&gt; ParserSettingsUsed -&gt; OBJECT (ParserSettingsUsed)
+|-&gt; Is3D -&gt; true (bool)
+|-&gt; DimensionalType -&gt; Dimension_3DHSBS (Enum)
+
+Check "Project Site" link for the GitHub project site.
+Icon designed by Madebyoliver from Flaticon</Description>
+        <Copyright>2016 - 2024 Stefan (StefmDE) Müller</Copyright>
+        <PackageIcon>icon_black_512px.png</PackageIcon>
+        <PackageTags>Series Movie ID String Parser Core</PackageTags>
+        <PackageReleaseNotes># Changelog #
+
+
+
+##12.0.0 (2024-02-03)##
+###New###
+- Project now supports .Net 8
+- CleanUp
+- Readme sample
+- Removed a ton of typos
+- Removed IEnumerable
+
+
+---
+
+
+
+##11.0.0 (2021-02-24)##
+###New###
+- Project now supports .Net 5
+- Support for .Net Core is closed now
+
+
+---
+
+
+
+##10.3.0 (2019-03-18)##
+###New###
+- Added file extensions ".mts" and ".m2ts"
+- Added "35mm" and "SDR" token
+
+###Fix###
+- Fixed an error where the setting for 8k detection is invalid
+- Fixed spaces in CHANGELOG-file</PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="..\Stuff\LibraryIcon\black\icon_black_512px.png">
+        <Pack>True</Pack>
+        <PackagePath></PackagePath>
+        <Link>icon_black_512px.png</Link>
+      </None>
     </ItemGroup>
 
 </Project>
