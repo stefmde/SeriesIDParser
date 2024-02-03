@@ -37,7 +37,7 @@ namespace SeriesIDParser;
 /// <summary>
 ///     The result object representing the series or movie string
 /// </summary>
-public class SeriesIdParser : ISeriesIdParser
+public class SeriesIDParser : ISeriesIDParser
 {
 	#region Fields
 	private CoreParserResult _coreParserResult;
@@ -51,7 +51,7 @@ public class SeriesIdParser : ISeriesIdParser
 	///     ctor with optional settings. Null settings are overriden with default settings
 	/// </summary>
 	/// <param name="settings"></param>
-	public SeriesIdParser( IParserSettings settings = null )
+	public SeriesIDParser( IParserSettings settings = null )
 	{
 		if (settings != null)
 		{

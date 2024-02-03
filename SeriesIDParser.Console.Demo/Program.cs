@@ -31,7 +31,7 @@ internal class Program
 {
 	static void Main( string[] args )
 	{
-		System.Console.WriteLine( "SeriesIDParserCore assembly version " + typeof(SeriesIdParser).GetTypeInfo().Assembly.GetName().Version );
+		System.Console.WriteLine( "SeriesIDParserCore assembly version " + typeof(SeriesIDParser).GetTypeInfo().Assembly.GetName().Version );
 		System.Console.WriteLine( Environment.NewLine );
 
 		System.Console.Write( "Example: Knight.Rider.S01E07.Die.grosse.Duerre.3D.HOU.1982.German.DVDRip.XviD-c0nFuSed.mkv" );
@@ -44,7 +44,7 @@ internal class Program
 		System.Console.WriteLine( Environment.NewLine );
 
 		// Creating the parser object with default settings(empty ctor)
-		SeriesIdParser serieparserResult = new();
+		SeriesIDParser serieparserResult = new();
 		var parserResult = serieparserResult.Parse( inputLine );
 
 		// Use the following three lines as a example for editing the parser settings

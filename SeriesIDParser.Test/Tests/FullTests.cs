@@ -41,7 +41,7 @@ public class FullTests
 	public void FullTestDefault()
 	{
 		ParserSettings parserSettings = new(true);
-		SeriesIdParser seriesIDParser = new(parserSettings);
+		SeriesIDParser seriesIDParser = new(parserSettings);
 		var parserResult = seriesIDParser.Parse( "Dubai.Airport.S01E05.Teil5.GERMAN.DOKU.HDTV.720p.x264.mkv" );
 
 		Assert.AreEqual( "Dubai.Airport.S01E05.Teil5", parserResult.FullTitle, "-FullTitle " );
@@ -70,7 +70,7 @@ public class FullTests
 	public void FullTestSmallSeriesAndEpisodeChar()
 	{
 		ParserSettings parserSettings = new(true);
-		SeriesIdParser seriesIDParser = new(parserSettings);
+		SeriesIDParser seriesIDParser = new(parserSettings);
 		var parserResult = seriesIDParser.Parse( "Dubai.Airport.s01e05.Teil5.GERMAN.DOKU.HDTV.720p.x264.mkv" );
 
 		Assert.AreEqual( "Dubai.Airport.S01E05.Teil5", parserResult.FullTitle, "-FullTitle " );
@@ -99,7 +99,7 @@ public class FullTests
 	public void FullTestThreeSeriesAndEpisodeChar()
 	{
 		ParserSettings parserSettings = new(true);
-		SeriesIdParser seriesIDParser = new(parserSettings);
+		SeriesIDParser seriesIDParser = new(parserSettings);
 		var parserResult = seriesIDParser.Parse( "Dubai.Airport.S001E005.Teil5.GERMAN.DOKU.HDTV.720p.x264.mkv" );
 
 		Assert.AreEqual( "Dubai.Airport.S01E05.Teil5", parserResult.FullTitle, "-FullTitle " );
@@ -128,7 +128,7 @@ public class FullTests
 	public void FullTestSingleSeriesAndEpisodeChar()
 	{
 		ParserSettings parserSettings = new(true);
-		SeriesIdParser seriesIDParser = new(parserSettings);
+		SeriesIDParser seriesIDParser = new(parserSettings);
 		var parserResult = seriesIDParser.Parse( "Dubai.Airport.S1E5.Teil5.GERMAN.DOKU.HDTV.720p.x264.mkv" );
 
 		Assert.AreEqual( "Dubai.Airport.S01E05.Teil5", parserResult.FullTitle, "-FullTitle " );
@@ -157,7 +157,7 @@ public class FullTests
 	public void FullTestDifferentSeriesAndEpisodeChar()
 	{
 		ParserSettings parserSettings = new(true);
-		SeriesIdParser seriesIDParser = new(parserSettings);
+		SeriesIDParser seriesIDParser = new(parserSettings);
 		var parserResult = seriesIDParser.Parse( "Dubai.Airport.S001E5.Teil5.GERMAN.DOKU.HDTV.720p.x264.mkv" );
 
 		Assert.AreEqual( "Dubai.Airport.S01E05.Teil5", parserResult.FullTitle, "-FullTitle " );
@@ -186,7 +186,7 @@ public class FullTests
 	public void FullTestTokenDubble()
 	{
 		ParserSettings parserSettings = new(true);
-		SeriesIdParser seriesIDParser = new(parserSettings);
+		SeriesIDParser seriesIDParser = new(parserSettings);
 		var parserResult = seriesIDParser.Parse( "Dubai.Airport.S01E05.Teil5.GERMAN.GERMAN.DOKU.HDTV.720p.x264.mkv" );
 
 		Assert.AreEqual( "Dubai.Airport.S01E05.Teil5", parserResult.FullTitle, "-FullTitle " );
@@ -215,7 +215,7 @@ public class FullTests
 	public void FullTestCustomSpacer()
 	{
 		ParserSettings parserSettings = new(true) { NewSpacingChar = '-', CacheMode = CacheMode.None };
-		SeriesIdParser seriesIDParser = new(parserSettings);
+		SeriesIDParser seriesIDParser = new(parserSettings);
 		var parserResult = seriesIDParser.Parse( "Dubai.Airport.S01E05.Teil5.GERMAN.DOKU.HDTV.720p.x264.mkv" );
 
 		Assert.AreEqual( "Dubai-Airport-S01E05-Teil5", parserResult.FullTitle, "-FullTitle " );
@@ -244,7 +244,7 @@ public class FullTests
 	public void FullTestReleaseGroup()
 	{
 		ParserSettings parserSettings = new(true);
-		SeriesIdParser seriesIDParser = new(parserSettings);
+		SeriesIDParser seriesIDParser = new(parserSettings);
 		var parserResult = seriesIDParser.Parse( "Better.Call.Saul.S02E10.GERMAN.DL.DUBBED.1080p.WebHD.h264-iNFOTv" );
 
 		Assert.AreEqual( "Better.Call.Saul.S02E10", parserResult.FullTitle, "-FullTitle " );
@@ -273,7 +273,7 @@ public class FullTests
 	public void FullTestReleaseGroupWithSpaces()
 	{
 		ParserSettings parserSettings = new(true);
-		SeriesIdParser seriesIDParser = new(parserSettings);
+		SeriesIDParser seriesIDParser = new(parserSettings);
 		var parserResult = seriesIDParser.Parse( "Better.Call.Saul.S02E10.GERMAN.DL.DUBBED.1080p.WebHD.h264 - iNFOTv" );
 
 		Assert.AreEqual( "Better.Call.Saul.S02E10", parserResult.FullTitle, "-FullTitle " );
@@ -302,7 +302,7 @@ public class FullTests
 	public void FullTestReleaseGroupWithSpacesAndExtension()
 	{
 		ParserSettings parserSettings = new(true);
-		SeriesIdParser seriesIDParser = new(parserSettings);
+		SeriesIDParser seriesIDParser = new(parserSettings);
 		var parserResult = seriesIDParser.Parse( "Better.Call.Saul.S02E10.GERMAN.DL.DUBBED.1080p.WebHD.h264 - iNFOTv.avi" );
 
 		Assert.AreEqual( "Better.Call.Saul.S02E10", parserResult.FullTitle, "-FullTitle " );
@@ -331,7 +331,7 @@ public class FullTests
 	public void FullTestMovieWithExtension()
 	{
 		ParserSettings parserSettings = new(true);
-		SeriesIdParser seriesIDParser = new(parserSettings);
+		SeriesIDParser seriesIDParser = new(parserSettings);
 		var parserResult = seriesIDParser.Parse( "Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv" );
 
 		Assert.AreEqual( "Der.Hobbit.Smaugs.Einoede", parserResult.FullTitle, "-FullTitle " );
@@ -360,7 +360,7 @@ public class FullTests
 	public void FullTestMovieDefault()
 	{
 		ParserSettings parserSettings = new(true);
-		SeriesIdParser seriesIDParser = new(parserSettings);
+		SeriesIDParser seriesIDParser = new(parserSettings);
 		var parserResult = seriesIDParser.Parse( "A.Chinese.Ghost.Story.3.1991.German.DTS.1080p.BD9.x264" );
 
 		Assert.AreEqual( "A.Chinese.Ghost.Story.3", parserResult.FullTitle, "-FullTitle " );
@@ -389,7 +389,7 @@ public class FullTests
 	public void FullTestSeriesMultiResolutions()
 	{
 		ParserSettings parserSettings = new(true);
-		SeriesIdParser seriesIDParser = new(parserSettings);
+		SeriesIDParser seriesIDParser = new(parserSettings);
 		var parserResult = seriesIDParser.Parse( "Narcos.S02E01.Endlich.frei.German.DD51.DL.1080p.720p.x264.mkv" );
 
 		Assert.AreEqual( "Narcos.S02E01.Endlich.frei", parserResult.FullTitle, "-FullTitle " );
@@ -419,7 +419,7 @@ public class FullTests
 	public void FullTestSeriesDownSampled()
 	{
 		ParserSettings parserSettings = new(true);
-		SeriesIdParser seriesIDParser = new(parserSettings);
+		SeriesIDParser seriesIDParser = new(parserSettings);
 		var parserResult = seriesIDParser.Parse( "Narcos.S02E01.Endlich.frei.German.DD51.DL.1080p.NetflixUHD.AAC.x264.mkv" );
 
 		Assert.AreEqual( "Narcos.S02E01.Endlich.frei", parserResult.FullTitle, "-FullTitle " );
@@ -449,7 +449,7 @@ public class FullTests
 	public void FullTestSeriesMultiEpisodes()
 	{
 		ParserSettings parserSettings = new(true);
-		SeriesIdParser seriesIDParser = new(parserSettings);
+		SeriesIDParser seriesIDParser = new(parserSettings);
 		var parserResult = seriesIDParser.Parse( "Narcos.S02E01E02.Endlich.frei.German.DD51.DL.1080p.720p.x264.mkv" );
 
 		Assert.AreEqual( "Narcos.S02E01E02.Endlich.frei", parserResult.FullTitle, "-FullTitle " );
@@ -479,7 +479,7 @@ public class FullTests
 	public void FullTestSeriesMultiEpisodesThree()
 	{
 		ParserSettings parserSettings = new(true);
-		SeriesIdParser seriesIDParser = new(parserSettings);
+		SeriesIDParser seriesIDParser = new(parserSettings);
 		var parserResult = seriesIDParser.Parse( "Narcos.S02E01E02E03.Endlich.frei.German.DD51.DL.1080p.720p.x264.mkv" );
 
 		Assert.AreEqual( "Narcos.S02E01E02E03.Endlich.frei", parserResult.FullTitle, "-FullTitle " );
@@ -509,7 +509,7 @@ public class FullTests
 	public void FullTestSeriesMultiEpisodesWithMissing()
 	{
 		ParserSettings parserSettings = new(true);
-		SeriesIdParser seriesIDParser = new(parserSettings);
+		SeriesIDParser seriesIDParser = new(parserSettings);
 		var parserResult = seriesIDParser.Parse( "Narcos.S02E01E02E04.Endlich.frei.German.DD51.DL.1080p.720p.x264.mkv" );
 
 		Assert.AreEqual( "Narcos.S02E01E02E04.Endlich.frei", parserResult.FullTitle, "-FullTitle " );
@@ -539,7 +539,7 @@ public class FullTests
 	public void FullTest3DDefault()
 	{
 		ParserSettings parserSettings = new(true);
-		SeriesIdParser seriesIDParser = new(parserSettings);
+		SeriesIDParser seriesIDParser = new(parserSettings);
 		var parserResult = seriesIDParser.Parse( "A.Chinese.Ghost.Story.3.3D.1991.German.DTS.1080p.BD9.x264" );
 
 		Assert.AreEqual( "A.Chinese.Ghost.Story.3", parserResult.FullTitle, "-FullTitle " );
@@ -568,7 +568,7 @@ public class FullTests
 	public void FullTest3DHOUDefault()
 	{
 		ParserSettings parserSettings = new(true);
-		SeriesIdParser seriesIDParser = new(parserSettings);
+		SeriesIDParser seriesIDParser = new(parserSettings);
 		var parserResult = seriesIDParser.Parse( "A.Chinese.Ghost.Story.3.3D.HOU.1991.German.DTS.1080p.BD9.x264" );
 
 		Assert.AreEqual( "A.Chinese.Ghost.Story.3", parserResult.FullTitle, "-FullTitle " );
@@ -597,7 +597,7 @@ public class FullTests
 	public void FullTest3DHSBSDefault()
 	{
 		ParserSettings parserSettings = new(true);
-		SeriesIdParser seriesIDParser = new(parserSettings);
+		SeriesIDParser seriesIDParser = new(parserSettings);
 		var parserResult = seriesIDParser.Parse( "A.Chinese.Ghost.Story.3.3D.HSBS.1991.German.DTS.1080p.BD9.x264" );
 
 		Assert.AreEqual( "A.Chinese.Ghost.Story.3", parserResult.FullTitle, "-FullTitle " );

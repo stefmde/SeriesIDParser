@@ -28,7 +28,7 @@ using SeriesIDParser.Models;
 
 namespace SeriesIDParser;
 
-public interface ISeriesIdParser
+public interface ISeriesIDParser
 {
 	/// <summary>
 	///     The primary parsing function

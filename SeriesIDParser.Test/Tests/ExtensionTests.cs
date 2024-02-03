@@ -153,7 +153,7 @@ public class ExtensionTests
 	public void ParseSeriesIDPathDirectoryInfoNull()
 	{
 		ParserSettings parserSettings = new(true);
-		SeriesIdParser seriesIDParser = new(parserSettings);
+		SeriesIDParser seriesIDParser = new(parserSettings);
 		DirectoryInfo directoryInfo = null;
 		var parserResults = directoryInfo.ParseSeriesIDPath();
 		Assert.IsTrue( !parserResults.Any() );
