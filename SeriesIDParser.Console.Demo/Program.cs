@@ -29,9 +29,10 @@ using System.Reflection;
 namespace SeriesIDParser.Console.Demo;
 
 [ExcludeFromCodeCoverage]
+[SuppressMessage( "ReSharper", "StringLiteralTypo" )]
 internal class Program
 {
-	static void Main( string[] args )
+	static void Main()
 	{
 		System.Console.WriteLine( "SeriesIDParserCore assembly version " + typeof(SeriesIDParser).GetTypeInfo().Assembly.GetName().Version );
 		System.Console.WriteLine( Environment.NewLine );
@@ -46,8 +47,8 @@ internal class Program
 		System.Console.WriteLine( Environment.NewLine );
 
 		// Creating the parser object with default settings(empty ctor)
-		var serieparserResult = new SeriesIDParser();
-		var parserResult = serieparserResult.Parse( inputLine );
+		var seriesIdParserResult = new SeriesIDParser();
+		var parserResult = seriesIdParserResult.Parse( inputLine );
 
 		// Use the following three lines as a example for editing the parser settings
 		//ParserSettings parserSettings = new ParserSettings();
@@ -55,7 +56,7 @@ internal class Program
 		//SeriesID seriesId2 = new SeriesID(parserSettings);
 		//ParserResult parserResult2 = seriesId2.Parse(inputLine);
 
-		// Use the folowwing line to use the fluent syntax
+		// Use the following line to use the fluent syntax
 		//ParserResult parserResult3 = new SeriesID().Parse(inputLine);
 
 		System.Console.WriteLine( "OriginalString (string): {0}", parserResult.OriginalString );
