@@ -46,7 +46,7 @@ internal class Program
 		System.Console.WriteLine( Environment.NewLine );
 
 		// Creating the parser object with default settings(empty ctor)
-		SeriesIDParser serieparserResult = new();
+		var serieparserResult = new SeriesIDParser();
 		var parserResult = serieparserResult.Parse( inputLine );
 
 		// Use the following three lines as a example for editing the parser settings

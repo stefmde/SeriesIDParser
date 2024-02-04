@@ -40,10 +40,10 @@ namespace SeriesIDParser.Test.Tests;
 public class DimensionalTests
 {
 	[Test]
-	public void DimensionalTestDefaultHOU()
+	public void DimensionalTestDefaultHou()
 	{
-		ParserSettings parserSettings = new(true);
-		SeriesIDParser seriesIDParser = new(parserSettings);
+		var parserSettings = new ParserSettings();
+		var seriesIDParser = new SeriesIDParser( parserSettings );
 		var parserResult = seriesIDParser.Parse( "Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.3D.HOU.German.DL.1080p.BluRay.x264.mkv" );
 
 		Assert.AreEqual( "Der.Hobbit.Smaugs.Einoede", parserResult.FullTitle, "-FullTitle " );
@@ -53,10 +53,10 @@ public class DimensionalTests
 	}
 
 	[Test]
-	public void DimensionalTestDefaultHSBS()
+	public void DimensionalTestDefaultHsbs()
 	{
-		ParserSettings parserSettings = new(true);
-		SeriesIDParser seriesIDParser = new(parserSettings);
+		var parserSettings = new ParserSettings();
+		var seriesIDParser = new SeriesIDParser( parserSettings );
 		var parserResult = seriesIDParser.Parse( "Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.3D.HSBS.German.DL.1080p.BluRay.x264.mkv" );
 
 		Assert.AreEqual( "Der.Hobbit.Smaugs.Einoede", parserResult.FullTitle, "-FullTitle " );
@@ -68,8 +68,8 @@ public class DimensionalTests
 	[Test]
 	public void DimensionalTestDefaultSingle()
 	{
-		ParserSettings parserSettings = new(true);
-		SeriesIDParser seriesIDParser = new(parserSettings);
+		var parserSettings = new ParserSettings();
+		var seriesIDParser = new SeriesIDParser( parserSettings );
 		var parserResult = seriesIDParser.Parse( "Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.3D.German.DL.1080p.BluRay.x264.mkv" );
 
 		Assert.AreEqual( "Der.Hobbit.Smaugs.Einoede", parserResult.FullTitle, "-FullTitle " );
@@ -81,8 +81,8 @@ public class DimensionalTests
 	[Test]
 	public void DimensionalTestNoThirdDimension()
 	{
-		ParserSettings parserSettings = new(true);
-		SeriesIDParser seriesIDParser = new(parserSettings);
+		var parserSettings = new ParserSettings();
+		var seriesIDParser = new SeriesIDParser( parserSettings );
 		var parserResult = seriesIDParser.Parse( "Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv" );
 
 		Assert.AreEqual( "Der.Hobbit.Smaugs.Einoede", parserResult.FullTitle, "-FullTitle " );
@@ -94,8 +94,8 @@ public class DimensionalTests
 	[Test]
 	public void DimensionalTestMissingSpacerHOU()
 	{
-		ParserSettings parserSettings = new(true);
-		SeriesIDParser seriesIDParser = new(parserSettings);
+		var parserSettings = new ParserSettings();
+		var seriesIDParser = new SeriesIDParser( parserSettings );
 		var parserResult = seriesIDParser.Parse( "Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.3DHOU.German.DL.1080p.BluRay.x264.mkv" );
 
 		Assert.AreEqual( "Der.Hobbit.Smaugs.Einoede", parserResult.FullTitle, "-FullTitle " );
@@ -107,10 +107,8 @@ public class DimensionalTests
 	[Test]
 	public void DimensionalTest2DToken()
 	{
-		ParserSettings parserSettings = new(true);
-		parserSettings.DimensionalString2DAny = "2D";
-		parserSettings.CacheMode = CacheMode.None;
-		SeriesIDParser seriesIDParser = new(parserSettings);
+		var parserSettings = new ParserSettings { DimensionalString2DAny = "2D", CacheMode = CacheMode.None };
+		var seriesIDParser = new SeriesIDParser( parserSettings );
 		var parserResult = seriesIDParser.Parse( "Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv" );
 
 		Assert.AreEqual( "Der.Hobbit.Smaugs.Einoede", parserResult.FullTitle, "-FullTitle " );

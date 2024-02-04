@@ -22,16 +22,13 @@
 // SOFTWARE.
 
 
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NUnit.Framework;
 using SeriesIDParser.Models;
 using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
-// ReSharper disable MissingXmlDoc
 
 namespace SeriesIDParser.Test.Tests;
 
@@ -96,8 +93,8 @@ public class FullPathTests
 	[Test]
 	public void FullPathTestEmptyAsString()
 	{
-		ParserSettings parserSettings = new(true);
-		SeriesIDParser seriesIDParser = new(parserSettings);
+		var parserSettings = new ParserSettings();
+		var seriesIDParser = new SeriesIDParser( parserSettings );
 		var parserResults = seriesIDParser.ParsePath( Constants.TestDataDirectoryEmptyRoot );
 		Assert.IsTrue( !parserResults.Any() );
 	}
@@ -105,9 +102,9 @@ public class FullPathTests
 	[Test]
 	public void FullPathTestEmptyAsDirectoryInfo()
 	{
-		ParserSettings parserSettings = new(true);
-		SeriesIDParser seriesIDParser = new(parserSettings);
-		DirectoryInfo directoryInfo = new(Constants.TestDataDirectoryEmptyRoot);
+		var parserSettings = new ParserSettings();
+		var seriesIDParser = new SeriesIDParser( parserSettings );
+		var directoryInfo = new DirectoryInfo( Constants.TestDataDirectoryEmptyRoot );
 		var parserResults = seriesIDParser.ParsePath( directoryInfo );
 		Assert.IsTrue( !parserResults.Any() );
 	}

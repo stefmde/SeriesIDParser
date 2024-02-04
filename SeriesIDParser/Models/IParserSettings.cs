@@ -166,7 +166,7 @@ public interface IParserSettings
 	///     Defines the string who is converted from the enum DimensionalType to something readable for e.g. the ParsedString.
 	///     Default: '3D.HOU'
 	/// </summary>
-	string DimensionalString3DHOU { get; set; }
+	string DimensionalString3DHou { get; set; }
 
 	/// <summary>
 	///     Defines the string who is converted from the enum DimensionalType to something readable for e.g. the ParsedString.

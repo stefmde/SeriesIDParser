@@ -40,7 +40,7 @@ public class CacheTests
 	[Test]
 	public void CacheDictionaryInit()
 	{
-		CacheDictionary cacheDictionary = new(10);
+		var cacheDictionary = new CacheDictionary( 10 );
 		Assert.AreEqual( 10, cacheDictionary.Limit, " -LimitCount" );
 		Assert.AreEqual( 0, cacheDictionary.Count, " -ItemCount" );
 		Assert.AreEqual( false, cacheDictionary.IsFull, " -IsFull" );
@@ -52,18 +52,18 @@ public class CacheTests
 	[Test]
 	public void CacheDictionaryDrop()
 	{
-		CacheDictionary cacheDictionary = new(10);
+		var cacheDictionary = new CacheDictionary( 10 );
 
 		for (var i = 1; i <= 11; i++)
 		{
-			cacheDictionary.Add( "Key_" + i, new MediaData() { Title = "Title_" + i } );
+			cacheDictionary.Add( "Key_" + i, new MediaData { Title = "Title_" + i } );
 		}
 
 		Assert.IsFalse( cacheDictionary.Contains( "Key_1" ), " -DroppedKey" );
 
 		for (var i = 2; i < 11; i++)
 		{
-			KeyValuePair<string, MediaData> keyValuePair = new("Key_" + i, new MediaData() { Title = "Title_" + i });
+			var keyValuePair = new KeyValuePair<string, MediaData>( "Key_" + i, new MediaData { Title = "Title_" + i } );
 
 			Assert.IsTrue( cacheDictionary.Contains( keyValuePair.Key ), " -Key" );
 			Assert.IsTrue( cacheDictionary.Contains( keyValuePair ), " -KeyValuePair" );

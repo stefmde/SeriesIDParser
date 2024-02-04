@@ -34,6 +34,7 @@ using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace SeriesIDParser.Test.Tests;
 
+[SuppressMessage( "ReSharper", "StringLiteralTypo" )]
 [ExcludeFromCodeCoverage]
 [TestFixture]
 public class ReplaceTokensTests
@@ -41,13 +42,13 @@ public class ReplaceTokensTests
 	[Test]
 	public void ReplaceTokensTestDefault()
 	{
-		ParserSettings ps = new(true);
+		var ps = new ParserSettings();
 
 		// Regular Test
 		ps.ReplaceRegexWithoutListTokens.Add( new KeyValuePair<string, string>( "EXTENDED", "." ) );
 		var input = "Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv";
 		var expected = "Der.Hobbit.Smaugs.Einoede.2013.German.DL.1080p.BluRay.x264.mkv";
-		List<string> expectedOutputList = new() { };
+		List<string> expectedOutputList = [];
 
 		var actualRemovedTokens = HelperWorker.ReplaceTokens( ref input, ".", ps.ReplaceRegexWithoutListTokens, false );
 		Assert.AreEqual( expected, input, " String compare " );
@@ -57,13 +58,13 @@ public class ReplaceTokensTests
 	[Test]
 	public void ReplaceTokensTestDots()
 	{
-		ParserSettings ps = new(true);
+		var ps = new ParserSettings();
 
 		ps.ReplaceRegexWithoutListTokens.Clear();
 		ps.ReplaceRegexWithoutListTokens.Add( new KeyValuePair<string, string>( ".EXTENDED.", "." ) );
 		var input = "Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv";
 		var expected = "Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv";
-		List<string> expectedOutputList = new() { };
+		List<string> expectedOutputList = [];
 
 		var actualRemovedTokens = HelperWorker.ReplaceTokens( ref input, ".", ps.ReplaceRegexWithoutListTokens, false );
 		Assert.AreEqual( expected, input, " String compare " );
@@ -73,13 +74,13 @@ public class ReplaceTokensTests
 	[Test]
 	public void ReplaceTokensTestCase()
 	{
-		ParserSettings ps = new(true);
+		var ps = new ParserSettings();
 
 		ps.ReplaceRegexWithoutListTokens.Clear();
 		ps.ReplaceRegexWithoutListTokens.Add( new KeyValuePair<string, string>( "extended", "." ) );
 		var input = "Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv";
 		var expected = "Der.Hobbit.Smaugs.Einoede.2013.German.DL.1080p.BluRay.x264.mkv";
-		List<string> expectedOutputList = new() { };
+		List<string> expectedOutputList = [];
 
 		var actualRemovedTokens = HelperWorker.ReplaceTokens( ref input, ".", ps.ReplaceRegexWithoutListTokens, false );
 		Assert.AreEqual( expected, input, " String compare " );
@@ -89,11 +90,11 @@ public class ReplaceTokensTests
 	[Test]
 	public void ReplaceTokensTestNothing()
 	{
-		ParserSettings ps = new(true);
+		var ps = new ParserSettings();
 
 		var input = "Der,Hobbit,Smaugs,Einoede,2013,EXTENDED,German,DL,1080p,BluRay,x264.mkv";
 		var expected = "Der,Hobbit,Smaugs,Einoede,2013,EXTENDED,German,DL,1080p,BluRay,x264.mkv";
-		List<string> expectedOutputList = new() { };
+		List<string> expectedOutputList = [];
 
 		var actualRemovedTokens = HelperWorker.ReplaceTokens( ref input, ".", ps.ReplaceRegexWithoutListTokens, false );
 		Assert.AreEqual( expected, input, " String compare " );
@@ -103,12 +104,11 @@ public class ReplaceTokensTests
 	[Test]
 	public void ReplaceTokensTestEmptyList()
 	{
-		ParserSettings ps = new(true);
+		var ps = new ParserSettings { ReplaceRegexWithoutListTokens = [] };
 
-		ps.ReplaceRegexWithoutListTokens = new List<KeyValuePair<string, string>>();
 		var input = "Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv";
 		var expected = "Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv";
-		List<string> expectedOutputList = new() { };
+		List<string> expectedOutputList = [];
 
 		var actualRemovedTokens = HelperWorker.ReplaceTokens( ref input, ".", ps.ReplaceRegexWithoutListTokens, false );
 		Assert.AreEqual( expected, input, " String compare " );
@@ -118,12 +118,11 @@ public class ReplaceTokensTests
 	[Test]
 	public void ReplaceTokensTestNullList()
 	{
-		ParserSettings ps = new(true);
+		var ps = new ParserSettings { ReplaceRegexWithoutListTokens = null };
 
-		ps.ReplaceRegexWithoutListTokens = null;
 		var input = "Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv";
 		var expected = "Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv";
-		List<string> expectedOutputList = new() { };
+		List<string> expectedOutputList = [];
 
 		var actualRemovedTokens = HelperWorker.ReplaceTokens( ref input, ".", ps.ReplaceRegexWithoutListTokens, false );
 		Assert.AreEqual( expected, input, " String compare " );
@@ -133,15 +132,14 @@ public class ReplaceTokensTests
 	[Test]
 	public void ReplaceTokensTestRegexTest()
 	{
-		ParserSettings ps = new(true);
+		var ps = new ParserSettings { ReplaceRegexWithoutListTokens = [] };
 
-		ps.ReplaceRegexWithoutListTokens = new List<KeyValuePair<string, string>>();
 		ps.ReplaceRegexWithoutListTokens.Clear();
 		ps.ReplaceRegexWithoutListTokens.Add( new KeyValuePair<string, string>( "e.tended", "." ) );
 
 		var input = "Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv";
 		var expected = "Der.Hobbit.Smaugs.Einoede.2013.German.DL.1080p.BluRay.x264.mkv";
-		List<string> expectedOutputList = new() { };
+		List<string> expectedOutputList = [];
 
 		var actualRemovedTokens = HelperWorker.ReplaceTokens( ref input, ".", ps.ReplaceRegexWithoutListTokens, false );
 		Assert.AreEqual( expected, input, " String compare " );

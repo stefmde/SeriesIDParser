@@ -37,7 +37,7 @@ internal class MediaDataCache
 {
 	#region FieldsAndProperties
 	private static CacheDictionary _cacheDictionary;
-	public static IParserSettings ParserSettings { get; private set; }
+	private static IParserSettings ParserSettings { get; set; }
 
 	private static MediaDataCache _instance;
 
@@ -123,7 +123,7 @@ internal class MediaDataCache
 	}
 
 	/// <summary>
-	/// Gets a result from the cache
+	///     Gets a result from the cache
 	/// </summary>
 	/// <param name="fileName"></param>
 	/// <returns></returns>
@@ -169,7 +169,7 @@ internal class MediaDataCache
 	}
 
 	/// <summary>
-	/// Replaces a cache item
+	///     Replaces a cache item
 	/// </summary>
 	/// <param name="fileName"></param>
 	/// <param name="data"></param>

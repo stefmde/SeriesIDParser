@@ -34,9 +34,9 @@ namespace SeriesIDParser.Test;
 internal static class Constants
 {
 	public static readonly string TestDataRoot = @"TestData";
-	
+
 	public static readonly string TestDataDirectoryCleanRoot = $"{TestDataRoot}{Path.DirectorySeparatorChar}Clean";
-	public static readonly string TestDataDirectoryDirtyRoot =$"{TestDataRoot}{Path.DirectorySeparatorChar}Dirty";
+	public static readonly string TestDataDirectoryDirtyRoot = $"{TestDataRoot}{Path.DirectorySeparatorChar}Dirty";
 	public static readonly string TestDataDirectoryEmptyRoot = $"{TestDataRoot}{Path.DirectorySeparatorChar}Empty";
 	public static readonly string TestDataDirectoryRemovedRoot = $"{TestDataRoot}{Path.DirectorySeparatorChar}Removed";
 

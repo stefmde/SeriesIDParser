@@ -38,7 +38,7 @@ namespace SeriesIDParser.Test.Tests;
 public class ExtensionTests
 {
 	private const string Title = "Der.Regenmacher";
-	
+
 	// ### Single File - String
 	// ##################################################
 	[Test]
@@ -64,7 +64,7 @@ public class ExtensionTests
 	[Test]
 	public void ParseSeriesIDStringEmptyInput()
 	{
-		var parserResult = String.Empty.ParseSeriesID();
+		var parserResult = string.Empty.ParseSeriesID();
 		Assert.IsTrue( parserResult.State == State.Error );
 		Assert.IsTrue( parserResult.Exception == null );
 	}
@@ -84,7 +84,7 @@ public class ExtensionTests
 	[Test]
 	public void ParseSeriesIDFileInfoNullInput()
 	{
-		ParserSettings parserSettings = new(true);
+		var parserSettings = new ParserSettings();
 		var parserResult = ((FileInfo)null).ParseSeriesID( parserSettings );
 		Assert.IsTrue( parserResult.State == State.Error );
 		Assert.IsTrue( parserResult.Exception == null );
@@ -110,11 +110,11 @@ public class ExtensionTests
 		Assert.IsTrue( parserResults.LastOrDefault( x => x.IsSeries )?.Season == 2 );
 		Assert.IsTrue( parserResults.LastOrDefault( x => !x.IsSeries )?.Title == Title );
 	}
-	
+
 	[Test]
 	public void ParseSeriesIDPathStringCustomSettings()
 	{
-		var parserResults = Constants.TestDataDirectoryCleanRoot.ParseSeriesIDPath(new ParserSettings());
+		var parserResults = Constants.TestDataDirectoryCleanRoot.ParseSeriesIDPath( new ParserSettings() );
 		Assert.IsTrue( parserResults.Count() == 2 );
 		Assert.IsTrue( parserResults.LastOrDefault( x => x.IsSeries )?.Season == 2 );
 		Assert.IsTrue( parserResults.LastOrDefault( x => !x.IsSeries )?.Title == Title );
@@ -123,7 +123,7 @@ public class ExtensionTests
 	[Test]
 	public void ParseSeriesIDPathNullString()
 	{
-		var parserSettings = new ParserSettings( true );
+		var parserSettings = new ParserSettings();
 		var parserResults = ((string)null).ParseSeriesIDPath( parserSettings );
 		Assert.IsTrue( !parserResults.Any() );
 	}

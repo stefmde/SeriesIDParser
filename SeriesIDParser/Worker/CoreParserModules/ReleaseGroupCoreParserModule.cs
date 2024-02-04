@@ -23,7 +23,6 @@
 
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using SeriesIDParser.Models;
 
@@ -42,7 +41,7 @@ public class ReleaseGroupCoreParserModule : ICoreParser
 
 	private State _state = State.Unknown;
 
-	private string _errorOrWarningMessage = String.Empty;
+	private string _errorOrWarningMessage = string.Empty;
 
 	/// <inheritdoc />
 	public CoreParserResult Parse( CoreParserResult inputResult )
@@ -58,7 +57,7 @@ public class ReleaseGroupCoreParserModule : ICoreParser
 				var separatorIndex = inputResult.ModifiedString.LastIndexOf( inputResult.ParserSettings.ReleaseGroupSeparator );
 				outputResult.MediaData.ReleaseGroup = string.IsNullOrEmpty( inputResult.MediaData.FileExtension )
 														? inputResult.ModifiedString.Substring( separatorIndex + 1 ).Trim()
-														: inputResult.ModifiedString.Substring( separatorIndex + 1 ).Replace( inputResult.MediaData.FileExtension, "" ).Trim();
+														: inputResult.ModifiedString.Substring( separatorIndex + 1 ).Replace( inputResult.MediaData.FileExtension, string.Empty ).Trim();
 				outputResult.ModifiedString = outputResult.ModifiedString.Remove( separatorIndex ).Trim();
 				_state = State.Success;
 			}
@@ -74,7 +73,7 @@ public class ReleaseGroupCoreParserModule : ICoreParser
 			_errorOrWarningMessage = "String to short to parse for ReleaseGroup";
 		}
 
-		outputResult.MediaData.ModuleStates.Add( new CoreParserModuleStateResult( Name, new List<CoreParserModuleSubState>() { new(_state, _errorOrWarningMessage) } ) );
+		outputResult.MediaData.ModuleStates.Add( new CoreParserModuleStateResult( Name, [new CoreParserModuleSubState( _state, _errorOrWarningMessage )] ) );
 
 		return outputResult;
 	}

@@ -45,11 +45,11 @@ internal static class HelperWorker
 	{
 		var interfaceType = typeof(ICoreParser);
 		var types = AppDomain.CurrentDomain.GetAssemblies().SelectMany( s => s.GetTypes() ).Where( x => interfaceType.IsAssignableFrom( x ) && !x.IsInterface && x.IsClass );
-		List<ICoreParser> coreParserModules = new();
+		List<ICoreParser> coreParserModules = [];
 
 		foreach (var type in types)
 		{
-			if (disabledCoreParsers == null || (disabledCoreParsers != null && disabledCoreParsers.All( x => x.GetType() != type )))
+			if (disabledCoreParsers == null || disabledCoreParsers.All( x => x.GetType() != type ))
 			{
 				coreParserModules.Add( (ICoreParser)Activator.CreateInstance( type ) );
 			}
@@ -177,7 +177,7 @@ internal static class HelperWorker
 	{
 		var year = -1;
 
-		Regex yearRegex = new(regex);
+		var yearRegex = new Regex( regex );
 		var matches = yearRegex.Matches( title );
 
 		foreach (Match match in matches)
@@ -197,7 +197,7 @@ internal static class HelperWorker
 		return year;
 	}
 
-	internal struct CharRating
+	private struct CharRating
 	{
 		internal char Char;
 		internal int Count;
@@ -211,7 +211,7 @@ internal static class HelperWorker
 	/// <returns>returns an empty string or the spacing char</returns>
 	internal static char GetSpacingChar( string input, IParserSettings settings )
 	{
-		char foundChar = new();
+		var foundChar = new char();
 
 		var charRating = settings.PossibleSpacingChars.Select( item => new CharRating { Char = item, Count = 0 } ).ToList();
 
@@ -270,7 +270,7 @@ internal static class HelperWorker
 	internal static IEnumerable<string> FindTokens( ref string fullTitle, string oldSpacingChar, List<string> removeTokens, bool addRemovedToList, bool removeTokensFromInput = true )
 	{
 		var ret = fullTitle;
-		List<string> foundTokens = new();
+		List<string> foundTokens = [];
 
 		if (fullTitle == null || oldSpacingChar == null || removeTokens == null || removeTokens.Count == 0)
 		{
@@ -328,8 +328,8 @@ internal static class HelperWorker
 	internal static List<string> ReplaceTokens( ref string input, string oldSpacingChar, List<KeyValuePair<string, string>> replaceList, bool addRemovedToList )
 	{
 		var ret = input;
-		List<string> foundTokens = new();
-		if (replaceList == null || (replaceList != null && !replaceList.Any()))
+		List<string> foundTokens = [];
+		if (replaceList == null || !replaceList.Any())
 		{
 			ret = input;
 		}
@@ -401,8 +401,8 @@ internal static class HelperWorker
 	/// <returns></returns>
 	internal static List<ResolutionsMap> GetResolutions( IParserSettings ps, char oldSpacer, ref string fullTitle )
 	{
-		List<ResolutionsMap> tempFoundResolutions = new();
-		List<ResolutionsMap> foundResolutions = new();
+		List<ResolutionsMap> tempFoundResolutions = [];
+		List<ResolutionsMap> foundResolutions = [];
 
 		// Try get 8K
 		tempFoundResolutions.AddRange( GetResolutionByResMap( ps.DetectUltraHD8kTokens, ResolutionsMap.UltraHD8K_4320p, oldSpacer, ref fullTitle ) );
@@ -437,23 +437,25 @@ internal static class HelperWorker
 	/// <param name="res">The given resolution wo is targeted by the ResMap tokens</param>
 	/// <param name="oldSpacingChar">the spacing char in the given string</param>
 	/// <param name="fullTitle">The given string who should be analyzed</param>
-	internal static List<ResolutionsMap> GetResolutionByResMap( List<string> resolutionMap, ResolutionsMap res, char oldSpacingChar, ref string fullTitle )
+	private static List<ResolutionsMap> GetResolutionByResMap( List<string> resolutionMap, ResolutionsMap res, char oldSpacingChar, ref string fullTitle )
 	{
 		var spacer = Regex.Escape( oldSpacingChar.ToString() );
-		List<ResolutionsMap> foundResolutions = new();
+		List<ResolutionsMap> foundResolutions = [];
 
 		foreach (var item in resolutionMap)
 		{
-			Regex removeRegex = new(spacer + item + spacer, RegexOptions.IgnoreCase);
+			var removeRegex = new Regex( spacer + item + spacer, RegexOptions.IgnoreCase );
 
-			if (removeRegex.IsMatch( fullTitle ))
+			if (!removeRegex.IsMatch( fullTitle ))
 			{
-				// Search with spacer but remove without spacer
-				removeRegex = new Regex( item, RegexOptions.IgnoreCase );
-				foundResolutions.Add( res );
-
-				fullTitle = removeRegex.Replace( fullTitle, "" );
+				continue;
 			}
+
+			// Search with spacer but remove without spacer
+			removeRegex = new Regex( item, RegexOptions.IgnoreCase );
+			foundResolutions.Add( res );
+
+			fullTitle = removeRegex.Replace( fullTitle, "" );
 		}
 
 		return foundResolutions;
@@ -468,7 +470,7 @@ internal static class HelperWorker
 	/// <returns></returns>
 	internal static DimensionalType GetDimensionalType( IParserSettings ps, char oldSpacer, ref string fullTitle )
 	{
-		List<DimensionalType> tempDimensionalTypes = new();
+		List<DimensionalType> tempDimensionalTypes = [];
 		DimensionalType foundDimensionalType;
 
 		// Try get 3D HSBS
@@ -507,23 +509,25 @@ internal static class HelperWorker
 	/// <param name="oldSpacingChar"></param>
 	/// <param name="fullTitle"></param>
 	/// <returns></returns>
-	internal static List<DimensionalType> GetDimensionalTypeByResMap( List<string> dimensionalTypeMap, DimensionalType type, char oldSpacingChar, ref string fullTitle )
+	private static List<DimensionalType> GetDimensionalTypeByResMap( List<string> dimensionalTypeMap, DimensionalType type, char oldSpacingChar, ref string fullTitle )
 	{
 		var spacer = Regex.Escape( oldSpacingChar.ToString() );
-		List<DimensionalType> foundDimensionalType = new();
+		List<DimensionalType> foundDimensionalType = [];
 
 		foreach (var item in dimensionalTypeMap)
 		{
-			Regex removeRegex = new(spacer + item + spacer, RegexOptions.IgnoreCase);
+			var removeRegex = new Regex( spacer + item + spacer, RegexOptions.IgnoreCase );
 
-			if (removeRegex.IsMatch( fullTitle ))
+			if (!removeRegex.IsMatch( fullTitle ))
 			{
-				// Search with spacer but remove without spacer
-				removeRegex = new Regex( item, RegexOptions.IgnoreCase );
-				foundDimensionalType.Add( type );
-
-				fullTitle = removeRegex.Replace( fullTitle, "" );
+				continue;
 			}
+
+			// Search with spacer but remove without spacer
+			removeRegex = new Regex( item, RegexOptions.IgnoreCase );
+			foundDimensionalType.Add( type );
+
+			fullTitle = removeRegex.Replace( fullTitle, "" );
 		}
 
 		return foundDimensionalType;
@@ -537,8 +541,8 @@ internal static class HelperWorker
 	/// <returns></returns>
 	internal static List<string> RemoveTokens( IParserSettings ps, char oldSpacer, ref string fullTitle )
 	{
-		List<string> tempFoundTokens = new();
-		List<string> foundResolutions = new();
+		List<string> tempFoundTokens = [];
+		List<string> foundResolutions = [];
 
 		tempFoundTokens.AddRange( FindTokens( ref fullTitle, oldSpacer.ToString(), ps.RemoveAndListTokens, true ) );
 		tempFoundTokens.AddRange( FindTokens( ref fullTitle, oldSpacer.ToString(), ps.RemoveWithoutListTokens, false ) );
@@ -612,7 +616,7 @@ internal static class HelperWorker
 	/// <returns>The episode title if one is fround or string.Empty</returns>
 	internal static string GetEpisodeTitle( IParserSettings ps, string fullTitle )
 	{
-		Regex seRegex = new(ps.SeasonAndEpisodeParseRegex);
+		var seRegex = new Regex( ps.SeasonAndEpisodeParseRegex );
 		var match = seRegex.Match( fullTitle.ToUpper() );
 		var episodeTitle = string.Empty;
 
@@ -633,7 +637,7 @@ internal static class HelperWorker
 
 	internal static string GetTitle( IParserSettings ps, char oldSpacingChar, string fullTitle )
 	{
-		Regex seRegex = new(ps.SeasonAndEpisodeParseRegex);
+		var seRegex = new Regex( ps.SeasonAndEpisodeParseRegex );
 		var match = seRegex.Match( fullTitle.ToUpper() );
 		var title = string.Empty;
 
@@ -662,7 +666,7 @@ internal static class HelperWorker
 	{
 		var season = -1;
 
-		Regex seRegex = new(ps.SeasonAndEpisodeParseRegex);
+		var seRegex = new Regex( ps.SeasonAndEpisodeParseRegex );
 		var match = seRegex.Match( fullTitle.ToUpper() );
 
 		if (IsSeries( ps, fullTitle ))
@@ -681,9 +685,9 @@ internal static class HelperWorker
 	/// <returns>Episode's as int list</returns>
 	internal static List<int> GetEpisodeIDs( IParserSettings ps, string fullTitle )
 	{
-		List<int> episodes = new();
+		List<int> episodes = [];
 
-		Regex seRegex = new(ps.SeasonAndEpisodeParseRegex);
+		var seRegex = new Regex( ps.SeasonAndEpisodeParseRegex );
 		var match = seRegex.Match( fullTitle.ToUpper() );
 
 		if (IsSeries( ps, fullTitle ))
@@ -706,7 +710,7 @@ internal static class HelperWorker
 	internal static bool IsSeries( IParserSettings ps, string fullTitle )
 	{
 		var isSeries = false;
-		Regex seRegex = new(ps.SeasonAndEpisodeParseRegex);
+		var seRegex = new Regex( ps.SeasonAndEpisodeParseRegex );
 		var match = seRegex.Match( fullTitle.ToUpper() );
 
 		if (match.Success)
@@ -726,12 +730,9 @@ internal static class HelperWorker
 	/// <returns></returns>
 	internal static IEnumerable<string> GetSeriesAndMovieFiles( string path, ParserSettings parserSettings = null, SearchOption searchOption = SearchOption.AllDirectories )
 	{
-		List<string> files = new();
+		List<string> files = [];
 
-		if (parserSettings == null)
-		{
-			parserSettings = new ParserSettings( true );
-		}
+		parserSettings ??= new ParserSettings();
 
 		if (path == null)
 		{
@@ -753,19 +754,16 @@ internal static class HelperWorker
 	/// <returns></returns>
 	internal static IEnumerable<FileInfo> GetSeriesAndMovieFileInfos( string path, IParserSettings parserSettings = null, SearchOption searchOption = SearchOption.AllDirectories )
 	{
-		List<FileInfo> files = new();
+		List<FileInfo> files = [];
 
-		if (parserSettings == null)
-		{
-			parserSettings = new ParserSettings( true );
-		}
+		parserSettings ??= new ParserSettings();
 
 		if (path == null)
 		{
 			return files;
 		}
 
-		DirectoryInfo di = new(path);
+		var di = new DirectoryInfo( path );
 
 		files = di.GetFiles( "*.*", searchOption ).Select( d => d ).Where( f => parserSettings.FileExtensions.Select( d => d.ToLower() ).Contains( f.Extension.ToLower() ) ).ToList();
 
@@ -774,13 +772,13 @@ internal static class HelperWorker
 
 	public static string GetDimensionalTypeString( IParserSettings parserSettings, DimensionalType dimensionalType )
 	{
-		switch (dimensionalType)
+		return dimensionalType switch
 		{
-			case DimensionalType.Dimension_3DAny: return parserSettings.DimensionalString3DAny;
-			case DimensionalType.Dimension_2DAny: return parserSettings.DimensionalString2DAny;
-			case DimensionalType.Dimension_3DHSBS: return parserSettings.DimensionalString3DHSBS;
-			case DimensionalType.Dimension_3DHOU: return parserSettings.DimensionalString3DHOU;
-			default: return string.Empty;
-		}
+			DimensionalType.Dimension_3DAny => parserSettings.DimensionalString3DAny,
+			DimensionalType.Dimension_2DAny => parserSettings.DimensionalString2DAny,
+			DimensionalType.Dimension_3DHSBS => parserSettings.DimensionalString3DHSBS,
+			DimensionalType.Dimension_3DHOU => parserSettings.DimensionalString3DHou,
+			_ => string.Empty
+		};
 	}
 }

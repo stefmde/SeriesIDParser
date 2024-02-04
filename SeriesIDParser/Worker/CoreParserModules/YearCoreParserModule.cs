@@ -23,7 +23,6 @@
 
 
 using System;
-using System.Collections.Generic;
 using SeriesIDParser.Models;
 
 namespace SeriesIDParser.Worker.CoreParserModules;
@@ -41,7 +40,7 @@ public class YearCoreParserModule : ICoreParser
 
 	private State _state = State.Unknown;
 
-	private string _errorOrWarningMessage = String.Empty;
+	private string _errorOrWarningMessage = string.Empty;
 
 	/// <inheritdoc />
 	public CoreParserResult Parse( CoreParserResult inputResult )
@@ -58,10 +57,10 @@ public class YearCoreParserModule : ICoreParser
 		{
 			outputResult.MediaData.Year = year;
 			_state = State.Success;
-			outputResult.ModifiedString = outputResult.ModifiedString.Replace( year.ToString(), "" );
+			outputResult.ModifiedString = outputResult.ModifiedString.Replace( year.ToString(), string.Empty );
 		}
 
-		outputResult.MediaData.ModuleStates.Add( new CoreParserModuleStateResult( Name, new List<CoreParserModuleSubState>() { new(_state, _errorOrWarningMessage) } ) );
+		outputResult.MediaData.ModuleStates.Add( new CoreParserModuleStateResult( Name, [new CoreParserModuleSubState( _state, _errorOrWarningMessage )] ) );
 
 		return outputResult;
 	}

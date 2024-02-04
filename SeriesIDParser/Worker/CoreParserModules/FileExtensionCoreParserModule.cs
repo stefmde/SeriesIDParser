@@ -23,7 +23,6 @@
 
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using SeriesIDParser.Models;
@@ -43,7 +42,7 @@ public class FileExtensionCoreParserModule : ICoreParser
 
 	private State _state = State.Unknown;
 
-	private string _errorOrWarningMessage = String.Empty;
+	private string _errorOrWarningMessage = string.Empty;
 
 	/// <inheritdoc />
 	public CoreParserResult Parse( CoreParserResult inputResult )
@@ -60,12 +59,12 @@ public class FileExtensionCoreParserModule : ICoreParser
 		{
 			outputResult.MediaData.FileExtension = extension.ToLower();
 
-			Regex removeRegex = new(outputResult.MediaData.FileExtension, RegexOptions.IgnoreCase);
-			outputResult.ModifiedString = removeRegex.Replace( outputResult.ModifiedString, "" );
+			var removeRegex = new Regex( outputResult.MediaData.FileExtension, RegexOptions.IgnoreCase );
+			outputResult.ModifiedString = removeRegex.Replace( outputResult.ModifiedString, string.Empty );
 			_state = State.Success;
 		}
 
-		outputResult.MediaData.ModuleStates.Add( new CoreParserModuleStateResult( Name, new List<CoreParserModuleSubState>() { new(_state, _errorOrWarningMessage) } ) );
+		outputResult.MediaData.ModuleStates.Add( new CoreParserModuleStateResult( Name, [new CoreParserModuleSubState( _state, _errorOrWarningMessage )] ) );
 
 		return outputResult;
 	}

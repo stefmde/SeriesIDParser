@@ -23,7 +23,6 @@
 
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using SeriesIDParser.Models;
@@ -45,7 +44,7 @@ public class OldSpacingCharCoreParserModule : ICoreParser
 
 	private State _state = State.Unknown;
 
-	private string _errorOrWarningMessage = String.Empty;
+	private string _errorOrWarningMessage = string.Empty;
 
 	/// <inheritdoc />
 	public CoreParserResult Parse( CoreParserResult inputResult )
@@ -64,7 +63,7 @@ public class OldSpacingCharCoreParserModule : ICoreParser
 			_errorOrWarningMessage = "No OldSpacingChar found";
 		}
 
-		outputResult.MediaData.ModuleStates.Add( new CoreParserModuleStateResult( Name, new List<CoreParserModuleSubState>() { new(_state, _errorOrWarningMessage) } ) );
+		outputResult.MediaData.ModuleStates.Add( new CoreParserModuleStateResult( Name, [new CoreParserModuleSubState( _state, _errorOrWarningMessage )] ) );
 
 		return outputResult;
 	}

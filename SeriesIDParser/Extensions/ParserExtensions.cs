@@ -47,7 +47,7 @@ public static class ParserExtensions
 	/// <returns></returns>
 	public static IParserResult ParseSeriesID( this string input )
 	{
-		SeriesIDParser sid = new();
+		var sid = new SeriesIDParser();
 		return sid.Parse( input );
 	}
 
@@ -59,7 +59,7 @@ public static class ParserExtensions
 	/// <returns></returns>
 	public static IParserResult ParseSeriesID( this string input, ParserSettings settings )
 	{
-		SeriesIDParser sid = new(settings);
+		var sid = new SeriesIDParser( settings );
 		return sid.Parse( input );
 	}
 	#endregion String
@@ -74,7 +74,7 @@ public static class ParserExtensions
 	/// <returns></returns>
 	public static IParserResult ParseSeriesID( this FileInfo input )
 	{
-		SeriesIDParser sid = new();
+		var sid = new SeriesIDParser();
 		return sid.Parse( input );
 	}
 
@@ -86,7 +86,7 @@ public static class ParserExtensions
 	/// <returns></returns>
 	public static IParserResult ParseSeriesID( this FileInfo input, ParserSettings settings )
 	{
-		SeriesIDParser sid = new(settings);
+		var sid = new SeriesIDParser( settings );
 		return sid.Parse( input );
 	}
 	#endregion FileInfo
@@ -101,7 +101,7 @@ public static class ParserExtensions
 	/// <returns></returns>
 	public static List<IParserResult> ParseSeriesIDPath( this DirectoryInfo path )
 	{
-		SeriesIDParser sid = new();
+		var sid = new SeriesIDParser();
 		return sid.ParsePath( path );
 	}
 
@@ -114,7 +114,7 @@ public static class ParserExtensions
 	/// <returns></returns>
 	public static List<IParserResult> ParseSeriesIDPath( this DirectoryInfo path, IParserSettings settings, SearchOption searchOption = SearchOption.AllDirectories )
 	{
-		SeriesIDParser sid = new(settings);
+		var sid = new SeriesIDParser( settings );
 		return sid.ParsePath( path, searchOption );
 	}
 	#endregion DirectoryInfo
@@ -129,7 +129,7 @@ public static class ParserExtensions
 	/// <returns></returns>
 	public static List<IParserResult> ParseSeriesIDPath( this string path )
 	{
-		SeriesIDParser sid = new();
+		var sid = new SeriesIDParser();
 		return sid.ParsePath( path );
 	}
 
@@ -142,7 +142,7 @@ public static class ParserExtensions
 	/// <returns></returns>
 	public static List<IParserResult> ParseSeriesIDPath( this string path, IParserSettings settings, SearchOption searchOption = SearchOption.AllDirectories )
 	{
-		SeriesIDParser sid = new(settings);
+		var sid = new SeriesIDParser( settings );
 		return sid.ParsePath( path, searchOption );
 	}
 	#endregion

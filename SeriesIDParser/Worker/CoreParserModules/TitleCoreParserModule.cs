@@ -23,7 +23,6 @@
 
 
 using System;
-using System.Collections.Generic;
 using SeriesIDParser.Models;
 
 namespace SeriesIDParser.Worker.CoreParserModules;
@@ -41,7 +40,7 @@ public class TitleCoreParserModule : ICoreParser
 
 	private State _state = State.Unknown;
 
-	private string _errorOrWarningMessage = String.Empty;
+	private string _errorOrWarningMessage = string.Empty;
 
 	/// <inheritdoc />
 	public CoreParserResult Parse( CoreParserResult inputResult )
@@ -66,7 +65,7 @@ public class TitleCoreParserModule : ICoreParser
 		outputResult.MediaData.Title = HelperWorker.GetTitle( inputResult.ParserSettings, inputResult.MediaData.DetectedOldSpacingChar, outputResult.ModifiedString );
 		_state = state;
 
-		outputResult.MediaData.ModuleStates.Add( new CoreParserModuleStateResult( Name, new List<CoreParserModuleSubState>() { new(_state, _errorOrWarningMessage) } ) );
+		outputResult.MediaData.ModuleStates.Add( new CoreParserModuleStateResult( Name, [new CoreParserModuleSubState( _state, _errorOrWarningMessage )] ) );
 
 		return outputResult;
 	}

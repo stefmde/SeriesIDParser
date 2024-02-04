@@ -71,7 +71,7 @@ public class ParserResult : IParserResult
 		OriginalString = originalString;
 		Title = title;
 		DimensionalType = dimensionalType;
-		Is3D = ((int)DimensionalType) > 1;
+		Is3D = (int)DimensionalType > 1;
 		FileInfo = fileInfo;
 	}
 
@@ -95,7 +95,7 @@ public class ParserResult : IParserResult
 				return _cacheFullTitle;
 			}
 
-			StringBuilder sb = new();
+			var sb = new StringBuilder();
 
 			if (IsSeries)
 			{
@@ -139,7 +139,7 @@ public class ParserResult : IParserResult
 					return _cacheParsedString;
 				}
 
-				StringBuilder sb = new();
+				var sb = new StringBuilder();
 				sb.Append( FullTitle );
 
 				if (_year > -1)
@@ -194,7 +194,7 @@ public class ParserResult : IParserResult
 					return _cacheIDString;
 				}
 
-				StringBuilder sb = new();
+				var sb = new StringBuilder();
 				sb.Append( string.Format( ParserSettingsUsed.IDStringFormatterSeason, _season ) );
 
 				foreach (var episode in _episodes)
@@ -264,7 +264,7 @@ public class ParserResult : IParserResult
 	public State State { get; private set; }
 
 	/// <summary>
-	///     Contains the dimensionalType of the object e.g. Dimension_3DHOU
+	///     Contains the dimensionalType of the object e.g. Dimension_3DHou
 	/// </summary>
 	public DimensionalType DimensionalType { get; private set; }
 
@@ -283,29 +283,29 @@ public class ParserResult : IParserResult
 	/// </summary>
 	public bool Is3D { get; private set; }
 
-	private string _audioCodec;
+	private readonly string _audioCodec;
 
 	/// <summary>
 	///     Contains the AudioCodec if one is found. string.Empty on error
 	/// </summary>
 	public string AudioCodec
 	{
-		get => (State == State.Success || State == State.Notice) ? _audioCodec : string.Empty;
-		private set => _audioCodec = value ?? String.Empty;
+		get => State == State.Success || State == State.Notice ? _audioCodec : string.Empty;
+		private init => _audioCodec = value ?? string.Empty;
 	}
 
-	private string _videoCodec;
+	private readonly string _videoCodec;
 
 	/// <summary>
 	///     Contains the VideoCodec if one is found. string.Empty on error
 	/// </summary>
 	public string VideoCodec
 	{
-		get => (State == State.Success || State == State.Notice) ? _videoCodec : null;
-		private set => _videoCodec = value ?? String.Empty;
+		get => State == State.Success || State == State.Notice ? _videoCodec : null;
+		private init => _videoCodec = value ?? string.Empty;
 	}
 
-	private string _episodeTitle;
+	private readonly string _episodeTitle;
 
 	/// <summary>
 	///     Contains the episode title if object state is series. string.Empty on error
@@ -313,10 +313,10 @@ public class ParserResult : IParserResult
 	public string EpisodeTitle
 	{
 		get => (State == State.Success || State == State.Notice) && IsSeries ? _episodeTitle : string.Empty;
-		private set => _episodeTitle = value;
+		private init => _episodeTitle = value;
 	}
 
-	private int _season;
+	private readonly int _season;
 
 	/// <summary>
 	///     Contains the season id if object state is series. -1 on error
@@ -324,62 +324,62 @@ public class ParserResult : IParserResult
 	public int Season
 	{
 		get => (State == State.Success || State == State.Notice) && IsSeries ? _season : -1;
-		private set => _season = value;
+		private init => _season = value;
 	}
 
-	private List<int> _episodes;
+	private readonly List<int> _episodes;
 
 	/// <summary>
 	///     Contains the episode id if object state is series.
 	/// </summary>
 	public List<int> Episodes
 	{
-		get => (State == State.Success || State == State.Notice) && IsSeries ? _episodes : new List<int>();
-		private set => _episodes = value != null ? new List<int>( value ) : new List<int>();
+		get => (State == State.Success || State == State.Notice) && IsSeries ? _episodes : [];
+		private init => _episodes = value != null ? [..value] : [];
 	}
 
-	private int _year;
+	private readonly int _year;
 
 	/// <summary>
 	///     Returns the year of the episode or movie if contained, otherwise -1
 	/// </summary>
 	public int Year
 	{
-		get => (State == State.Success || State == State.Notice) ? _year : -1;
-		private set => _year = value;
+		get => State == State.Success || State == State.Notice ? _year : -1;
+		private init => _year = value;
 	}
 
-	private TimeSpan _processingDuration;
+	private readonly TimeSpan _processingDuration;
 
 	/// <summary>
 	///     Returns the year of the episode or movie if contained, otherwise -1
 	/// </summary>
 	public TimeSpan ProcessingDuration
 	{
-		get => (State == State.Success || State == State.Notice) ? _processingDuration : new TimeSpan();
-		private set => _processingDuration = value;
+		get => State == State.Success || State == State.Notice ? _processingDuration : new TimeSpan();
+		private init => _processingDuration = value;
 	}
 
-	private List<ResolutionsMap> _resolutions;
+	private readonly List<ResolutionsMap> _resolutions;
 
 	/// <summary>
 	///     Returns the resolution as enum. UNKNOWN on error
 	/// </summary>
 	public List<ResolutionsMap> Resolutions
 	{
-		get => (State == State.Success || State == State.Notice) ? _resolutions : new List<ResolutionsMap>() { ResolutionsMap.Unknown };
-		private set => _resolutions = new List<ResolutionsMap>( value );
+		get => State == State.Success || State == State.Notice ? _resolutions : [ResolutionsMap.Unknown];
+		private init => _resolutions = [..value];
 	}
 
-	private string _releaseGroup;
+	private readonly string _releaseGroup;
 
 	/// <summary>
 	///     Contains the release group string if contained in the source. string.Empty on error
 	/// </summary>
 	public string ReleaseGroup
 	{
-		get => (State == State.Success || State == State.Notice) ? _releaseGroup : string.Empty;
-		private set => _releaseGroup = value;
+		get => State == State.Success || State == State.Notice ? _releaseGroup : string.Empty;
+		private init => _releaseGroup = value;
 	}
 	#endregion PropertiesDefault
 

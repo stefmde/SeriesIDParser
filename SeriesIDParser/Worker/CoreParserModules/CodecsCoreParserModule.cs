@@ -23,7 +23,6 @@
 
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using SeriesIDParser.Models;
 
@@ -32,7 +31,7 @@ namespace SeriesIDParser.Worker.CoreParserModules;
 public class CodecsCoreParserModule : ICoreParser
 {
 	/// <summary>
-	///     Defines the priority in which order the Parser have to execute. Higher values came first. -1 is last/no prio needed
+	///     Defines the priority in which order the Parser have to execute. Higher values came first. -1 is last/no priority needed
 	/// </summary>
 	public int Priority { get; } = 9400;
 
@@ -48,7 +47,7 @@ public class CodecsCoreParserModule : ICoreParser
 
 	private State _state = State.Unknown;
 
-	private string _errorOrWarningMessage = String.Empty;
+	private readonly string _errorOrWarningMessage = string.Empty;
 
 	/// <summary>
 	///     The main parse methode
@@ -77,7 +76,7 @@ public class CodecsCoreParserModule : ICoreParser
 		outputResult.ModifiedString = modifiedString;
 		_state = State.Success;
 
-		outputResult.MediaData.ModuleStates.Add( new CoreParserModuleStateResult( Name, new List<CoreParserModuleSubState>() { new(_state, _errorOrWarningMessage) } ) );
+		outputResult.MediaData.ModuleStates.Add( new CoreParserModuleStateResult( Name, [new CoreParserModuleSubState( _state, _errorOrWarningMessage )] ) );
 
 		return outputResult;
 	}

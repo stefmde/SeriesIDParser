@@ -26,7 +26,6 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NUnit.Framework;
 using SeriesIDParser.Models;
 using SeriesIDParser.Test.Helper;
@@ -43,7 +42,7 @@ public class CoreParserCustom
 	public void CoreParserCustomRemoveParser()
 	{
 		var initialParserCount = HelperWorker.GetAllCoreParsers().Count();
-		ParserSettings ps = new(true);
+		var ps = new ParserSettings();
 		ps.DisabledCoreParserModules.Add( new UnitTestCoreParserModule() );
 		var actualParserCount = HelperWorker.GetAllCoreParsers( ps.DisabledCoreParserModules ).Count();
 
@@ -54,7 +53,7 @@ public class CoreParserCustom
 	public void CoreParserCustomRemoveParserTwice()
 	{
 		var initialParserCount = HelperWorker.GetAllCoreParsers().Count();
-		ParserSettings ps = new(true);
+		var ps = new ParserSettings();
 		ps.DisabledCoreParserModules.Add( new UnitTestCoreParserModule() );
 		ps.DisabledCoreParserModules.Add( new UnitTestCoreParserModule() );
 		var actualParserCount = HelperWorker.GetAllCoreParsers( ps.DisabledCoreParserModules ).Count();
@@ -66,7 +65,7 @@ public class CoreParserCustom
 	public void CoreParserCustomNullActivator()
 	{
 		var initialParserCount = HelperWorker.GetAllCoreParsers().Count();
-		var actualParserCount = HelperWorker.GetAllCoreParsers( null ).Count();
+		var actualParserCount = HelperWorker.GetAllCoreParsers().Count();
 
 		Assert.AreEqual( initialParserCount, actualParserCount );
 	}

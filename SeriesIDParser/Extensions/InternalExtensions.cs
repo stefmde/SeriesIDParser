@@ -36,9 +36,10 @@ internal static class InternalExtensions
 {
 	internal static ParserResult ToParserResult( this MediaData mediaData, IParserSettings parserSettings )
 	{
-		ParserResult result = new(mediaData.OriginalString, parserSettings, mediaData.AudioCodec, mediaData.VideoCodec, mediaData.ProcessingDuration, mediaData.Resolutions, mediaData.Season,
-								mediaData.Episodes, mediaData.Year, mediaData.DetectedOldSpacingChar, mediaData.Exception, mediaData.IsSeries, mediaData.RemovedTokens, mediaData.State,
-								mediaData.ModuleStates, mediaData.FileExtension, mediaData.FileInfo, mediaData.Title, mediaData.EpisodeTitle, mediaData.ReleaseGroup, mediaData.DimensionalType);
+		var result = new ParserResult( mediaData.OriginalString, parserSettings, mediaData.AudioCodec, mediaData.VideoCodec, mediaData.ProcessingDuration, mediaData.Resolutions,
+										mediaData.Season, mediaData.Episodes, mediaData.Year, mediaData.DetectedOldSpacingChar, mediaData.Exception, mediaData.IsSeries,
+										mediaData.RemovedTokens, mediaData.State, mediaData.ModuleStates, mediaData.FileExtension, mediaData.FileInfo, mediaData.Title, mediaData.EpisodeTitle,
+										mediaData.ReleaseGroup, mediaData.DimensionalType );
 
 		return result;
 	}

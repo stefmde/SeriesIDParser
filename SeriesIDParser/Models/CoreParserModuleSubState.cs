@@ -34,7 +34,7 @@ public class CoreParserModuleSubState
 	public CoreParserModuleSubState( State state, string message )
 	{
 		State = state;
-		Message = message ?? String.Empty;
+		Message = message ?? string.Empty;
 	}
 
 	public State State { get; }

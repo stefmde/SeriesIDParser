@@ -35,7 +35,7 @@ internal class MediaData
 	/// <summary>
 	///     Contains tokens which are removed by the parser as string list
 	/// </summary>
-	internal List<string> RemovedTokens { get; set; } = new();
+	internal List<string> RemovedTokens { get; set; } = [];
 
 	/// <summary>
 	///     Contains the FileInfo that is given to the parser
@@ -70,7 +70,7 @@ internal class MediaData
 	/// <summary>
 	///     Contains the state information provided by each module
 	/// </summary>
-	public List<CoreParserModuleStateResult> ModuleStates { get; internal set; } = new();
+	public List<CoreParserModuleStateResult> ModuleStates { get; internal set; } = [];
 
 	/// <summary>
 	///     Contains the Exception if any occurs. Default: null
@@ -105,7 +105,7 @@ internal class MediaData
 	/// <summary>
 	///     Contains the episode id if object state is series.
 	/// </summary>
-	internal List<int> Episodes { get; set; } = new();
+	internal List<int> Episodes { get; set; } = [];
 
 	/// <summary>
 	///     Returns the year of the episode or movie if contained, otherwise -1
@@ -120,7 +120,7 @@ internal class MediaData
 	/// <summary>
 	///     Returns the resolution as enum. UNKNOWN on error
 	/// </summary>
-	internal List<ResolutionsMap> Resolutions { get; set; } = new();
+	internal List<ResolutionsMap> Resolutions { get; set; } = [];
 
 	/// <summary>
 	///     Contains the release group string if contained in the source. string.Empty on error
@@ -128,7 +128,7 @@ internal class MediaData
 	internal string ReleaseGroup { get; set; } = string.Empty;
 
 	/// <summary>
-	///     Contains the dimensionalType of the object e.g. Dimension_3DHOU
+	///     Contains the dimensionalType of the object e.g. Dimension_3DHou
 	/// </summary>
 	public DimensionalType DimensionalType { get; set; } = DimensionalType.Unknown;
 }

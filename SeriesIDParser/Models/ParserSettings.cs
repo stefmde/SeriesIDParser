@@ -24,8 +24,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
-using Newtonsoft.Json;
 using SeriesIDParser.Worker;
 
 [assembly: InternalsVisibleTo( "SeriesIDParser.Test" )]
@@ -36,13 +36,14 @@ namespace SeriesIDParser.Models;
 ///     The settings who can give to the SeriesIDParser to modify the behavior. Object is prefilled with the default values
 ///     and list entries
 /// </summary>
+[SuppressMessage( "ReSharper", "StringLiteralTypo" )]
 public class ParserSettings : IParserSettings
 {
 	/// <summary>
 	///     Prefill ctor
 	/// </summary>
 	/// <param name="preFillLists">Set to true if the lists should be prefilled with the default values</param>
-	public ParserSettings( bool preFillLists = true)
+	public ParserSettings( bool preFillLists = true )
 	{
 		if (!preFillLists)
 		{
@@ -183,6 +184,7 @@ public class ParserSettings : IParserSettings
 		DisabledCoreParserModules = [];
 	}
 
+	// ReSharper disable once UnusedMember.Local
 	private ParserSettings()
 	{
 	}
@@ -335,7 +337,7 @@ public class ParserSettings : IParserSettings
 	///     Defines the string who is converted from the enum DimensionalType to something readable for e.g. the ParsedString.
 	///     Default: '3D.HOU'
 	/// </summary>
-	public string DimensionalString3DHOU { get; set; } = "3D.HOU";
+	public string DimensionalString3DHou { get; set; } = "3D.HOU";
 
 	/// <summary>
 	///     Defines the string who is converted from the enum DimensionalType to something readable for e.g. the ParsedString.

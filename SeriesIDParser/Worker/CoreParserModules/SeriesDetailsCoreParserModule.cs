@@ -23,7 +23,6 @@
 
 
 using System;
-using System.Collections.Generic;
 using SeriesIDParser.Models;
 
 namespace SeriesIDParser.Worker.CoreParserModules;
@@ -41,7 +40,7 @@ public class SeriesDetailsCoreParserModule : ICoreParser
 
 	private State _state = State.Unknown;
 
-	private string _errorOrWarningMessage = String.Empty;
+	private readonly string _errorOrWarningMessage = string.Empty;
 
 	/// <inheritdoc />
 	public CoreParserResult Parse( CoreParserResult inputResult )
@@ -54,7 +53,7 @@ public class SeriesDetailsCoreParserModule : ICoreParser
 		outputResult.MediaData.Episodes = HelperWorker.GetEpisodeIDs( inputResult.ParserSettings, inputResult.ModifiedString );
 
 		_state = State.Success;
-		outputResult.MediaData.ModuleStates.Add( new CoreParserModuleStateResult( Name, new List<CoreParserModuleSubState>() { new(_state, _errorOrWarningMessage) } ) );
+		outputResult.MediaData.ModuleStates.Add( new CoreParserModuleStateResult( Name, [new CoreParserModuleSubState( _state, _errorOrWarningMessage )] ) );
 
 		return outputResult;
 	}

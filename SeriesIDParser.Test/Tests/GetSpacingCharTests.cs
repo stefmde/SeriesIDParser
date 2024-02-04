@@ -23,52 +23,50 @@
 
 
 using System.Diagnostics.CodeAnalysis;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NUnit.Framework;
 using SeriesIDParser.Models;
 using SeriesIDParser.Worker;
 using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
-// ReSharper disable MissingXmlDoc
-
 namespace SeriesIDParser.Test.Tests;
 
 [ExcludeFromCodeCoverage]
 [TestFixture]
+[SuppressMessage( "ReSharper", "StringLiteralTypo" )]
 public class GetSpacingCharTests
 {
 	[Test]
 	public void GetSpacingCharTestDefault()
 	{
-		ParserSettings ps = new(true);
+		var ps = new ParserSettings();
 		Assert.AreEqual( '.', HelperWorker.GetSpacingChar( "Dubai.Airport.S01E05.Teil5.GERMAN.DOKU.HDTV.720p.x264.mkv", ps ), "Should return a '.'" );
 	}
 
 	[Test]
 	public void GetSpacingCharTestWithNoise()
 	{
-		ParserSettings ps = new(true);
+		var ps = new ParserSettings();
 		Assert.AreEqual( '.', HelperWorker.GetSpacingChar( "Dubai.Airport,S01E05.Teil5.GERMAN.DOKU-HDTV.720p.x264.mkv", ps ), "Should return a '.'" );
 	}
 
 	[Test]
 	public void GetSpacingCharTestDashChar()
 	{
-		ParserSettings ps = new(true);
+		var ps = new ParserSettings();
 		Assert.AreEqual( '-', HelperWorker.GetSpacingChar( "Dubai-Airport-S01E05-Teil5-GERMAN-DOKU-HDTV-720p-x264.mkv", ps ), "Should return a '-'" );
 	}
 
 	[Test]
-	public void GetSpacingCharTestCpaceChar()
+	public void GetSpacingCharTestSpaceChar()
 	{
-		ParserSettings ps = new(true);
+		var ps = new ParserSettings();
 		Assert.AreEqual( ' ', HelperWorker.GetSpacingChar( "Dubai Airport S01E05 Teil5 GERMAN DOKU HDTV 720p x264.mkv", ps ), "Should return a space" );
 	}
 
 	[Test]
 	public void GetSpacingCharTestUnknown()
 	{
-		ParserSettings ps = new(true);
+		var ps = new ParserSettings();
 		Assert.AreEqual( new char(), HelperWorker.GetSpacingChar( "Dubai Airport S01E05 Teil5 GERMAN-DOKU-HDTV-720p-x264", ps ), "Should return a empy char" );
 	}
 }

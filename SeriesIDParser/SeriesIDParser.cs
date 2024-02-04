@@ -113,7 +113,7 @@ public class SeriesIDParser : ISeriesIDParser
 	public ParserResult Parse( FileInfo input )
 	{
 		_fileInfo = input;
-		return CoreParser( input?.Name ?? String.Empty ).ToParserResult( _parserSettings );
+		return CoreParser( input?.Name ?? string.Empty ).ToParserResult( _parserSettings );
 	}
 
 	/// <summary>
@@ -124,7 +124,7 @@ public class SeriesIDParser : ISeriesIDParser
 	/// <returns></returns>
 	public List<IParserResult> ParsePath( DirectoryInfo path, SearchOption searchOption = SearchOption.AllDirectories )
 	{
-		return ParsePath( path?.FullName ?? String.Empty, searchOption );
+		return ParsePath( path?.FullName ?? string.Empty, searchOption );
 	}
 
 	/// <summary>
@@ -135,7 +135,7 @@ public class SeriesIDParser : ISeriesIDParser
 	/// <returns></returns>
 	public List<IParserResult> ParsePath( string path, SearchOption searchOption = SearchOption.AllDirectories )
 	{
-		List<IParserResult> results = new();
+		List<IParserResult> results = [];
 
 		if (string.IsNullOrEmpty( path ) || !Directory.Exists( path ))
 		{
@@ -171,8 +171,7 @@ public class SeriesIDParser : ISeriesIDParser
 	{
 		try
 		{
-			_coreParserResult = new CoreParserResult( input, _parserSettings );
-			_coreParserResult.MediaData.FileInfo = _fileInfo;
+			_coreParserResult = new CoreParserResult( input, _parserSettings ) { MediaData = { FileInfo = _fileInfo } };
 
 			if (input.Length < 5)
 			{
@@ -194,10 +193,9 @@ public class SeriesIDParser : ISeriesIDParser
 				catch (Exception ex)
 				{
 					_coreParserResult.MediaData.ModuleStates.Add( new CoreParserModuleStateResult( coreParserModule.Name,
-																									new List<CoreParserModuleSubState>()
-																									{
-																										new(State.Error, "Exception on executing module occurred. See exception for more details.")
-																									}, ex ) );
+					[
+						new CoreParserModuleSubState( State.Error, "Exception on executing module occurred. See exception for more details." )
+					], ex ) );
 
 					// Throw exception if the flag is set
 					if (_parserSettings.ThrowExceptionInsteadOfErrorFlag)
