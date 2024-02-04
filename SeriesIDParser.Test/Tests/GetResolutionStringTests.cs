@@ -1,7 +1,7 @@
 ﻿// MIT License
 // 
 // Copyright(c) 2016 - 2024
-// Stefan Müller, Stefm, https://Stefm.de, https://github.com/stefmde/SeriesIDParser
+// Stefan (StefmDE) Müller, https://Stefm.de, https://github.com/stefmde/SeriesIDParser
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -25,18 +25,20 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using SeriesIDParser.Models;
 using SeriesIDParser.Worker;
+using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 // ReSharper disable MissingXmlDoc
 
 namespace SeriesIDParser.Test.Tests;
 
 [ExcludeFromCodeCoverage]
-[TestClass]
+[TestFixture]
 public class GetResolutionStringTests
 {
-	[TestMethod]
+	[Test]
 	public void GetResolutionStringTestLowestDefault()
 	{
 		ParserSettings ps = new(true);
@@ -45,7 +47,7 @@ public class GetResolutionStringTests
 						"(1) Should give one full HD" );
 	}
 
-	[TestMethod]
+	[Test]
 	public void GetResolutionStringTestLowestSingle()
 	{
 		ParserSettings ps = new(true);
@@ -53,7 +55,7 @@ public class GetResolutionStringTests
 		Assert.AreEqual( ps.ResolutionStringFullHD, HelperWorker.GetResolutionString( ps, new List<ResolutionsMap> { ResolutionsMap.FullHD_1080p } ), "(2) Should give one full HD" );
 	}
 
-	[TestMethod]
+	[Test]
 	public void GetResolutionStringTestLowestWithUnknown()
 	{
 		ParserSettings ps = new(true);
@@ -63,7 +65,7 @@ public class GetResolutionStringTests
 						"(3) Should give one full HD" );
 	}
 
-	[TestMethod]
+	[Test]
 	public void GetResolutionStringTestLowestEmpty()
 	{
 		ParserSettings ps = new(true);
@@ -71,7 +73,7 @@ public class GetResolutionStringTests
 		Assert.AreEqual( ps.ResolutionStringUnknown, HelperWorker.GetResolutionString( ps, new List<ResolutionsMap>() ), "(4) Should give unknown" );
 	}
 
-	[TestMethod]
+	[Test]
 	public void GetResolutionStringTestHighestDefault()
 	{
 		ParserSettings ps = new(true);
@@ -80,7 +82,7 @@ public class GetResolutionStringTests
 						"(10) Should give one UHD" );
 	}
 
-	[TestMethod]
+	[Test]
 	public void GetResolutionStringTestHighestSingle()
 	{
 		ParserSettings ps = new(true);
@@ -88,7 +90,7 @@ public class GetResolutionStringTests
 		Assert.AreEqual( ps.ResolutionStringFullHD, HelperWorker.GetResolutionString( ps, new List<ResolutionsMap> { ResolutionsMap.FullHD_1080p } ), "(11) Should give one full HD" );
 	}
 
-	[TestMethod]
+	[Test]
 	public void GetResolutionStringTestHighestUnknown()
 	{
 		ParserSettings ps = new(true);
@@ -98,7 +100,7 @@ public class GetResolutionStringTests
 						"(12) Should give one UHD" );
 	}
 
-	[TestMethod]
+	[Test]
 	public void GetResolutionStringTestHighestEmpty()
 	{
 		ParserSettings ps = new(true);
@@ -106,7 +108,7 @@ public class GetResolutionStringTests
 		Assert.AreEqual( ps.ResolutionStringUnknown, HelperWorker.GetResolutionString( ps, new List<ResolutionsMap>() ), "(13) Should give unknown" );
 	}
 
-	[TestMethod]
+	[Test]
 	public void GetResolutionStringTestAllDefault()
 	{
 		ParserSettings ps = new(true);
@@ -115,7 +117,7 @@ public class GetResolutionStringTests
 						HelperWorker.GetResolutionString( ps, new List<ResolutionsMap> { ResolutionsMap.FullHD_1080p, ResolutionsMap.UltraHD_2160p } ), "(20) Should give HD + UHD" );
 	}
 
-	[TestMethod]
+	[Test]
 	public void GetResolutionStringTestAllSingle()
 	{
 		ParserSettings ps = new(true);
@@ -123,7 +125,7 @@ public class GetResolutionStringTests
 		Assert.AreEqual( ps.ResolutionStringFullHD, HelperWorker.GetResolutionString( ps, new List<ResolutionsMap> { ResolutionsMap.FullHD_1080p } ), "(21) Should give one full HD" );
 	}
 
-	[TestMethod]
+	[Test]
 	public void GetResolutionStringTestAllUnknown()
 	{
 		ParserSettings ps = new(true);
@@ -133,7 +135,7 @@ public class GetResolutionStringTests
 						"(22) Should give UHD HD" );
 	}
 
-	[TestMethod]
+	[Test]
 	public void GetResolutionStringTestAllEmpty()
 	{
 		ParserSettings ps = new(true);

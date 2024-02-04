@@ -1,7 +1,7 @@
 ﻿// MIT License
 // 
 // Copyright(c) 2016 - 2024
-// Stefan Müller, Stefm, https://Stefm.de, https://github.com/stefmde/SeriesIDParser
+// Stefan (StefmDE) Müller, https://Stefm.de, https://github.com/stefmde/SeriesIDParser
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -32,15 +32,10 @@ namespace SeriesIDParser.Models;
 
 internal class MediaData
 {
-	///// <summary>
-	///// Contains the ParserSettings object used to generate this result object
-	///// </summary>
-	//public ParserSettings ParserSettingsUsed { get; set; } = new ParserSettings(false);
-
 	/// <summary>
 	///     Contains tokens which are removed by the parser as string list
 	/// </summary>
-	internal List<string> RemovedTokens { get; set; } = new List<string>();
+	internal List<string> RemovedTokens { get; set; } = new();
 
 	/// <summary>
 	///     Contains the FileInfo that is given to the parser
@@ -110,7 +105,7 @@ internal class MediaData
 	/// <summary>
 	///     Contains the episode id if object state is series.
 	/// </summary>
-	internal List<int> Episodes { get; set; } = new List<int>();
+	internal List<int> Episodes { get; set; } = new();
 
 	/// <summary>
 	///     Returns the year of the episode or movie if contained, otherwise -1
@@ -125,7 +120,7 @@ internal class MediaData
 	/// <summary>
 	///     Returns the resolution as enum. UNKNOWN on error
 	/// </summary>
-	internal List<ResolutionsMap> Resolutions { get; set; } = new List<ResolutionsMap>();
+	internal List<ResolutionsMap> Resolutions { get; set; } = new();
 
 	/// <summary>
 	///     Contains the release group string if contained in the source. string.Empty on error

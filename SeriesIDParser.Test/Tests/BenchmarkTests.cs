@@ -1,18 +1,18 @@
 ﻿// MIT License
-// 
+//
 // Copyright(c) 2016 - 2024
-// Stefan Müller, Stefm, https://Stefm.de, https://github.com/stefmde/SeriesIDParser
-// 
+// Stefan (StefmDE) Müller, https://Stefm.de, https://github.com/stefmde/SeriesIDParser
+//
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
 // in the Software without restriction, including without limitation the rights
 // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be included in all
 // copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -21,117 +21,97 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-// using System;
-// using System.Diagnostics.CodeAnalysis;
-// using Microsoft.VisualStudio.TestTools.UnitTesting;
-// using SeriesIDParser.Models;
-//
-// namespace SeriesIDParser.Test.Tests;
-//
-// /// <summary>
-// ///     Runs some benchmarktests against the library. Results in TestExplorer -> Summary/Details
-// /// </summary>
-// [ExcludeFromCodeCoverage]
-// [TestClass]
-// public class BenchmarkTests
-// {
-// 	private static readonly int _benchmarkLoopCount = 10000;
-//
-// 	// ### Series
-// 	// ##################################################
-// 	/// <summary>
-// 	///     Benchmarks a series string without cache
-// 	/// </summary>
-// 	[TestMethod]
-// 	public void BenchmarkSeriesNoCache()
-// 	{
-// 			DateTime start = DateTime.Now;
-//
-// 			ParserSettings parserSettings = new ParserSettings( true ) {CacheMode = CacheMode.None};
-//
-// 			SeriesID seriesId = new SeriesID( parserSettings );
-//
-// 			for (int i = 0; i < _benchmarkLoopCount; i++)
-// 			{
-// 				seriesId.Parse( Constants.SeriesFile );
-// 			}
-//
-// 			TimeSpan totalDuration = DateTime.Now - start;
-// 			TimeSpan singleDuration = new TimeSpan( totalDuration.Ticks / _benchmarkLoopCount );
-// 			Console.WriteLine( "BenchmarkSeriesNoCache total duration: " + totalDuration.Seconds + "s " + totalDuration.Milliseconds + "ms " +
-// 								totalDuration.Ticks + "ticks" );
-// 			Console.WriteLine( "BenchmarkSeriesNoCache single duration: " + singleDuration.Seconds + "s " + singleDuration.Milliseconds + "ms " +
-// 								singleDuration.Ticks + "ticks" );
-// 		}
-//
-// 	/// <summary>
-// 	///     Benchmarks a series string with cache
-// 	/// </summary>
-// 	[TestMethod]
-// 	public void BenchmarkSeriesCache()
-// 	{
-// 			DateTime start = DateTime.Now;
-// 			SeriesID seriesId = new SeriesID();
-//
-// 			for (int i = 0; i < _benchmarkLoopCount; i++)
-// 			{
-// 				seriesId.Parse( Constants.SeriesFile );
-// 			}
-//
-// 			TimeSpan totalDuration = DateTime.Now - start;
-// 			TimeSpan singleDuration = new TimeSpan( totalDuration.Ticks / _benchmarkLoopCount );
-// 			Console.WriteLine( "BenchmarkSeriesCache total duration: " + totalDuration.Seconds + "s " + totalDuration.Milliseconds + "ms " +
-// 								totalDuration.Ticks + "ticks" );
-// 			Console.WriteLine( "BenchmarkSeriesCache single duration: " + singleDuration.Seconds + "s " + singleDuration.Milliseconds + "ms " +
-// 								singleDuration.Ticks + "ticks" );
-// 		}
-//
-// 	// ### Movie
-// 	// ##################################################
-// 	/// <summary>
-// 	///     Benchmarks a movie string without cache
-// 	/// </summary>
-// 	[TestMethod]
-// 	public void BenchmarkMovieNoCache()
-// 	{
-// 			DateTime start = DateTime.Now;
-//
-// 			ParserSettings parserSettings = new ParserSettings( true ) {CacheMode = CacheMode.None};
-//
-// 			SeriesID seriesId = new SeriesID( parserSettings );
-//
-// 			for (int i = 0; i < _benchmarkLoopCount; i++)
-// 			{
-// 				seriesId.Parse( Constants.MovieFile );
-// 			}
-//
-// 			TimeSpan totalDuration = DateTime.Now - start;
-// 			TimeSpan singleDuration = new TimeSpan( totalDuration.Ticks / _benchmarkLoopCount );
-// 			Console.WriteLine( "BenchmarkMovieNoCache total duration: " + totalDuration.Seconds + "s " + totalDuration.Milliseconds + "ms " +
-// 								totalDuration.Ticks + "ticks" );
-// 			Console.WriteLine( "BenchmarkMovieNoCache single duration: " + singleDuration.Seconds + "s " + singleDuration.Milliseconds + "ms " +
-// 								singleDuration.Ticks + "ticks" );
-// 		}
-//
-// 	/// <summary>
-// 	///     Benchmarks a movie string with cache
-// 	/// </summary>
-// 	[TestMethod]
-// 	public void BenchmarkMovieCache()
-// 	{
-// 			DateTime start = DateTime.Now;
-// 			SeriesID seriesId = new SeriesID();
-//
-// 			for (int i = 0; i < _benchmarkLoopCount; i++)
-// 			{
-// 				seriesId.Parse( Constants.MovieFile );
-// 			}
-//
-// 			TimeSpan totalDuration = DateTime.Now - start;
-// 			TimeSpan singleDuration = new TimeSpan( totalDuration.Ticks / _benchmarkLoopCount );
-// 			Console.WriteLine( "BenchmarkMovieCache total duration: " + totalDuration.Seconds + "s " + totalDuration.Milliseconds + "ms " +
-// 								totalDuration.Ticks + "ticks" );
-// 			Console.WriteLine( "BenchmarkMovieCache single duration: " + singleDuration.Seconds + "s " + singleDuration.Milliseconds + "ms " +
-// 								singleDuration.Ticks + "ticks" );
-// 		}
-// }
+using System;
+using System.Diagnostics.CodeAnalysis;
+using FluentAssertions;
+using NUnit.Framework;
+
+namespace SeriesIDParser.Test.Tests;
+
+[ExcludeFromCodeCoverage]
+[TestFixture (Description = "Runs some BenchmarkTests against the library. Results in TestExplorer -> Summary/Details")]
+public class BenchmarkTests
+{
+	private const int BenchmarkLoopCount = 10000;
+
+	// ### Series
+	// ##################################################
+	[Test(Description = "Series - Benchmarks a series string without cache")]
+	public void BenchmarkSeriesNoCache()
+	{
+		var start = DateTime.Now;
+		var seriesId = new SeriesIDParser();
+
+		for (var i = 0; i < BenchmarkLoopCount; i++)
+		{
+			seriesId.Parse( Constants.SeriesFile );
+		}
+
+		var totalDuration = DateTime.Now - start;
+		PrintTimeSpans( nameof(BenchmarkSeriesNoCache), totalDuration );
+		totalDuration.TotalMilliseconds.Should().BeLessThan( 200 );
+	}
+
+	/// <summary>
+	///     Benchmarks a series string with cache
+	/// </summary>
+	[Test(Description = "Series - Benchmarks a series string with cache")]
+	public void BenchmarkSeriesCache()
+	{
+		var start = DateTime.Now;
+		var seriesIdParser = new SeriesIDParser();
+
+		for (var i = 0; i < BenchmarkLoopCount; i++)
+		{
+			seriesIdParser.Parse( Constants.SeriesFile );
+		}
+
+		var totalDuration = DateTime.Now - start;
+		PrintTimeSpans( nameof(BenchmarkSeriesCache), totalDuration );
+		totalDuration.TotalMilliseconds.Should().BeLessThan( 200 );
+	}
+
+	// ### Movie
+	// ##################################################
+	[Test(Description = "Movie - Benchmarks a movie string without cache")]
+	public void BenchmarkMovieNoCache()
+	{
+		var start = DateTime.Now;
+		var seriesIdParser = new SeriesIDParser();
+
+		for (var i = 0; i < BenchmarkLoopCount; i++)
+		{
+			seriesIdParser.Parse( Constants.MovieFile );
+		}
+
+		var totalDuration = DateTime.Now - start;
+		PrintTimeSpans( nameof(BenchmarkMovieNoCache), totalDuration );
+		totalDuration.TotalMilliseconds.Should().BeLessThan( 200 );
+	}
+
+	/// <summary>
+	///     Benchmarks a movie string with cache
+	/// </summary>
+	[Test(Description = "Movie - Benchmarks a movie string with cache")]
+	public void BenchmarkMovieCache()
+	{
+		var start = DateTime.Now;
+		var seriesIdParser = new SeriesIDParser();
+
+		for (var i = 0; i < BenchmarkLoopCount; i++)
+		{
+			seriesIdParser.Parse( Constants.MovieFile );
+		}
+
+		var totalDuration = DateTime.Now - start;
+		PrintTimeSpans( nameof(BenchmarkMovieCache), totalDuration );
+		totalDuration.TotalMilliseconds.Should().BeLessThan( 200 );
+	}
+
+	private static void PrintTimeSpans( string functionName, TimeSpan totalTs)
+	{
+		var singleTs = totalTs / BenchmarkLoopCount;
+		Console.WriteLine($"{functionName} single duration: {singleTs.Seconds} s {singleTs.Milliseconds} ms {singleTs.Ticks} ticks");
+		Console.WriteLine($"{functionName} total duration: {totalTs.Seconds} s {totalTs.Milliseconds} ms {totalTs.Ticks} ticks");
+	}
+}

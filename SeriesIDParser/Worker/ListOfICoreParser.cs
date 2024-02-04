@@ -1,7 +1,7 @@
 ﻿// MIT License
 // 
 // Copyright(c) 2016 - 2024
-// Stefan Müller, Stefm, https://Stefm.de, https://github.com/stefmde/SeriesIDParser
+// Stefan (StefmDE) Müller, https://Stefm.de, https://github.com/stefmde/SeriesIDParser
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -35,11 +35,7 @@ namespace SeriesIDParser.Worker;
 
 public class ListOfICoreParser : List<ICoreParser>, IXmlSerializable
 {
-	private Type _type = typeof(ICoreParser);
-
-	public ListOfICoreParser() : base()
-	{
-	}
+	private readonly Type _type = typeof(ICoreParser);
 
 	/// <inheritdoc />
 	public XmlSchema GetSchema()
@@ -53,15 +49,14 @@ public class ListOfICoreParser : List<ICoreParser>, IXmlSerializable
 		reader.ReadStartElement( "ListOfICoreParser" );
 		while (reader.IsStartElement( _type.Name ))
 		{
-			var type = Type.GetType( reader.GetAttribute( "AssemblyQualifiedName" ) );
 			XmlSerializer serial = new(_type);
 
 			reader.ReadStartElement( _type.Name );
 			Add( (ICoreParser)serial.Deserialize( reader ) );
-			reader.ReadEndElement(); //ICoreParser
+			reader.ReadEndElement(); // ICoreParser
 		}
 
-		reader.ReadEndElement(); //ListOfICoreParser
+		reader.ReadEndElement(); // ListOfICoreParser
 	}
 
 	/// <inheritdoc />

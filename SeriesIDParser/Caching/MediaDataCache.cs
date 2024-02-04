@@ -1,7 +1,7 @@
 ﻿// MIT License
 // 
 // Copyright(c) 2016 - 2024
-// Stefan Müller, Stefm, https://Stefm.de, https://github.com/stefmde/SeriesIDParser
+// Stefan (StefmDE) Müller, https://Stefm.de, https://github.com/stefmde/SeriesIDParser
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -31,7 +31,7 @@ using SeriesIDParser.Models;
 namespace SeriesIDParser.Caching;
 
 /// <summary>
-///     Caching maintenance for the MediaData
+///     The Cache
 /// </summary>
 internal class MediaDataCache
 {
@@ -122,8 +122,13 @@ internal class MediaDataCache
 		throw new ArgumentException( "Cache is used but is disabled" );
 	}
 
-	// ReSharper disable once MemberCanBePrivate.Global
-	public ParserResult GetAsParserResult( string fileName )
+	/// <summary>
+	/// Gets a result from the cache
+	/// </summary>
+	/// <param name="fileName"></param>
+	/// <returns></returns>
+	/// <exception cref="ArgumentException"></exception>
+	public IParserResult GetAsParserResult( string fileName )
 	{
 		if (ParserSettings.CacheMode == CacheMode.Advanced)
 		{
@@ -138,7 +143,6 @@ internal class MediaDataCache
 		throw new ArgumentException( "Cache is used but is disabled" );
 	}
 
-	// ReSharper disable once MemberCanBePrivate.Global
 	public bool TryGet( string fileName, out MediaData mediaData )
 	{
 		if (Contains( fileName ))
@@ -154,9 +158,7 @@ internal class MediaDataCache
 	// ReSharper disable once MemberCanBePrivate.Global
 	public bool TryGetAsParserResult( string fileName, out ParserResult parserResult )
 	{
-		MediaData innerMediaData;
-
-		if (TryGet( fileName, out innerMediaData ))
+		if (TryGet( fileName, out var innerMediaData ))
 		{
 			parserResult = innerMediaData.ToParserResult( ParserSettings );
 			return true;
@@ -166,7 +168,12 @@ internal class MediaDataCache
 		return false;
 	}
 
-	// ReSharper disable once MemberCanBePrivate.Global
+	/// <summary>
+	/// Replaces a cache item
+	/// </summary>
+	/// <param name="fileName"></param>
+	/// <param name="data"></param>
+	/// <exception cref="ArgumentException"></exception>
 	public void Replace( string fileName, MediaData data )
 	{
 		if (ParserSettings.CacheMode == CacheMode.Advanced)

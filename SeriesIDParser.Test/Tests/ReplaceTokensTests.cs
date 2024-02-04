@@ -1,7 +1,7 @@
 ﻿// MIT License
 // 
 // Copyright(c) 2016 - 2024
-// Stefan Müller, Stefm, https://Stefm.de, https://github.com/stefmde/SeriesIDParser
+// Stefan (StefmDE) Müller, https://Stefm.de, https://github.com/stefmde/SeriesIDParser
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -25,18 +25,20 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using SeriesIDParser.Models;
 using SeriesIDParser.Worker;
+using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 // ReSharper disable MissingXmlDoc
 
 namespace SeriesIDParser.Test.Tests;
 
 [ExcludeFromCodeCoverage]
-[TestClass]
+[TestFixture]
 public class ReplaceTokensTests
 {
-	[TestMethod]
+	[Test]
 	public void ReplaceTokensTestDefault()
 	{
 		ParserSettings ps = new(true);
@@ -52,7 +54,7 @@ public class ReplaceTokensTests
 		CollectionAssert.AreEqual( expectedOutputList, actualRemovedTokens, " List compare " );
 	}
 
-	[TestMethod]
+	[Test]
 	public void ReplaceTokensTestDots()
 	{
 		ParserSettings ps = new(true);
@@ -68,7 +70,7 @@ public class ReplaceTokensTests
 		CollectionAssert.AreEqual( expectedOutputList, actualRemovedTokens, " List compare " );
 	}
 
-	[TestMethod]
+	[Test]
 	public void ReplaceTokensTestCase()
 	{
 		ParserSettings ps = new(true);
@@ -84,7 +86,7 @@ public class ReplaceTokensTests
 		CollectionAssert.AreEqual( expectedOutputList, actualRemovedTokens, " List compare " );
 	}
 
-	[TestMethod]
+	[Test]
 	public void ReplaceTokensTestNothing()
 	{
 		ParserSettings ps = new(true);
@@ -98,7 +100,7 @@ public class ReplaceTokensTests
 		CollectionAssert.AreEqual( expectedOutputList, actualRemovedTokens, " List compare " );
 	}
 
-	[TestMethod]
+	[Test]
 	public void ReplaceTokensTestEmptyList()
 	{
 		ParserSettings ps = new(true);
@@ -113,7 +115,7 @@ public class ReplaceTokensTests
 		CollectionAssert.AreEqual( expectedOutputList, actualRemovedTokens, " List compare " );
 	}
 
-	[TestMethod]
+	[Test]
 	public void ReplaceTokensTestNullList()
 	{
 		ParserSettings ps = new(true);
@@ -128,7 +130,7 @@ public class ReplaceTokensTests
 		CollectionAssert.AreEqual( expectedOutputList, actualRemovedTokens, " List compare " );
 	}
 
-	[TestMethod]
+	[Test]
 	public void ReplaceTokensTestRegexTest()
 	{
 		ParserSettings ps = new(true);

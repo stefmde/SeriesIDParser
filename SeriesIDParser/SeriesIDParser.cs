@@ -1,7 +1,7 @@
 ﻿// MIT License
 // 
 // Copyright(c) 2016 - 2024
-// Stefan Müller, Stefm, https://Stefm.de, https://github.com/stefmde/SeriesIDParser
+// Stefan (StefmDE) Müller, https://Stefm.de, https://github.com/stefmde/SeriesIDParser
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -41,7 +41,7 @@ public class SeriesIDParser : ISeriesIDParser
 {
 	#region Fields
 	private CoreParserResult _coreParserResult;
-	private readonly IParserSettings _parserSettings = new ParserSettings( true );
+	private readonly IParserSettings _parserSettings = new ParserSettings();
 	private readonly DateTime _parseStartTime = new();
 	private FileInfo _fileInfo;
 	private readonly bool _cacheEnabled;
@@ -53,7 +53,7 @@ public class SeriesIDParser : ISeriesIDParser
 	/// <param name="settings"></param>
 	public SeriesIDParser( IParserSettings settings = null )
 	{
-		if (settings != null)
+		if (settings is not null)
 		{
 			_parserSettings = settings;
 		}

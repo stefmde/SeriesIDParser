@@ -1,7 +1,7 @@
 ﻿// MIT License
 // 
 // Copyright(c) 2016 - 2024
-// Stefan Müller, Stefm, https://Stefm.de, https://github.com/stefmde/SeriesIDParser
+// Stefan (StefmDE) Müller, https://Stefm.de, https://github.com/stefmde/SeriesIDParser
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -27,17 +27,19 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using SeriesIDParser.Models;
 using SeriesIDParser.Test.Helper;
 using SeriesIDParser.Worker;
+using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace SeriesIDParser.Test.Tests;
 
 [ExcludeFromCodeCoverage]
-[TestClass]
+[TestFixture]
 public class CoreParserCustom
 {
-	[TestMethod]
+	[Test]
 	public void CoreParserCustomRemoveParser()
 	{
 		var initialParserCount = HelperWorker.GetAllCoreParsers().Count();
@@ -48,7 +50,7 @@ public class CoreParserCustom
 		Assert.AreEqual( initialParserCount - 1, actualParserCount );
 	}
 
-	[TestMethod]
+	[Test]
 	public void CoreParserCustomRemoveParserTwice()
 	{
 		var initialParserCount = HelperWorker.GetAllCoreParsers().Count();
@@ -60,7 +62,7 @@ public class CoreParserCustom
 		Assert.AreEqual( initialParserCount - 1, actualParserCount );
 	}
 
-	[TestMethod]
+	[Test]
 	public void CoreParserCustomNullActivator()
 	{
 		var initialParserCount = HelperWorker.GetAllCoreParsers().Count();
@@ -69,7 +71,7 @@ public class CoreParserCustom
 		Assert.AreEqual( initialParserCount, actualParserCount );
 	}
 
-	[TestMethod]
+	[Test]
 	public void CoreParserCustomAddParser()
 	{
 		Assert.IsTrue( HelperWorker.GetAllCoreParsers().Any( x => x.Name == "UnitTestCoreParserModuleEmpty" ) );

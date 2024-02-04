@@ -1,7 +1,7 @@
 ﻿// MIT License
 // 
 // Copyright(c) 2016 - 2024
-// Stefan Müller, Stefm, https://Stefm.de, https://github.com/stefmde/SeriesIDParser
+// Stefan (StefmDE) Müller, https://Stefm.de, https://github.com/stefmde/SeriesIDParser
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -26,8 +26,9 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using SeriesIDParser.Models;
+using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace SeriesIDParser.Test.Tests;
 
@@ -35,10 +36,10 @@ namespace SeriesIDParser.Test.Tests;
 ///     Runs some Dimensional 2D/3D against the library. Results in TestExplorer -> Summary/Details
 /// </summary>
 [ExcludeFromCodeCoverage]
-[TestClass]
+[TestFixture]
 public class DimensionalTests
 {
-	[TestMethod]
+	[Test]
 	public void DimensionalTestDefaultHOU()
 	{
 		ParserSettings parserSettings = new(true);
@@ -51,7 +52,7 @@ public class DimensionalTests
 		Assert.AreEqual( DimensionalType.Dimension_3DHOU, parserResult.DimensionalType, "-DimensionalType " );
 	}
 
-	[TestMethod]
+	[Test]
 	public void DimensionalTestDefaultHSBS()
 	{
 		ParserSettings parserSettings = new(true);
@@ -64,7 +65,7 @@ public class DimensionalTests
 		Assert.AreEqual( DimensionalType.Dimension_3DHSBS, parserResult.DimensionalType, "-DimensionalType " );
 	}
 
-	[TestMethod]
+	[Test]
 	public void DimensionalTestDefaultSingle()
 	{
 		ParserSettings parserSettings = new(true);
@@ -77,7 +78,7 @@ public class DimensionalTests
 		Assert.AreEqual( DimensionalType.Dimension_3DAny, parserResult.DimensionalType, "-DimensionalType " );
 	}
 
-	[TestMethod]
+	[Test]
 	public void DimensionalTestNoThirdDimension()
 	{
 		ParserSettings parserSettings = new(true);
@@ -90,7 +91,7 @@ public class DimensionalTests
 		Assert.AreEqual( DimensionalType.Dimension_2DAny, parserResult.DimensionalType, "-DimensionalType " );
 	}
 
-	[TestMethod]
+	[Test]
 	public void DimensionalTestMissingSpacerHOU()
 	{
 		ParserSettings parserSettings = new(true);
@@ -103,7 +104,7 @@ public class DimensionalTests
 		Assert.AreEqual( DimensionalType.Dimension_3DHOU, parserResult.DimensionalType, "-DimensionalType " );
 	}
 
-	[TestMethod]
+	[Test]
 	public void DimensionalTest2DToken()
 	{
 		ParserSettings parserSettings = new(true);

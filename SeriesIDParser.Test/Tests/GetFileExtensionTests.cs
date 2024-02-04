@@ -1,7 +1,7 @@
 ﻿// MIT License
 // 
 // Copyright(c) 2016 - 2024
-// Stefan Müller, Stefm, https://Stefm.de, https://github.com/stefmde/SeriesIDParser
+// Stefan (StefmDE) Müller, https://Stefm.de, https://github.com/stefmde/SeriesIDParser
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -25,67 +25,69 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using SeriesIDParser.Models;
 using SeriesIDParser.Worker;
+using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 // ReSharper disable MissingXmlDoc
 
 namespace SeriesIDParser.Test.Tests;
 
 [ExcludeFromCodeCoverage]
-[TestClass]
+[TestFixture]
 public class GetFileExtensionTests
 {
-	[TestMethod]
+	[Test]
 	public void GetFileExtensionTestDefault()
 	{
 		ParserSettings ps = new(true);
 		Assert.AreEqual( ".mkv", HelperWorker.GetFileExtension( "Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv", ps.FileExtensions ), "(1) Should give a extension" );
 	}
 
-	[TestMethod]
+	[Test]
 	public void GetFileExtensionTestExtensionAVI()
 	{
 		ParserSettings ps = new(true);
 		Assert.AreEqual( ".avi", HelperWorker.GetFileExtension( "Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.avi", ps.FileExtensions ), "(2) Should give a extension" );
 	}
 
-	[TestMethod]
+	[Test]
 	public void GetFileExtensionTestExtensionM4V()
 	{
 		ParserSettings ps = new(true);
 		Assert.AreEqual( ".m4v", HelperWorker.GetFileExtension( "Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.m4v", ps.FileExtensions ), "(3) Should give a extension" );
 	}
 
-	[TestMethod]
+	[Test]
 	public void GetFileExtensionTestExtensionWMV()
 	{
 		ParserSettings ps = new(true);
 		Assert.AreEqual( ".wmv", HelperWorker.GetFileExtension( "Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.wmv", ps.FileExtensions ), "(4) Should give a extension" );
 	}
 
-	[TestMethod]
+	[Test]
 	public void GetFileExtensionTestNoValidExtension()
 	{
 		ParserSettings ps = new(true);
 		Assert.AreEqual( String.Empty, HelperWorker.GetFileExtension( "Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.xyz", ps.FileExtensions ), "(5) Should give no extension" );
 	}
 
-	[TestMethod]
+	[Test]
 	public void GetFileExtensionTestCase()
 	{
 		ParserSettings ps = new(true);
 		Assert.AreEqual( ".wmv", HelperWorker.GetFileExtension( "Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.WmV", ps.FileExtensions ), "(6) Should give a extension" );
 	}
 
-	[TestMethod]
+	[Test]
 	public void GetFileExtensionTestSpecialSpacers()
 	{
 		ParserSettings ps = new(true);
 		Assert.AreEqual( ".mp4", HelperWorker.GetFileExtension( "Der,Hobbit,Smaugs,Einoede,2013,EXTENDED,German,DL,1080p,BluRay,x264.mp4", ps.FileExtensions ), "(7) Should give a extension" );
 	}
 
-	[TestMethod]
+	[Test]
 	public void GetFileExtensionTestNoExtension()
 	{
 		ParserSettings ps = new(true);

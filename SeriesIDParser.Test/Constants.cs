@@ -1,7 +1,7 @@
 ﻿// MIT License
 // 
 // Copyright(c) 2016 - 2024
-// Stefan Müller, Stefm, https://Stefm.de, https://github.com/stefmde/SeriesIDParser
+// Stefan (StefmDE) Müller, https://Stefm.de, https://github.com/stefmde/SeriesIDParser
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,24 +23,25 @@
 
 
 using System;
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Linq;
 using System.Text;
 
 namespace SeriesIDParser.Test;
 
+[ExcludeFromCodeCoverage]
 internal static class Constants
 {
-	public static readonly string TestDataRoot = @"..\..\..\..\Stuff\TestData";
+	public static readonly string TestDataRoot = @"TestData";
+	
+	public static readonly string TestDataDirectoryCleanRoot = $"{TestDataRoot}{Path.DirectorySeparatorChar}Clean";
+	public static readonly string TestDataDirectoryDirtyRoot =$"{TestDataRoot}{Path.DirectorySeparatorChar}Dirty";
+	public static readonly string TestDataDirectoryEmptyRoot = $"{TestDataRoot}{Path.DirectorySeparatorChar}Empty";
+	public static readonly string TestDataDirectoryRemovedRoot = $"{TestDataRoot}{Path.DirectorySeparatorChar}Removed";
 
-	public static readonly string TestDataDirectoryRoot = @"..\..\..\..\Stuff\TestData\Directory";
-	public static readonly string TestDataDirectoryCleanRoot = @"..\..\..\..\Stuff\TestData\Directory\Clean";
-	public static readonly string TestDataDirectoryDirtyRoot = @"..\..\..\..\Stuff\TestData\Directory\Dirty";
-	public static readonly string TestDataDirectoryEmptyRoot = @"..\..\..\..\Stuff\TestData\Directory\Empty";
-	public static readonly string TestDataDirectoryRemovedRoot = @"..\..\..\..\Stuff\TestData\Directory\Removed";
-
-	public static readonly string MovieFilePath = TestDataDirectoryCleanRoot + "\\Der.Regenmacher.1997.German.1080p.BluRay.x264.mkv";
-
-	public static readonly string SeriesFilePath = TestDataDirectoryCleanRoot + "\\Gotham.S02E01.Glueck.oder.Wahrheit.1080p.BluRay.DUBBED.German.x264.mkv";
+	public static readonly string MovieFilePath = $"{TestDataDirectoryCleanRoot}{Path.DirectorySeparatorChar}Der.Regenmacher.1997.German.1080p.BluRay.x264.mkv";
+	public static readonly string SeriesFilePath = $"{TestDataDirectoryCleanRoot}{Path.DirectorySeparatorChar}Gotham.S02E01.Glueck.oder.Wahrheit.1080p.BluRay.DUBBED.German.x264.mkv";
 
 	public static readonly string MovieFile = "Der.Regenmacher.1997.German.1080p.BluRay.x264.mkv";
 	public static readonly string SeriesFile = "Gotham.S02E01.Glueck.oder.Wahrheit.1080p.BluRay.DUBBED.German.x264.mkv";

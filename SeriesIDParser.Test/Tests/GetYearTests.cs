@@ -1,7 +1,7 @@
 ﻿// MIT License
 // 
 // Copyright(c) 2016 - 2024
-// Stefan Müller, Stefm, https://Stefm.de, https://github.com/stefmde/SeriesIDParser
+// Stefan (StefmDE) Müller, https://Stefm.de, https://github.com/stefmde/SeriesIDParser
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -25,39 +25,41 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using SeriesIDParser.Models;
 using SeriesIDParser.Worker;
+using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 // ReSharper disable MissingXmlDoc
 
 namespace SeriesIDParser.Test.Tests;
 
 [ExcludeFromCodeCoverage]
-[TestClass]
+[TestFixture]
 public class GetYearTests
 {
-	[TestMethod]
+	[Test]
 	public void GetYearTestDefault()
 	{
 		ParserSettings ps = new(true);
 		Assert.AreEqual( 2013, HelperWorker.GetYear( "Der.Hobbit.Smaugs.Einoede.2013.EXTENDED.German.DL.1080p.BluRay.x264.mkv", ps.YearParseRegex ), "Should give a year" );
 	}
 
-	[TestMethod]
+	[Test]
 	public void GetYearTestToOld()
 	{
 		ParserSettings ps = new(true);
 		Assert.AreEqual( -1, HelperWorker.GetYear( "Der.Hobbit.Smaugs.Einoede.1899.EXTENDED.German.DL.1080p.BluRay.x264.mkv", ps.YearParseRegex ), "Should give no year" );
 	}
 
-	[TestMethod]
+	[Test]
 	public void GetYearTestOldest()
 	{
 		ParserSettings ps = new(true);
 		Assert.AreEqual( 1900, HelperWorker.GetYear( "Der.Hobbit.Smaugs.Einoede.1900.EXTENDED.German.DL.1080p.BluRay.x264.mkv", ps.YearParseRegex ), "Should give a year" );
 	}
 
-	[TestMethod]
+	[Test]
 	public void GetYearTestFuture()
 	{
 		ParserSettings ps = new(true);
@@ -65,7 +67,7 @@ public class GetYearTests
 						"Should give no year" );
 	}
 
-	[TestMethod]
+	[Test]
 	public void GetYearTestSpecialCharNoise()
 	{
 		ParserSettings ps = new(true);

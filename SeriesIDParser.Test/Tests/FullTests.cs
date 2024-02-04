@@ -1,7 +1,7 @@
 ﻿// MIT License
 // 
 // Copyright(c) 2016 - 2024
-// Stefan Müller, Stefm, https://Stefm.de, https://github.com/stefmde/SeriesIDParser
+// Stefan (StefmDE) Müller, https://Stefm.de, https://github.com/stefmde/SeriesIDParser
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -27,17 +27,19 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using SeriesIDParser.Models;
+using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 // ReSharper disable MissingXmlDoc
 
 namespace SeriesIDParser.Test.Tests;
 
 [ExcludeFromCodeCoverage]
-[TestClass]
+[TestFixture]
 public class FullTests
 {
-	[TestMethod]
+	[Test]
 	public void FullTestDefault()
 	{
 		ParserSettings parserSettings = new(true);
@@ -66,7 +68,7 @@ public class FullTests
 		CollectionAssert.AreEqual( new List<ResolutionsMap> { ResolutionsMap.HD_720p }.OrderBy( x => x ).ToList(), parserResult.Resolutions.OrderBy( x => x ).ToList(), "-Resolution " );
 	}
 
-	[TestMethod]
+	[Test]
 	public void FullTestSmallSeriesAndEpisodeChar()
 	{
 		ParserSettings parserSettings = new(true);
@@ -95,7 +97,7 @@ public class FullTests
 		CollectionAssert.AreEqual( new List<ResolutionsMap> { ResolutionsMap.HD_720p }.OrderBy( x => x ).ToList(), parserResult.Resolutions.OrderBy( x => x ).ToList(), "-Resolution " );
 	}
 
-	[TestMethod]
+	[Test]
 	public void FullTestThreeSeriesAndEpisodeChar()
 	{
 		ParserSettings parserSettings = new(true);
@@ -124,7 +126,7 @@ public class FullTests
 		CollectionAssert.AreEqual( new List<ResolutionsMap> { ResolutionsMap.HD_720p }.OrderBy( x => x ).ToList(), parserResult.Resolutions.OrderBy( x => x ).ToList(), "-Resolution " );
 	}
 
-	[TestMethod]
+	[Test]
 	public void FullTestSingleSeriesAndEpisodeChar()
 	{
 		ParserSettings parserSettings = new(true);
@@ -153,7 +155,7 @@ public class FullTests
 		CollectionAssert.AreEqual( new List<ResolutionsMap> { ResolutionsMap.HD_720p }.OrderBy( x => x ).ToList(), parserResult.Resolutions.OrderBy( x => x ).ToList(), "-Resolution " );
 	}
 
-	[TestMethod]
+	[Test]
 	public void FullTestDifferentSeriesAndEpisodeChar()
 	{
 		ParserSettings parserSettings = new(true);
@@ -182,7 +184,7 @@ public class FullTests
 		CollectionAssert.AreEqual( new List<ResolutionsMap> { ResolutionsMap.HD_720p }.OrderBy( x => x ).ToList(), parserResult.Resolutions.OrderBy( x => x ).ToList(), "-Resolution " );
 	}
 
-	[TestMethod]
+	[Test]
 	public void FullTestTokenDubble()
 	{
 		ParserSettings parserSettings = new(true);
@@ -211,7 +213,7 @@ public class FullTests
 		CollectionAssert.AreEqual( new List<ResolutionsMap> { ResolutionsMap.HD_720p }.OrderBy( x => x ).ToList(), parserResult.Resolutions.OrderBy( x => x ).ToList(), "-Resolution " );
 	}
 
-	[TestMethod]
+	[Test]
 	public void FullTestCustomSpacer()
 	{
 		ParserSettings parserSettings = new(true) { NewSpacingChar = '-', CacheMode = CacheMode.None };
@@ -240,7 +242,7 @@ public class FullTests
 		CollectionAssert.AreEqual( new List<ResolutionsMap> { ResolutionsMap.HD_720p }.OrderBy( x => x ).ToList(), parserResult.Resolutions.OrderBy( x => x ).ToList(), "-Resolution " );
 	}
 
-	[TestMethod]
+	[Test]
 	public void FullTestReleaseGroup()
 	{
 		ParserSettings parserSettings = new(true);
@@ -269,7 +271,7 @@ public class FullTests
 		CollectionAssert.AreEqual( new List<ResolutionsMap> { ResolutionsMap.FullHD_1080p }.OrderBy( x => x ).ToList(), parserResult.Resolutions.OrderBy( x => x ).ToList(), "-Resolution " );
 	}
 
-	[TestMethod]
+	[Test]
 	public void FullTestReleaseGroupWithSpaces()
 	{
 		ParserSettings parserSettings = new(true);
@@ -298,7 +300,7 @@ public class FullTests
 		CollectionAssert.AreEqual( new List<ResolutionsMap> { ResolutionsMap.FullHD_1080p }.OrderBy( x => x ).ToList(), parserResult.Resolutions.OrderBy( x => x ).ToList(), "-Resolution " );
 	}
 
-	[TestMethod]
+	[Test]
 	public void FullTestReleaseGroupWithSpacesAndExtension()
 	{
 		ParserSettings parserSettings = new(true);
@@ -327,7 +329,7 @@ public class FullTests
 		CollectionAssert.AreEqual( new List<ResolutionsMap> { ResolutionsMap.FullHD_1080p }.OrderBy( x => x ).ToList(), parserResult.Resolutions.OrderBy( x => x ).ToList(), "-Resolution " );
 	}
 
-	[TestMethod]
+	[Test]
 	public void FullTestMovieWithExtension()
 	{
 		ParserSettings parserSettings = new(true);
@@ -356,7 +358,7 @@ public class FullTests
 		CollectionAssert.AreEqual( new List<ResolutionsMap> { ResolutionsMap.FullHD_1080p }.OrderBy( x => x ).ToList(), parserResult.Resolutions.OrderBy( x => x ).ToList(), "-Resolution " );
 	}
 
-	[TestMethod]
+	[Test]
 	public void FullTestMovieDefault()
 	{
 		ParserSettings parserSettings = new(true);
@@ -385,7 +387,7 @@ public class FullTests
 		CollectionAssert.AreEqual( new List<ResolutionsMap> { ResolutionsMap.FullHD_1080p }.OrderBy( x => x ).ToList(), parserResult.Resolutions.OrderBy( x => x ).ToList(), "-Resolution " );
 	}
 
-	[TestMethod]
+	[Test]
 	public void FullTestSeriesMultiResolutions()
 	{
 		ParserSettings parserSettings = new(true);
@@ -415,7 +417,7 @@ public class FullTests
 									"-Resolution " );
 	}
 
-	[TestMethod]
+	[Test]
 	public void FullTestSeriesDownSampled()
 	{
 		ParserSettings parserSettings = new(true);
@@ -445,7 +447,7 @@ public class FullTests
 									parserResult.Resolutions.OrderBy( x => x ).ToList(), "-Resolution " );
 	}
 
-	[TestMethod]
+	[Test]
 	public void FullTestSeriesMultiEpisodes()
 	{
 		ParserSettings parserSettings = new(true);
@@ -475,7 +477,7 @@ public class FullTests
 									"-Resolution " );
 	}
 
-	[TestMethod]
+	[Test]
 	public void FullTestSeriesMultiEpisodesThree()
 	{
 		ParserSettings parserSettings = new(true);
@@ -505,7 +507,7 @@ public class FullTests
 									"-Resolution " );
 	}
 
-	[TestMethod]
+	[Test]
 	public void FullTestSeriesMultiEpisodesWithMissing()
 	{
 		ParserSettings parserSettings = new(true);
@@ -535,7 +537,7 @@ public class FullTests
 									"-Resolution " );
 	}
 
-	[TestMethod]
+	[Test]
 	public void FullTest3DDefault()
 	{
 		ParserSettings parserSettings = new(true);
@@ -564,7 +566,7 @@ public class FullTests
 		CollectionAssert.AreEqual( new List<ResolutionsMap> { ResolutionsMap.FullHD_1080p }.OrderBy( x => x ).ToList(), parserResult.Resolutions.OrderBy( x => x ).ToList(), "-Resolution " );
 	}
 
-	[TestMethod]
+	[Test]
 	public void FullTest3DHOUDefault()
 	{
 		ParserSettings parserSettings = new(true);
@@ -593,7 +595,7 @@ public class FullTests
 		CollectionAssert.AreEqual( new List<ResolutionsMap> { ResolutionsMap.FullHD_1080p }.OrderBy( x => x ).ToList(), parserResult.Resolutions.OrderBy( x => x ).ToList(), "-Resolution " );
 	}
 
-	[TestMethod]
+	[Test]
 	public void FullTest3DHSBSDefault()
 	{
 		ParserSettings parserSettings = new(true);

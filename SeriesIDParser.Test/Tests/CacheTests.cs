@@ -1,7 +1,7 @@
 ﻿// MIT License
 // 
 // Copyright(c) 2016 - 2024
-// Stefan Müller, Stefm, https://Stefm.de, https://github.com/stefmde/SeriesIDParser
+// Stefan (StefmDE) Müller, https://Stefm.de, https://github.com/stefmde/SeriesIDParser
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -27,18 +27,17 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using SeriesIDParser.Models;
-
-// ReSharper disable MissingXmlDoc
+using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace SeriesIDParser.Test.Tests;
 
 [ExcludeFromCodeCoverage]
-[TestClass]
+[TestFixture]
 public class CacheTests
 {
-	[TestMethod]
+	[Test]
 	public void CacheDictionaryInit()
 	{
 		CacheDictionary cacheDictionary = new(10);
@@ -50,7 +49,7 @@ public class CacheTests
 		Assert.AreNotEqual( null, cacheDictionary._keys, " -RootKeys" );
 	}
 
-	[TestMethod]
+	[Test]
 	public void CacheDictionaryDrop()
 	{
 		CacheDictionary cacheDictionary = new(10);
@@ -59,9 +58,6 @@ public class CacheTests
 		{
 			cacheDictionary.Add( "Key_" + i, new MediaData() { Title = "Title_" + i } );
 		}
-
-		var a = cacheDictionary._dictionary.Count;
-		var b = cacheDictionary._keys.Count;
 
 		Assert.IsFalse( cacheDictionary.Contains( "Key_1" ), " -DroppedKey" );
 

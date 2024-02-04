@@ -1,7 +1,7 @@
 ﻿// MIT License
 // 
 // Copyright(c) 2016 - 2024
-// Stefan Müller, Stefm, https://Stefm.de, https://github.com/stefmde/SeriesIDParser
+// Stefan (StefmDE) Müller, https://Stefm.de, https://github.com/stefmde/SeriesIDParser
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,25 +23,25 @@
 
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using SeriesIDParser.Extensions;
 using SeriesIDParser.Models;
-
-// ReSharper disable MissingXmlDoc
+using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace SeriesIDParser.Test.Tests;
 
 [ExcludeFromCodeCoverage]
-[TestClass]
+[TestFixture]
 public class ExtensionTests
 {
+	private const string Title = "Der.Regenmacher";
+	
 	// ### Single File - String
 	// ##################################################
-	[TestMethod]
+	[Test]
 	public void ParseSeriesIDStringDefault()
 	{
 		var parserResult = Constants.SeriesFile.ParseSeriesID();
@@ -51,19 +51,17 @@ public class ExtensionTests
 		Assert.IsTrue( parserResult.Exception == null );
 	}
 
-	[TestMethod]
+	[Test]
 	public void ParseSeriesIDStringNullSettings()
 	{
-		ParserSettings parserSettings = new(true);
-		parserSettings = null;
-		var parserResult = Constants.SeriesFile.ParseSeriesID( parserSettings );
+		var parserResult = Constants.SeriesFile.ParseSeriesID( null );
 		Assert.IsTrue( parserResult.IsSeries );
 		Assert.IsTrue( parserResult.Season == 2 );
 		Assert.IsTrue( parserResult.FileExtension == ".mkv" );
 		Assert.IsTrue( parserResult.Exception == null );
 	}
 
-	[TestMethod]
+	[Test]
 	public void ParseSeriesIDStringEmptyInput()
 	{
 		var parserResult = String.Empty.ParseSeriesID();
@@ -73,7 +71,7 @@ public class ExtensionTests
 
 	// ### Single File - FileInfo
 	// ##################################################
-	[TestMethod]
+	[Test]
 	public void ParseSeriesIDFileInfoDefault()
 	{
 		var parserResult = new FileInfo( Constants.SeriesFilePath ).ParseSeriesID();
@@ -83,18 +81,16 @@ public class ExtensionTests
 		Assert.IsTrue( parserResult.Exception == null );
 	}
 
-	[TestMethod]
+	[Test]
 	public void ParseSeriesIDFileInfoNullInput()
 	{
 		ParserSettings parserSettings = new(true);
-		FileInfo file = new(Constants.SeriesFilePath);
-		file = null;
-		var parserResult = file.ParseSeriesID( parserSettings );
+		var parserResult = ((FileInfo)null).ParseSeriesID( parserSettings );
 		Assert.IsTrue( parserResult.State == State.Error );
 		Assert.IsTrue( parserResult.Exception == null );
 	}
 
-	[TestMethod]
+	[Test]
 	public void ParseSeriesIDFileInfoNullSetting()
 	{
 		var parserResult = new FileInfo( Constants.SeriesFilePath ).ParseSeriesID( null );
@@ -106,67 +102,68 @@ public class ExtensionTests
 
 	// ### Multi - String
 	// ##################################################
-	// [TestMethod]
-	// public void ParseSeriesIDPathStringDefault()
-	// {
-	// 	ParserSettings parserSettings = new ParserSettings( true );
-	// 	string directoryInfo = Constants.TestDataDirectoryCleanRoot;
-	// 	IEnumerable<ParserResult> parserResults = directoryInfo.ParseSeriesIDPath();
-	// 	Assert.IsTrue( parserResults.Count() == 2 );
-	// 	Assert.IsTrue( parserResults.LastOrDefault( x => x.IsSeries ).Season == 2 );
-	// 	Assert.IsTrue( parserResults.LastOrDefault( x => !x.IsSeries ).Title == "Der.Regenmacher" );
-	// }
-
-	// [TestMethod]
-	// public void ParseSeriesIDPathNullString()
-	// {
-	// 	ParserSettings parserSettings = new ParserSettings( true );
-	// 	string directoryInfo = null;
-	// 	IEnumerable<ParserResult> parserResults = directoryInfo.ParseSeriesIDPath( parserSettings );
-	// 	Assert.IsTrue( !parserResults.Any() );
-	// }
-
-	// [TestMethod]
-	// public void ParseSeriesIDPathNullSettings()
-	// {
-	// 	string directoryInfo = Constants.TestDataDirectoryCleanRoot;
-	// 	IEnumerable<ParserResult> parserResults = directoryInfo.ParseSeriesIDPath( null );
-	// 	Assert.IsTrue( parserResults.Count() == 2 );
-	// 	Assert.IsTrue( parserResults.LastOrDefault( x => x.IsSeries ).Season == 2 );
-	// 	Assert.IsTrue( parserResults.LastOrDefault( x => !x.IsSeries ).Title == "Der.Regenmacher" );
-	// }
-
-	// ### Multi - DirectoryInfo
-	// ##################################################
-	// [TestMethod]
-	// public void ParseSeriesIDPathDirectoryInfoDefault()
-	// {
-	// 	ParserSettings parserSettings = new ParserSettings( true );
-	// 	DirectoryInfo directoryInfo = new DirectoryInfo( Constants.TestDataDirectoryCleanRoot );
-	// 	IEnumerable<ParserResult> parserResults = directoryInfo.ParseSeriesIDPath();
-	// 	Assert.IsTrue( parserResults.Count() == 2 );
-	// 	Assert.IsTrue( parserResults.LastOrDefault( x => x.IsSeries ).Season == 2 );
-	// 	Assert.IsTrue( parserResults.LastOrDefault( x => !x.IsSeries ).Title == "Der.Regenmacher" );
-	// }
-
-	[TestMethod]
-	public void ParseSeriesIDPathDirectoryInfoNull()
+	[Test]
+	public void ParseSeriesIDPathStringDefault()
 	{
-		ParserSettings parserSettings = new(true);
-		SeriesIDParser seriesIDParser = new(parserSettings);
-		DirectoryInfo directoryInfo = null;
-		var parserResults = directoryInfo.ParseSeriesIDPath();
+		var parserResults = Constants.TestDataDirectoryCleanRoot.ParseSeriesIDPath();
+		Assert.IsTrue( parserResults.Count() == 2 );
+		Assert.IsTrue( parserResults.LastOrDefault( x => x.IsSeries )?.Season == 2 );
+		Assert.IsTrue( parserResults.LastOrDefault( x => !x.IsSeries )?.Title == Title );
+	}
+	
+	[Test]
+	public void ParseSeriesIDPathStringCustomSettings()
+	{
+		var parserResults = Constants.TestDataDirectoryCleanRoot.ParseSeriesIDPath(new ParserSettings());
+		Assert.IsTrue( parserResults.Count() == 2 );
+		Assert.IsTrue( parserResults.LastOrDefault( x => x.IsSeries )?.Season == 2 );
+		Assert.IsTrue( parserResults.LastOrDefault( x => !x.IsSeries )?.Title == Title );
+	}
+
+	[Test]
+	public void ParseSeriesIDPathNullString()
+	{
+		var parserSettings = new ParserSettings( true );
+		var parserResults = ((string)null).ParseSeriesIDPath( parserSettings );
 		Assert.IsTrue( !parserResults.Any() );
 	}
 
-	// [TestMethod]
-	// public void ParseSeriesIDPathDirectoryInfoNullSetting()
-	// {
-	// 	ParserSettings parserSettings = new ParserSettings( true );
-	// 	DirectoryInfo directoryInfo = new DirectoryInfo( Constants.TestDataDirectoryCleanRoot );
-	// 	IEnumerable<ParserResult> parserResults = directoryInfo.ParseSeriesIDPath( null );
-	// 	Assert.IsTrue( parserResults.Count() == 2 );
-	// 	Assert.IsTrue( parserResults.LastOrDefault( x => x.IsSeries ).Season == 2 );
-	// 	Assert.IsTrue( parserResults.LastOrDefault( x => !x.IsSeries ).Title == "Der.Regenmacher" );
-	// }
+	[Test]
+	public void ParseSeriesIDPathNullSettings()
+	{
+		var directoryInfo = Constants.TestDataDirectoryCleanRoot;
+		var parserResults = directoryInfo.ParseSeriesIDPath( null );
+		Assert.IsTrue( parserResults.Count() == 2 );
+		Assert.IsTrue( parserResults.LastOrDefault( x => x.IsSeries )?.Season == 2 );
+		Assert.IsTrue( parserResults.LastOrDefault( x => !x.IsSeries )?.Title == Title );
+	}
+
+	// ### Multi - DirectoryInfo
+	// ##################################################
+	[Test]
+	public void ParseSeriesIDPathDirectoryInfoDefault()
+	{
+		var directoryInfo = new DirectoryInfo( Constants.TestDataDirectoryCleanRoot );
+		var parserResults = directoryInfo.ParseSeriesIDPath();
+		Assert.IsTrue( parserResults.Count() == 2 );
+		Assert.IsTrue( parserResults.LastOrDefault( x => x.IsSeries )?.Season == 2 );
+		Assert.IsTrue( parserResults.LastOrDefault( x => !x.IsSeries )?.Title == Title );
+	}
+
+	[Test]
+	public void ParseSeriesIDPathDirectoryInfoNull()
+	{
+		var parserResults = ((DirectoryInfo)null).ParseSeriesIDPath();
+		Assert.IsTrue( !parserResults.Any() );
+	}
+
+	[Test]
+	public void ParseSeriesIDPathDirectoryInfoNullSetting()
+	{
+		var directoryInfo = new DirectoryInfo( Constants.TestDataDirectoryCleanRoot );
+		var parserResults = directoryInfo.ParseSeriesIDPath( null );
+		Assert.IsTrue( parserResults.Count() == 2 );
+		Assert.IsTrue( parserResults.LastOrDefault( x => x.IsSeries )?.Season == 2 );
+		Assert.IsTrue( parserResults.LastOrDefault( x => !x.IsSeries )?.Title == Title );
+	}
 }
